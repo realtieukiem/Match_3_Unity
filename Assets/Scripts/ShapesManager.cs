@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using DG.Tweening;
 
 
 public class ShapesManager : MonoBehaviour
@@ -13,8 +14,19 @@ public class ShapesManager : MonoBehaviour
 
     private int score;
 
-    public readonly Vector2 BottomRight = new Vector2(-2.37f, -4.27f);
-    public readonly Vector2 CandySize = new Vector2(0.8f, 0.8f);
+    public Vector2 DefaultBottomRight = new Vector2(-2.37f, -4.27f);
+    public Vector2 DefaultCandySize = new Vector2(0.8f, 0.8f);
+    public float HorizontalScreenPadding = 0.3f;
+    public float BoardVerticalOffset = 0f;
+    public bool ScaleUpSmallBoardsToFillWidth = false;
+    public bool UseBoardLayoutFrame = true;
+    public Vector2 BoardLayoutFrameCenter = new Vector2(0f, 0f);
+    public Vector2 BoardLayoutFrameSize = new Vector2(6f, 8f);
+    public int RandomLevelRows = 7;
+    public int RandomLevelColumns = 7;
+
+    private Vector2 BoardBottomLeft;
+    private Vector2 CandySize;
 
     private GameState state = GameState.None;
     private GameObject hitGo = null;
@@ -33,6 +45,7 @@ public class ShapesManager : MonoBehaviour
     {
         InitializeTypesOnPrefabShapesAndBonuses();
 
+        Constants.ConfigureBoardSize(RandomLevelRows, RandomLevelColumns);
         InitializeCandyAndSpawnPositions();
 
         StartCheckForPotentialMatches();
@@ -57,8 +70,10 @@ public class ShapesManager : MonoBehaviour
         if (shapes != null)
             DestroyAllCandy();
 
+        Constants.ConfigureBoardSize(premadeLevel.GetLength(0), premadeLevel.GetLength(1));
         shapes = new ShapesArray();
         SpawnPositions = new Vector2[Constants.Columns];
+        UpdateBoardLayout();
 
         for (int row = 0; row < Constants.Rows; row++)
         {
@@ -69,7 +84,8 @@ public class ShapesManager : MonoBehaviour
 
                 newCandy = GetSpecificCandyOrBonusForPremadeLevel(premadeLevel[row, column]);
 
-                InstantiateAndPlaceNewCandy(row, column, newCandy);
+                var placedCandy = InstantiateAndPlaceNewCandy(row, column, newCandy);
+                ApplyPremadeLevelInfo(placedCandy, premadeLevel[row, column]);
 
             }
         }
@@ -85,8 +101,10 @@ public class ShapesManager : MonoBehaviour
         if (shapes != null)
             DestroyAllCandy();
 
+        Constants.ConfigureBoardSize(RandomLevelRows, RandomLevelColumns);
         shapes = new ShapesArray();
         SpawnPositions = new Vector2[Constants.Columns];
+        UpdateBoardLayout();
 
         for (int row = 0; row < Constants.Rows; row++)
         {
@@ -119,16 +137,81 @@ public class ShapesManager : MonoBehaviour
 
 
 
-    private void InstantiateAndPlaceNewCandy(int row, int column, GameObject newCandy)
+    private GameObject InstantiateAndPlaceNewCandy(int row, int column, GameObject newCandy)
     {
         GameObject go = Instantiate(newCandy,
-            BottomRight + new Vector2(column * CandySize.x, row * CandySize.y), Quaternion.identity)
+            GetWorldPosition(row, column), Quaternion.identity)
             as GameObject;
 
         //assign the specific properties
         go.GetComponent<Shape>().Assign(newCandy.GetComponent<Shape>().Type, row, column);
+        go.transform.localScale = Vector3.one * GetCandyScale();
         go.transform.SetParent(transform);
         shapes[row, column] = go;
+        return go;
+    }
+
+    private void UpdateBoardLayout()
+    {
+        CandySize = DefaultCandySize;
+
+        if (UseBoardLayoutFrame)
+        {
+            Rect frame = GetBoardLayoutFrame();
+            float frameAvailableWidth = Mathf.Max(0.1f, frame.width);
+            float frameAvailableHeight = Mathf.Max(0.1f, frame.height);
+            float frameBoardWidth = DefaultCandySize.x * Constants.Columns;
+            float frameBoardHeight = DefaultCandySize.y * Constants.Rows;
+            float frameBoardScale = Mathf.Min(frameAvailableWidth / frameBoardWidth, frameAvailableHeight / frameBoardHeight);
+
+            if (frameBoardScale < 1f || ScaleUpSmallBoardsToFillWidth)
+                CandySize = DefaultCandySize * frameBoardScale;
+
+            float frameBoardLeftX = frame.center.x - ((Constants.Columns - 1) * CandySize.x) / 2f;
+            float frameBoardBottomY = frame.center.y - ((Constants.Rows - 1) * CandySize.y) / 2f;
+            BoardBottomLeft = new Vector2(frameBoardLeftX, frameBoardBottomY);
+            return;
+        }
+
+        Camera camera = Camera.main;
+        if (camera == null || !camera.orthographic)
+        {
+            BoardBottomLeft = DefaultBottomRight;
+            return;
+        }
+
+        float cameraHeight = camera.orthographicSize * 2f;
+        float cameraWidth = cameraHeight * camera.aspect;
+        float availableWidth = Mathf.Max(0.1f, cameraWidth - HorizontalScreenPadding * 2f);
+        float boardWidth = DefaultCandySize.x * Constants.Columns;
+        float boardScale = availableWidth / boardWidth;
+
+        if (boardWidth > availableWidth || ScaleUpSmallBoardsToFillWidth)
+            CandySize = DefaultCandySize * boardScale;
+
+        float leftEdge = camera.transform.position.x - cameraWidth / 2f + HorizontalScreenPadding;
+        float minBoardLeftX = leftEdge + CandySize.x / 2f;
+        float boardCenterX = camera.transform.position.x;
+        float boardLeftX = boardCenterX - ((Constants.Columns - 1) * CandySize.x) / 2f;
+        float boardBottomY = DefaultBottomRight.y + BoardVerticalOffset;
+
+        BoardBottomLeft = new Vector2(Mathf.Max(minBoardLeftX, boardLeftX), boardBottomY);
+    }
+
+    public Rect GetBoardLayoutFrame()
+    {
+        Vector2 size = new Vector2(Mathf.Max(0.1f, BoardLayoutFrameSize.x), Mathf.Max(0.1f, BoardLayoutFrameSize.y));
+        return new Rect(BoardLayoutFrameCenter - size / 2f, size);
+    }
+
+    private float GetCandyScale()
+    {
+        return CandySize.x / DefaultCandySize.x;
+    }
+
+    private Vector2 GetWorldPosition(int row, int column)
+    {
+        return BoardBottomLeft + new Vector2(column * CandySize.x, row * CandySize.y);
     }
 
     private void SetupSpawnPositions()
@@ -136,16 +219,16 @@ public class ShapesManager : MonoBehaviour
         //create the spawn positions for the new shapes (will pop from the 'ceiling')
         for (int column = 0; column < Constants.Columns; column++)
         {
-            SpawnPositions[column] = BottomRight
+            SpawnPositions[column] = BoardBottomLeft
                 + new Vector2(column * CandySize.x, Constants.Rows * CandySize.y);
         }
     }
 
     private void DestroyAllCandy()
     {
-        for (int row = 0; row < Constants.Rows; row++)
+        for (int row = 0; row < shapes.Rows; row++)
         {
-            for (int column = 0; column < Constants.Columns; column++)
+            for (int column = 0; column < shapes.Columns; column++)
             {
                 Destroy(shapes[row, column]);
             }
@@ -220,12 +303,12 @@ public class ShapesManager : MonoBehaviour
     {
         //get the second item that was part of the swipe
         var hitGo2 = hit2.collider.gameObject;
+        Vector3 hitGoPosition = hitGo.transform.position;
+        Vector3 hitGo2Position = hitGo2.transform.position;
         shapes.Swap(hitGo, hitGo2);
 
         //move the swapped ones
-        hitGo.transform.positionTo(Constants.AnimationDuration, hitGo2.transform.position);
-        hitGo2.transform.positionTo(Constants.AnimationDuration, hitGo.transform.position);
-        yield return new WaitForSeconds(Constants.AnimationDuration);
+        yield return AnimateCandySwap(hitGo, hitGo2, hitGo2Position, hitGoPosition, Constants.AnimationDuration);
 
         //get the matches via the helper methods
         var hitGomatchesInfo = shapes.GetMatches(hitGo);
@@ -237,9 +320,7 @@ public class ShapesManager : MonoBehaviour
         //if user's swap didn't create at least a 3-match, undo their swap
         if (totalMatches.Count() < Constants.MinimumMatches)
         {
-            hitGo.transform.positionTo(Constants.AnimationDuration, hitGo2.transform.position);
-            hitGo2.transform.positionTo(Constants.AnimationDuration, hitGo.transform.position);
-            yield return new WaitForSeconds(Constants.AnimationDuration);
+            yield return AnimateCandySwap(hitGo, hitGo2, hitGoPosition, hitGo2Position, Constants.AnimationDuration);
 
             shapes.UndoSwap();
         }
@@ -310,6 +391,7 @@ public class ShapesManager : MonoBehaviour
 
                 newCandy.transform.SetParent(transform);
                 newCandy.GetComponent<Shape>().Assign(go.GetComponent<Shape>().Type, item.Row, item.Column);
+                newCandy.transform.localScale = Vector3.one * GetCandyScale();
 
                 if (Constants.Rows - item.Row > newCandyInfo.MaxDistance)
                     newCandyInfo.MaxDistance = Constants.Rows - item.Row;
@@ -323,15 +405,29 @@ public class ShapesManager : MonoBehaviour
 
     private void MoveAndAnimate(IEnumerable<GameObject> movedGameObjects, int distance)
     {
+        float duration = Constants.MoveAnimationMinDuration * distance;
         foreach (var item in movedGameObjects)
         {
-            item.transform.positionTo(Constants.MoveAnimationMinDuration * distance, BottomRight +
-                new Vector2(item.GetComponent<Shape>().Column * CandySize.x, item.GetComponent<Shape>().Row * CandySize.y));
+            item.transform.DOKill();
+            item.transform.DOMove(GetWorldPosition(item.GetComponent<Shape>().Row, item.GetComponent<Shape>().Column), duration);
         }
+    }
+
+    private IEnumerator AnimateCandySwap(GameObject firstCandy, GameObject secondCandy,
+        Vector3 firstDestination, Vector3 secondDestination, float duration)
+    {
+        firstCandy.transform.DOKill();
+        secondCandy.transform.DOKill();
+
+        Sequence swapSequence = DOTween.Sequence();
+        swapSequence.Join(firstCandy.transform.DOMove(firstDestination, duration));
+        swapSequence.Join(secondCandy.transform.DOMove(secondDestination, duration));
+        yield return swapSequence.WaitForCompletion();
     }
 
     private void RemoveFromScene(GameObject item)
     {
+        item.transform.DOKill();
         GameObject explosion = GetRandomExplosion();
         var newExplosion = Instantiate(explosion, item.transform.position, Quaternion.identity) as GameObject;
         newExplosion.transform.SetParent(transform);
@@ -393,6 +489,7 @@ public class ShapesManager : MonoBehaviour
             {
                 if (item == null) break;
 
+                item.GetComponent<SpriteRenderer>().DOKill();
                 Color c = item.GetComponent<SpriteRenderer>().color;
                 c.a = 1.0f;
                 item.GetComponent<SpriteRenderer>().color = c;
@@ -418,7 +515,7 @@ public class ShapesManager : MonoBehaviour
     {
         var tokens = info.Split('_');
 
-        if (tokens.Count() == 1)
+        if (tokens.Count() == 1 || tokens.Count() == 2)
         {
             foreach (var item in CandyPrefabs)
             {
@@ -427,6 +524,35 @@ public class ShapesManager : MonoBehaviour
             }
 
         }
-        throw new System.Exception("Wrong type, check your premade level");
+        throw new System.Exception("Wrong type '" + info + "', check your premade level");
+    }
+
+    private void ApplyPremadeLevelInfo(GameObject candy, string info)
+    {
+        var tokens = info.Split('_');
+
+        if (tokens.Count() < 2)
+            return;
+
+        if (tokens[1].Trim() == "B")
+            candy.GetComponent<Shape>().Bonus = BonusType.DestroyWholeRowColumn;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (!UseBoardLayoutFrame)
+            return;
+
+        Rect frame = GetBoardLayoutFrame();
+        Vector3 bottomLeft = new Vector3(frame.xMin, frame.yMin, transform.position.z);
+        Vector3 topLeft = new Vector3(frame.xMin, frame.yMax, transform.position.z);
+        Vector3 topRight = new Vector3(frame.xMax, frame.yMax, transform.position.z);
+        Vector3 bottomRight = new Vector3(frame.xMax, frame.yMin, transform.position.z);
+
+        Gizmos.color = new Color(0f, 0.8f, 1f, 1f);
+        Gizmos.DrawLine(bottomLeft, topLeft);
+        Gizmos.DrawLine(topLeft, topRight);
+        Gizmos.DrawLine(topRight, bottomRight);
+        Gizmos.DrawLine(bottomRight, bottomLeft);
     }
 }

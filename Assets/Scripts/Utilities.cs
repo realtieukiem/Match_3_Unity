@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using DG.Tweening;
 
 
 public static class Utilities
@@ -15,26 +16,27 @@ public static class Utilities
     /// <returns></returns>
     public static IEnumerator AnimatePotentialMatches(IEnumerable<GameObject> potentialMatches)
     {
-        for (float i = 1f; i >= 0.3f; i -= 0.1f)
+        var matches = potentialMatches.Where(item => item != null).ToList();
+        Sequence fadeOutSequence = DOTween.Sequence();
+        foreach (var item in matches)
         {
-            foreach (var item in potentialMatches)
-            {
-                Color c = item.GetComponent<SpriteRenderer>().color;
-                c.a = i;
-                item.GetComponent<SpriteRenderer>().color = c;
-            }
-            yield return new WaitForSeconds(Constants.OpacityAnimationFrameDelay);
+            var spriteRenderer = item.GetComponent<SpriteRenderer>();
+            spriteRenderer.DOKill();
+            fadeOutSequence.Join(spriteRenderer.DOFade(0.3f, Constants.OpacityAnimationFrameDelay * 7));
         }
-        for (float i = 0.3f; i <= 1f; i += 0.1f)
+
+        yield return fadeOutSequence.WaitForCompletion();
+
+        Sequence fadeInSequence = DOTween.Sequence();
+        foreach (var item in matches)
         {
-            foreach (var item in potentialMatches)
-            {
-                Color c = item.GetComponent<SpriteRenderer>().color;
-                c.a = i;
-                item.GetComponent<SpriteRenderer>().color = c;
-            }
-            yield return new WaitForSeconds(Constants.OpacityAnimationFrameDelay);
+            if (item == null)
+                continue;
+
+            fadeInSequence.Join(item.GetComponent<SpriteRenderer>().DOFade(1f, Constants.OpacityAnimationFrameDelay * 7));
         }
+
+        yield return fadeInSequence.WaitForCompletion();
     }
 
     /// <summary>

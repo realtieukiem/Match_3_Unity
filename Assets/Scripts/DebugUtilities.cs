@@ -11,16 +11,25 @@ public static class DebugUtilities
 
     public static string[,] FillShapesArrayFromResourcesData()
     {
-        string[,] shapes = new string[Constants.Rows, Constants.Columns];
-
         TextAsset txt = Resources.Load("level") as TextAsset;
-        string level = txt.text;
+        if (txt == null)
+            throw new Exception("Cannot find Resources/level.txt");
 
-        string[] lines = level.Split(new string[] { System.Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-        for (int row = Constants.Rows - 1; row >= 0; row--)
+        string level = txt.text;
+        string[] lines = level.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.RemoveEmptyEntries);
+        if (lines.Length == 0)
+            throw new Exception("Premade level is empty");
+
+        int columns = lines[0].Split('|').Length;
+        string[,] shapes = new string[lines.Length, columns];
+
+        for (int row = 0; row < lines.Length; row++)
         {
             string[] items = lines[row].Split('|');
-            for (int column = 0; column < Constants.Columns; column++)
+            if (items.Length != columns)
+                throw new Exception("Premade level row " + (row + 1) + " has " + items.Length + " columns, expected " + columns);
+
+            for (int column = 0; column < columns; column++)
             {
                 shapes[row, column] = items[column];
             }

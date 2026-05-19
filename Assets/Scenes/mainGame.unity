@@ -716,6 +716,7 @@ MonoBehaviour:
   - {fileID: 195492, guid: 4ee919a3cb1ff3448ae1b4c056dd8c35, type: 3}
   - {fileID: 125858, guid: 5268d9197b90bc44492e32f316fa679e, type: 3}
   - {fileID: 123910, guid: 1d881f16d2f366c46afb3f9e9b96654f, type: 3}
+  - {fileID: 123910, guid: 1d881f16d2f366c46afb3f9e9b96654f, type: 3}
   soundManager: {fileID: 1624638383}
 --- !u!4 &1363272350
 Transform:

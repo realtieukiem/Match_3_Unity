@@ -6,8 +6,8 @@ using System.Text;
 
     public static class Constants
     {
-        public static readonly int Rows = 7;
-        public static readonly int Columns = 7;
+        public static int Rows = 7;
+        public static int Columns = 7;
         public static readonly float AnimationDuration =  0.2f;
 
         public static readonly float MoveAnimationMinDuration = 0.05f;
@@ -22,6 +22,18 @@ using System.Text;
 
         public static readonly int Match3Score = 60;
         public static readonly int SubsequentMatchScore = 1000;
+
+        public static void ConfigureBoardSize(int rows, int columns)
+        {
+            if (rows <= 0)
+                throw new ArgumentException("rows");
+
+            if (columns <= 0)
+                throw new ArgumentException("columns");
+
+            Rows = rows;
+            Columns = columns;
+        }
     }
 
    

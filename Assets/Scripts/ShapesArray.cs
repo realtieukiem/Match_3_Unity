@@ -12,6 +12,16 @@ public class ShapesArray
 
     private GameObject[,] shapes = new GameObject[Constants.Rows, Constants.Columns];
 
+    public int Rows
+    {
+        get { return shapes.GetLength(0); }
+    }
+
+    public int Columns
+    {
+        get { return shapes.GetLength(1); }
+    }
+
     /// <summary>
     /// Indexer
     /// </summary>
