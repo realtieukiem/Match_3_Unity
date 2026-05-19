@@ -2128,3 +2128,1468 @@ AssetImportParameters requested are different than current active one (requested
   custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
   custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
   custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  2.417 seconds
+Refreshing native plugins compatible for Editor in 1.32 ms, found 1 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  4.756 seconds
+Domain Reload Profiling: 7174ms
+	BeginReloadAssembly (176ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (7ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (42ms)
+	RebuildCommonClasses (26ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (21ms)
+	LoadAllAssembliesAndSetupDomain (2187ms)
+		LoadAssemblies (2264ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (12ms)
+			TypeCache.Refresh (6ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (4757ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (215ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (20ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (37ms)
+			ProcessInitializeOnLoadAttributes (132ms)
+			ProcessInitializeOnLoadMethodAttributes (20ms)
+			AfterProcessingInitializeOnLoad (3ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Refreshing native plugins compatible for Editor in 1.25 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2307 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (27.0 KB). Loaded Objects now: 2853.
+Memory consumption went from 104.7 MB to 104.7 MB.
+Total: 3.005700 ms (FindLiveObjects: 0.154800 ms CreateObjectMapping: 0.046100 ms MarkObjects: 2.753500 ms  DeleteObjects: 0.050100 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/GoSmoothedVector3.cs: 3a6ceb396859da913cbecdd1940e0aa2 -> 
+  custom:scripting/monoscript/fileName/EulerAnglesTweenProperty.cs: 7a2321a8c63f28c3857aa33414a11270 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/IGenericProperty.cs: f404e27010d8ce1a25f7cc2ac06431ac -> 
+  custom:scripting/monoscript/fileName/GoEaseSinusoidal.cs: e637d6b7456e2acd06dfd152f10b71d1 -> 
+  custom:scripting/monoscript/fileName/GoSplineCatmullRomSolver.cs: 8bbd4e9dc2722b25540d14d500b88879 -> 
+  custom:scripting/monoscript/fileName/IntTweenProperty.cs: 1f39418055dd7708ff3b9e75a86d93a1 -> 
+  custom:scripting/monoscript/fileName/Vector3YTweenProperty.cs: 2b996e9222bddad772657bb084e9da48 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuintic.cs: 672086238d051af0856016e64ad97204 -> 
+  custom:scripting/monoscript/fileName/GoEaseCubic.cs: 7d74fd43480e52f793e3086826193b77 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/GoSmoothedQuaternion.cs: 92de95a3ce149743e526859a8d0255c5 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/ShakeTweenProperty.cs: fdb713005206085d3b49cdd6b2d15f80 -> 
+  custom:scripting/monoscript/fileName/Vector2TweenProperty.cs: d7a25a544d56d947d9526019347f1f6e -> 
+  custom:scripting/monoscript/fileName/GoKitTweenExtensions.cs: 28ee7421c4d34eb9c057646838e28859 -> 
+  custom:scripting/monoscript/fileName/Vector3XTweenProperty.cs: 9592582ea2f541a8cf92ba7dd7dd85f2 -> 
+  custom:scripting/monoscript/fileName/Go.cs: 840adb47e0f4be71eeea7168442feb7d -> 
+  custom:scripting/monoscript/fileName/ColorTweenProperty.cs: 94ba4bee52d153d3fd58a82d4cf8ce0c -> 
+  custom:scripting/monoscript/fileName/GoEaseLinear.cs: b690756fd76817f101a31dcd50ae4adc -> 
+  custom:scripting/monoscript/fileName/GoEaseExponential.cs: 8f890ce1f0130e8014d1a219fa0d7904 -> 
+  custom:scripting/monoscript/fileName/ScaleTweenProperty.cs: 068e501b322923caa36166fe86d472e5 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/GoSpline.cs: 8039f73cfdc174dc6ffa15343c307f29 -> 
+  custom:scripting/monoscript/fileName/GoTweenFlow.cs: ce7a11a1fb9e8397b83cab3847ba7970 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuartic.cs: d34853ce84f33fe9033901002d4ff793 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/GoEaseBounce.cs: e71b365170d63025c159c4756b1910b2 -> 
+  custom:scripting/monoscript/fileName/GoSplineQuadraticBezierSolver.cs: 44dee8c5fd496e5eb749f54d83d1397e -> 
+  custom:scripting/monoscript/fileName/GoEaseQuadratic.cs: e3ed230c2d29b99c6f642587e4ad0e5d -> 
+  custom:scripting/monoscript/fileName/MaterialColorTweenProperty.cs: f6d4ed9537ac95d7564838fa4e660e7d -> 
+  custom:scripting/monoscript/fileName/GoEaseCircular.cs: 84a2009340e8431314db7056edf1bd68 -> 
+  custom:scripting/monoscript/fileName/PositionPathTweenProperty.cs: efde40660de14fd7cd1ede2fa47e9837 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/FloatTweenProperty.cs: 48aea3a8bbe79ca6e0baa81dc186bdfd -> 
+  custom:scripting/monoscript/fileName/GoTweenChain.cs: f9995827e6ddafabc43c1b0e0dcfd886 -> 
+  custom:scripting/monoscript/fileName/GoTweenCollectionConfig.cs: 37c99bdc8dc674650bd69bc44bb2e57b -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/AbstractQuaternionTweenProperty.cs: 65ceda31db804ab1e0e34f0e48afa285 -> 
+  custom:scripting/monoscript/fileName/AbstractColorTweenProperty.cs: bba0da230ed56fc0a25af92f6a3e377e -> 
+  custom:scripting/monoscript/fileName/AbstractVector3TweenProperty.cs: 6aa4defef7531529f4ddc1516936e2e3 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/Vector4TweenProperty.cs: 18bb73739ede80588b5bfadcee873907 -> 
+  custom:scripting/monoscript/fileName/GoEaseBack.cs: 3f6e00793ada35f633abc2146480990e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/GoTweenConfig.cs: 5b3154c82824c20addf84e8652f51cfe -> 
+  custom:scripting/monoscript/fileName/RotationQuaternionTweenProperty.cs: e0d94af0c913b0be4cd670833a2cda91 -> 
+  custom:scripting/monoscript/fileName/GoTweenUtils.cs: 867d37edf69335bc6e54784197f28064 -> 
+  custom:scripting/monoscript/fileName/GoSplineCubicBezierSolver.cs: 6d81419c64f7c334f4359254f1cbade0 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ScalePathTweenProperty.cs: 816c1a788eca415c60d1b7e87fb103fe -> 
+  custom:scripting/monoscript/fileName/GoEaseElastic.cs: f0cafb366ac4251d5c35fe413d3f62f6 -> 
+  custom:scripting/monoscript/fileName/GoDummyPath.cs: a21201ab2fac2187e4faeaf08bb4ec90 -> 
+  custom:scripting/monoscript/fileName/PositionTweenProperty.cs: e367a96b2cbc0b819bff5d0620f4b258 -> 
+  custom:scripting/monoscript/fileName/Vector3TweenProperty.cs: 8e9f9d7bb7b15068d97f4d593f097c86 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTween.cs: 3bdc69e313ad58745cd33c4b74e6a709 -> 
+  custom:scripting/monoscript/fileName/GoSplineStraightLineSolver.cs: b6a3907f2ead3ba9ac17ad3fdd121ec9 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTweenCollection.cs: 61d9f5f358696a7942516ed78ffe7e98 -> 
+  custom:scripting/monoscript/fileName/Vector3PathTweenProperty.cs: 94848aa2e96060cfeaf83844ee158f0c -> 
+  custom:scripting/monoscript/fileName/Vector3ZTweenProperty.cs: 35595634a87246c4e13691b1563178c5 -> 
+  custom:scripting/monoscript/fileName/AbstractTweenProperty.cs: c71b2ece20cb4e1e30772e574c806625 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
+  custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
+  custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 13073.352670 seconds.
+  path: Assets/Scripts/Enums.cs
+  artifactKey: Guid(473679c1b7456d9408b927d09a24b4a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Enums.cs using Guid(473679c1b7456d9408b927d09a24b4a2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f8450619117a2938fde1c126ecd32a23') in 0.009714 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.361374 seconds.
+  path: Assets/Scripts/DebugUtilities.cs
+  artifactKey: Guid(1f506dbc19f7d9946a914e9788c956af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/DebugUtilities.cs using Guid(1f506dbc19f7d9946a914e9788c956af) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f3beb4f14a2ec831a9d9afde8d5e1f93') in 0.000359 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.325041 seconds.
+  path: Assets/Scripts/Constants.cs
+  artifactKey: Guid(1f89b50e0cb5ccd43b89d7c233318e32) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/Constants.cs using Guid(1f89b50e0cb5ccd43b89d7c233318e32) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '529e59e4a6cc2beff004316ba78cc7dc') in 0.000350 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Import Request.
+  Time since last request: 0.335397 seconds.
+  path: Assets/Scripts/AlteredCandyInfo.cs
+  artifactKey: Guid(88dd8eb9a2b51264e91110d4a6118377) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Scripts/AlteredCandyInfo.cs using Guid(88dd8eb9a2b51264e91110d4a6118377) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4babbfddd8c03cc04344625e38556599') in 0.000363 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 0
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.302 seconds
+Refreshing native plugins compatible for Editor in 1.04 ms, found 1 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.354 seconds
+Domain Reload Profiling: 656ms
+	BeginReloadAssembly (107ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (18ms)
+	RebuildCommonClasses (31ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (21ms)
+	LoadAllAssembliesAndSetupDomain (135ms)
+		LoadAssemblies (188ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (8ms)
+			TypeCache.Refresh (4ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (355ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (178ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (16ms)
+			SetLoadedEditorAssemblies (2ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (33ms)
+			ProcessInitializeOnLoadAttributes (108ms)
+			ProcessInitializeOnLoadMethodAttributes (17ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Refreshing native plugins compatible for Editor in 1.39 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2306 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (27.1 KB). Loaded Objects now: 2856.
+Memory consumption went from 104.4 MB to 104.4 MB.
+Total: 1.845900 ms (FindLiveObjects: 0.139500 ms CreateObjectMapping: 0.047600 ms MarkObjects: 1.625900 ms  DeleteObjects: 0.032200 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/GoSmoothedVector3.cs: 3a6ceb396859da913cbecdd1940e0aa2 -> 
+  custom:scripting/monoscript/fileName/EulerAnglesTweenProperty.cs: 7a2321a8c63f28c3857aa33414a11270 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/IGenericProperty.cs: f404e27010d8ce1a25f7cc2ac06431ac -> 
+  custom:scripting/monoscript/fileName/GoEaseSinusoidal.cs: e637d6b7456e2acd06dfd152f10b71d1 -> 
+  custom:scripting/monoscript/fileName/GoSplineCatmullRomSolver.cs: 8bbd4e9dc2722b25540d14d500b88879 -> 
+  custom:scripting/monoscript/fileName/IntTweenProperty.cs: 1f39418055dd7708ff3b9e75a86d93a1 -> 
+  custom:scripting/monoscript/fileName/Vector3YTweenProperty.cs: 2b996e9222bddad772657bb084e9da48 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuintic.cs: 672086238d051af0856016e64ad97204 -> 
+  custom:scripting/monoscript/fileName/GoEaseCubic.cs: 7d74fd43480e52f793e3086826193b77 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/GoSmoothedQuaternion.cs: 92de95a3ce149743e526859a8d0255c5 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/ShakeTweenProperty.cs: fdb713005206085d3b49cdd6b2d15f80 -> 
+  custom:scripting/monoscript/fileName/Vector2TweenProperty.cs: d7a25a544d56d947d9526019347f1f6e -> 
+  custom:scripting/monoscript/fileName/GoKitTweenExtensions.cs: 28ee7421c4d34eb9c057646838e28859 -> 
+  custom:scripting/monoscript/fileName/Vector3XTweenProperty.cs: 9592582ea2f541a8cf92ba7dd7dd85f2 -> 
+  custom:scripting/monoscript/fileName/Go.cs: 840adb47e0f4be71eeea7168442feb7d -> 
+  custom:scripting/monoscript/fileName/ColorTweenProperty.cs: 94ba4bee52d153d3fd58a82d4cf8ce0c -> 
+  custom:scripting/monoscript/fileName/GoEaseLinear.cs: b690756fd76817f101a31dcd50ae4adc -> 
+  custom:scripting/monoscript/fileName/GoEaseExponential.cs: 8f890ce1f0130e8014d1a219fa0d7904 -> 
+  custom:scripting/monoscript/fileName/ScaleTweenProperty.cs: 068e501b322923caa36166fe86d472e5 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/GoSpline.cs: 8039f73cfdc174dc6ffa15343c307f29 -> 
+  custom:scripting/monoscript/fileName/GoTweenFlow.cs: ce7a11a1fb9e8397b83cab3847ba7970 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuartic.cs: d34853ce84f33fe9033901002d4ff793 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/GoEaseBounce.cs: e71b365170d63025c159c4756b1910b2 -> 
+  custom:scripting/monoscript/fileName/GoSplineQuadraticBezierSolver.cs: 44dee8c5fd496e5eb749f54d83d1397e -> 
+  custom:scripting/monoscript/fileName/GoEaseQuadratic.cs: e3ed230c2d29b99c6f642587e4ad0e5d -> 
+  custom:scripting/monoscript/fileName/MaterialColorTweenProperty.cs: f6d4ed9537ac95d7564838fa4e660e7d -> 
+  custom:scripting/monoscript/fileName/GoEaseCircular.cs: 84a2009340e8431314db7056edf1bd68 -> 
+  custom:scripting/monoscript/fileName/PositionPathTweenProperty.cs: efde40660de14fd7cd1ede2fa47e9837 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/FloatTweenProperty.cs: 48aea3a8bbe79ca6e0baa81dc186bdfd -> 
+  custom:scripting/monoscript/fileName/GoTweenChain.cs: f9995827e6ddafabc43c1b0e0dcfd886 -> 
+  custom:scripting/monoscript/fileName/GoTweenCollectionConfig.cs: 37c99bdc8dc674650bd69bc44bb2e57b -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/AbstractQuaternionTweenProperty.cs: 65ceda31db804ab1e0e34f0e48afa285 -> 
+  custom:scripting/monoscript/fileName/AbstractColorTweenProperty.cs: bba0da230ed56fc0a25af92f6a3e377e -> 
+  custom:scripting/monoscript/fileName/AbstractVector3TweenProperty.cs: 6aa4defef7531529f4ddc1516936e2e3 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/Vector4TweenProperty.cs: 18bb73739ede80588b5bfadcee873907 -> 
+  custom:scripting/monoscript/fileName/GoEaseBack.cs: 3f6e00793ada35f633abc2146480990e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/GoTweenConfig.cs: 5b3154c82824c20addf84e8652f51cfe -> 
+  custom:scripting/monoscript/fileName/RotationQuaternionTweenProperty.cs: e0d94af0c913b0be4cd670833a2cda91 -> 
+  custom:scripting/monoscript/fileName/GoTweenUtils.cs: 867d37edf69335bc6e54784197f28064 -> 
+  custom:scripting/monoscript/fileName/GoSplineCubicBezierSolver.cs: 6d81419c64f7c334f4359254f1cbade0 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ScalePathTweenProperty.cs: 816c1a788eca415c60d1b7e87fb103fe -> 
+  custom:scripting/monoscript/fileName/GoEaseElastic.cs: f0cafb366ac4251d5c35fe413d3f62f6 -> 
+  custom:scripting/monoscript/fileName/GoDummyPath.cs: a21201ab2fac2187e4faeaf08bb4ec90 -> 
+  custom:scripting/monoscript/fileName/PositionTweenProperty.cs: e367a96b2cbc0b819bff5d0620f4b258 -> 
+  custom:scripting/monoscript/fileName/Vector3TweenProperty.cs: 8e9f9d7bb7b15068d97f4d593f097c86 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTween.cs: 3bdc69e313ad58745cd33c4b74e6a709 -> 
+  custom:scripting/monoscript/fileName/GoSplineStraightLineSolver.cs: b6a3907f2ead3ba9ac17ad3fdd121ec9 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTweenCollection.cs: 61d9f5f358696a7942516ed78ffe7e98 -> 
+  custom:scripting/monoscript/fileName/Vector3PathTweenProperty.cs: 94848aa2e96060cfeaf83844ee158f0c -> 
+  custom:scripting/monoscript/fileName/Vector3ZTweenProperty.cs: 35595634a87246c4e13691b1563178c5 -> 
+  custom:scripting/monoscript/fileName/AbstractTweenProperty.cs: c71b2ece20cb4e1e30772e574c806625 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
+  custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
+  custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.268 seconds
+Refreshing native plugins compatible for Editor in 1.05 ms, found 1 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.361 seconds
+Domain Reload Profiling: 629ms
+	BeginReloadAssembly (104ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (17ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (17ms)
+	LoadAllAssembliesAndSetupDomain (116ms)
+		LoadAssemblies (167ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (9ms)
+			TypeCache.Refresh (4ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (361ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (179ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (16ms)
+			SetLoadedEditorAssemblies (2ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (34ms)
+			ProcessInitializeOnLoadAttributes (103ms)
+			ProcessInitializeOnLoadMethodAttributes (21ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Refreshing native plugins compatible for Editor in 1.24 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2307 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (26.9 KB). Loaded Objects now: 2859.
+Memory consumption went from 104.7 MB to 104.7 MB.
+Total: 1.939400 ms (FindLiveObjects: 0.163200 ms CreateObjectMapping: 0.061200 ms MarkObjects: 1.679300 ms  DeleteObjects: 0.034800 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/GoSmoothedVector3.cs: 3a6ceb396859da913cbecdd1940e0aa2 -> 
+  custom:scripting/monoscript/fileName/EulerAnglesTweenProperty.cs: 7a2321a8c63f28c3857aa33414a11270 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/IGenericProperty.cs: f404e27010d8ce1a25f7cc2ac06431ac -> 
+  custom:scripting/monoscript/fileName/GoEaseSinusoidal.cs: e637d6b7456e2acd06dfd152f10b71d1 -> 
+  custom:scripting/monoscript/fileName/GoSplineCatmullRomSolver.cs: 8bbd4e9dc2722b25540d14d500b88879 -> 
+  custom:scripting/monoscript/fileName/IntTweenProperty.cs: 1f39418055dd7708ff3b9e75a86d93a1 -> 
+  custom:scripting/monoscript/fileName/Vector3YTweenProperty.cs: 2b996e9222bddad772657bb084e9da48 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuintic.cs: 672086238d051af0856016e64ad97204 -> 
+  custom:scripting/monoscript/fileName/GoEaseCubic.cs: 7d74fd43480e52f793e3086826193b77 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/GoSmoothedQuaternion.cs: 92de95a3ce149743e526859a8d0255c5 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/ShakeTweenProperty.cs: fdb713005206085d3b49cdd6b2d15f80 -> 
+  custom:scripting/monoscript/fileName/Vector2TweenProperty.cs: d7a25a544d56d947d9526019347f1f6e -> 
+  custom:scripting/monoscript/fileName/GoKitTweenExtensions.cs: 28ee7421c4d34eb9c057646838e28859 -> 
+  custom:scripting/monoscript/fileName/Vector3XTweenProperty.cs: 9592582ea2f541a8cf92ba7dd7dd85f2 -> 
+  custom:scripting/monoscript/fileName/Go.cs: 840adb47e0f4be71eeea7168442feb7d -> 
+  custom:scripting/monoscript/fileName/ColorTweenProperty.cs: 94ba4bee52d153d3fd58a82d4cf8ce0c -> 
+  custom:scripting/monoscript/fileName/GoEaseLinear.cs: b690756fd76817f101a31dcd50ae4adc -> 
+  custom:scripting/monoscript/fileName/GoEaseExponential.cs: 8f890ce1f0130e8014d1a219fa0d7904 -> 
+  custom:scripting/monoscript/fileName/ScaleTweenProperty.cs: 068e501b322923caa36166fe86d472e5 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/GoSpline.cs: 8039f73cfdc174dc6ffa15343c307f29 -> 
+  custom:scripting/monoscript/fileName/GoTweenFlow.cs: ce7a11a1fb9e8397b83cab3847ba7970 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuartic.cs: d34853ce84f33fe9033901002d4ff793 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/GoEaseBounce.cs: e71b365170d63025c159c4756b1910b2 -> 
+  custom:scripting/monoscript/fileName/GoSplineQuadraticBezierSolver.cs: 44dee8c5fd496e5eb749f54d83d1397e -> 
+  custom:scripting/monoscript/fileName/GoEaseQuadratic.cs: e3ed230c2d29b99c6f642587e4ad0e5d -> 
+  custom:scripting/monoscript/fileName/MaterialColorTweenProperty.cs: f6d4ed9537ac95d7564838fa4e660e7d -> 
+  custom:scripting/monoscript/fileName/GoEaseCircular.cs: 84a2009340e8431314db7056edf1bd68 -> 
+  custom:scripting/monoscript/fileName/PositionPathTweenProperty.cs: efde40660de14fd7cd1ede2fa47e9837 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/FloatTweenProperty.cs: 48aea3a8bbe79ca6e0baa81dc186bdfd -> 
+  custom:scripting/monoscript/fileName/GoTweenChain.cs: f9995827e6ddafabc43c1b0e0dcfd886 -> 
+  custom:scripting/monoscript/fileName/GoTweenCollectionConfig.cs: 37c99bdc8dc674650bd69bc44bb2e57b -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/AbstractQuaternionTweenProperty.cs: 65ceda31db804ab1e0e34f0e48afa285 -> 
+  custom:scripting/monoscript/fileName/AbstractColorTweenProperty.cs: bba0da230ed56fc0a25af92f6a3e377e -> 
+  custom:scripting/monoscript/fileName/AbstractVector3TweenProperty.cs: 6aa4defef7531529f4ddc1516936e2e3 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/Vector4TweenProperty.cs: 18bb73739ede80588b5bfadcee873907 -> 
+  custom:scripting/monoscript/fileName/GoEaseBack.cs: 3f6e00793ada35f633abc2146480990e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/GoTweenConfig.cs: 5b3154c82824c20addf84e8652f51cfe -> 
+  custom:scripting/monoscript/fileName/RotationQuaternionTweenProperty.cs: e0d94af0c913b0be4cd670833a2cda91 -> 
+  custom:scripting/monoscript/fileName/GoTweenUtils.cs: 867d37edf69335bc6e54784197f28064 -> 
+  custom:scripting/monoscript/fileName/GoSplineCubicBezierSolver.cs: 6d81419c64f7c334f4359254f1cbade0 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ScalePathTweenProperty.cs: 816c1a788eca415c60d1b7e87fb103fe -> 
+  custom:scripting/monoscript/fileName/GoEaseElastic.cs: f0cafb366ac4251d5c35fe413d3f62f6 -> 
+  custom:scripting/monoscript/fileName/GoDummyPath.cs: a21201ab2fac2187e4faeaf08bb4ec90 -> 
+  custom:scripting/monoscript/fileName/PositionTweenProperty.cs: e367a96b2cbc0b819bff5d0620f4b258 -> 
+  custom:scripting/monoscript/fileName/Vector3TweenProperty.cs: 8e9f9d7bb7b15068d97f4d593f097c86 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTween.cs: 3bdc69e313ad58745cd33c4b74e6a709 -> 
+  custom:scripting/monoscript/fileName/GoSplineStraightLineSolver.cs: b6a3907f2ead3ba9ac17ad3fdd121ec9 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTweenCollection.cs: 61d9f5f358696a7942516ed78ffe7e98 -> 
+  custom:scripting/monoscript/fileName/Vector3PathTweenProperty.cs: 94848aa2e96060cfeaf83844ee158f0c -> 
+  custom:scripting/monoscript/fileName/Vector3ZTweenProperty.cs: 35595634a87246c4e13691b1563178c5 -> 
+  custom:scripting/monoscript/fileName/AbstractTweenProperty.cs: c71b2ece20cb4e1e30772e574c806625 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
+  custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
+  custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.289 seconds
+Refreshing native plugins compatible for Editor in 1.28 ms, found 1 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.362 seconds
+Domain Reload Profiling: 651ms
+	BeginReloadAssembly (114ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (22ms)
+	RebuildCommonClasses (30ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (23ms)
+	LoadAllAssembliesAndSetupDomain (114ms)
+		LoadAssemblies (164ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (9ms)
+			TypeCache.Refresh (4ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (362ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (172ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (17ms)
+			SetLoadedEditorAssemblies (2ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (32ms)
+			ProcessInitializeOnLoadAttributes (106ms)
+			ProcessInitializeOnLoadMethodAttributes (14ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (4ms)
+Refreshing native plugins compatible for Editor in 1.11 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2307 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (27.0 KB). Loaded Objects now: 2862.
+Memory consumption went from 104.7 MB to 104.7 MB.
+Total: 1.757000 ms (FindLiveObjects: 0.150000 ms CreateObjectMapping: 0.051500 ms MarkObjects: 1.522700 ms  DeleteObjects: 0.031600 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/GoSmoothedVector3.cs: 3a6ceb396859da913cbecdd1940e0aa2 -> 
+  custom:scripting/monoscript/fileName/EulerAnglesTweenProperty.cs: 7a2321a8c63f28c3857aa33414a11270 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/IGenericProperty.cs: f404e27010d8ce1a25f7cc2ac06431ac -> 
+  custom:scripting/monoscript/fileName/GoEaseSinusoidal.cs: e637d6b7456e2acd06dfd152f10b71d1 -> 
+  custom:scripting/monoscript/fileName/GoSplineCatmullRomSolver.cs: 8bbd4e9dc2722b25540d14d500b88879 -> 
+  custom:scripting/monoscript/fileName/IntTweenProperty.cs: 1f39418055dd7708ff3b9e75a86d93a1 -> 
+  custom:scripting/monoscript/fileName/Vector3YTweenProperty.cs: 2b996e9222bddad772657bb084e9da48 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuintic.cs: 672086238d051af0856016e64ad97204 -> 
+  custom:scripting/monoscript/fileName/GoEaseCubic.cs: 7d74fd43480e52f793e3086826193b77 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/GoSmoothedQuaternion.cs: 92de95a3ce149743e526859a8d0255c5 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/ShakeTweenProperty.cs: fdb713005206085d3b49cdd6b2d15f80 -> 
+  custom:scripting/monoscript/fileName/Vector2TweenProperty.cs: d7a25a544d56d947d9526019347f1f6e -> 
+  custom:scripting/monoscript/fileName/GoKitTweenExtensions.cs: 28ee7421c4d34eb9c057646838e28859 -> 
+  custom:scripting/monoscript/fileName/Vector3XTweenProperty.cs: 9592582ea2f541a8cf92ba7dd7dd85f2 -> 
+  custom:scripting/monoscript/fileName/Go.cs: 840adb47e0f4be71eeea7168442feb7d -> 
+  custom:scripting/monoscript/fileName/ColorTweenProperty.cs: 94ba4bee52d153d3fd58a82d4cf8ce0c -> 
+  custom:scripting/monoscript/fileName/GoEaseLinear.cs: b690756fd76817f101a31dcd50ae4adc -> 
+  custom:scripting/monoscript/fileName/GoEaseExponential.cs: 8f890ce1f0130e8014d1a219fa0d7904 -> 
+  custom:scripting/monoscript/fileName/ScaleTweenProperty.cs: 068e501b322923caa36166fe86d472e5 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/GoSpline.cs: 8039f73cfdc174dc6ffa15343c307f29 -> 
+  custom:scripting/monoscript/fileName/GoTweenFlow.cs: ce7a11a1fb9e8397b83cab3847ba7970 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuartic.cs: d34853ce84f33fe9033901002d4ff793 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/GoEaseBounce.cs: e71b365170d63025c159c4756b1910b2 -> 
+  custom:scripting/monoscript/fileName/GoSplineQuadraticBezierSolver.cs: 44dee8c5fd496e5eb749f54d83d1397e -> 
+  custom:scripting/monoscript/fileName/GoEaseQuadratic.cs: e3ed230c2d29b99c6f642587e4ad0e5d -> 
+  custom:scripting/monoscript/fileName/MaterialColorTweenProperty.cs: f6d4ed9537ac95d7564838fa4e660e7d -> 
+  custom:scripting/monoscript/fileName/GoEaseCircular.cs: 84a2009340e8431314db7056edf1bd68 -> 
+  custom:scripting/monoscript/fileName/PositionPathTweenProperty.cs: efde40660de14fd7cd1ede2fa47e9837 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/FloatTweenProperty.cs: 48aea3a8bbe79ca6e0baa81dc186bdfd -> 
+  custom:scripting/monoscript/fileName/GoTweenChain.cs: f9995827e6ddafabc43c1b0e0dcfd886 -> 
+  custom:scripting/monoscript/fileName/GoTweenCollectionConfig.cs: 37c99bdc8dc674650bd69bc44bb2e57b -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/AbstractQuaternionTweenProperty.cs: 65ceda31db804ab1e0e34f0e48afa285 -> 
+  custom:scripting/monoscript/fileName/AbstractColorTweenProperty.cs: bba0da230ed56fc0a25af92f6a3e377e -> 
+  custom:scripting/monoscript/fileName/AbstractVector3TweenProperty.cs: 6aa4defef7531529f4ddc1516936e2e3 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/Vector4TweenProperty.cs: 18bb73739ede80588b5bfadcee873907 -> 
+  custom:scripting/monoscript/fileName/GoEaseBack.cs: 3f6e00793ada35f633abc2146480990e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/GoTweenConfig.cs: 5b3154c82824c20addf84e8652f51cfe -> 
+  custom:scripting/monoscript/fileName/RotationQuaternionTweenProperty.cs: e0d94af0c913b0be4cd670833a2cda91 -> 
+  custom:scripting/monoscript/fileName/GoTweenUtils.cs: 867d37edf69335bc6e54784197f28064 -> 
+  custom:scripting/monoscript/fileName/GoSplineCubicBezierSolver.cs: 6d81419c64f7c334f4359254f1cbade0 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ScalePathTweenProperty.cs: 816c1a788eca415c60d1b7e87fb103fe -> 
+  custom:scripting/monoscript/fileName/GoEaseElastic.cs: f0cafb366ac4251d5c35fe413d3f62f6 -> 
+  custom:scripting/monoscript/fileName/GoDummyPath.cs: a21201ab2fac2187e4faeaf08bb4ec90 -> 
+  custom:scripting/monoscript/fileName/PositionTweenProperty.cs: e367a96b2cbc0b819bff5d0620f4b258 -> 
+  custom:scripting/monoscript/fileName/Vector3TweenProperty.cs: 8e9f9d7bb7b15068d97f4d593f097c86 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTween.cs: 3bdc69e313ad58745cd33c4b74e6a709 -> 
+  custom:scripting/monoscript/fileName/GoSplineStraightLineSolver.cs: b6a3907f2ead3ba9ac17ad3fdd121ec9 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTweenCollection.cs: 61d9f5f358696a7942516ed78ffe7e98 -> 
+  custom:scripting/monoscript/fileName/Vector3PathTweenProperty.cs: 94848aa2e96060cfeaf83844ee158f0c -> 
+  custom:scripting/monoscript/fileName/Vector3ZTweenProperty.cs: 35595634a87246c4e13691b1563178c5 -> 
+  custom:scripting/monoscript/fileName/AbstractTweenProperty.cs: c71b2ece20cb4e1e30772e574c806625 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
+  custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
+  custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.296 seconds
+Refreshing native plugins compatible for Editor in 1.09 ms, found 1 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.351 seconds
+Domain Reload Profiling: 648ms
+	BeginReloadAssembly (111ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (18ms)
+	RebuildCommonClasses (25ms)
+	RebuildNativeTypeToScriptingClass (10ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (132ms)
+		LoadAssemblies (182ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (14ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (2ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (352ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (178ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (16ms)
+			SetLoadedEditorAssemblies (2ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (40ms)
+			ProcessInitializeOnLoadAttributes (102ms)
+			ProcessInitializeOnLoadMethodAttributes (15ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Refreshing native plugins compatible for Editor in 1.04 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2307 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (26.9 KB). Loaded Objects now: 2865.
+Memory consumption went from 104.7 MB to 104.7 MB.
+Total: 1.759300 ms (FindLiveObjects: 0.140400 ms CreateObjectMapping: 0.044500 ms MarkObjects: 1.541200 ms  DeleteObjects: 0.032500 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/GoSmoothedVector3.cs: 3a6ceb396859da913cbecdd1940e0aa2 -> 
+  custom:scripting/monoscript/fileName/EulerAnglesTweenProperty.cs: 7a2321a8c63f28c3857aa33414a11270 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/IGenericProperty.cs: f404e27010d8ce1a25f7cc2ac06431ac -> 
+  custom:scripting/monoscript/fileName/GoEaseSinusoidal.cs: e637d6b7456e2acd06dfd152f10b71d1 -> 
+  custom:scripting/monoscript/fileName/GoSplineCatmullRomSolver.cs: 8bbd4e9dc2722b25540d14d500b88879 -> 
+  custom:scripting/monoscript/fileName/IntTweenProperty.cs: 1f39418055dd7708ff3b9e75a86d93a1 -> 
+  custom:scripting/monoscript/fileName/Vector3YTweenProperty.cs: 2b996e9222bddad772657bb084e9da48 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuintic.cs: 672086238d051af0856016e64ad97204 -> 
+  custom:scripting/monoscript/fileName/GoEaseCubic.cs: 7d74fd43480e52f793e3086826193b77 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/GoSmoothedQuaternion.cs: 92de95a3ce149743e526859a8d0255c5 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/ShakeTweenProperty.cs: fdb713005206085d3b49cdd6b2d15f80 -> 
+  custom:scripting/monoscript/fileName/Vector2TweenProperty.cs: d7a25a544d56d947d9526019347f1f6e -> 
+  custom:scripting/monoscript/fileName/GoKitTweenExtensions.cs: 28ee7421c4d34eb9c057646838e28859 -> 
+  custom:scripting/monoscript/fileName/Vector3XTweenProperty.cs: 9592582ea2f541a8cf92ba7dd7dd85f2 -> 
+  custom:scripting/monoscript/fileName/Go.cs: 840adb47e0f4be71eeea7168442feb7d -> 
+  custom:scripting/monoscript/fileName/ColorTweenProperty.cs: 94ba4bee52d153d3fd58a82d4cf8ce0c -> 
+  custom:scripting/monoscript/fileName/GoEaseLinear.cs: b690756fd76817f101a31dcd50ae4adc -> 
+  custom:scripting/monoscript/fileName/GoEaseExponential.cs: 8f890ce1f0130e8014d1a219fa0d7904 -> 
+  custom:scripting/monoscript/fileName/ScaleTweenProperty.cs: 068e501b322923caa36166fe86d472e5 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/GoSpline.cs: 8039f73cfdc174dc6ffa15343c307f29 -> 
+  custom:scripting/monoscript/fileName/GoTweenFlow.cs: ce7a11a1fb9e8397b83cab3847ba7970 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuartic.cs: d34853ce84f33fe9033901002d4ff793 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/GoEaseBounce.cs: e71b365170d63025c159c4756b1910b2 -> 
+  custom:scripting/monoscript/fileName/GoSplineQuadraticBezierSolver.cs: 44dee8c5fd496e5eb749f54d83d1397e -> 
+  custom:scripting/monoscript/fileName/GoEaseQuadratic.cs: e3ed230c2d29b99c6f642587e4ad0e5d -> 
+  custom:scripting/monoscript/fileName/MaterialColorTweenProperty.cs: f6d4ed9537ac95d7564838fa4e660e7d -> 
+  custom:scripting/monoscript/fileName/GoEaseCircular.cs: 84a2009340e8431314db7056edf1bd68 -> 
+  custom:scripting/monoscript/fileName/PositionPathTweenProperty.cs: efde40660de14fd7cd1ede2fa47e9837 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/FloatTweenProperty.cs: 48aea3a8bbe79ca6e0baa81dc186bdfd -> 
+  custom:scripting/monoscript/fileName/GoTweenChain.cs: f9995827e6ddafabc43c1b0e0dcfd886 -> 
+  custom:scripting/monoscript/fileName/GoTweenCollectionConfig.cs: 37c99bdc8dc674650bd69bc44bb2e57b -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/AbstractQuaternionTweenProperty.cs: 65ceda31db804ab1e0e34f0e48afa285 -> 
+  custom:scripting/monoscript/fileName/AbstractColorTweenProperty.cs: bba0da230ed56fc0a25af92f6a3e377e -> 
+  custom:scripting/monoscript/fileName/AbstractVector3TweenProperty.cs: 6aa4defef7531529f4ddc1516936e2e3 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/Vector4TweenProperty.cs: 18bb73739ede80588b5bfadcee873907 -> 
+  custom:scripting/monoscript/fileName/GoEaseBack.cs: 3f6e00793ada35f633abc2146480990e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/GoTweenConfig.cs: 5b3154c82824c20addf84e8652f51cfe -> 
+  custom:scripting/monoscript/fileName/RotationQuaternionTweenProperty.cs: e0d94af0c913b0be4cd670833a2cda91 -> 
+  custom:scripting/monoscript/fileName/GoTweenUtils.cs: 867d37edf69335bc6e54784197f28064 -> 
+  custom:scripting/monoscript/fileName/GoSplineCubicBezierSolver.cs: 6d81419c64f7c334f4359254f1cbade0 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ScalePathTweenProperty.cs: 816c1a788eca415c60d1b7e87fb103fe -> 
+  custom:scripting/monoscript/fileName/GoEaseElastic.cs: f0cafb366ac4251d5c35fe413d3f62f6 -> 
+  custom:scripting/monoscript/fileName/GoDummyPath.cs: a21201ab2fac2187e4faeaf08bb4ec90 -> 
+  custom:scripting/monoscript/fileName/PositionTweenProperty.cs: e367a96b2cbc0b819bff5d0620f4b258 -> 
+  custom:scripting/monoscript/fileName/Vector3TweenProperty.cs: 8e9f9d7bb7b15068d97f4d593f097c86 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTween.cs: 3bdc69e313ad58745cd33c4b74e6a709 -> 
+  custom:scripting/monoscript/fileName/GoSplineStraightLineSolver.cs: b6a3907f2ead3ba9ac17ad3fdd121ec9 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTweenCollection.cs: 61d9f5f358696a7942516ed78ffe7e98 -> 
+  custom:scripting/monoscript/fileName/Vector3PathTweenProperty.cs: 94848aa2e96060cfeaf83844ee158f0c -> 
+  custom:scripting/monoscript/fileName/Vector3ZTweenProperty.cs: 35595634a87246c4e13691b1563178c5 -> 
+  custom:scripting/monoscript/fileName/AbstractTweenProperty.cs: c71b2ece20cb4e1e30772e574c806625 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
+  custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
+  custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.299 seconds
+Refreshing native plugins compatible for Editor in 1.03 ms, found 1 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.376 seconds
+Domain Reload Profiling: 675ms
+	BeginReloadAssembly (111ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (17ms)
+	RebuildCommonClasses (23ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (20ms)
+	LoadAllAssembliesAndSetupDomain (131ms)
+		LoadAssemblies (179ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (17ms)
+			TypeCache.Refresh (7ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (3ms)
+			ResolveRequiredComponents (6ms)
+	FinalizeReload (376ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (190ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (16ms)
+			SetLoadedEditorAssemblies (2ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (35ms)
+			ProcessInitializeOnLoadAttributes (116ms)
+			ProcessInitializeOnLoadMethodAttributes (19ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (7ms)
+Refreshing native plugins compatible for Editor in 1.19 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2307 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (27.0 KB). Loaded Objects now: 2868.
+Memory consumption went from 104.7 MB to 104.7 MB.
+Total: 2.390400 ms (FindLiveObjects: 0.189500 ms CreateObjectMapping: 0.124400 ms MarkObjects: 2.029400 ms  DeleteObjects: 0.045900 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/GoSmoothedVector3.cs: 3a6ceb396859da913cbecdd1940e0aa2 -> 
+  custom:scripting/monoscript/fileName/EulerAnglesTweenProperty.cs: 7a2321a8c63f28c3857aa33414a11270 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/IGenericProperty.cs: f404e27010d8ce1a25f7cc2ac06431ac -> 
+  custom:scripting/monoscript/fileName/GoEaseSinusoidal.cs: e637d6b7456e2acd06dfd152f10b71d1 -> 
+  custom:scripting/monoscript/fileName/GoSplineCatmullRomSolver.cs: 8bbd4e9dc2722b25540d14d500b88879 -> 
+  custom:scripting/monoscript/fileName/IntTweenProperty.cs: 1f39418055dd7708ff3b9e75a86d93a1 -> 
+  custom:scripting/monoscript/fileName/Vector3YTweenProperty.cs: 2b996e9222bddad772657bb084e9da48 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuintic.cs: 672086238d051af0856016e64ad97204 -> 
+  custom:scripting/monoscript/fileName/GoEaseCubic.cs: 7d74fd43480e52f793e3086826193b77 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/GoSmoothedQuaternion.cs: 92de95a3ce149743e526859a8d0255c5 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/ShakeTweenProperty.cs: fdb713005206085d3b49cdd6b2d15f80 -> 
+  custom:scripting/monoscript/fileName/Vector2TweenProperty.cs: d7a25a544d56d947d9526019347f1f6e -> 
+  custom:scripting/monoscript/fileName/GoKitTweenExtensions.cs: 28ee7421c4d34eb9c057646838e28859 -> 
+  custom:scripting/monoscript/fileName/Vector3XTweenProperty.cs: 9592582ea2f541a8cf92ba7dd7dd85f2 -> 
+  custom:scripting/monoscript/fileName/Go.cs: 840adb47e0f4be71eeea7168442feb7d -> 
+  custom:scripting/monoscript/fileName/ColorTweenProperty.cs: 94ba4bee52d153d3fd58a82d4cf8ce0c -> 
+  custom:scripting/monoscript/fileName/GoEaseLinear.cs: b690756fd76817f101a31dcd50ae4adc -> 
+  custom:scripting/monoscript/fileName/GoEaseExponential.cs: 8f890ce1f0130e8014d1a219fa0d7904 -> 
+  custom:scripting/monoscript/fileName/ScaleTweenProperty.cs: 068e501b322923caa36166fe86d472e5 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/GoSpline.cs: 8039f73cfdc174dc6ffa15343c307f29 -> 
+  custom:scripting/monoscript/fileName/GoTweenFlow.cs: ce7a11a1fb9e8397b83cab3847ba7970 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuartic.cs: d34853ce84f33fe9033901002d4ff793 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/GoEaseBounce.cs: e71b365170d63025c159c4756b1910b2 -> 
+  custom:scripting/monoscript/fileName/GoSplineQuadraticBezierSolver.cs: 44dee8c5fd496e5eb749f54d83d1397e -> 
+  custom:scripting/monoscript/fileName/GoEaseQuadratic.cs: e3ed230c2d29b99c6f642587e4ad0e5d -> 
+  custom:scripting/monoscript/fileName/MaterialColorTweenProperty.cs: f6d4ed9537ac95d7564838fa4e660e7d -> 
+  custom:scripting/monoscript/fileName/GoEaseCircular.cs: 84a2009340e8431314db7056edf1bd68 -> 
+  custom:scripting/monoscript/fileName/PositionPathTweenProperty.cs: efde40660de14fd7cd1ede2fa47e9837 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/FloatTweenProperty.cs: 48aea3a8bbe79ca6e0baa81dc186bdfd -> 
+  custom:scripting/monoscript/fileName/GoTweenChain.cs: f9995827e6ddafabc43c1b0e0dcfd886 -> 
+  custom:scripting/monoscript/fileName/GoTweenCollectionConfig.cs: 37c99bdc8dc674650bd69bc44bb2e57b -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/AbstractQuaternionTweenProperty.cs: 65ceda31db804ab1e0e34f0e48afa285 -> 
+  custom:scripting/monoscript/fileName/AbstractColorTweenProperty.cs: bba0da230ed56fc0a25af92f6a3e377e -> 
+  custom:scripting/monoscript/fileName/AbstractVector3TweenProperty.cs: 6aa4defef7531529f4ddc1516936e2e3 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/Vector4TweenProperty.cs: 18bb73739ede80588b5bfadcee873907 -> 
+  custom:scripting/monoscript/fileName/GoEaseBack.cs: 3f6e00793ada35f633abc2146480990e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/GoTweenConfig.cs: 5b3154c82824c20addf84e8652f51cfe -> 
+  custom:scripting/monoscript/fileName/RotationQuaternionTweenProperty.cs: e0d94af0c913b0be4cd670833a2cda91 -> 
+  custom:scripting/monoscript/fileName/GoTweenUtils.cs: 867d37edf69335bc6e54784197f28064 -> 
+  custom:scripting/monoscript/fileName/GoSplineCubicBezierSolver.cs: 6d81419c64f7c334f4359254f1cbade0 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ScalePathTweenProperty.cs: 816c1a788eca415c60d1b7e87fb103fe -> 
+  custom:scripting/monoscript/fileName/GoEaseElastic.cs: f0cafb366ac4251d5c35fe413d3f62f6 -> 
+  custom:scripting/monoscript/fileName/GoDummyPath.cs: a21201ab2fac2187e4faeaf08bb4ec90 -> 
+  custom:scripting/monoscript/fileName/PositionTweenProperty.cs: e367a96b2cbc0b819bff5d0620f4b258 -> 
+  custom:scripting/monoscript/fileName/Vector3TweenProperty.cs: 8e9f9d7bb7b15068d97f4d593f097c86 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTween.cs: 3bdc69e313ad58745cd33c4b74e6a709 -> 
+  custom:scripting/monoscript/fileName/GoSplineStraightLineSolver.cs: b6a3907f2ead3ba9ac17ad3fdd121ec9 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTweenCollection.cs: 61d9f5f358696a7942516ed78ffe7e98 -> 
+  custom:scripting/monoscript/fileName/Vector3PathTweenProperty.cs: 94848aa2e96060cfeaf83844ee158f0c -> 
+  custom:scripting/monoscript/fileName/Vector3ZTweenProperty.cs: 35595634a87246c4e13691b1563178c5 -> 
+  custom:scripting/monoscript/fileName/AbstractTweenProperty.cs: c71b2ece20cb4e1e30772e574c806625 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
+  custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
+  custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.277 seconds
+Refreshing native plugins compatible for Editor in 1.24 ms, found 1 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.356 seconds
+Domain Reload Profiling: 633ms
+	BeginReloadAssembly (108ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (18ms)
+	RebuildCommonClasses (24ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (118ms)
+		LoadAssemblies (170ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (9ms)
+			TypeCache.Refresh (4ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (357ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (182ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (16ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (33ms)
+			ProcessInitializeOnLoadAttributes (111ms)
+			ProcessInitializeOnLoadMethodAttributes (16ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (4ms)
+Refreshing native plugins compatible for Editor in 0.97 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2307 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (26.9 KB). Loaded Objects now: 2871.
+Memory consumption went from 104.7 MB to 104.7 MB.
+Total: 1.904200 ms (FindLiveObjects: 0.200500 ms CreateObjectMapping: 0.118100 ms MarkObjects: 1.549800 ms  DeleteObjects: 0.035000 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/GoSmoothedVector3.cs: 3a6ceb396859da913cbecdd1940e0aa2 -> 
+  custom:scripting/monoscript/fileName/EulerAnglesTweenProperty.cs: 7a2321a8c63f28c3857aa33414a11270 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/IGenericProperty.cs: f404e27010d8ce1a25f7cc2ac06431ac -> 
+  custom:scripting/monoscript/fileName/GoEaseSinusoidal.cs: e637d6b7456e2acd06dfd152f10b71d1 -> 
+  custom:scripting/monoscript/fileName/GoSplineCatmullRomSolver.cs: 8bbd4e9dc2722b25540d14d500b88879 -> 
+  custom:scripting/monoscript/fileName/IntTweenProperty.cs: 1f39418055dd7708ff3b9e75a86d93a1 -> 
+  custom:scripting/monoscript/fileName/Vector3YTweenProperty.cs: 2b996e9222bddad772657bb084e9da48 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuintic.cs: 672086238d051af0856016e64ad97204 -> 
+  custom:scripting/monoscript/fileName/GoEaseCubic.cs: 7d74fd43480e52f793e3086826193b77 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/GoSmoothedQuaternion.cs: 92de95a3ce149743e526859a8d0255c5 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/ShakeTweenProperty.cs: fdb713005206085d3b49cdd6b2d15f80 -> 
+  custom:scripting/monoscript/fileName/Vector2TweenProperty.cs: d7a25a544d56d947d9526019347f1f6e -> 
+  custom:scripting/monoscript/fileName/GoKitTweenExtensions.cs: 28ee7421c4d34eb9c057646838e28859 -> 
+  custom:scripting/monoscript/fileName/Vector3XTweenProperty.cs: 9592582ea2f541a8cf92ba7dd7dd85f2 -> 
+  custom:scripting/monoscript/fileName/Go.cs: 840adb47e0f4be71eeea7168442feb7d -> 
+  custom:scripting/monoscript/fileName/ColorTweenProperty.cs: 94ba4bee52d153d3fd58a82d4cf8ce0c -> 
+  custom:scripting/monoscript/fileName/GoEaseLinear.cs: b690756fd76817f101a31dcd50ae4adc -> 
+  custom:scripting/monoscript/fileName/GoEaseExponential.cs: 8f890ce1f0130e8014d1a219fa0d7904 -> 
+  custom:scripting/monoscript/fileName/ScaleTweenProperty.cs: 068e501b322923caa36166fe86d472e5 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/GoSpline.cs: 8039f73cfdc174dc6ffa15343c307f29 -> 
+  custom:scripting/monoscript/fileName/GoTweenFlow.cs: ce7a11a1fb9e8397b83cab3847ba7970 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuartic.cs: d34853ce84f33fe9033901002d4ff793 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/GoEaseBounce.cs: e71b365170d63025c159c4756b1910b2 -> 
+  custom:scripting/monoscript/fileName/GoSplineQuadraticBezierSolver.cs: 44dee8c5fd496e5eb749f54d83d1397e -> 
+  custom:scripting/monoscript/fileName/GoEaseQuadratic.cs: e3ed230c2d29b99c6f642587e4ad0e5d -> 
+  custom:scripting/monoscript/fileName/MaterialColorTweenProperty.cs: f6d4ed9537ac95d7564838fa4e660e7d -> 
+  custom:scripting/monoscript/fileName/GoEaseCircular.cs: 84a2009340e8431314db7056edf1bd68 -> 
+  custom:scripting/monoscript/fileName/PositionPathTweenProperty.cs: efde40660de14fd7cd1ede2fa47e9837 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/FloatTweenProperty.cs: 48aea3a8bbe79ca6e0baa81dc186bdfd -> 
+  custom:scripting/monoscript/fileName/GoTweenChain.cs: f9995827e6ddafabc43c1b0e0dcfd886 -> 
+  custom:scripting/monoscript/fileName/GoTweenCollectionConfig.cs: 37c99bdc8dc674650bd69bc44bb2e57b -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/AbstractQuaternionTweenProperty.cs: 65ceda31db804ab1e0e34f0e48afa285 -> 
+  custom:scripting/monoscript/fileName/AbstractColorTweenProperty.cs: bba0da230ed56fc0a25af92f6a3e377e -> 
+  custom:scripting/monoscript/fileName/AbstractVector3TweenProperty.cs: 6aa4defef7531529f4ddc1516936e2e3 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/Vector4TweenProperty.cs: 18bb73739ede80588b5bfadcee873907 -> 
+  custom:scripting/monoscript/fileName/GoEaseBack.cs: 3f6e00793ada35f633abc2146480990e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/GoTweenConfig.cs: 5b3154c82824c20addf84e8652f51cfe -> 
+  custom:scripting/monoscript/fileName/RotationQuaternionTweenProperty.cs: e0d94af0c913b0be4cd670833a2cda91 -> 
+  custom:scripting/monoscript/fileName/GoTweenUtils.cs: 867d37edf69335bc6e54784197f28064 -> 
+  custom:scripting/monoscript/fileName/GoSplineCubicBezierSolver.cs: 6d81419c64f7c334f4359254f1cbade0 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ScalePathTweenProperty.cs: 816c1a788eca415c60d1b7e87fb103fe -> 
+  custom:scripting/monoscript/fileName/GoEaseElastic.cs: f0cafb366ac4251d5c35fe413d3f62f6 -> 
+  custom:scripting/monoscript/fileName/GoDummyPath.cs: a21201ab2fac2187e4faeaf08bb4ec90 -> 
+  custom:scripting/monoscript/fileName/PositionTweenProperty.cs: e367a96b2cbc0b819bff5d0620f4b258 -> 
+  custom:scripting/monoscript/fileName/Vector3TweenProperty.cs: 8e9f9d7bb7b15068d97f4d593f097c86 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTween.cs: 3bdc69e313ad58745cd33c4b74e6a709 -> 
+  custom:scripting/monoscript/fileName/GoSplineStraightLineSolver.cs: b6a3907f2ead3ba9ac17ad3fdd121ec9 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTweenCollection.cs: 61d9f5f358696a7942516ed78ffe7e98 -> 
+  custom:scripting/monoscript/fileName/Vector3PathTweenProperty.cs: 94848aa2e96060cfeaf83844ee158f0c -> 
+  custom:scripting/monoscript/fileName/Vector3ZTweenProperty.cs: 35595634a87246c4e13691b1563178c5 -> 
+  custom:scripting/monoscript/fileName/AbstractTweenProperty.cs: c71b2ece20cb4e1e30772e574c806625 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
+  custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
+  custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.272 seconds
+Refreshing native plugins compatible for Editor in 1.07 ms, found 1 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.397 seconds
+Domain Reload Profiling: 670ms
+	BeginReloadAssembly (104ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (17ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (19ms)
+	LoadAllAssembliesAndSetupDomain (119ms)
+		LoadAssemblies (169ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (9ms)
+			TypeCache.Refresh (4ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (398ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (186ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (22ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (36ms)
+			ProcessInitializeOnLoadAttributes (105ms)
+			ProcessInitializeOnLoadMethodAttributes (17ms)
+			AfterProcessingInitializeOnLoad (3ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (6ms)
+Refreshing native plugins compatible for Editor in 1.01 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2307 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (26.9 KB). Loaded Objects now: 2874.
+Memory consumption went from 104.7 MB to 104.7 MB.
+Total: 1.851800 ms (FindLiveObjects: 0.131900 ms CreateObjectMapping: 0.048600 ms MarkObjects: 1.637200 ms  DeleteObjects: 0.032800 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/GoSmoothedVector3.cs: 3a6ceb396859da913cbecdd1940e0aa2 -> 
+  custom:scripting/monoscript/fileName/EulerAnglesTweenProperty.cs: 7a2321a8c63f28c3857aa33414a11270 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/IGenericProperty.cs: f404e27010d8ce1a25f7cc2ac06431ac -> 
+  custom:scripting/monoscript/fileName/GoEaseSinusoidal.cs: e637d6b7456e2acd06dfd152f10b71d1 -> 
+  custom:scripting/monoscript/fileName/GoSplineCatmullRomSolver.cs: 8bbd4e9dc2722b25540d14d500b88879 -> 
+  custom:scripting/monoscript/fileName/IntTweenProperty.cs: 1f39418055dd7708ff3b9e75a86d93a1 -> 
+  custom:scripting/monoscript/fileName/Vector3YTweenProperty.cs: 2b996e9222bddad772657bb084e9da48 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuintic.cs: 672086238d051af0856016e64ad97204 -> 
+  custom:scripting/monoscript/fileName/GoEaseCubic.cs: 7d74fd43480e52f793e3086826193b77 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/GoSmoothedQuaternion.cs: 92de95a3ce149743e526859a8d0255c5 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/ShakeTweenProperty.cs: fdb713005206085d3b49cdd6b2d15f80 -> 
+  custom:scripting/monoscript/fileName/Vector2TweenProperty.cs: d7a25a544d56d947d9526019347f1f6e -> 
+  custom:scripting/monoscript/fileName/GoKitTweenExtensions.cs: 28ee7421c4d34eb9c057646838e28859 -> 
+  custom:scripting/monoscript/fileName/Vector3XTweenProperty.cs: 9592582ea2f541a8cf92ba7dd7dd85f2 -> 
+  custom:scripting/monoscript/fileName/Go.cs: 840adb47e0f4be71eeea7168442feb7d -> 
+  custom:scripting/monoscript/fileName/ColorTweenProperty.cs: 94ba4bee52d153d3fd58a82d4cf8ce0c -> 
+  custom:scripting/monoscript/fileName/GoEaseLinear.cs: b690756fd76817f101a31dcd50ae4adc -> 
+  custom:scripting/monoscript/fileName/GoEaseExponential.cs: 8f890ce1f0130e8014d1a219fa0d7904 -> 
+  custom:scripting/monoscript/fileName/ScaleTweenProperty.cs: 068e501b322923caa36166fe86d472e5 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/GoSpline.cs: 8039f73cfdc174dc6ffa15343c307f29 -> 
+  custom:scripting/monoscript/fileName/GoTweenFlow.cs: ce7a11a1fb9e8397b83cab3847ba7970 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuartic.cs: d34853ce84f33fe9033901002d4ff793 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/GoEaseBounce.cs: e71b365170d63025c159c4756b1910b2 -> 
+  custom:scripting/monoscript/fileName/GoSplineQuadraticBezierSolver.cs: 44dee8c5fd496e5eb749f54d83d1397e -> 
+  custom:scripting/monoscript/fileName/GoEaseQuadratic.cs: e3ed230c2d29b99c6f642587e4ad0e5d -> 
+  custom:scripting/monoscript/fileName/MaterialColorTweenProperty.cs: f6d4ed9537ac95d7564838fa4e660e7d -> 
+  custom:scripting/monoscript/fileName/GoEaseCircular.cs: 84a2009340e8431314db7056edf1bd68 -> 
+  custom:scripting/monoscript/fileName/PositionPathTweenProperty.cs: efde40660de14fd7cd1ede2fa47e9837 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/FloatTweenProperty.cs: 48aea3a8bbe79ca6e0baa81dc186bdfd -> 
+  custom:scripting/monoscript/fileName/GoTweenChain.cs: f9995827e6ddafabc43c1b0e0dcfd886 -> 
+  custom:scripting/monoscript/fileName/GoTweenCollectionConfig.cs: 37c99bdc8dc674650bd69bc44bb2e57b -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/AbstractQuaternionTweenProperty.cs: 65ceda31db804ab1e0e34f0e48afa285 -> 
+  custom:scripting/monoscript/fileName/AbstractColorTweenProperty.cs: bba0da230ed56fc0a25af92f6a3e377e -> 
+  custom:scripting/monoscript/fileName/AbstractVector3TweenProperty.cs: 6aa4defef7531529f4ddc1516936e2e3 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/Vector4TweenProperty.cs: 18bb73739ede80588b5bfadcee873907 -> 
+  custom:scripting/monoscript/fileName/GoEaseBack.cs: 3f6e00793ada35f633abc2146480990e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/GoTweenConfig.cs: 5b3154c82824c20addf84e8652f51cfe -> 
+  custom:scripting/monoscript/fileName/RotationQuaternionTweenProperty.cs: e0d94af0c913b0be4cd670833a2cda91 -> 
+  custom:scripting/monoscript/fileName/GoTweenUtils.cs: 867d37edf69335bc6e54784197f28064 -> 
+  custom:scripting/monoscript/fileName/GoSplineCubicBezierSolver.cs: 6d81419c64f7c334f4359254f1cbade0 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ScalePathTweenProperty.cs: 816c1a788eca415c60d1b7e87fb103fe -> 
+  custom:scripting/monoscript/fileName/GoEaseElastic.cs: f0cafb366ac4251d5c35fe413d3f62f6 -> 
+  custom:scripting/monoscript/fileName/GoDummyPath.cs: a21201ab2fac2187e4faeaf08bb4ec90 -> 
+  custom:scripting/monoscript/fileName/PositionTweenProperty.cs: e367a96b2cbc0b819bff5d0620f4b258 -> 
+  custom:scripting/monoscript/fileName/Vector3TweenProperty.cs: 8e9f9d7bb7b15068d97f4d593f097c86 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTween.cs: 3bdc69e313ad58745cd33c4b74e6a709 -> 
+  custom:scripting/monoscript/fileName/GoSplineStraightLineSolver.cs: b6a3907f2ead3ba9ac17ad3fdd121ec9 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTweenCollection.cs: 61d9f5f358696a7942516ed78ffe7e98 -> 
+  custom:scripting/monoscript/fileName/Vector3PathTweenProperty.cs: 94848aa2e96060cfeaf83844ee158f0c -> 
+  custom:scripting/monoscript/fileName/Vector3ZTweenProperty.cs: 35595634a87246c4e13691b1563178c5 -> 
+  custom:scripting/monoscript/fileName/AbstractTweenProperty.cs: c71b2ece20cb4e1e30772e574c806625 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
+  custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
+  custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.283 seconds
+Refreshing native plugins compatible for Editor in 1.06 ms, found 1 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.357 seconds
+Domain Reload Profiling: 641ms
+	BeginReloadAssembly (115ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (16ms)
+	RebuildCommonClasses (26ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (17ms)
+	LoadAllAssembliesAndSetupDomain (118ms)
+		LoadAssemblies (173ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (12ms)
+			TypeCache.Refresh (5ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (2ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (358ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (172ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (16ms)
+			SetLoadedEditorAssemblies (2ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (34ms)
+			ProcessInitializeOnLoadAttributes (103ms)
+			ProcessInitializeOnLoadMethodAttributes (15ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (6ms)
+Refreshing native plugins compatible for Editor in 0.95 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2307 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (27.0 KB). Loaded Objects now: 2877.
+Memory consumption went from 104.7 MB to 104.7 MB.
+Total: 1.778100 ms (FindLiveObjects: 0.134300 ms CreateObjectMapping: 0.052000 ms MarkObjects: 1.555200 ms  DeleteObjects: 0.035500 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/GoSmoothedVector3.cs: 3a6ceb396859da913cbecdd1940e0aa2 -> 
+  custom:scripting/monoscript/fileName/EulerAnglesTweenProperty.cs: 7a2321a8c63f28c3857aa33414a11270 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/IGenericProperty.cs: f404e27010d8ce1a25f7cc2ac06431ac -> 
+  custom:scripting/monoscript/fileName/GoEaseSinusoidal.cs: e637d6b7456e2acd06dfd152f10b71d1 -> 
+  custom:scripting/monoscript/fileName/GoSplineCatmullRomSolver.cs: 8bbd4e9dc2722b25540d14d500b88879 -> 
+  custom:scripting/monoscript/fileName/IntTweenProperty.cs: 1f39418055dd7708ff3b9e75a86d93a1 -> 
+  custom:scripting/monoscript/fileName/Vector3YTweenProperty.cs: 2b996e9222bddad772657bb084e9da48 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuintic.cs: 672086238d051af0856016e64ad97204 -> 
+  custom:scripting/monoscript/fileName/GoEaseCubic.cs: 7d74fd43480e52f793e3086826193b77 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/GoSmoothedQuaternion.cs: 92de95a3ce149743e526859a8d0255c5 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/ShakeTweenProperty.cs: fdb713005206085d3b49cdd6b2d15f80 -> 
+  custom:scripting/monoscript/fileName/Vector2TweenProperty.cs: d7a25a544d56d947d9526019347f1f6e -> 
+  custom:scripting/monoscript/fileName/GoKitTweenExtensions.cs: 28ee7421c4d34eb9c057646838e28859 -> 
+  custom:scripting/monoscript/fileName/Vector3XTweenProperty.cs: 9592582ea2f541a8cf92ba7dd7dd85f2 -> 
+  custom:scripting/monoscript/fileName/Go.cs: 840adb47e0f4be71eeea7168442feb7d -> 
+  custom:scripting/monoscript/fileName/ColorTweenProperty.cs: 94ba4bee52d153d3fd58a82d4cf8ce0c -> 
+  custom:scripting/monoscript/fileName/GoEaseLinear.cs: b690756fd76817f101a31dcd50ae4adc -> 
+  custom:scripting/monoscript/fileName/GoEaseExponential.cs: 8f890ce1f0130e8014d1a219fa0d7904 -> 
+  custom:scripting/monoscript/fileName/ScaleTweenProperty.cs: 068e501b322923caa36166fe86d472e5 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/GoSpline.cs: 8039f73cfdc174dc6ffa15343c307f29 -> 
+  custom:scripting/monoscript/fileName/GoTweenFlow.cs: ce7a11a1fb9e8397b83cab3847ba7970 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuartic.cs: d34853ce84f33fe9033901002d4ff793 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/GoEaseBounce.cs: e71b365170d63025c159c4756b1910b2 -> 
+  custom:scripting/monoscript/fileName/GoSplineQuadraticBezierSolver.cs: 44dee8c5fd496e5eb749f54d83d1397e -> 
+  custom:scripting/monoscript/fileName/GoEaseQuadratic.cs: e3ed230c2d29b99c6f642587e4ad0e5d -> 
+  custom:scripting/monoscript/fileName/MaterialColorTweenProperty.cs: f6d4ed9537ac95d7564838fa4e660e7d -> 
+  custom:scripting/monoscript/fileName/GoEaseCircular.cs: 84a2009340e8431314db7056edf1bd68 -> 
+  custom:scripting/monoscript/fileName/PositionPathTweenProperty.cs: efde40660de14fd7cd1ede2fa47e9837 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/FloatTweenProperty.cs: 48aea3a8bbe79ca6e0baa81dc186bdfd -> 
+  custom:scripting/monoscript/fileName/GoTweenChain.cs: f9995827e6ddafabc43c1b0e0dcfd886 -> 
+  custom:scripting/monoscript/fileName/GoTweenCollectionConfig.cs: 37c99bdc8dc674650bd69bc44bb2e57b -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/AbstractQuaternionTweenProperty.cs: 65ceda31db804ab1e0e34f0e48afa285 -> 
+  custom:scripting/monoscript/fileName/AbstractColorTweenProperty.cs: bba0da230ed56fc0a25af92f6a3e377e -> 
+  custom:scripting/monoscript/fileName/AbstractVector3TweenProperty.cs: 6aa4defef7531529f4ddc1516936e2e3 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/Vector4TweenProperty.cs: 18bb73739ede80588b5bfadcee873907 -> 
+  custom:scripting/monoscript/fileName/GoEaseBack.cs: 3f6e00793ada35f633abc2146480990e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/GoTweenConfig.cs: 5b3154c82824c20addf84e8652f51cfe -> 
+  custom:scripting/monoscript/fileName/RotationQuaternionTweenProperty.cs: e0d94af0c913b0be4cd670833a2cda91 -> 
+  custom:scripting/monoscript/fileName/GoTweenUtils.cs: 867d37edf69335bc6e54784197f28064 -> 
+  custom:scripting/monoscript/fileName/GoSplineCubicBezierSolver.cs: 6d81419c64f7c334f4359254f1cbade0 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ScalePathTweenProperty.cs: 816c1a788eca415c60d1b7e87fb103fe -> 
+  custom:scripting/monoscript/fileName/GoEaseElastic.cs: f0cafb366ac4251d5c35fe413d3f62f6 -> 
+  custom:scripting/monoscript/fileName/GoDummyPath.cs: a21201ab2fac2187e4faeaf08bb4ec90 -> 
+  custom:scripting/monoscript/fileName/PositionTweenProperty.cs: e367a96b2cbc0b819bff5d0620f4b258 -> 
+  custom:scripting/monoscript/fileName/Vector3TweenProperty.cs: 8e9f9d7bb7b15068d97f4d593f097c86 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTween.cs: 3bdc69e313ad58745cd33c4b74e6a709 -> 
+  custom:scripting/monoscript/fileName/GoSplineStraightLineSolver.cs: b6a3907f2ead3ba9ac17ad3fdd121ec9 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTweenCollection.cs: 61d9f5f358696a7942516ed78ffe7e98 -> 
+  custom:scripting/monoscript/fileName/Vector3PathTweenProperty.cs: 94848aa2e96060cfeaf83844ee158f0c -> 
+  custom:scripting/monoscript/fileName/Vector3ZTweenProperty.cs: 35595634a87246c4e13691b1563178c5 -> 
+  custom:scripting/monoscript/fileName/AbstractTweenProperty.cs: c71b2ece20cb4e1e30772e574c806625 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
+  custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
+  custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.265 seconds
+Refreshing native plugins compatible for Editor in 1.14 ms, found 1 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.347 seconds
+Domain Reload Profiling: 612ms
+	BeginReloadAssembly (101ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (17ms)
+	RebuildCommonClasses (23ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (17ms)
+	LoadAllAssembliesAndSetupDomain (115ms)
+		LoadAssemblies (163ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (9ms)
+			TypeCache.Refresh (4ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (4ms)
+	FinalizeReload (348ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (170ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (15ms)
+			SetLoadedEditorAssemblies (2ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (32ms)
+			ProcessInitializeOnLoadAttributes (104ms)
+			ProcessInitializeOnLoadMethodAttributes (15ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Refreshing native plugins compatible for Editor in 1.43 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2307 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (27.0 KB). Loaded Objects now: 2880.
+Memory consumption went from 104.7 MB to 104.7 MB.
+Total: 1.791000 ms (FindLiveObjects: 0.135800 ms CreateObjectMapping: 0.052200 ms MarkObjects: 1.568700 ms  DeleteObjects: 0.033300 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/GoSmoothedVector3.cs: 3a6ceb396859da913cbecdd1940e0aa2 -> 
+  custom:scripting/monoscript/fileName/EulerAnglesTweenProperty.cs: 7a2321a8c63f28c3857aa33414a11270 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/IGenericProperty.cs: f404e27010d8ce1a25f7cc2ac06431ac -> 
+  custom:scripting/monoscript/fileName/GoEaseSinusoidal.cs: e637d6b7456e2acd06dfd152f10b71d1 -> 
+  custom:scripting/monoscript/fileName/GoSplineCatmullRomSolver.cs: 8bbd4e9dc2722b25540d14d500b88879 -> 
+  custom:scripting/monoscript/fileName/IntTweenProperty.cs: 1f39418055dd7708ff3b9e75a86d93a1 -> 
+  custom:scripting/monoscript/fileName/Vector3YTweenProperty.cs: 2b996e9222bddad772657bb084e9da48 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuintic.cs: 672086238d051af0856016e64ad97204 -> 
+  custom:scripting/monoscript/fileName/GoEaseCubic.cs: 7d74fd43480e52f793e3086826193b77 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/GoSmoothedQuaternion.cs: 92de95a3ce149743e526859a8d0255c5 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/ShakeTweenProperty.cs: fdb713005206085d3b49cdd6b2d15f80 -> 
+  custom:scripting/monoscript/fileName/Vector2TweenProperty.cs: d7a25a544d56d947d9526019347f1f6e -> 
+  custom:scripting/monoscript/fileName/GoKitTweenExtensions.cs: 28ee7421c4d34eb9c057646838e28859 -> 
+  custom:scripting/monoscript/fileName/Vector3XTweenProperty.cs: 9592582ea2f541a8cf92ba7dd7dd85f2 -> 
+  custom:scripting/monoscript/fileName/Go.cs: 840adb47e0f4be71eeea7168442feb7d -> 
+  custom:scripting/monoscript/fileName/ColorTweenProperty.cs: 94ba4bee52d153d3fd58a82d4cf8ce0c -> 
+  custom:scripting/monoscript/fileName/GoEaseLinear.cs: b690756fd76817f101a31dcd50ae4adc -> 
+  custom:scripting/monoscript/fileName/GoEaseExponential.cs: 8f890ce1f0130e8014d1a219fa0d7904 -> 
+  custom:scripting/monoscript/fileName/ScaleTweenProperty.cs: 068e501b322923caa36166fe86d472e5 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/GoSpline.cs: 8039f73cfdc174dc6ffa15343c307f29 -> 
+  custom:scripting/monoscript/fileName/GoTweenFlow.cs: ce7a11a1fb9e8397b83cab3847ba7970 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuartic.cs: d34853ce84f33fe9033901002d4ff793 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/GoEaseBounce.cs: e71b365170d63025c159c4756b1910b2 -> 
+  custom:scripting/monoscript/fileName/GoSplineQuadraticBezierSolver.cs: 44dee8c5fd496e5eb749f54d83d1397e -> 
+  custom:scripting/monoscript/fileName/GoEaseQuadratic.cs: e3ed230c2d29b99c6f642587e4ad0e5d -> 
+  custom:scripting/monoscript/fileName/MaterialColorTweenProperty.cs: f6d4ed9537ac95d7564838fa4e660e7d -> 
+  custom:scripting/monoscript/fileName/GoEaseCircular.cs: 84a2009340e8431314db7056edf1bd68 -> 
+  custom:scripting/monoscript/fileName/PositionPathTweenProperty.cs: efde40660de14fd7cd1ede2fa47e9837 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/FloatTweenProperty.cs: 48aea3a8bbe79ca6e0baa81dc186bdfd -> 
+  custom:scripting/monoscript/fileName/GoTweenChain.cs: f9995827e6ddafabc43c1b0e0dcfd886 -> 
+  custom:scripting/monoscript/fileName/GoTweenCollectionConfig.cs: 37c99bdc8dc674650bd69bc44bb2e57b -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/AbstractQuaternionTweenProperty.cs: 65ceda31db804ab1e0e34f0e48afa285 -> 
+  custom:scripting/monoscript/fileName/AbstractColorTweenProperty.cs: bba0da230ed56fc0a25af92f6a3e377e -> 
+  custom:scripting/monoscript/fileName/AbstractVector3TweenProperty.cs: 6aa4defef7531529f4ddc1516936e2e3 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/Vector4TweenProperty.cs: 18bb73739ede80588b5bfadcee873907 -> 
+  custom:scripting/monoscript/fileName/GoEaseBack.cs: 3f6e00793ada35f633abc2146480990e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/GoTweenConfig.cs: 5b3154c82824c20addf84e8652f51cfe -> 
+  custom:scripting/monoscript/fileName/RotationQuaternionTweenProperty.cs: e0d94af0c913b0be4cd670833a2cda91 -> 
+  custom:scripting/monoscript/fileName/GoTweenUtils.cs: 867d37edf69335bc6e54784197f28064 -> 
+  custom:scripting/monoscript/fileName/GoSplineCubicBezierSolver.cs: 6d81419c64f7c334f4359254f1cbade0 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ScalePathTweenProperty.cs: 816c1a788eca415c60d1b7e87fb103fe -> 
+  custom:scripting/monoscript/fileName/GoEaseElastic.cs: f0cafb366ac4251d5c35fe413d3f62f6 -> 
+  custom:scripting/monoscript/fileName/GoDummyPath.cs: a21201ab2fac2187e4faeaf08bb4ec90 -> 
+  custom:scripting/monoscript/fileName/PositionTweenProperty.cs: e367a96b2cbc0b819bff5d0620f4b258 -> 
+  custom:scripting/monoscript/fileName/Vector3TweenProperty.cs: 8e9f9d7bb7b15068d97f4d593f097c86 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTween.cs: 3bdc69e313ad58745cd33c4b74e6a709 -> 
+  custom:scripting/monoscript/fileName/GoSplineStraightLineSolver.cs: b6a3907f2ead3ba9ac17ad3fdd121ec9 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTweenCollection.cs: 61d9f5f358696a7942516ed78ffe7e98 -> 
+  custom:scripting/monoscript/fileName/Vector3PathTweenProperty.cs: 94848aa2e96060cfeaf83844ee158f0c -> 
+  custom:scripting/monoscript/fileName/Vector3ZTweenProperty.cs: 35595634a87246c4e13691b1563178c5 -> 
+  custom:scripting/monoscript/fileName/AbstractTweenProperty.cs: c71b2ece20cb4e1e30772e574c806625 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
+  custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
+  custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 682.020898 seconds.
+  path: Assets/Prefabs/Absorb.prefab
+  artifactKey: Guid(f8731bdc219cec744ace9a71f469370a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Absorb.prefab using Guid(f8731bdc219cec744ace9a71f469370a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9aa410cae42b9e7c06d98f2728e5997e') in 0.099108 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Prefabs/Heart.prefab
+  artifactKey: Guid(04eadc8c790030b44be3e2656c4435ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Heart.prefab using Guid(04eadc8c790030b44be3e2656c4435ea) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '94f6289946295114d806bc3cef339909') in 0.035855 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Import Request.
+  Time since last request: 0.000031 seconds.
+  path: Assets/Prefabs/Mana.prefab
+  artifactKey: Guid(c739f479e38193b4d9e8e5f64d6fe48d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Mana.prefab using Guid(c739f479e38193b4d9e8e5f64d6fe48d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0c4cad59fe9c4c89a199fc6f20c9498f') in 0.028794 seconds
+Number of updated asset objects reloaded before import = 0
+Number of asset objects unloaded after import = 9
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.298 seconds
+Refreshing native plugins compatible for Editor in 1.66 ms, found 1 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.403 seconds
+Domain Reload Profiling: 701ms
+	BeginReloadAssembly (112ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (5ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (20ms)
+	RebuildCommonClasses (25ms)
+	RebuildNativeTypeToScriptingClass (11ms)
+	initialDomainReloadingComplete (24ms)
+	LoadAllAssembliesAndSetupDomain (126ms)
+		LoadAssemblies (177ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (10ms)
+			TypeCache.Refresh (4ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (5ms)
+	FinalizeReload (403ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (197ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (16ms)
+			SetLoadedEditorAssemblies (2ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (33ms)
+			ProcessInitializeOnLoadAttributes (125ms)
+			ProcessInitializeOnLoadMethodAttributes (20ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Refreshing native plugins compatible for Editor in 1.17 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2306 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (27.0 KB). Loaded Objects now: 2883.
+Memory consumption went from 104.5 MB to 104.4 MB.
+Total: 2.184300 ms (FindLiveObjects: 0.198400 ms CreateObjectMapping: 0.115500 ms MarkObjects: 1.829200 ms  DeleteObjects: 0.040300 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/GoSmoothedVector3.cs: 3a6ceb396859da913cbecdd1940e0aa2 -> 
+  custom:scripting/monoscript/fileName/EulerAnglesTweenProperty.cs: 7a2321a8c63f28c3857aa33414a11270 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/IGenericProperty.cs: f404e27010d8ce1a25f7cc2ac06431ac -> 
+  custom:scripting/monoscript/fileName/GoEaseSinusoidal.cs: e637d6b7456e2acd06dfd152f10b71d1 -> 
+  custom:scripting/monoscript/fileName/GoSplineCatmullRomSolver.cs: 8bbd4e9dc2722b25540d14d500b88879 -> 
+  custom:scripting/monoscript/fileName/IntTweenProperty.cs: 1f39418055dd7708ff3b9e75a86d93a1 -> 
+  custom:scripting/monoscript/fileName/Vector3YTweenProperty.cs: 2b996e9222bddad772657bb084e9da48 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuintic.cs: 672086238d051af0856016e64ad97204 -> 
+  custom:scripting/monoscript/fileName/GoEaseCubic.cs: 7d74fd43480e52f793e3086826193b77 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/GoSmoothedQuaternion.cs: 92de95a3ce149743e526859a8d0255c5 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/ShakeTweenProperty.cs: fdb713005206085d3b49cdd6b2d15f80 -> 
+  custom:scripting/monoscript/fileName/Vector2TweenProperty.cs: d7a25a544d56d947d9526019347f1f6e -> 
+  custom:scripting/monoscript/fileName/GoKitTweenExtensions.cs: 28ee7421c4d34eb9c057646838e28859 -> 
+  custom:scripting/monoscript/fileName/Vector3XTweenProperty.cs: 9592582ea2f541a8cf92ba7dd7dd85f2 -> 
+  custom:scripting/monoscript/fileName/Go.cs: 840adb47e0f4be71eeea7168442feb7d -> 
+  custom:scripting/monoscript/fileName/ColorTweenProperty.cs: 94ba4bee52d153d3fd58a82d4cf8ce0c -> 
+  custom:scripting/monoscript/fileName/GoEaseLinear.cs: b690756fd76817f101a31dcd50ae4adc -> 
+  custom:scripting/monoscript/fileName/GoEaseExponential.cs: 8f890ce1f0130e8014d1a219fa0d7904 -> 
+  custom:scripting/monoscript/fileName/ScaleTweenProperty.cs: 068e501b322923caa36166fe86d472e5 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/GoSpline.cs: 8039f73cfdc174dc6ffa15343c307f29 -> 
+  custom:scripting/monoscript/fileName/GoTweenFlow.cs: ce7a11a1fb9e8397b83cab3847ba7970 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuartic.cs: d34853ce84f33fe9033901002d4ff793 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/GoEaseBounce.cs: e71b365170d63025c159c4756b1910b2 -> 
+  custom:scripting/monoscript/fileName/GoSplineQuadraticBezierSolver.cs: 44dee8c5fd496e5eb749f54d83d1397e -> 
+  custom:scripting/monoscript/fileName/GoEaseQuadratic.cs: e3ed230c2d29b99c6f642587e4ad0e5d -> 
+  custom:scripting/monoscript/fileName/MaterialColorTweenProperty.cs: f6d4ed9537ac95d7564838fa4e660e7d -> 
+  custom:scripting/monoscript/fileName/GoEaseCircular.cs: 84a2009340e8431314db7056edf1bd68 -> 
+  custom:scripting/monoscript/fileName/PositionPathTweenProperty.cs: efde40660de14fd7cd1ede2fa47e9837 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/FloatTweenProperty.cs: 48aea3a8bbe79ca6e0baa81dc186bdfd -> 
+  custom:scripting/monoscript/fileName/GoTweenChain.cs: f9995827e6ddafabc43c1b0e0dcfd886 -> 
+  custom:scripting/monoscript/fileName/GoTweenCollectionConfig.cs: 37c99bdc8dc674650bd69bc44bb2e57b -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/AbstractQuaternionTweenProperty.cs: 65ceda31db804ab1e0e34f0e48afa285 -> 
+  custom:scripting/monoscript/fileName/AbstractColorTweenProperty.cs: bba0da230ed56fc0a25af92f6a3e377e -> 
+  custom:scripting/monoscript/fileName/AbstractVector3TweenProperty.cs: 6aa4defef7531529f4ddc1516936e2e3 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/Vector4TweenProperty.cs: 18bb73739ede80588b5bfadcee873907 -> 
+  custom:scripting/monoscript/fileName/GoEaseBack.cs: 3f6e00793ada35f633abc2146480990e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/GoTweenConfig.cs: 5b3154c82824c20addf84e8652f51cfe -> 
+  custom:scripting/monoscript/fileName/RotationQuaternionTweenProperty.cs: e0d94af0c913b0be4cd670833a2cda91 -> 
+  custom:scripting/monoscript/fileName/GoTweenUtils.cs: 867d37edf69335bc6e54784197f28064 -> 
+  custom:scripting/monoscript/fileName/GoSplineCubicBezierSolver.cs: 6d81419c64f7c334f4359254f1cbade0 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ScalePathTweenProperty.cs: 816c1a788eca415c60d1b7e87fb103fe -> 
+  custom:scripting/monoscript/fileName/GoEaseElastic.cs: f0cafb366ac4251d5c35fe413d3f62f6 -> 
+  custom:scripting/monoscript/fileName/GoDummyPath.cs: a21201ab2fac2187e4faeaf08bb4ec90 -> 
+  custom:scripting/monoscript/fileName/PositionTweenProperty.cs: e367a96b2cbc0b819bff5d0620f4b258 -> 
+  custom:scripting/monoscript/fileName/Vector3TweenProperty.cs: 8e9f9d7bb7b15068d97f4d593f097c86 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTween.cs: 3bdc69e313ad58745cd33c4b74e6a709 -> 
+  custom:scripting/monoscript/fileName/GoSplineStraightLineSolver.cs: b6a3907f2ead3ba9ac17ad3fdd121ec9 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTweenCollection.cs: 61d9f5f358696a7942516ed78ffe7e98 -> 
+  custom:scripting/monoscript/fileName/Vector3PathTweenProperty.cs: 94848aa2e96060cfeaf83844ee158f0c -> 
+  custom:scripting/monoscript/fileName/Vector3ZTweenProperty.cs: 35595634a87246c4e13691b1563178c5 -> 
+  custom:scripting/monoscript/fileName/AbstractTweenProperty.cs: c71b2ece20cb4e1e30772e574c806625 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
+  custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
+  custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+========================================================================
+Received Prepare
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.313 seconds
+Refreshing native plugins compatible for Editor in 1.56 ms, found 1 plugins.
+Native extension for WindowsStandalone target not found
+Native extension for Android target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  0.388 seconds
+Domain Reload Profiling: 702ms
+	BeginReloadAssembly (114ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (4ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (18ms)
+	RebuildCommonClasses (34ms)
+	RebuildNativeTypeToScriptingClass (12ms)
+	initialDomainReloadingComplete (20ms)
+	LoadAllAssembliesAndSetupDomain (134ms)
+		LoadAssemblies (191ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (10ms)
+			TypeCache.Refresh (3ms)
+				TypeCache.ScanAssembly (0ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
+			ResolveRequiredComponents (6ms)
+	FinalizeReload (389ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (198ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (17ms)
+			SetLoadedEditorAssemblies (3ms)
+			RefreshPlugins (0ms)
+			BeforeProcessingInitializeOnLoad (39ms)
+			ProcessInitializeOnLoadAttributes (119ms)
+			ProcessInitializeOnLoadMethodAttributes (17ms)
+			AfterProcessingInitializeOnLoad (2ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (6ms)
+Refreshing native plugins compatible for Editor in 1.06 ms, found 1 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2307 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 21 unused Assets / (27.0 KB). Loaded Objects now: 2886.
+Memory consumption went from 104.7 MB to 104.7 MB.
+Total: 1.894400 ms (FindLiveObjects: 0.142900 ms CreateObjectMapping: 0.053900 ms MarkObjects: 1.663000 ms  DeleteObjects: 0.033300 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:scripting/monoscript/fileName/GoSmoothedVector3.cs: 3a6ceb396859da913cbecdd1940e0aa2 -> 
+  custom:scripting/monoscript/fileName/EulerAnglesTweenProperty.cs: 7a2321a8c63f28c3857aa33414a11270 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:scripting/monoscript/fileName/IGenericProperty.cs: f404e27010d8ce1a25f7cc2ac06431ac -> 
+  custom:scripting/monoscript/fileName/GoEaseSinusoidal.cs: e637d6b7456e2acd06dfd152f10b71d1 -> 
+  custom:scripting/monoscript/fileName/GoSplineCatmullRomSolver.cs: 8bbd4e9dc2722b25540d14d500b88879 -> 
+  custom:scripting/monoscript/fileName/IntTweenProperty.cs: 1f39418055dd7708ff3b9e75a86d93a1 -> 
+  custom:scripting/monoscript/fileName/Vector3YTweenProperty.cs: 2b996e9222bddad772657bb084e9da48 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuintic.cs: 672086238d051af0856016e64ad97204 -> 
+  custom:scripting/monoscript/fileName/GoEaseCubic.cs: 7d74fd43480e52f793e3086826193b77 -> 
+  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
+  custom:scripting/monoscript/fileName/GoSmoothedQuaternion.cs: 92de95a3ce149743e526859a8d0255c5 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
+  custom:scripting/monoscript/fileName/ShakeTweenProperty.cs: fdb713005206085d3b49cdd6b2d15f80 -> 
+  custom:scripting/monoscript/fileName/Vector2TweenProperty.cs: d7a25a544d56d947d9526019347f1f6e -> 
+  custom:scripting/monoscript/fileName/GoKitTweenExtensions.cs: 28ee7421c4d34eb9c057646838e28859 -> 
+  custom:scripting/monoscript/fileName/Vector3XTweenProperty.cs: 9592582ea2f541a8cf92ba7dd7dd85f2 -> 
+  custom:scripting/monoscript/fileName/Go.cs: 840adb47e0f4be71eeea7168442feb7d -> 
+  custom:scripting/monoscript/fileName/ColorTweenProperty.cs: 94ba4bee52d153d3fd58a82d4cf8ce0c -> 
+  custom:scripting/monoscript/fileName/GoEaseLinear.cs: b690756fd76817f101a31dcd50ae4adc -> 
+  custom:scripting/monoscript/fileName/GoEaseExponential.cs: 8f890ce1f0130e8014d1a219fa0d7904 -> 
+  custom:scripting/monoscript/fileName/ScaleTweenProperty.cs: 068e501b322923caa36166fe86d472e5 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:scripting/monoscript/fileName/GoSpline.cs: 8039f73cfdc174dc6ffa15343c307f29 -> 
+  custom:scripting/monoscript/fileName/GoTweenFlow.cs: ce7a11a1fb9e8397b83cab3847ba7970 -> 
+  custom:scripting/monoscript/fileName/GoEaseQuartic.cs: d34853ce84f33fe9033901002d4ff793 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:scripting/monoscript/fileName/GoEaseBounce.cs: e71b365170d63025c159c4756b1910b2 -> 
+  custom:scripting/monoscript/fileName/GoSplineQuadraticBezierSolver.cs: 44dee8c5fd496e5eb749f54d83d1397e -> 
+  custom:scripting/monoscript/fileName/GoEaseQuadratic.cs: e3ed230c2d29b99c6f642587e4ad0e5d -> 
+  custom:scripting/monoscript/fileName/MaterialColorTweenProperty.cs: f6d4ed9537ac95d7564838fa4e660e7d -> 
+  custom:scripting/monoscript/fileName/GoEaseCircular.cs: 84a2009340e8431314db7056edf1bd68 -> 
+  custom:scripting/monoscript/fileName/PositionPathTweenProperty.cs: efde40660de14fd7cd1ede2fa47e9837 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:scripting/monoscript/fileName/FloatTweenProperty.cs: 48aea3a8bbe79ca6e0baa81dc186bdfd -> 
+  custom:scripting/monoscript/fileName/GoTweenChain.cs: f9995827e6ddafabc43c1b0e0dcfd886 -> 
+  custom:scripting/monoscript/fileName/GoTweenCollectionConfig.cs: 37c99bdc8dc674650bd69bc44bb2e57b -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/AbstractQuaternionTweenProperty.cs: 65ceda31db804ab1e0e34f0e48afa285 -> 
+  custom:scripting/monoscript/fileName/AbstractColorTweenProperty.cs: bba0da230ed56fc0a25af92f6a3e377e -> 
+  custom:scripting/monoscript/fileName/AbstractVector3TweenProperty.cs: 6aa4defef7531529f4ddc1516936e2e3 -> 
+  custom:CustomObjectIndexerAttribute: 9a22284fe3817be447336de3de66b15e -> 
+  custom:scripting/monoscript/fileName/Vector4TweenProperty.cs: 18bb73739ede80588b5bfadcee873907 -> 
+  custom:scripting/monoscript/fileName/GoEaseBack.cs: 3f6e00793ada35f633abc2146480990e -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:scripting/monoscript/fileName/GoTweenConfig.cs: 5b3154c82824c20addf84e8652f51cfe -> 
+  custom:scripting/monoscript/fileName/RotationQuaternionTweenProperty.cs: e0d94af0c913b0be4cd670833a2cda91 -> 
+  custom:scripting/monoscript/fileName/GoTweenUtils.cs: 867d37edf69335bc6e54784197f28064 -> 
+  custom:scripting/monoscript/fileName/GoSplineCubicBezierSolver.cs: 6d81419c64f7c334f4359254f1cbade0 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:scripting/monoscript/fileName/ScalePathTweenProperty.cs: 816c1a788eca415c60d1b7e87fb103fe -> 
+  custom:scripting/monoscript/fileName/GoEaseElastic.cs: f0cafb366ac4251d5c35fe413d3f62f6 -> 
+  custom:scripting/monoscript/fileName/GoDummyPath.cs: a21201ab2fac2187e4faeaf08bb4ec90 -> 
+  custom:scripting/monoscript/fileName/PositionTweenProperty.cs: e367a96b2cbc0b819bff5d0620f4b258 -> 
+  custom:scripting/monoscript/fileName/Vector3TweenProperty.cs: 8e9f9d7bb7b15068d97f4d593f097c86 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTween.cs: 3bdc69e313ad58745cd33c4b74e6a709 -> 
+  custom:scripting/monoscript/fileName/GoSplineStraightLineSolver.cs: b6a3907f2ead3ba9ac17ad3fdd121ec9 -> 
+  custom:scripting/monoscript/fileName/AbstractGoTweenCollection.cs: 61d9f5f358696a7942516ed78ffe7e98 -> 
+  custom:scripting/monoscript/fileName/Vector3PathTweenProperty.cs: 94848aa2e96060cfeaf83844ee158f0c -> 
+  custom:scripting/monoscript/fileName/Vector3ZTweenProperty.cs: 35595634a87246c4e13691b1563178c5 -> 
+  custom:scripting/monoscript/fileName/AbstractTweenProperty.cs: c71b2ece20cb4e1e30772e574c806625 -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:scripting/monoscript/fileName/AbstractGoSplineSolver.cs: 788a6b8052af6ee0371d3a464e692d1b -> 
+  custom:scripting/monoscript/fileName/GoTween.cs: 4df5a8b9fefcbd8a2b5d6fe6223ee62f -> 
+  custom:scripting/monoscript/fileName/RotationTweenProperty.cs: 13e7fbd741208cd89873755249a873a9 -> 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+TcpMessagingSession - receive error: operation aborted. errorcode: 995, details: The I/O operation has been aborted because of either a thread exit or an application request.
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

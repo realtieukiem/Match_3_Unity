@@ -37,3 +37,15 @@ public enum GameState
     SelectionStarted,
     Animating
 }
+
+public enum ShapeEffectType
+{
+    ByPrefabName,
+    None,
+    Attack,
+    Heal,
+    Mana,
+    Rage,
+    Absorb,
+    Armor
+}

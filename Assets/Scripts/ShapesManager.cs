@@ -24,6 +24,10 @@ public class ShapesManager : MonoBehaviour
     public Vector2 BoardLayoutFrameSize = new Vector2(6f, 8f);
     public int RandomLevelRows = 7;
     public int RandomLevelColumns = 7;
+    [Range(0f, 1f)]
+    public float X2ItemChance = 0.1f;
+    [Range(0f, 1f)]
+    public float X3ItemChance = 0.05f;
 
     private Vector2 BoardBottomLeft;
     private Vector2 CandySize;
@@ -84,7 +88,7 @@ public class ShapesManager : MonoBehaviour
 
                 newCandy = GetSpecificCandyOrBonusForPremadeLevel(premadeLevel[row, column]);
 
-                var placedCandy = InstantiateAndPlaceNewCandy(row, column, newCandy);
+                var placedCandy = InstantiateAndPlaceNewCandy(row, column, newCandy, GetItemCountForPremadeLevel(premadeLevel[row, column]));
                 ApplyPremadeLevelInfo(placedCandy, premadeLevel[row, column]);
 
             }
@@ -128,7 +132,7 @@ public class ShapesManager : MonoBehaviour
                 {
                     newCandy = GetRandomCandy();
                 }
-                InstantiateAndPlaceNewCandy(row, column, newCandy);
+                InstantiateAndPlaceNewCandy(row, column, newCandy, GetRandomItemCount());
             }
         }
 
@@ -137,14 +141,14 @@ public class ShapesManager : MonoBehaviour
 
 
 
-    private GameObject InstantiateAndPlaceNewCandy(int row, int column, GameObject newCandy)
+    private GameObject InstantiateAndPlaceNewCandy(int row, int column, GameObject newCandy, int itemCount)
     {
         GameObject go = Instantiate(newCandy,
             GetWorldPosition(row, column), Quaternion.identity)
             as GameObject;
 
         //assign the specific properties
-        go.GetComponent<Shape>().Assign(newCandy.GetComponent<Shape>().Type, row, column);
+        go.GetComponent<Shape>().Assign(newCandy.GetComponent<Shape>().Type, row, column, itemCount);
         go.transform.localScale = Vector3.one * GetCandyScale();
         go.transform.SetParent(transform);
         shapes[row, column] = go;
@@ -293,6 +297,8 @@ public class ShapesManager : MonoBehaviour
         {
             sp1.sortingOrder = 1;
             sp2.sortingOrder = 0;
+            hitGo.GetComponent<Shape>().RefreshCountTextSorting();
+            hitGo2.GetComponent<Shape>().RefreshCountTextSorting();
         }
     }
 
@@ -326,24 +332,29 @@ public class ShapesManager : MonoBehaviour
         }
 
         int timesRun = 1;
+        List<ShapeMatchData> matchedItemQueue = new List<ShapeMatchData>();
         while (totalMatches.Count() >= Constants.MinimumMatches)
         {
+            List<GameObject> matchedItems = totalMatches.ToList();
+            AddMatchedItems(matchedItems, matchedItemQueue);
+
             //increase score
-            IncreaseScore((totalMatches.Count() - 2) * Constants.Match3Score);
+            IncreaseScore((matchedItems.Count - 2) * Constants.Match3Score);
 
             if (timesRun >= 2)
                 IncreaseScore(Constants.SubsequentMatchScore);
 
-            soundManager.PlayCrincle();
+            if (soundManager != null)
+                soundManager.PlayCrincle();
 
-            foreach (var item in totalMatches)
+            foreach (var item in matchedItems)
             {
                 shapes.Remove(item);
                 RemoveFromScene(item);
             }
 
             //get the columns that we had a collapse
-            var columns = totalMatches.Select(go => go.GetComponent<Shape>().Column).Distinct();
+            var columns = matchedItems.Select(go => go.GetComponent<Shape>().Column).Distinct();
 
             //the order the 2 methods below get called is important!!!
             //collapse the ones gone
@@ -370,8 +381,47 @@ public class ShapesManager : MonoBehaviour
             timesRun++;
         }
 
+        if (matchedItemQueue.Count > 0)
+        {
+            SetAllShapesVisible(false);
+            if (GameController.Instance != null)
+                yield return GameController.Instance.PlayMatchedItems(matchedItemQueue);
+            SetAllShapesVisible(true);
+        }
+
         state = GameState.None;
+        if (timesRun > 1 && GameController.Instance != null)
+            GameController.Instance.EndCurrentTurn();
+
         StartCheckForPotentialMatches();
+    }
+
+    private void AddMatchedItems(IEnumerable<GameObject> matchedItems, List<ShapeMatchData> matchedItemQueue)
+    {
+        foreach (GameObject item in matchedItems)
+        {
+            Shape shape = item.GetComponent<Shape>();
+            SpriteRenderer spriteRenderer = item.GetComponent<SpriteRenderer>();
+            Sprite sprite = spriteRenderer != null ? spriteRenderer.sprite : null;
+            Color color = spriteRenderer != null ? spriteRenderer.color : Color.white;
+            matchedItemQueue.Add(new ShapeMatchData(shape.GetResolvedItemEffect(), shape.ItemCount, sprite, color));
+        }
+    }
+
+    private void SetAllShapesVisible(bool visible)
+    {
+        if (shapes == null)
+            return;
+
+        for (int row = 0; row < shapes.Rows; row++)
+        {
+            for (int column = 0; column < shapes.Columns; column++)
+            {
+                GameObject shape = shapes[row, column];
+                if (shape != null)
+                    shape.SetActive(visible);
+            }
+        }
     }
 
    
@@ -390,7 +440,7 @@ public class ShapesManager : MonoBehaviour
                     as GameObject;
 
                 newCandy.transform.SetParent(transform);
-                newCandy.GetComponent<Shape>().Assign(go.GetComponent<Shape>().Type, item.Row, item.Column);
+                newCandy.GetComponent<Shape>().Assign(go.GetComponent<Shape>().Type, item.Row, item.Column, GetRandomItemCount());
                 newCandy.transform.localScale = Vector3.one * GetCandyScale();
 
                 if (Constants.Rows - item.Row > newCandyInfo.MaxDistance)
@@ -438,6 +488,19 @@ public class ShapesManager : MonoBehaviour
     private GameObject GetRandomCandy()
     {
         return CandyPrefabs[Random.Range(0, CandyPrefabs.Length)];
+    }
+
+    private int GetRandomItemCount()
+    {
+        float randomValue = Random.value;
+
+        if (randomValue < X3ItemChance)
+            return 3;
+
+        if (randomValue < X3ItemChance + X2ItemChance)
+            return 2;
+
+        return 1;
     }
 
     private void InitializeVariables()
@@ -515,7 +578,7 @@ public class ShapesManager : MonoBehaviour
     {
         var tokens = info.Split('_');
 
-        if (tokens.Count() == 1 || tokens.Count() == 2)
+        if (tokens.Count() >= 1)
         {
             foreach (var item in CandyPrefabs)
             {
@@ -534,8 +597,28 @@ public class ShapesManager : MonoBehaviour
         if (tokens.Count() < 2)
             return;
 
-        if (tokens[1].Trim() == "B")
-            candy.GetComponent<Shape>().Bonus = BonusType.DestroyWholeRowColumn;
+        for (int i = 1; i < tokens.Count(); i++)
+        {
+            if (tokens[i].Trim() == "B")
+                candy.GetComponent<Shape>().Bonus = BonusType.DestroyWholeRowColumn;
+        }
+    }
+
+    private int GetItemCountForPremadeLevel(string info)
+    {
+        var tokens = info.Split('_');
+
+        for (int i = 1; i < tokens.Count(); i++)
+        {
+            string token = tokens[i].Trim().ToLower();
+            if (token == "2" || token == "x2")
+                return 2;
+
+            if (token == "3" || token == "x3")
+                return 3;
+        }
+
+        return GetRandomItemCount();
     }
 
     private void OnDrawGizmosSelected()
