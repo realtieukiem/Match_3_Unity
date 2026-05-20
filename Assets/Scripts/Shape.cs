@@ -25,6 +25,12 @@ public class Shape : MonoBehaviour
         ItemCount = 1;
     }
 
+    private void Awake()
+    {
+        if (ItemCount <= 0)
+            ItemCount = 1;
+    }
+
     /// <summary>
     /// Checks if the current shape is of the same type as the parameter
     /// </summary>
@@ -32,10 +38,10 @@ public class Shape : MonoBehaviour
     /// <returns></returns>
     public bool IsSameType(Shape otherShape)
     {
-        if (otherShape == null || !(otherShape is Shape))
+        if (otherShape == null)
             throw new ArgumentException("otherShape");
 
-        return string.Compare(this.Type, (otherShape as Shape).Type) == 0;
+        return string.Compare(Type, otherShape.Type) == 0;
     }
 
     /// <summary>
@@ -70,6 +76,9 @@ public class Shape : MonoBehaviour
     private void UpdateCountText()
     {
         TextMeshPro countText = GetCountText();
+        if (countText == null)
+            return;
+
         countText.text = ItemCount > 1 ? "x" + ItemCount.ToString() : string.Empty;
         countText.gameObject.SetActive(ItemCount > 1);
     }
@@ -83,7 +92,8 @@ public class Shape : MonoBehaviour
         if (textTransform != null)
         {
             CountText = textTransform.GetComponent<TextMeshPro>();
-            return CountText;
+            if (CountText != null)
+                return CountText;
         }
 
         GameObject textGo = new GameObject(CountTextName);

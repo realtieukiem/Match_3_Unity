@@ -32,15 +32,7 @@ public class ShapesArray
     {
         get
         {
-            try
-            {
-                return shapes[row, column];
-            }
-            catch (Exception ex)
-            {
-                
-                throw ex;
-            }
+            return shapes[row, column];
         }
         set
         {
@@ -107,6 +99,9 @@ public class ShapesArray
         List<GameObject> matches = new List<GameObject>();
         foreach (var go in gos)
         {
+            if (go == null)
+                continue;
+
             matches.AddRange(GetMatches(go).MatchedCandy);
         }
         return matches.Distinct();
@@ -120,6 +115,8 @@ public class ShapesArray
     public MatchesInfo GetMatches(GameObject go)
     {
         MatchesInfo matchesInfo = new MatchesInfo();
+        if (go == null)
+            return matchesInfo;
 
         var horizontalMatches = GetMatchesHorizontally(go);
         if (ContainsDestroyRowColumnBonus(horizontalMatches))
@@ -163,7 +160,8 @@ public class ShapesArray
         int row = go.GetComponent<Shape>().Row;
         for (int column = 0; column < Constants.Columns; column++)
         {
-            matches.Add(shapes[row, column]);
+            if (shapes[row, column] != null)
+                matches.Add(shapes[row, column]);
         }
         return matches;
     }
@@ -174,7 +172,8 @@ public class ShapesArray
         int column = go.GetComponent<Shape>().Column;
         for (int row = 0; row < Constants.Rows; row++)
         {
-            matches.Add(shapes[row, column]);
+            if (shapes[row, column] != null)
+                matches.Add(shapes[row, column]);
         }
         return matches;
     }
@@ -193,7 +192,7 @@ public class ShapesArray
         if (shape.Column != 0)
             for (int column = shape.Column - 1; column >= 0; column--)
             {
-                if (shapes[shape.Row, column].GetComponent<Shape>().IsSameType(shape))
+                if (shapes[shape.Row, column] != null && shapes[shape.Row, column].GetComponent<Shape>().IsSameType(shape))
                 {
                     matches.Add(shapes[shape.Row, column]);
                 }
@@ -205,7 +204,7 @@ public class ShapesArray
         if (shape.Column != Constants.Columns - 1)
             for (int column = shape.Column + 1; column < Constants.Columns; column++)
             {
-                if (shapes[shape.Row, column].GetComponent<Shape>().IsSameType(shape))
+                if (shapes[shape.Row, column] != null && shapes[shape.Row, column].GetComponent<Shape>().IsSameType(shape))
                 {
                     matches.Add(shapes[shape.Row, column]);
                 }
@@ -308,7 +307,7 @@ public class ShapesArray
                             shapes[row, column].GetComponent<Shape>().Row = row;
                             shapes[row, column].GetComponent<Shape>().Column = column;
 
-                            collapseInfo.AddCandy(shapes[row, column]);
+                            collapseInfo.AddCandy(shapes[row, column], row2, row, column);
                             break;
                         }
                     }

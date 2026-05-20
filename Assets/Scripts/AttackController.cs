@@ -14,13 +14,18 @@ public class AttackController : MonoBehaviour
     public int AbsorbAmount = 10;
     public int ArmorAmount = 10;
 
+    [Header("Effects")]
+    public List<ShapeItemEffect> ItemEffects = new List<ShapeItemEffect>();
+
     [Header("Item Visuals")]
     public Transform ItemDisplayRoot;
     public Transform ItemVisualParent;
     public Vector2 ItemDisplaySpacing = new Vector2(0.7f, 0f);
     public float ItemVisualScale = 0.45f;
     public float ItemShowDuration = 0.2f;
+    public float ItemHoldDuration = 0f;
     public float ItemFlyDuration = 0.45f;
+    public float ItemDelayBetweenApplies = 0f;
     public Ease ItemShowEase = Ease.OutBack;
     public Ease ItemFlyEase = Ease.InBack;
 
@@ -29,7 +34,7 @@ public class AttackController : MonoBehaviour
         if (owner == null || opponent == null)
             yield break;
 
-        List<ShapeMatchData> items = GetPlayableItems(matchedItems);
+        List<ShapeMatchData> items = ShapeMatchDataAggregator.MergeByEffectType(matchedItems);
         List<GameObject> itemVisuals = CreateItemVisuals(items);
         if (itemVisuals.Count == 0)
             yield break;
@@ -39,6 +44,8 @@ public class AttackController : MonoBehaviour
             showSequence.Join(itemVisuals[i].transform.DOScale(Vector3.one * ItemVisualScale, ItemShowDuration).SetEase(ItemShowEase));
 
         yield return showSequence.WaitForCompletion();
+        if (ItemHoldDuration > 0f)
+            yield return new WaitForSeconds(ItemHoldDuration);
 
         int index = 0;
         foreach (ShapeMatchData item in items)
@@ -57,6 +64,9 @@ public class AttackController : MonoBehaviour
             ApplyItem(item, owner, opponent);
             Destroy(visual);
             index++;
+
+            if (ItemDelayBetweenApplies > 0f && index < itemVisuals.Count)
+                yield return new WaitForSeconds(ItemDelayBetweenApplies);
         }
     }
 
@@ -95,23 +105,6 @@ public class AttackController : MonoBehaviour
         }
 
         return visuals;
-    }
-
-    private List<ShapeMatchData> GetPlayableItems(IEnumerable<ShapeMatchData> matchedItems)
-    {
-        List<ShapeMatchData> items = new List<ShapeMatchData>();
-        foreach (ShapeMatchData item in matchedItems)
-        {
-            if (item.EffectType == ShapeEffectType.None)
-                continue;
-
-            if (items.Count > 0 && items[items.Count - 1].EffectType == item.EffectType)
-                items[items.Count - 1] = items[items.Count - 1].WithAddedCount(item.Count);
-            else
-                items.Add(item);
-        }
-
-        return items;
     }
 
     private void CreateCountText(Transform parent, int count)
@@ -158,6 +151,13 @@ public class AttackController : MonoBehaviour
 
     private void ApplyItem(ShapeMatchData item, PlayerControllerBase owner, PlayerControllerBase opponent)
     {
+        ShapeItemEffect configuredEffect = GetConfiguredEffect(item.EffectType);
+        if (configuredEffect != null)
+        {
+            configuredEffect.Apply(owner, opponent, item.Count);
+            return;
+        }
+
         int amount = GetAmount(item.EffectType, item.Count);
 
         switch (item.EffectType)
@@ -181,6 +181,17 @@ public class AttackController : MonoBehaviour
                 owner.AddArmor(amount);
                 break;
         }
+    }
+
+    private ShapeItemEffect GetConfiguredEffect(ShapeEffectType effectType)
+    {
+        foreach (ShapeItemEffect effect in ItemEffects)
+        {
+            if (effect != null && effect.CanHandle(effectType))
+                return effect;
+        }
+
+        return null;
     }
 
     private int GetAmount(ShapeEffectType effectType, int itemCount)

@@ -10,6 +10,6 @@ public class AttackItemEffect : ShapeItemEffect
 
     public override void Apply(PlayerControllerBase owner, PlayerControllerBase opponent, int itemCount)
     {
-        opponent.TakeDamage(GetAmount(itemCount));
+        opponent.TakeDamage(owner.GetAttackDamageWithRageBonus(GetAmount(itemCount)));
     }
 }

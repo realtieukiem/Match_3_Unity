@@ -2,13 +2,25 @@
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 
 public class ShapesManager : MonoBehaviour
 {
-    public Text ScoreText;
+    private struct BoardMove
+    {
+        public readonly GameObject First;
+        public readonly GameObject Second;
+
+        public BoardMove(GameObject first, GameObject second)
+        {
+            First = first;
+            Second = second;
+        }
+    }
+
+    public TMP_Text ScoreText;
 
     public ShapesArray shapes;
 
@@ -22,6 +34,8 @@ public class ShapesManager : MonoBehaviour
     public bool UseBoardLayoutFrame = true;
     public Vector2 BoardLayoutFrameCenter = new Vector2(0f, 0f);
     public Vector2 BoardLayoutFrameSize = new Vector2(6f, 8f);
+    public bool ClipCandyToBoard = true;
+    public float BoardMaskPadding = 0f;
     public int RandomLevelRows = 7;
     public int RandomLevelColumns = 7;
     [Range(0f, 1f)]
@@ -29,12 +43,21 @@ public class ShapesManager : MonoBehaviour
     [Range(0f, 1f)]
     public float X3ItemChance = 0.05f;
 
+    [Header("Timing")]
+    public float SwapAnimationDuration = 0.2f;
+    public float CollapseMoveDurationPerCell = 0.05f;
+    public Ease CollapseMoveEase = Ease.Linear;
+    public float DelayBetweenCascadeMatches = 0f;
+    public float HideBoardBeforeItemListDelay = 0f;
+    public float ShowBoardAfterItemListDelay = 0f;
+
     private Vector2 BoardBottomLeft;
     private Vector2 CandySize;
+    private SpriteMask boardSpriteMask;
+    private Sprite boardMaskSprite;
 
     private GameState state = GameState.None;
     private GameObject hitGo = null;
-    private Vector2[] SpawnPositions;
     public GameObject[] CandyPrefabs;
     public GameObject[] ExplosionPrefabs;
     //public GameObject[] BonusPrefabs;
@@ -44,9 +67,11 @@ public class ShapesManager : MonoBehaviour
 
     IEnumerable<GameObject> potentialMatches;
 
-    public SoundManager soundManager;
     void Start()
     {
+        if (!HasRequiredPrefabs())
+            return;
+
         InitializeTypesOnPrefabShapesAndBonuses();
 
         Constants.ConfigureBoardSize(RandomLevelRows, RandomLevelColumns);
@@ -60,9 +85,29 @@ public class ShapesManager : MonoBehaviour
         //just assign the name of the prefab
         foreach (var item in CandyPrefabs)
         {
-            item.GetComponent<Shape>().Type = item.name;
+            if (item == null)
+                continue;
 
+            Shape shape = item.GetComponent<Shape>();
+            if (shape != null)
+                shape.Type = item.name;
         }
+    }
+
+    private bool HasRequiredPrefabs()
+    {
+        if (CandyPrefabs != null && CandyPrefabs.Length > 0)
+        {
+            foreach (GameObject prefab in CandyPrefabs)
+            {
+                if (prefab != null && prefab.GetComponent<Shape>() != null)
+                    return true;
+            }
+        }
+
+        Debug.LogError("ShapesManager requires at least one candy prefab with a Shape component.", this);
+        enabled = false;
+        return false;
     }
 
     public void InitializeCandyAndSpawnPositionsFromPremadeLevel()
@@ -76,8 +121,8 @@ public class ShapesManager : MonoBehaviour
 
         Constants.ConfigureBoardSize(premadeLevel.GetLength(0), premadeLevel.GetLength(1));
         shapes = new ShapesArray();
-        SpawnPositions = new Vector2[Constants.Columns];
         UpdateBoardLayout();
+        RefreshBoardMask();
 
         for (int row = 0; row < Constants.Rows; row++)
         {
@@ -93,8 +138,6 @@ public class ShapesManager : MonoBehaviour
 
             }
         }
-
-        SetupSpawnPositions();
     }
 
 
@@ -107,8 +150,8 @@ public class ShapesManager : MonoBehaviour
 
         Constants.ConfigureBoardSize(RandomLevelRows, RandomLevelColumns);
         shapes = new ShapesArray();
-        SpawnPositions = new Vector2[Constants.Columns];
         UpdateBoardLayout();
+        RefreshBoardMask();
 
         for (int row = 0; row < Constants.Rows; row++)
         {
@@ -135,8 +178,6 @@ public class ShapesManager : MonoBehaviour
                 InstantiateAndPlaceNewCandy(row, column, newCandy, GetRandomItemCount());
             }
         }
-
-        SetupSpawnPositions();
     }
 
 
@@ -151,6 +192,7 @@ public class ShapesManager : MonoBehaviour
         go.GetComponent<Shape>().Assign(newCandy.GetComponent<Shape>().Type, row, column, itemCount);
         go.transform.localScale = Vector3.one * GetCandyScale();
         go.transform.SetParent(transform);
+        ApplyBoardMask(go);
         shapes[row, column] = go;
         return go;
     }
@@ -218,16 +260,6 @@ public class ShapesManager : MonoBehaviour
         return BoardBottomLeft + new Vector2(column * CandySize.x, row * CandySize.y);
     }
 
-    private void SetupSpawnPositions()
-    {
-        //create the spawn positions for the new shapes (will pop from the 'ceiling')
-        for (int column = 0; column < Constants.Columns; column++)
-        {
-            SpawnPositions[column] = BoardBottomLeft
-                + new Vector2(column * CandySize.x, Constants.Rows * CandySize.y);
-        }
-    }
-
     private void DestroyAllCandy()
     {
         for (int row = 0; row < shapes.Rows; row++)
@@ -240,59 +272,143 @@ public class ShapesManager : MonoBehaviour
     }
 
 
-    // Update is called once per frame
     void Update()
     {
+        if (GameController.Instance != null && !GameController.Instance.CanCurrentPlayerAct())
+            return;
+
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null)
+            return;
+
         if (state == GameState.None)
         {
-            //user has clicked or touched
             if (Input.GetMouseButtonDown(0))
             {
-                //get the hit position
-                var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                if (hit.collider != null) //we have a hit!!!
+                Shape selectedShape = GetShapeUnderPointer(mainCamera);
+                if (selectedShape != null)
                 {
-                    hitGo = hit.collider.gameObject;
+                    hitGo = selectedShape.gameObject;
                     state = GameState.SelectionStarted;
                 }
-                
             }
         }
         else if (state == GameState.SelectionStarted)
         {
-            //user dragged
             if (Input.GetMouseButton(0))
             {
-                
+                Shape targetShape = GetShapeUnderPointer(mainCamera);
+                if (targetShape == null || hitGo == targetShape.gameObject)
+                    return;
 
-                var hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-                //we have a hit
-                if (hit.collider != null && hitGo != hit.collider.gameObject)
+                StopCheckForPotentialMatches();
+
+                Shape selectedShape = hitGo.GetComponent<Shape>();
+                if (!Utilities.AreVerticalOrHorizontalNeighbors(selectedShape, targetShape))
                 {
-
-                    //user did a hit, no need to show him hints 
-                    StopCheckForPotentialMatches();
-
-                    //if the two shapes are diagonally aligned (different row and column), just return
-                    if (!Utilities.AreVerticalOrHorizontalNeighbors(hitGo.GetComponent<Shape>(),
-                        hit.collider.gameObject.GetComponent<Shape>()))
-                    {
-                        state = GameState.None;
-                    }
-                    else
-                    {
-                        state = GameState.Animating;
-                        FixSortingLayer(hitGo, hit.collider.gameObject);
-                        StartCoroutine(FindMatchesAndCollapse(hit));
-                    }
+                    CancelCurrentSelection();
+                    return;
                 }
+
+                state = GameState.Animating;
+                if (GameController.Instance != null)
+                    GameController.Instance.BeginCurrentTurnAction();
+
+                StartBoardMove(hitGo, targetShape.gameObject);
             }
         }
     }
+
+    private Shape GetShapeUnderPointer(Camera mainCamera)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+        if (hit.collider == null)
+            return null;
+
+        return hit.collider.GetComponent<Shape>();
+    }
+
+    public void CancelCurrentSelection()
+    {
+        if (state == GameState.Animating)
+            return;
+
+        hitGo = null;
+        state = GameState.None;
+    }
+
+    public bool TryPlayAutomaticMove()
+    {
+        if (state != GameState.None || shapes == null)
+            return false;
+
+        List<BoardMove> validMoves = FindValidMoves();
+        if (validMoves.Count == 0)
+            return false;
+
+        BoardMove selectedMove = validMoves[Random.Range(0, validMoves.Count)];
+        StartBoardMove(selectedMove.First, selectedMove.Second);
+        return true;
+    }
+
+    private List<BoardMove> FindValidMoves()
+    {
+        List<BoardMove> validMoves = new List<BoardMove>();
+        for (int row = 0; row < shapes.Rows; row++)
+        {
+            for (int column = 0; column < shapes.Columns; column++)
+            {
+                GameObject item = shapes[row, column];
+                if (item == null)
+                    continue;
+
+                TryAddValidMove(validMoves, item, row, column + 1);
+                TryAddValidMove(validMoves, item, row + 1, column);
+            }
+        }
+
+        return validMoves;
+    }
+
+    private void TryAddValidMove(List<BoardMove> validMoves, GameObject first, int secondRow, int secondColumn)
+    {
+        if (secondRow < 0 || secondRow >= shapes.Rows || secondColumn < 0 || secondColumn >= shapes.Columns)
+            return;
+
+        GameObject second = shapes[secondRow, secondColumn];
+        if (second == null || !MoveCreatesMatch(first, second))
+            return;
+
+        validMoves.Add(new BoardMove(first, second));
+    }
+
+    private bool MoveCreatesMatch(GameObject first, GameObject second)
+    {
+        shapes.Swap(first, second);
+        bool createsMatch = shapes.GetMatches(first).MatchedCandy
+            .Union(shapes.GetMatches(second).MatchedCandy)
+            .Count() >= Constants.MinimumMatches;
+        shapes.UndoSwap();
+
+        return createsMatch;
+    }
+
+    private void StartBoardMove(GameObject first, GameObject second)
+    {
+        StopCheckForPotentialMatches();
+        hitGo = first;
+        state = GameState.Animating;
+        FixSortingLayer(first, second);
+        StartCoroutine(FindMatchesAndCollapse(second));
+    }
+
     private void FixSortingLayer(GameObject hitGo, GameObject hitGo2)
     {
         SpriteRenderer sp1 = hitGo.GetComponent<SpriteRenderer>();
         SpriteRenderer sp2 = hitGo2.GetComponent<SpriteRenderer>();
+        if (sp1 == null || sp2 == null)
+            return;
+
         if (sp1.sortingOrder <= sp2.sortingOrder)
         {
             sp1.sortingOrder = 1;
@@ -305,16 +421,14 @@ public class ShapesManager : MonoBehaviour
 
 
 
-    private IEnumerator FindMatchesAndCollapse(RaycastHit2D hit2)
+    private IEnumerator FindMatchesAndCollapse(GameObject hitGo2)
     {
-        //get the second item that was part of the swipe
-        var hitGo2 = hit2.collider.gameObject;
         Vector3 hitGoPosition = hitGo.transform.position;
         Vector3 hitGo2Position = hitGo2.transform.position;
         shapes.Swap(hitGo, hitGo2);
 
         //move the swapped ones
-        yield return AnimateCandySwap(hitGo, hitGo2, hitGo2Position, hitGoPosition, Constants.AnimationDuration);
+        yield return AnimateCandySwap(hitGo, hitGo2, hitGo2Position, hitGoPosition, SwapAnimationDuration);
 
         //get the matches via the helper methods
         var hitGomatchesInfo = shapes.GetMatches(hitGo);
@@ -326,7 +440,7 @@ public class ShapesManager : MonoBehaviour
         //if user's swap didn't create at least a 3-match, undo their swap
         if (totalMatches.Count() < Constants.MinimumMatches)
         {
-            yield return AnimateCandySwap(hitGo, hitGo2, hitGoPosition, hitGo2Position, Constants.AnimationDuration);
+            yield return AnimateCandySwap(hitGo, hitGo2, hitGoPosition, hitGo2Position, SwapAnimationDuration);
 
             shapes.UndoSwap();
         }
@@ -344,8 +458,8 @@ public class ShapesManager : MonoBehaviour
             if (timesRun >= 2)
                 IncreaseScore(Constants.SubsequentMatchScore);
 
-            if (soundManager != null)
-                soundManager.PlayCrincle();
+            //audio
+            AudioController.Instance.PlaySfx("Eat");
 
             foreach (var item in matchedItems)
             {
@@ -364,13 +478,16 @@ public class ShapesManager : MonoBehaviour
 
             int maxDistance = Mathf.Max(collapsedCandyInfo.MaxDistance, newCandyInfo.MaxDistance);
 
-            MoveAndAnimate(newCandyInfo.AlteredCandy, maxDistance);
-            MoveAndAnimate(collapsedCandyInfo.AlteredCandy, maxDistance);
+            MoveAndAnimate(newCandyInfo.Moves);
+            MoveAndAnimate(collapsedCandyInfo.Moves);
 
 
 
             //will wait for both of the above animations
-            yield return new WaitForSeconds(Constants.MoveAnimationMinDuration * maxDistance);
+            yield return new WaitForSeconds(GetCollapseMoveDuration(maxDistance));
+
+            if (DelayBetweenCascadeMatches > 0f)
+                yield return new WaitForSeconds(DelayBetweenCascadeMatches);
 
             //search if there are matches with the new/collapsed items
             totalMatches = shapes.GetMatches(collapsedCandyInfo.AlteredCandy).
@@ -383,15 +500,29 @@ public class ShapesManager : MonoBehaviour
 
         if (matchedItemQueue.Count > 0)
         {
+            ResetAllShapeOpacity();
+
+            if (HideBoardBeforeItemListDelay > 0f)
+                yield return new WaitForSeconds(HideBoardBeforeItemListDelay);
+
             SetAllShapesVisible(false);
+
             if (GameController.Instance != null)
                 yield return GameController.Instance.PlayMatchedItems(matchedItemQueue);
+
+            if (ShowBoardAfterItemListDelay > 0f)
+                yield return new WaitForSeconds(ShowBoardAfterItemListDelay);
+
+            ResetAllShapeOpacity();
             SetAllShapesVisible(true);
         }
 
+        ResetAllShapeOpacity();
+        bool shouldEndTurn = timesRun > 1;
         state = GameState.None;
-        if (timesRun > 1 && GameController.Instance != null)
-            GameController.Instance.EndCurrentTurn();
+
+        if (GameController.Instance != null)
+            GameController.Instance.CompleteCurrentTurnAction(shouldEndTurn);
 
         StartCheckForPotentialMatches();
     }
@@ -419,12 +550,17 @@ public class ShapesManager : MonoBehaviour
             {
                 GameObject shape = shapes[row, column];
                 if (shape != null)
+                {
+                    if (visible)
+                        ResetShapeOpacity(shape);
+
                     shape.SetActive(visible);
+                }
             }
         }
     }
 
-   
+
     private AlteredCandyInfo CreateNewCandyInSpecificColumns(IEnumerable<int> columnsWithMissingCandy)
     {
         AlteredCandyInfo newCandyInfo = new AlteredCandyInfo();
@@ -432,35 +568,120 @@ public class ShapesManager : MonoBehaviour
         //find how many null values the column has
         foreach (int column in columnsWithMissingCandy)
         {
-            var emptyItems = shapes.GetEmptyItemsOnColumn(column);
-            foreach (var item in emptyItems)
+            var emptyItems = shapes.GetEmptyItemsOnColumn(column).ToList();
+            for (int i = 0; i < emptyItems.Count; i++)
             {
+                ShapeInfo item = emptyItems[i];
                 var go = GetRandomCandy();
-                GameObject newCandy = Instantiate(go, SpawnPositions[column], Quaternion.identity)
+                int spawnRow = Constants.Rows + i;
+                GameObject newCandy = Instantiate(go, GetWorldPosition(spawnRow, column), Quaternion.identity)
                     as GameObject;
 
                 newCandy.transform.SetParent(transform);
                 newCandy.GetComponent<Shape>().Assign(go.GetComponent<Shape>().Type, item.Row, item.Column, GetRandomItemCount());
                 newCandy.transform.localScale = Vector3.one * GetCandyScale();
+                ApplyBoardMask(newCandy);
 
-                if (Constants.Rows - item.Row > newCandyInfo.MaxDistance)
-                    newCandyInfo.MaxDistance = Constants.Rows - item.Row;
+                int distance = spawnRow - item.Row;
+                if (distance > newCandyInfo.MaxDistance)
+                    newCandyInfo.MaxDistance = distance;
 
                 shapes[item.Row, item.Column] = newCandy;
-                newCandyInfo.AddCandy(newCandy);
+                newCandyInfo.AddCandy(newCandy, spawnRow, item.Row, column);
             }
         }
         return newCandyInfo;
     }
 
-    private void MoveAndAnimate(IEnumerable<GameObject> movedGameObjects, int distance)
+    private void MoveAndAnimate(IEnumerable<CandyMoveData> moves)
     {
-        float duration = Constants.MoveAnimationMinDuration * distance;
-        foreach (var item in movedGameObjects)
+        float stepDuration = Mathf.Max(0f, CollapseMoveDurationPerCell);
+        foreach (CandyMoveData move in moves)
         {
-            item.transform.DOKill();
-            item.transform.DOMove(GetWorldPosition(item.GetComponent<Shape>().Row, item.GetComponent<Shape>().Column), duration);
+            if (move.Candy == null)
+                continue;
+
+            move.Candy.transform.DOKill();
+            bool startsOutsideBoard = move.StartRow >= Constants.Rows;
+            if (startsOutsideBoard)
+                SetNonSpriteRenderersVisible(move.Candy, false);
+
+            Sequence dropSequence = DOTween.Sequence();
+            for (int row = move.StartRow - 1; row >= move.TargetRow; row--)
+            {
+                dropSequence.Append(move.Candy.transform
+                    .DOMove(GetWorldPosition(row, move.Column), stepDuration)
+                    .SetEase(CollapseMoveEase));
+
+                if (startsOutsideBoard && row == Constants.Rows - 1)
+                    dropSequence.AppendCallback(() => SetNonSpriteRenderersVisible(move.Candy, true));
+            }
         }
+    }
+
+    private void RefreshBoardMask()
+    {
+        if (!ClipCandyToBoard)
+        {
+            if (boardSpriteMask != null)
+                boardSpriteMask.enabled = false;
+
+            return;
+        }
+
+        if (boardSpriteMask == null)
+        {
+            GameObject maskGo = new GameObject("BoardSpriteMask");
+            maskGo.transform.SetParent(transform);
+            boardSpriteMask = maskGo.AddComponent<SpriteMask>();
+        }
+
+        if (boardMaskSprite == null)
+        {
+            Texture2D texture = new Texture2D(1, 1);
+            texture.SetPixel(0, 0, Color.white);
+            texture.Apply();
+            texture.hideFlags = HideFlags.HideAndDontSave;
+            boardMaskSprite = Sprite.Create(texture, new Rect(0f, 0f, 1f, 1f), new Vector2(0.5f, 0.5f), 1f);
+            boardMaskSprite.hideFlags = HideFlags.HideAndDontSave;
+        }
+
+        float width = Constants.Columns * CandySize.x + BoardMaskPadding * 2f;
+        float height = Constants.Rows * CandySize.y + BoardMaskPadding * 2f;
+        Vector2 center = BoardBottomLeft + new Vector2((Constants.Columns - 1) * CandySize.x * 0.5f, (Constants.Rows - 1) * CandySize.y * 0.5f);
+
+        boardSpriteMask.sprite = boardMaskSprite;
+        boardSpriteMask.transform.position = center;
+        boardSpriteMask.transform.localScale = new Vector3(width, height, 1f);
+        boardSpriteMask.enabled = true;
+    }
+
+    private void ApplyBoardMask(GameObject candy)
+    {
+        SpriteMaskInteraction maskInteraction = ClipCandyToBoard
+            ? SpriteMaskInteraction.VisibleInsideMask
+            : SpriteMaskInteraction.None;
+
+        SpriteRenderer[] spriteRenderers = candy.GetComponentsInChildren<SpriteRenderer>(true);
+        foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+            spriteRenderer.maskInteraction = maskInteraction;
+    }
+
+    private void SetNonSpriteRenderersVisible(GameObject candy, bool visible)
+    {
+        Renderer[] renderers = candy.GetComponentsInChildren<Renderer>(true);
+        foreach (Renderer renderer in renderers)
+        {
+            if (renderer is SpriteRenderer)
+                continue;
+
+            renderer.enabled = visible;
+        }
+    }
+
+    private float GetCollapseMoveDuration(int distance)
+    {
+        return Mathf.Max(0f, CollapseMoveDurationPerCell) * Mathf.Max(1, distance);
     }
 
     private IEnumerator AnimateCandySwap(GameObject firstCandy, GameObject secondCandy,
@@ -479,15 +700,35 @@ public class ShapesManager : MonoBehaviour
     {
         item.transform.DOKill();
         GameObject explosion = GetRandomExplosion();
-        var newExplosion = Instantiate(explosion, item.transform.position, Quaternion.identity) as GameObject;
-        newExplosion.transform.SetParent(transform);
-        Destroy(newExplosion, Constants.ExplosionDuration);
+        if (explosion != null)
+        {
+            var newExplosion = Instantiate(explosion, item.transform.position, Quaternion.identity) as GameObject;
+            newExplosion.transform.SetParent(transform);
+            Destroy(newExplosion, Constants.ExplosionDuration);
+        }
+
         Destroy(item);
     }
 
     private GameObject GetRandomCandy()
     {
-        return CandyPrefabs[Random.Range(0, CandyPrefabs.Length)];
+        if (CandyPrefabs == null || CandyPrefabs.Length == 0)
+            return null;
+
+        for (int i = 0; i < CandyPrefabs.Length; i++)
+        {
+            GameObject prefab = CandyPrefabs[Random.Range(0, CandyPrefabs.Length)];
+            if (prefab != null && prefab.GetComponent<Shape>() != null)
+                return prefab;
+        }
+
+        foreach (GameObject prefab in CandyPrefabs)
+        {
+            if (prefab != null && prefab.GetComponent<Shape>() != null)
+                return prefab;
+        }
+
+        return null;
     }
 
     private int GetRandomItemCount()
@@ -517,11 +758,15 @@ public class ShapesManager : MonoBehaviour
 
     private void ShowScore()
     {
-        ScoreText.text = "Score: " + score.ToString();
+        if (ScoreText != null)
+            ScoreText.text = "Score: " + score.ToString();
     }
 
     private GameObject GetRandomExplosion()
     {
+        if (ExplosionPrefabs == null || ExplosionPrefabs.Length == 0)
+            return null;
+
         return ExplosionPrefabs[Random.Range(0, ExplosionPrefabs.Length)];
     }
 
@@ -543,6 +788,7 @@ public class ShapesManager : MonoBehaviour
         if (CheckPotentialMatchesCoroutine != null)
             StopCoroutine(CheckPotentialMatchesCoroutine);
         ResetOpacityOnPotentialMatches();
+        ResetAllShapeOpacity();
     }
 
     private void ResetOpacityOnPotentialMatches()
@@ -550,13 +796,39 @@ public class ShapesManager : MonoBehaviour
         if (potentialMatches != null)
             foreach (var item in potentialMatches)
             {
-                if (item == null) break;
+                if (item == null)
+                    continue;
 
-                item.GetComponent<SpriteRenderer>().DOKill();
-                Color c = item.GetComponent<SpriteRenderer>().color;
-                c.a = 1.0f;
-                item.GetComponent<SpriteRenderer>().color = c;
+                ResetShapeOpacity(item);
             }
+    }
+
+    private void ResetAllShapeOpacity()
+    {
+        if (shapes == null)
+            return;
+
+        for (int row = 0; row < shapes.Rows; row++)
+        {
+            for (int column = 0; column < shapes.Columns; column++)
+            {
+                GameObject shape = shapes[row, column];
+                if (shape != null)
+                    ResetShapeOpacity(shape);
+            }
+        }
+    }
+
+    private void ResetShapeOpacity(GameObject shape)
+    {
+        SpriteRenderer[] spriteRenderers = shape.GetComponentsInChildren<SpriteRenderer>(true);
+        foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+        {
+            spriteRenderer.DOKill();
+            Color color = spriteRenderer.color;
+            color.a = 1f;
+            spriteRenderer.color = color;
+        }
     }
     private IEnumerator CheckPotentialMatches()
     {
@@ -582,7 +854,11 @@ public class ShapesManager : MonoBehaviour
         {
             foreach (var item in CandyPrefabs)
             {
-                if (item.GetComponent<Shape>().Type.Contains(tokens[0].Trim()))
+                if (item == null)
+                    continue;
+
+                Shape shape = item.GetComponent<Shape>();
+                if (shape != null && shape.Type.Contains(tokens[0].Trim()))
                     return item;
             }
 

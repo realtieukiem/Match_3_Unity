@@ -4,7 +4,7 @@ using UnityEngine;
 public abstract class PlayerControllerBase : MonoBehaviour
 {
     public Transform EffectTarget;
-    public Transform TurnArrowPoint;
+    public GameObject TurnArrow;
 
     public TMP_Text HealthText;
     public TMP_Text RageText;
@@ -21,15 +21,22 @@ public abstract class PlayerControllerBase : MonoBehaviour
     public int Armor { get; private set; }
     public int Mana { get; private set; }
     public bool IsDead { get; private set; }
+    public virtual bool AllowsBoardInput
+    {
+        get { return false; }
+    }
+
+    protected virtual void OnValidate()
+    {
+        MaxHealth = Mathf.Max(1, MaxHealth);
+        MaxRage = Mathf.Max(1, MaxRage);
+        MaxMana = Mathf.Max(1, MaxMana);
+        MaxRageAttackMultiplier = Mathf.Max(1f, MaxRageAttackMultiplier);
+    }
 
     public Transform GetEffectTarget()
     {
         return EffectTarget != null ? EffectTarget : transform;
-    }
-
-    public Transform GetTurnArrowPoint()
-    {
-        return TurnArrowPoint != null ? TurnArrowPoint : transform;
     }
 
     protected virtual void Awake()
@@ -38,18 +45,27 @@ public abstract class PlayerControllerBase : MonoBehaviour
         Rage = 0;
         Armor = 0;
         Mana = 0;
+        SetTurnIndicatorActive(false);
         RefreshTexts();
     }
 
     public virtual void StartTurn()
     {
         Armor = 0;
+        SetTurnIndicatorActive(true);
         RefreshTexts();
     }
 
     public virtual void EndTurn()
     {
+        SetTurnIndicatorActive(false);
         RefreshTexts();
+    }
+
+    public void SetTurnIndicatorActive(bool active)
+    {
+        if (TurnArrow != null)
+            TurnArrow.SetActive(active);
     }
 
     public virtual void TakeDamage(int amount)

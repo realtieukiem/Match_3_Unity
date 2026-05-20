@@ -22,6 +22,9 @@ public class MatchesInfo
 
     public void AddObject(GameObject go)
     {
+        if (go == null)
+            return;
+
         if (!matchedCandies.Contains(go))
             matchedCandies.Add(go);
     }
