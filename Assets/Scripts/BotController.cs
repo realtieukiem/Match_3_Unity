@@ -18,6 +18,14 @@ public class BotController : PlayerControllerBase
         ThinkDelay = Mathf.Max(0f, ThinkDelay);
     }
 
+    public override void Configure(PlayerConfig config)
+    {
+        base.Configure(config);
+
+        if (config != null)
+            ThinkDelay = config.BotThinkDelay;
+    }
+
     public override void StartTurn()
     {
         base.StartTurn();

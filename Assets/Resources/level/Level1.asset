@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d1df73d84d07eb438e73a6e0fb07103, type: 3}
+  m_Name: Level1
+  m_EditorClassIdentifier: 
+  DisplayName: Level 1
+  MapIcon: {fileID: 0}
+  GameplaySceneName: GamePlay
+  Player1Config: {fileID: 11400000, guid: d22ecf738cea72d4e8880c0bc24f1f77, type: 2}
+  BotConfig: {fileID: 11400000, guid: e35f8c677632eef4ba9c3bb1bf5deee6, type: 2}
+  MaxPlayer1Cards: 3
+  Player1Cards:
+  - {fileID: 11400000, guid: 1f13ba655740d314bbc79c1c37ec2931, type: 2}
+  - {fileID: 11400000, guid: 548e41c3e9eacbe40b75a237b7c8d6c2, type: 2}
+  Player2Cards:
+  - {fileID: 11400000, guid: 1f13ba655740d314bbc79c1c37ec2931, type: 2}
+  - {fileID: 11400000, guid: 548e41c3e9eacbe40b75a237b7c8d6c2, type: 2}
+  Player2RandomCardPool: []
+  RandomizePlayer2CardsWhenBot: 1
+  MaxPlayer2RandomCards: 3

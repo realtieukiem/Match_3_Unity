@@ -1,15 +1,10 @@
-using TMPro;
+using System;
 using UnityEngine;
 
 public abstract class PlayerControllerBase : MonoBehaviour
 {
     public Transform EffectTarget;
     public GameObject TurnArrow;
-
-    public TMP_Text HealthText;
-    public TMP_Text RageText;
-    public TMP_Text ArmorText;
-    public TMP_Text ManaText;
 
     public int MaxHealth = 200;
     public int MaxRage = 100;
@@ -21,6 +16,9 @@ public abstract class PlayerControllerBase : MonoBehaviour
     public int Armor { get; private set; }
     public int Mana { get; private set; }
     public bool IsDead { get; private set; }
+    public PlayerConfig Config { get; private set; }
+    public event Action StatsChanged;
+
     public virtual bool AllowsBoardInput
     {
         get { return false; }
@@ -39,27 +37,37 @@ public abstract class PlayerControllerBase : MonoBehaviour
         return EffectTarget != null ? EffectTarget : transform;
     }
 
+    public virtual void Configure(PlayerConfig config)
+    {
+        Config = config;
+        if (config != null)
+        {
+            MaxHealth = config.MaxHealth;
+            MaxRage = config.MaxRage;
+            MaxMana = config.MaxMana;
+            MaxRageAttackMultiplier = config.MaxRageAttackMultiplier;
+        }
+
+        ResetStats();
+    }
+
     protected virtual void Awake()
     {
-        Health = MaxHealth;
-        Rage = 0;
-        Armor = 0;
-        Mana = 0;
+        ResetStats();
         SetTurnIndicatorActive(false);
-        RefreshTexts();
     }
 
     public virtual void StartTurn()
     {
         Armor = 0;
         SetTurnIndicatorActive(true);
-        RefreshTexts();
+        NotifyStatsChanged();
     }
 
     public virtual void EndTurn()
     {
         SetTurnIndicatorActive(false);
-        RefreshTexts();
+        NotifyStatsChanged();
     }
 
     public void SetTurnIndicatorActive(bool active)
@@ -78,9 +86,12 @@ public abstract class PlayerControllerBase : MonoBehaviour
         Health = Mathf.Max(0, Health - damageAfterArmor);
 
         if (Health <= 0)
+        {
             Die();
+            return;
+        }
 
-        RefreshTexts();
+        NotifyStatsChanged();
     }
 
     public virtual void Heal(int amount)
@@ -89,7 +100,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
             return;
 
         Health = Mathf.Min(MaxHealth, Health + amount);
-        RefreshTexts();
+        NotifyStatsChanged();
     }
 
     public virtual void AddRage(int amount)
@@ -98,7 +109,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
             return;
 
         Rage = Mathf.Min(MaxRage, Rage + amount);
-        RefreshTexts();
+        NotifyStatsChanged();
     }
 
     public virtual int GetAttackDamageWithRageBonus(int baseDamage)
@@ -110,7 +121,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
             return baseDamage;
 
         Rage = 0;
-        RefreshTexts();
+        NotifyStatsChanged();
         return Mathf.RoundToInt(baseDamage * MaxRageAttackMultiplier);
     }
 
@@ -121,7 +132,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
 
         int drained = Mathf.Min(Rage, amount);
         Rage -= drained;
-        RefreshTexts();
+        NotifyStatsChanged();
         return drained;
     }
 
@@ -131,7 +142,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
             return;
 
         Mana = Mathf.Min(MaxMana, Mana + amount);
-        RefreshTexts();
+        NotifyStatsChanged();
     }
 
     public virtual int DrainMana(int amount)
@@ -141,7 +152,7 @@ public abstract class PlayerControllerBase : MonoBehaviour
 
         int drained = Mathf.Min(Mana, amount);
         Mana -= drained;
-        RefreshTexts();
+        NotifyStatsChanged();
         return drained;
     }
 
@@ -151,28 +162,29 @@ public abstract class PlayerControllerBase : MonoBehaviour
             return;
 
         Armor += amount;
-        RefreshTexts();
+        NotifyStatsChanged();
     }
 
     public virtual void Die()
     {
         IsDead = true;
         Health = 0;
-        RefreshTexts();
+        NotifyStatsChanged();
     }
 
-    protected virtual void RefreshTexts()
+    protected void NotifyStatsChanged()
     {
-        if (HealthText != null)
-            HealthText.text = Health + "/" + MaxHealth;
+        if (StatsChanged != null)
+            StatsChanged.Invoke();
+    }
 
-        if (RageText != null)
-            RageText.text = Rage + "/" + MaxRage;
-
-        if (ArmorText != null)
-            ArmorText.text = Armor.ToString();
-
-        if (ManaText != null)
-            ManaText.text = Mana + "/" + MaxMana;
+    protected void ResetStats()
+    {
+        Health = Mathf.CeilToInt(MaxHealth * 0.8f);
+        Rage = 0;
+        Armor = 0;
+        Mana = 0;
+        IsDead = false;
+        NotifyStatsChanged();
     }
 }

@@ -6,11 +6,22 @@ public class GameController : MonoBehaviour
 {
     public static GameController Instance { get; private set; }
 
+    [Header("Systems")]
     public ShapesManager ShapeController;
     public AttackController AttackController;
+    public TurnTimer TurnTimer;
+    public CardController CardController;
+
+    [Header("Player Setup")]
+    public LevelConfig DefaultLevelConfig;
+    public PlayerConfig Player1Config;
+    public PlayerConfig Player2Config;
+    public Transform Player1SpawnRoot;
+    public Transform Player2SpawnRoot;
+
+    [Header("Runtime Players")]
     public PlayerControllerBase Player1;
     public PlayerControllerBase Player2;
-    public TurnTimer TurnTimer;
 
     public PlayerControllerBase CurrentPlayer { get; private set; }
     public PlayerControllerBase OpponentPlayer { get; private set; }
@@ -18,6 +29,7 @@ public class GameController : MonoBehaviour
 
     private bool isResolvingTurnAction;
     private bool endTurnWhenActionFinishes;
+    private LevelConfig activeLevelConfig;
 
     private void Awake()
     {
@@ -28,7 +40,11 @@ public class GameController : MonoBehaviour
         }
 
         Instance = this;
+        ApplyLevelConfig();
         ResolveReferences();
+        SetupPlayers();
+        if (CardController != null)
+            CardController.Configure(activeLevelConfig);
         RegisterTimerEvents();
     }
 
@@ -86,6 +102,9 @@ public class GameController : MonoBehaviour
         if (bot == null || CurrentPlayer != bot || isResolvingTurnAction || ShapeController == null)
             return false;
 
+        if (CardController != null)
+            CardController.UseRandomCards(bot);
+
         BeginCurrentTurnAction();
         if (ShapeController.TryPlayAutomaticMove())
             return true;
@@ -129,7 +148,11 @@ public class GameController : MonoBehaviour
             OpponentPlayer.SetTurnIndicatorActive(false);
 
         if (CurrentPlayer != null)
+        {
             CurrentPlayer.StartTurn();
+            if (CardController != null)
+                CardController.StartTurn(CurrentPlayer);
+        }
 
         if (TurnTimer != null)
             TurnTimer.Restart();
@@ -166,7 +189,38 @@ public class GameController : MonoBehaviour
         if (TurnTimer == null)
             TurnTimer = gameObject.AddComponent<TurnTimer>();
 
-        ResolvePlayers();
+        if (CardController == null)
+            CardController = GetComponent<CardController>();
+
+        if (CardController == null)
+            CardController = FindObjectOfType<CardController>();
+
+        if (CardController == null)
+            CardController = gameObject.AddComponent<CardController>();
+
+        bool needsPlayer1Fallback = Player1 == null && (Player1Config == null || Player1Config.PlayerPrefab == null);
+        bool needsPlayer2Fallback = Player2 == null && (Player2Config == null || Player2Config.PlayerPrefab == null);
+        if (needsPlayer1Fallback || needsPlayer2Fallback)
+            ResolvePlayers();
+    }
+
+    private void ApplyLevelConfig()
+    {
+        activeLevelConfig = SelectedLevel.Current != null ? SelectedLevel.Current : DefaultLevelConfig;
+        if (activeLevelConfig == null)
+            return;
+
+        if (activeLevelConfig.Player1Config != null)
+            Player1Config = activeLevelConfig.Player1Config;
+
+        if (activeLevelConfig.BotConfig != null)
+            Player2Config = activeLevelConfig.BotConfig;
+    }
+
+    private void SetupPlayers()
+    {
+        Player1 = SetupPlayer(Player1Config, Player1SpawnRoot, Player1);
+        Player2 = SetupPlayer(Player2Config, Player2SpawnRoot, Player2);
     }
 
     private void ResolvePlayers()
@@ -186,5 +240,44 @@ public class GameController : MonoBehaviour
                 return;
             }
         }
+    }
+
+    private PlayerControllerBase SetupPlayer(PlayerConfig config, Transform spawnRoot, PlayerControllerBase fallbackPlayer)
+    {
+        if (config == null)
+            return fallbackPlayer;
+
+        PlayerControllerBase player = fallbackPlayer;
+        if (config.PlayerPrefab != null)
+        {
+            Transform parent = spawnRoot != null ? spawnRoot : transform;
+            player = Instantiate(config.PlayerPrefab, parent);
+            ResetSpawnedPlayerTransform(player.transform);
+        }
+
+        if (player == null)
+        {
+            Debug.LogError($"{nameof(GameController)} requires a player prefab or fallback player for {config.name}.", this);
+            return null;
+        }
+
+        player.Configure(config);
+        return player;
+    }
+
+    private void ResetSpawnedPlayerTransform(Transform playerTransform)
+    {
+        RectTransform rectTransform = playerTransform as RectTransform;
+        if (rectTransform != null)
+        {
+            rectTransform.anchoredPosition = Vector2.zero;
+            rectTransform.localRotation = Quaternion.identity;
+            rectTransform.localScale = Vector3.one;
+            return;
+        }
+
+        playerTransform.localPosition = Vector3.zero;
+        playerTransform.localRotation = Quaternion.identity;
+        playerTransform.localScale = Vector3.one;
     }
 }
