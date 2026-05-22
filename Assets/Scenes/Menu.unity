@@ -616,7 +616,8 @@ MonoBehaviour:
   FallbackGameplaySceneName: GamePlay
   MaxSelectedCards: 3
   SelectedCards:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 1f13ba655740d314bbc79c1c37ec2931, type: 2}
+  - {fileID: 11400000, guid: 548e41c3e9eacbe40b75a237b7c8d6c2, type: 2}
 --- !u!4 &1038899022
 Transform:
   m_ObjectHideFlags: 0
