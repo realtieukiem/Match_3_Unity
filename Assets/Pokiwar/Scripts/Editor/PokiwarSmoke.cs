@@ -350,7 +350,7 @@ namespace Pokiwar.EditorTools
         private static IEnumerator Capture(string name)
         {
             yield return new WaitForEndOfFrame();
-            var canvas = FindObjectOfType<Canvas>();
+            var canvas = FindFirstObjectByType<Canvas>();
             const int w = 1920, h = 1080;
             var rt = new RenderTexture(w, h, 24);
             var camGo = new GameObject("CaptureCam");

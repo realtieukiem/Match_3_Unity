@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Match_3_Unity.sln"
+    "dotnet.defaultSolution": "Match_3_Unity.slnx"
 }

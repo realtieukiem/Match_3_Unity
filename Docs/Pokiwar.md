@@ -1,11 +1,11 @@
 # Pokiwar Offline - vertical slice
 
 Turn-based pet battle on one shared 8x8 match-3 board. One player pet vs one AI monster/boss, local save.
-Unity 2022.3.27f1, uGUI, mouse + touch, 16:9 landscape (1920x1080 reference, `Expand` scaler).
+Unity 6 (6000.0.79f1 LTS), uGUI, mouse + touch, 16:9 landscape (1920x1080 reference, `Expand` scaler).
 
 ## Play it
 
-1. Open the project in Unity 2022.3.27f1.
+1. Open the project in Unity 6000.0.79f1.
 2. Open `Assets/Pokiwar/Scenes/Pokiwar.unity` (first scene in Build Settings) and press Play.
 3. Hub -> ADVENTURE -> Dune Beach -> pick pet + up to 5 cards -> FIGHT.
    - Swap: drag a gem onto a neighbour, or tap one gem then a neighbour.
