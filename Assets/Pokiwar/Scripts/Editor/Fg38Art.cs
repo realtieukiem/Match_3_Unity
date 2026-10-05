@@ -117,7 +117,23 @@ namespace Pokiwar.EditorTools
             S("UI/Room/room_panel_v01.png", "room_panel", 1024, 120, "room.panel"),
             I("UI/Room/room_pet_pedestal_v01.png", "room_stand", 512, false, "room.stand"),
             S("UI/Room/room_card_slot_add_v01.png", "card_add", 512, 40, "card.add"),
+            I("Meta/Icons/icon_gold_v01.png", "icon_gold", 256, false, "icon.gold"),
+            I("Avatar/avatar_base_v01.png", "avatar_base", 512, false, "avatar.base"),
+            Doll("hair", "spiky"), Doll("hair", "bob"), Doll("hair", "ponytail"),
+            Doll("top", "tee"), Doll("top", "jacket"), Doll("top", "robe"),
+            Doll("bottom", "shorts"), Doll("bottom", "pants"), Doll("bottom", "skirt"),
+            Doll("hat", "cap"), Doll("hat", "wizard"),
+            Icon("hair", "spiky"), Icon("hair", "bob"), Icon("hair", "ponytail"),
+            Icon("top", "tee"), Icon("top", "jacket"), Icon("top", "robe"),
+            Icon("bottom", "shorts"), Icon("bottom", "pants"), Icon("bottom", "skirt"),
+            Icon("hat", "cap"), Icon("hat", "wizard"),
         };
+
+        private static Item Doll(string slot, string name) =>
+            I("Avatar/avatar_" + slot + "_" + name + "_v01.png", "avatar_" + slot + "_" + name, 512, false, "avatar." + slot + "." + name);
+
+        private static Item Icon(string slot, string name) =>
+            I("Avatar/Icons/avatar_" + slot + "_" + name + "_icon_v01.png", "avatar_" + slot + "_" + name + "_icon", 256, false, "avatar." + slot + "." + name + ".icon");
 
         /// <summary>Copies missing files from Source, draws the square gems, and overrides the matching keys in art.</summary>
         public static void Apply(Dictionary<string, Sprite> art)

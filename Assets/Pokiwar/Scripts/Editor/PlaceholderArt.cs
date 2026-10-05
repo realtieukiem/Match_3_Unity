@@ -62,6 +62,8 @@ namespace Pokiwar.EditorTools
             made["skill.mind_spark"] = WriteIcon("skill_mind_spark", new Color(0.7f, 0.6f, 0.2f), Star);
             made["skill.tidal_siphon"] = WriteIcon("skill_tidal_siphon", new Color(0.15f, 0.35f, 0.75f), YinYangWhite);
 
+            WriteAvatar(made);
+
             AssetDatabase.Refresh();
             var result = new Dictionary<string, Sprite>();
             foreach (var kv in made)
@@ -70,6 +72,46 @@ namespace Pokiwar.EditorTools
                 result[kv.Key] = AssetDatabase.LoadAssetAtPath<Sprite>(kv.Value);
             }
             return result;
+        }
+
+        private static bool Disc(float x, float y, float cx, float cy, float r) => (x - cx) * (x - cx) + (y - cy) * (y - cy) <= r * r;
+
+        private static bool Box(float x, float y, float cx, float cy, float hw, float hh) => RoundRect(x - cx, y - cy, hw, hh, Mathf.Min(hw, hh) * 0.5f);
+
+        private static bool Head(float x, float y) => Disc(x, y, 0f, 0.4f, 0.34f);
+        private static bool Torso(float x, float y) => Box(x, y, 0f, -0.14f, 0.2f, 0.2f);
+        private static bool Arms(float x, float y) => Box(x, y, -0.27f, -0.14f, 0.065f, 0.19f) || Box(x, y, 0.27f, -0.14f, 0.065f, 0.19f);
+        private static bool Legs(float x, float y) => Box(x, y, -0.09f, -0.56f, 0.075f, 0.22f) || Box(x, y, 0.09f, -0.56f, 0.075f, 0.22f);
+        private static bool Feet(float x, float y) => Box(x, y, -0.11f, -0.8f, 0.1f, 0.05f) || Box(x, y, 0.11f, -0.8f, 0.1f, 0.05f);
+
+        private static string Doll(string name, Func<float, float, bool> shape, Color c) =>
+            Write("avatar_" + name, 512, (x, y) => shape(x, y) ? Shade(c, x, y) : Color.clear, 2);
+
+        private static void WriteAvatar(Dictionary<string, string> made)
+        {
+            var skin = Hex("#F2C9A0");
+            var ink = Hex("#21191F");
+            made["avatar.base"] = Write("avatar_base", 512, (x, y) =>
+            {
+                if (Disc(x, y, -0.12f, 0.36f, 0.035f) || Disc(x, y, 0.12f, 0.36f, 0.035f)) return ink;
+                if (Box(x, y, 0f, -0.37f, 0.19f, 0.06f)) return Color.white;
+                if (Head(x, y) || Disc(x, y, -0.35f, 0.4f, 0.06f) || Disc(x, y, 0.35f, 0.4f, 0.06f) || Box(x, y, 0f, 0.04f, 0.06f, 0.05f) ||
+                    Torso(x, y) || Arms(x, y) || Legs(x, y) || Feet(x, y)) return Shade(skin, x, y);
+                return Color.clear;
+            }, 2);
+            bool Cap(float x, float y) => Head(x, y) && y > 0.48f || Disc(x, y, 0f, 0.46f, 0.37f) && y > 0.5f;
+            made["avatar.hair.spiky"] = Doll("hair_spiky", (x, y) => Cap(x, y) ||
+                Tri(x, y, -0.36f, 0.5f, -0.2f, 0.62f, -0.44f, 0.72f) || Tri(x, y, 0.36f, 0.5f, 0.2f, 0.62f, 0.44f, 0.72f) || Tri(x, y, -0.12f, 0.7f, 0.12f, 0.7f, 0f, 0.86f), Hex("#3A2A24"));
+            made["avatar.hair.bob"] = Doll("hair_bob", (x, y) => Cap(x, y) || Disc(x, y, 0f, 0.42f, 0.4f) && y > 0.18f && Mathf.Abs(x) > 0.27f, Hex("#B5562E"));
+            made["avatar.hair.ponytail"] = Doll("hair_ponytail", (x, y) => Cap(x, y) || Disc(x, y, 0.4f, 0.52f, 0.13f) || Box(x, y, 0.44f, 0.3f, 0.06f, 0.2f), Hex("#E8C24A"));
+            made["avatar.top.tee"] = Doll("top_tee", (x, y) => Box(x, y, 0f, -0.13f, 0.22f, 0.21f) || Box(x, y, -0.27f, -0.02f, 0.08f, 0.08f) || Box(x, y, 0.27f, -0.02f, 0.08f, 0.08f), Hex("#3C8ED8"));
+            made["avatar.top.jacket"] = Doll("top_jacket", (x, y) => Box(x, y, 0f, -0.12f, 0.23f, 0.23f) || Box(x, y, -0.27f, -0.12f, 0.08f, 0.2f) || Box(x, y, 0.27f, -0.12f, 0.08f, 0.2f), Hex("#C9762E"));
+            made["avatar.top.robe"] = Doll("top_robe", (x, y) => Box(x, y, 0f, -0.3f, 0.24f, 0.38f) || Box(x, y, -0.29f, -0.12f, 0.1f, 0.2f) || Box(x, y, 0.29f, -0.12f, 0.1f, 0.2f), Hex("#7A45C2"));
+            made["avatar.bottom.shorts"] = Doll("bottom_shorts", (x, y) => Box(x, y, 0f, -0.42f, 0.2f, 0.11f), Hex("#5A4636"));
+            made["avatar.bottom.pants"] = Doll("bottom_pants", (x, y) => Box(x, y, 0f, -0.38f, 0.2f, 0.07f) || Box(x, y, -0.09f, -0.55f, 0.085f, 0.21f) || Box(x, y, 0.09f, -0.55f, 0.085f, 0.21f), Hex("#5E6B3A"));
+            made["avatar.bottom.skirt"] = Doll("bottom_skirt", (x, y) => y < -0.3f && y > -0.56f && Mathf.Abs(x) < 0.2f + (-0.3f - y) * 0.5f, Hex("#D8506E"));
+            made["avatar.hat.cap"] = Doll("hat_cap", (x, y) => Disc(x, y, 0f, 0.55f, 0.33f) && y > 0.58f || Box(x, y, 0.2f, 0.6f, 0.24f, 0.035f), Hex("#D93A32"));
+            made["avatar.hat.wizard"] = Doll("hat_wizard", (x, y) => Tri(x, y, -0.32f, 0.62f, 0.32f, 0.62f, 0.08f, 1f) || Box(x, y, 0f, 0.62f, 0.42f, 0.04f), Hex("#3B3F9E"));
         }
 
         private static void ConfigureImporter(string path, bool sliced)

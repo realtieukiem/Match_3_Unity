@@ -128,6 +128,50 @@ Save the room pieces to `D:\Project\Pokiwar_Art_FG38\Assets\UI\Room\`:
 | `room_pet_pedestal_v01.png` | 512x192 | Round stone platform the player pet stands on | Seen from slightly above, sandstone with a gold rim |
 | `room_card_slot_add_v01.png` | 384x480 | Empty card slot ("choose card") | Card-shaped dark recess with a carved frame inside 40 px, a large cream `+` in the centre |
 
+## Batch 8 - player avatar paper doll (23 images)
+
+The player is a chibi trainer who owns the pets, like the original Zing Me game: a bald base body in plain
+underwear, with hair, top, bottom and hat drawn as separate layers stacked on top. The game stacks them in
+the order base -> bottom -> top -> hair -> hat, every layer at the same position and size, so every file
+MUST share one canvas and one pose.
+
+Canvas for the base and all 11 layers: 512x512, transparent, front-facing chibi, arms down and slightly away
+from the body, big head. Pin these pixel positions (y measured from the top):
+head centre (256, 154), head radius about 88 px, chin about y 240, shoulders about y 262, waist about y 330,
+feet bottom about y 474. Leave about 30 px of empty space at the top for tall hats.
+
+How to keep layers aligned: paint the base first. For each layer, paint the piece ON a copy of the base, then
+cut out only the piece's own pixels (everything else fully transparent) and save that. Check with a script
+(PIL) that compositing base + layer gives the dressed character with no gap or shift.
+Layer rules: hair stays close to the skull (no more than ~20 px above it) so any hat hides its top; hats
+cover the top of the head; tops cover the torso and upper arms but leave the hands; bottoms cover hips to
+knees or ankles; nothing covers the face.
+
+Save to `D:\Project\Pokiwar_Art_FG38\Assets\Avatar\`:
+
+| File | What |
+|---|---|
+| `avatar_base_v01.png` | Bald chibi body, warm skin, simple happy face, plain cream underwear shorts |
+| `avatar_hair_spiky_v01.png` | Short dark-brown spiky hair (starter) |
+| `avatar_hair_bob_v01.png` | Copper-red bob cut |
+| `avatar_hair_ponytail_v01.png` | Blonde side ponytail |
+| `avatar_top_tee_v01.png` | Blue T-shirt (starter) |
+| `avatar_top_jacket_v01.png` | Orange explorer jacket with pockets, long sleeves |
+| `avatar_top_robe_v01.png` | Purple mage robe reaching the knees, wide sleeves |
+| `avatar_bottom_shorts_v01.png` | Brown shorts (starter) |
+| `avatar_bottom_pants_v01.png` | Olive cargo pants with boots |
+| `avatar_bottom_skirt_v01.png` | Pink pleated skirt |
+| `avatar_hat_cap_v01.png` | Red trainer cap, brim to the right |
+| `avatar_hat_wizard_v01.png` | Tall navy wizard hat with a star |
+
+Shop icons: 256x256, transparent, the single item alone, centred, filling ~80 %, no body. Save to
+`D:\Project\Pokiwar_Art_FG38\Assets\Avatar\Icons\` as `avatar_<slot>_<name>_icon_v01.png` for the same 11
+items (for example `avatar_hat_cap_icon_v01.png`, `avatar_top_robe_icon_v01.png`).
+
+Final check: one contact sheet with the base alone, the starter outfit (spiky + tee + shorts), and three mixed
+outfits (bob + jacket + pants + cap, ponytail + robe + skirt + wizard hat, spiky + robe + pants), all
+composited by script.
+
 ## After any batch
 
 Tell Claude Code "lấy asset Codex mới vào game" (or run `Pokiwar/Rebuild Scene + Art` in Unity). Painted

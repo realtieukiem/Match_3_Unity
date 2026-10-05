@@ -129,6 +129,13 @@ namespace Pokiwar.EditorTools
 
         private static void Log(string s) => Debug.Log("[SMOKE] " + s);
 
+        private static int WornLayers(AvatarView v)
+        {
+            int n = 0;
+            foreach (var l in v.Layers) if (l != null && l.gameObject.activeSelf) n++;
+            return n;
+        }
+
         private void Check(bool ok, string what)
         {
             checks++;
@@ -186,6 +193,30 @@ namespace Pokiwar.EditorTools
             app.Hub.ShakeButton.onClick.Invoke();
             Check(app.Battle.Shake.Enabled && audio.SfxOn, "settings restored");
 
+            Check(WornLayers(app.Hub.Avatar) == 3, "hub shows the player avatar in the starter outfit (" + WornLayers(app.Hub.Avatar) + " layers)");
+            app.Hub.AvatarButton.onClick.Invoke();
+            yield return null;
+            Check(app.Wardrobe.gameObject.activeSelf, "wardrobe opens from hub");
+            app.Wardrobe.Tabs[(int)AvatarSlot.Hat].onClick.Invoke();
+            yield return null;
+            var hatRows = app.Wardrobe.ItemTemplate.transform.parent.GetComponentsInChildren<RowView>(false);
+            Check(hatRows.Length == 2, "hat tab lists 2 hats (" + hatRows.Length + ")");
+            int goldBefore = app.Save.Gold;
+            if (hatRows.Length > 0) hatRows[0].ExtraA.onClick.Invoke();
+            yield return null;
+            string hat = app.Avatars.WornIn(app.Save, AvatarSlot.Hat);
+            Check(hat != null && app.Save.Gold == goldBefore - app.Db.TryAvatarItem(hat).Price, "buying a hat spends gold and wears it");
+            Check(WornLayers(app.Wardrobe.Preview) == 4, "preview shows the new hat");
+            app.Wardrobe.NameField.text = "Smokey";
+            app.Wardrobe.SaveNameButton.onClick.Invoke();
+            var rereadAvatar = new SaveService(new FileSaveStore(), new JsonSaveSerializer(), app.Progression).LoadOrCreate();
+            Check(rereadAvatar.PlayerName == "Smokey" && rereadAvatar.AvatarWorn.Contains(hat), "name and outfit persist");
+            CheckOnScreen(app.Wardrobe.transform, "wardrobe");
+            yield return Capture("01b_wardrobe");
+            app.Wardrobe.BackButton.onClick.Invoke();
+            yield return null;
+            Check(app.Hub.gameObject.activeSelf && WornLayers(app.Hub.Avatar) == 4 && app.Hub.PlayerLabel.text.StartsWith("Smokey"), "hub shows the new outfit and name");
+
             app.Hub.AdventureButton.onClick.Invoke();
             yield return null;
             Check(app.Map.gameObject.activeSelf, "map opens from hub");
@@ -221,6 +252,7 @@ namespace Pokiwar.EditorTools
             var bc = app.Battle;
             Check(app.BattleScreen.activeSelf && bc.Engine != null, "battle starts");
             Check(app.Save.Energy == energy - 1, "energy spent");
+            Check(bc.PlayerCard.gameObject.activeSelf && bc.PlayerCard.NameLabel.text == "Smokey" && !bc.EnemyCard.gameObject.activeSelf, "player avatar card shows; a wild monster has none");
             string firstBattle = bc.Engine.State.BattleId;
 
             yield return WaitFor(() => bc.Engine.IsTurnOf(Side.Player) && bc.Board.InputEnabled, 20);

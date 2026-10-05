@@ -25,6 +25,8 @@ namespace Pokiwar.UI
         public Image TimerFill;
         public CanvasGroup BoardGroup;
         public CanvasGroup TurnPop;
+        public AvatarCard PlayerCard;
+        public AvatarCard EnemyCard;
         public CanvasGroup Banner;
         public Text BannerLabel;
         public Button AutoButton;

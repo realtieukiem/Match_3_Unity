@@ -97,8 +97,18 @@ lasting layout changes go into its `Portrait(...)` calls.
 | `Rewards/*` | EXP, pet EXP, gold, drops (stone/card/charm/pet, chance, first clear only) |
 | `AI/*` | weights per gem, randomness, mistakes, opponent-opportunity penalty, card/skill use, QTE skill |
 | `Rules/upgrade.config` | merge chance/cost per tier, lucky bonus, enhance chance/cost per level, fail accumulation, downgrade, sockets |
-| `Rules/progression.config` | starter pets/cards/items, energy, EXP curves |
+| `Rules/progression.config` | starter pets/cards/items, energy, EXP curves, default player name, starter avatar outfit |
+| `Avatar/*` | wearable avatar pieces: slot (Bottom / Top / Hair / Hat), price in gold, sprite key |
 | `Rules/map.main` | regions and nodes (position, encounter, unlock requirement, wins required) |
+
+## Player avatar
+
+The player is a trainer who owns the pets (original: room A 01:57 shows the bare paper-doll body, B 11:02 a
+dressed one; battle A 02:12 / B 01:20 shows the avatar card top-left). `AvatarService` (domain) buys, wears,
+takes off and renames; the save keeps `PlayerName`, `AvatarOwned`, `AvatarWorn` (save version 3, older saves get
+the starter outfit). `AvatarLook` (name + worn ids) is what any screen - or a remote player later - needs to draw
+one. It shows in the hub, standing beside the pet in the room, as the battle card (hidden for a wild monster),
+and in the AVATAR wardrobe (tabs PANTS / TOP / HAIR / HAT, tap a row to try on, BUY / WEAR / TAKE OFF).
 
 ## Sound and effects
 
@@ -184,6 +194,8 @@ Files in `Assets/Pokiwar/Art/Placeholder` (keep the name, or point `SpriteLibrar
 - Card icons: `card_mana_potion`, `card_herbal_salve`, `card_fire_bolt`, `card_summon_sprite`, `card_iron_skin`, `card_mana_leech`, `card_war_cry`, `card_meteor`
 - Skill icons: `skill_blaze_burst`, `skill_thorn_bind`, `skill_tide_lance`, `skill_mind_spark`, `skill_tidal_siphon`
 - UI: `ui_round` (9-slice 24px), `ui_frame`, `ui_circle`, `ui_ring`, `ui_arrow`, `ui_gradient`, `map`, `stone`, `battle_arrow` (turn arrow beside the acting pet), `fx_bubble` (shield bubble over the pet)
+
+- Avatar paper doll (512 px, one shared canvas): `avatar_base`, `avatar_hair_*`, `avatar_top_*`, `avatar_bottom_*`, `avatar_hat_*` - replaced by Codex Batch 8
 
 "Rebuild Scene + Art" only writes PNGs that are missing, so final art dropped in under the same name is kept. It does rebuild the scene layout.
 

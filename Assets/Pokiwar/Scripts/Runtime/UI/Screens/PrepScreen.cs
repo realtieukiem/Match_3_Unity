@@ -14,6 +14,7 @@ namespace Pokiwar.UI
         public Text EnemyTitle;
         public Image PetImage;
         public Text PetName;
+        public AvatarView Avatar;
         public Button ChoosePetButton;
         public GameObject PetPicker;
         public Button PetPickerClose;
@@ -69,6 +70,7 @@ namespace Pokiwar.UI
             EnemyTitle.text = enc.Name + "  Lv " + enc.Level;
             PetPicker.SetActive(false);
             CardPicker.SetActive(false);
+            if (Avatar != null) Avatar.Show(a.Avatars.Look(a.Save), a.Db, a.Sprites);
             Refresh();
         }
 

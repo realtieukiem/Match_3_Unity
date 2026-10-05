@@ -121,6 +121,7 @@ namespace Pokiwar.EditorTools
             var battle = BuildBattle(root, lib, gemPrefab);
             var result = BuildResult(root);
             var upgrade = BuildUpgrade(root);
+            var wardrobe = BuildWardrobe(root);
             BuildVfx(root);
             var toast = BuildToast(root);
             Portrait(toast, 0.5f, 0.5f, 0, -40, 900, 84);
@@ -137,6 +138,7 @@ namespace Pokiwar.EditorTools
             app.Battle = battle;
             app.Result = result;
             app.Upgrade = upgrade;
+            app.Wardrobe = wardrobe;
             app.ToastView = toast;
             var audio = new GameObject("Audio").AddComponent<AudioDirector>();
             audio.transform.SetParent(appGo.transform, false);
@@ -149,6 +151,7 @@ namespace Pokiwar.EditorTools
             battle.gameObject.SetActive(false);
             result.gameObject.SetActive(false);
             upgrade.gameObject.SetActive(false);
+            wardrobe.gameObject.SetActive(false);
 
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene, ScenePath);
@@ -172,9 +175,11 @@ namespace Pokiwar.EditorTools
             var card = Img(s, "PetCard", "ui.round", PanelCol);
             At(card.rectTransform, 0.5f, 0.5f, -360, -110, 620, 560);
             Skin(card, "ui.panel", 48);
+            hub.Avatar = MakeAvatar(card.transform, "Avatar");
+            At((RectTransform)hub.Avatar.transform, 0.5f, 0.5f, -130, 70, 400, 400);
             hub.PetImage = Img(card.transform, "PetImage", "emberkit", Color.white);
             hub.PetImage.preserveAspect = true;
-            At(hub.PetImage.rectTransform, 0.5f, 0.5f, 0, 60, 380, 380);
+            At(hub.PetImage.rectTransform, 0.5f, 0.5f, 130, 20, 300, 300);
             hub.PetLabel = Txt(card.transform, "PetLabel", "", 32, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
             At(hub.PetLabel.rectTransform, 0.5f, 0.5f, 0, -200, 580, 110);
 
@@ -182,8 +187,10 @@ namespace Pokiwar.EditorTools
             At(Rt(hub.AdventureButton), 0.5f, 0.5f, 420, 40, 560, 160);
             hub.UpgradeButton = Btn(s, "UpgradeButton", "PETS & STONES", Blue, 42, out _);
             At(Rt(hub.UpgradeButton), 0.5f, 0.5f, 420, -140, 560, 120);
+            hub.AvatarButton = Btn(s, "AvatarButton", "AVATAR", Gold, 40, out _);
+            At(Rt(hub.AvatarButton), 0.5f, 0.5f, 420, -270, 560, 110);
             hub.ResetButton = Btn(s, "ResetButton", "RESET SAVE", Red, 28, out _);
-            At(Rt(hub.ResetButton), 0.5f, 0.5f, 420, -290, 300, 80);
+            At(Rt(hub.ResetButton), 0.5f, 0.5f, 420, -400, 300, 76);
             hub.MusicButton = Btn(s, "MusicButton", "MUSIC: ON", Gray, 24, out hub.MusicLabel);
             At(Rt(hub.MusicButton), 1, 1, -560, -50, 190, 64);
             hub.SfxButton = Btn(s, "SfxButton", "SOUND: ON", Gray, 24, out hub.SfxLabel);
@@ -199,7 +206,8 @@ namespace Pokiwar.EditorTools
             Portrait(card, 0.5f, 0.5f, 0, 120, 620, 560);
             Portrait(hub.AdventureButton, 0.5f, 0.5f, 0, -320, 560, 160);
             Portrait(hub.UpgradeButton, 0.5f, 0.5f, 0, -480, 560, 120);
-            Portrait(hub.ResetButton, 0.5f, 0.5f, 0, -610, 300, 80);
+            Portrait(hub.AvatarButton, 0.5f, 0.5f, 0, -620, 560, 110);
+            Portrait(hub.ResetButton, 0.5f, 0.5f, 0, -750, 300, 76);
             Portrait(hint, 0.5f, 0, 0, 60, 1000, 80);
             return hub;
         }
@@ -249,9 +257,11 @@ namespace Pokiwar.EditorTools
                 stand.preserveAspect = true;
                 At(stand.rectTransform, 0.5f, 0.5f, -560, -40, 420, 160);
             }
+            prep.Avatar = MakeAvatar(s, "Avatar");
+            At((RectTransform)prep.Avatar.transform, 0.5f, 0.5f, -680, 150, 440, 440);
             prep.PetImage = Img(s, "PetImage", "emberkit", Color.white);
             prep.PetImage.preserveAspect = true;
-            At(prep.PetImage.rectTransform, 0.5f, 0.5f, -560, 120, 440, 380);
+            At(prep.PetImage.rectTransform, 0.5f, 0.5f, -450, 70, 380, 330);
             prep.PetName = Txt(s, "PetName", "Emberkit", 36, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
             At(prep.PetName.rectTransform, 0.5f, 0.5f, -560, -140, 500, 50);
             prep.PetName.gameObject.AddComponent<Outline>().effectColor = new Color(0.05f, 0.15f, 0.4f);
@@ -310,7 +320,8 @@ namespace Pokiwar.EditorTools
             Portrait(prep.EnemyImage, 0.5f, 0.5f, 0, 520, 540, 440);
             Portrait(prep.EnemyTitle, 0.5f, 0.5f, 0, 260, 640, 52);
             Portrait(stand, 0.5f, 0.5f, -220, -330, stand.rectTransform.sizeDelta.x, stand.rectTransform.sizeDelta.y);
-            Portrait(prep.PetImage, 0.5f, 0.5f, -220, -140, 440, 380);
+            Portrait(prep.Avatar, 0.5f, 0.5f, -330, -110, 400, 400);
+            Portrait(prep.PetImage, 0.5f, 0.5f, -140, -170, 340, 300);
             Portrait(prep.PetName, 0.5f, 0.5f, -220, -400, 440, 50);
             Portrait(prep.ChoosePetButton, 0.5f, 0.5f, 260, -170, 320, 84);
             Portrait(prep.FightButton, 0.5f, 0.5f, 260, -320, 380, 116);
@@ -376,6 +387,11 @@ namespace Pokiwar.EditorTools
 
             bc.PlayerHud = MakeHud(s, top.transform, "PlayerHud", true);
             bc.EnemyHud = MakeHud(s, top.transform, "EnemyHud", false);
+            bc.PlayerCard = MakeAvatarCard(s, "PlayerCard", true);
+            At((RectTransform)bc.PlayerCard.transform, 0, 1, 104, -200, 180, 200);
+            bc.EnemyCard = MakeAvatarCard(s, "EnemyCard", false);
+            At((RectTransform)bc.EnemyCard.transform, 1, 1, -104, -200, 180, 200);
+            bc.EnemyCard.gameObject.SetActive(false);
 
             var boardRoot = NewUI("Board", s);
             At(boardRoot, 0.5f, 0.5f, 0, -8, 704, 704);
@@ -492,6 +508,8 @@ namespace Pokiwar.EditorTools
             Portrait(bc.EnemyHud, 0.5f, 0.5f, 265, 470, 520, 500, 0.78f);
             Portrait(bc.PlayerHud.ElementIcon, 0, 1, 64, -330, 96, 96);
             Portrait(bc.EnemyHud.ElementIcon, 1, 1, -64, -330, 96, 96);
+            Portrait(bc.PlayerCard, 0, 1, 58, -455, 180, 200, 0.6f);
+            Portrait(bc.EnemyCard, 1, 1, -58, -455, 180, 200, 0.6f);
             Portrait(boardRoot, 0.5f, 0.5f, 0, -255, 704, 704, 1.38f);
             Portrait(bar, 0.5f, 0, -75, 120, 700, 170);
             Portrait(skills[0], 0.5f, 0, 345, 120, 116, 116);
@@ -693,6 +711,120 @@ namespace Pokiwar.EditorTools
             Portrait(cp, 0.5f, 0.5f, 262, 449, 600, 860, 0.86f);
             Portrait(rp, 0.5f, 0.5f, 0, -470, 720, 860, 1.0f);
             return up;
+        }
+
+        private static AvatarScreen BuildWardrobe(Transform root)
+        {
+            var s = Screen(root, "AvatarScreen");
+            Fill(Img(s, "Bg", Key("bg.hub", null), art.ContainsKey("bg.hub") ? Color.white : new Color(0.07f, 0.09f, 0.15f)).rectTransform);
+            Fill(Img(s, "Shade", null, new Color(0, 0, 0, 0.35f)).rectTransform);
+            var w = s.gameObject.AddComponent<AvatarScreen>();
+            var header = Txt(s, "Header", "AVATAR", 56, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(header.rectTransform, 0.5f, 1, 0, -60, 900, 80);
+            w.BackButton = Btn(s, "BackButton", "BACK", Gray, 36, out _);
+            At(Rt(w.BackButton), 0, 1, 140, -60, 220, 86);
+            var wallet = NewUI("Wallet", s);
+            At(wallet, 1, 1, -170, -60, 260, 70);
+            var coin = Img(wallet, "Coin", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold);
+            coin.preserveAspect = true;
+            At(coin.rectTransform, 0, 0.5f, 30, 0, 60, 60);
+            w.WalletLabel = Txt(wallet, "Gold", "0", 40, Gold, TextAnchor.MiddleLeft, FontStyle.Bold);
+            Fill(w.WalletLabel.rectTransform, 72, 0, 0, 0);
+
+            var left = Img(s, "PreviewPanel", "ui.round", PanelCol);
+            At(left.rectTransform, 0.5f, 0.5f, -500, -50, 680, 860);
+            Skin(left, "ui.panel", 48);
+            var stand = Img(left.transform, "Stand", "ui.circle", new Color(1f, 1f, 1f, 0.35f));
+            At(stand.rectTransform, 0.5f, 0.5f, 0, -170, 360, 90);
+            if (Skin(stand, "room.stand"))
+            {
+                stand.preserveAspect = true;
+                At(stand.rectTransform, 0.5f, 0.5f, 0, -170, 420, 160);
+            }
+            w.Preview = MakeAvatar(left.transform, "Preview");
+            At((RectTransform)w.Preview.transform, 0.5f, 0.5f, 0, 70, 600, 600);
+            w.NameField = MakeInput(left.transform, "NameField", Pokiwar.Domain.AvatarService.MaxNameLength);
+            At((RectTransform)w.NameField.transform, 0.5f, 0, -80, 90, 400, 76);
+            w.SaveNameButton = Btn(left.transform, "SaveName", "OK", Green, 34, out _);
+            At(Rt(w.SaveNameButton), 0.5f, 0, 210, 90, 140, 76);
+
+            var right = Img(s, "ItemPanel", "ui.round", PanelCol);
+            At(right.rectTransform, 0.5f, 0.5f, 360, -50, 960, 860);
+            Skin(right, "ui.panel", 48);
+            string[] tabs = { "PANTS", "TOP", "HAIR", "HAT" };
+            for (int i = 0; i < 4; i++)
+            {
+                w.Tabs[i] = Btn(right.transform, "Tab" + tabs[i], tabs[i], Gray, 30, out _);
+                At(Rt(w.Tabs[i]), 0.5f, 1, -330 + i * 220, -70, 200, 76);
+                w.TabBackgrounds[i] = (Image)w.Tabs[i].targetGraphic;
+            }
+            var content = ScrollList(right.transform, "Items", out var view);
+            At(view, 0.5f, 1, 0, -480, 900, 740);
+            w.ItemTemplate = MakeRow(content, "ItemTemplate", 860, 130, new Color(0.24f, 0.3f, 0.45f), 110, 1, 32, 24);
+            w.ItemTemplate.ExtraA.GetComponent<Image>().color = Green;
+            w.ItemTemplate.gameObject.SetActive(false);
+
+            Portrait(left, 0.5f, 0.5f, 0, 420, 680, 860, 0.9f);
+            Portrait(right, 0.5f, 0.5f, 0, -470, 960, 860, 1.05f);
+            Portrait(wallet, 1, 1, -150, -60, 260, 70);
+            return w;
+        }
+
+        private static AvatarView MakeAvatar(Transform parent, string name)
+        {
+            var root = NewUI(name, parent);
+            var v = root.gameObject.AddComponent<AvatarView>();
+            v.Body = Img(root, "Body", "avatar.base", Color.white);
+            v.Body.preserveAspect = true;
+            Fill(v.Body.rectTransform);
+            foreach (Pokiwar.Domain.AvatarSlot slot in System.Enum.GetValues(typeof(Pokiwar.Domain.AvatarSlot)))
+            {
+                var layer = Img(root, slot.ToString(), "avatar.base", Color.white);
+                layer.preserveAspect = true;
+                Fill(layer.rectTransform);
+                layer.gameObject.SetActive(false);
+                v.Layers[(int)slot] = layer;
+            }
+            return v;
+        }
+
+        private static AvatarCard MakeAvatarCard(Transform parent, string name, bool player)
+        {
+            var bg = Img(parent, name, "ui.round", new Color(0.07f, 0.15f, 0.38f, 0.93f), true);
+            Skin(bg, "ui.panel", 24);
+            var card = bg.gameObject.AddComponent<AvatarCard>();
+            var mask = Img(bg.transform, "Window", "ui.round", new Color(0.55f, 0.8f, 1f, 1f));
+            At(mask.rectTransform, 0.5f, 1, 0, -84, 144, 136);
+            mask.gameObject.AddComponent<RectMask2D>();
+            card.Avatar = MakeAvatar(mask.transform, "Avatar");
+            At((RectTransform)card.Avatar.transform, 0.5f, 0.5f, 0, -100, 330, 330);
+            card.NameLabel = Txt(bg.transform, "Name", "Trainer", 24, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(card.NameLabel.rectTransform, 0.5f, 0, 0, 24, 168, 34);
+            card.NameLabel.gameObject.AddComponent<Outline>().effectColor = new Color(0.05f, 0.1f, 0.3f);
+            card.NameLabel.horizontalOverflow = HorizontalWrapMode.Overflow;
+            card.NameLabel.resizeTextMaxSize = 24;
+            card.NameLabel.resizeTextMinSize = 14;
+            card.NameLabel.resizeTextForBestFit = true;
+            return card;
+        }
+
+        private static InputField MakeInput(Transform parent, string name, int maxChars)
+        {
+            var bg = Img(parent, name, "ui.round", new Color(0.95f, 0.93f, 0.86f), true);
+            var field = bg.gameObject.AddComponent<InputField>();
+            field.targetGraphic = bg;
+            field.characterLimit = maxChars;
+            field.lineType = InputField.LineType.SingleLine;
+            var text = Txt(bg.transform, "Text", "", 34, new Color(0.15f, 0.1f, 0.12f), TextAnchor.MiddleLeft, FontStyle.Bold);
+            Fill(text.rectTransform, 20, 20, 4, 4);
+            text.supportRichText = false;
+            text.GetComponent<Shadow>().enabled = false;
+            var hint = Txt(bg.transform, "Placeholder", "Your name", 34, new Color(0.15f, 0.1f, 0.12f, 0.45f), TextAnchor.MiddleLeft, FontStyle.Italic);
+            Fill(hint.rectTransform, 20, 20, 4, 4);
+            hint.GetComponent<Shadow>().enabled = false;
+            field.textComponent = text;
+            field.placeholder = hint;
+            return field;
         }
 
         private static VfxLayer BuildVfx(Transform root)

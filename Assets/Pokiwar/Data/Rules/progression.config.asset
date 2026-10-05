@@ -59,3 +59,8 @@ MonoBehaviour:
       Count: 1
       Chance: 1
       FirstClearOnly: 0
+    DefaultPlayerName: Trainer
+    StarterAvatarIds:
+    - avatar.hair.spiky
+    - avatar.top.tee
+    - avatar.bottom.shorts

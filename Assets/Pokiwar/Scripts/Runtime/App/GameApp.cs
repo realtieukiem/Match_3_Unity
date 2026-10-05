@@ -22,12 +22,14 @@ namespace Pokiwar.App
         public BattleController Battle;
         public ResultScreen Result;
         public UpgradeScreen Upgrade;
+        public AvatarScreen Wardrobe;
         public ToastView ToastView;
         public AudioDirector Audio;
 
         public ContentDatabase Db { get; private set; }
         public ProgressionService Progression { get; private set; }
         public UpgradeService Upgrades { get; private set; }
+        public AvatarService Avatars { get; private set; }
         public SaveData Save { get; private set; }
         public SeededRng Rng { get; private set; }
         public RewardGrant LastGrant { get; private set; }
@@ -42,6 +44,7 @@ namespace Pokiwar.App
             Db = Catalog != null ? Catalog.Build() : DefaultContent.Create();
             Progression = new ProgressionService(Db);
             Upgrades = new UpgradeService(Db);
+            Avatars = new AvatarService(Db);
             saves = new SaveService(new FileSaveStore(), new JsonSaveSerializer(), Progression);
             Save = saves.LoadOrCreate();
             Rng = new SeededRng(Save.RngState);
@@ -88,6 +91,15 @@ namespace Pokiwar.App
             BattleScreen.SetActive(false);
             Result.gameObject.SetActive(false);
             Upgrade.gameObject.SetActive(false);
+            if (Wardrobe != null) Wardrobe.gameObject.SetActive(false);
+        }
+
+        public void ShowWardrobe()
+        {
+            HideAll();
+            Wardrobe.gameObject.SetActive(true);
+            if (Audio != null) Audio.PlayMusic("music.menu");
+            Wardrobe.Show(this);
         }
 
         public void ShowHub()
@@ -139,6 +151,8 @@ namespace Pokiwar.App
             BattleScreen.SetActive(true);
             var enc = Db.Encounter(node.EncounterId);
             Battle.Begin(setup, enc, node.Id, Save.SelectedPetUid, Sprites, OnBattleFinished);
+            if (Battle.PlayerCard != null) Battle.PlayerCard.Show(Avatars.Look(Save), Db, Sprites);
+            if (Battle.EnemyCard != null) Battle.EnemyCard.Show(null, Db, Sprites);
         }
 
         private void OnBattleFinished(BattleReport report)

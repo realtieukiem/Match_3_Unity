@@ -10,6 +10,8 @@ namespace Pokiwar.UI
         public Text ResourcesLabel;
         public Text PetLabel;
         public Image PetImage;
+        public AvatarView Avatar;
+        public Button AvatarButton;
         public Button AdventureButton;
         public Button UpgradeButton;
         public Button ResetButton;
@@ -26,6 +28,7 @@ namespace Pokiwar.UI
         {
             AdventureButton.onClick.AddListener(() => app.ShowMap());
             UpgradeButton.onClick.AddListener(() => app.ShowUpgrade());
+            if (AvatarButton != null) AvatarButton.onClick.AddListener(() => app.ShowWardrobe());
             ResetButton.onClick.AddListener(() => app.ResetSave());
             MusicButton.onClick.AddListener(() => { app.Save.MusicOn = !app.Save.MusicOn; app.ApplySettings(); Show(app); });
             SfxButton.onClick.AddListener(() => { app.Save.SfxOn = !app.Save.SfxOn; app.ApplySettings(); Show(app); });
@@ -36,7 +39,8 @@ namespace Pokiwar.UI
         {
             app = a;
             var s = a.Save;
-            PlayerLabel.text = "Trainer Lv " + s.PlayerLevel + "   EXP " + s.PlayerExp + "/" + a.Progression.PlayerExpToNext(s.PlayerLevel);
+            if (Avatar != null) Avatar.Show(a.Avatars.Look(s), a.Db, a.Sprites);
+            PlayerLabel.text = s.PlayerName + "  Lv " + s.PlayerLevel + "   EXP " + s.PlayerExp + "/" + a.Progression.PlayerExpToNext(s.PlayerLevel);
             ResourcesLabel.text = "Gold " + s.Gold + "    Energy " + s.Energy + "/" + a.Db.Progression.MaxEnergy +
                                   "    Lucky " + s.LuckyCharms + "    Protect " + s.ProtectionCharms;
             MusicLabel.text = "MUSIC: " + (s.MusicOn ? "ON" : "OFF");

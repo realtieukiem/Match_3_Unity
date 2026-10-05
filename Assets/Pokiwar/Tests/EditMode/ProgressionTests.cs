@@ -89,7 +89,7 @@ namespace Pokiwar.Tests
             var db = DefaultContent.Create();
             var store = new MemorySaveStore { Json = "{\"Version\":1,\"Gold\":77,\"Energy\":0,\"Pets\":[{\"Uid\":\"p1\",\"PetId\":\"pet.emberkit\",\"Level\":4}]}" };
             var loaded = new SaveService(store, new UnitySerializer(), new ProgressionService(db)).LoadOrCreate();
-            Assert.AreEqual(2, loaded.Version);
+            Assert.AreEqual(SaveData.CurrentVersion, loaded.Version);
             Assert.AreEqual(77, loaded.Gold);
             Assert.AreEqual(db.Progression.MaxEnergy, loaded.Energy);
             Assert.AreEqual(4, loaded.Pets[0].Level);

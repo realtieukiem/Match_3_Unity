@@ -53,6 +53,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8ec92a157ca399846a5f61d0e7ee4123, type: 2}
   - {fileID: 11400000, guid: 69b2b5339ba94784183814be61541240, type: 2}
   - {fileID: 11400000, guid: 889c12276b0f66b4da44877f36096a7d, type: 2}
+  AvatarItems:
+  - {fileID: 11400000, guid: c573277bd23ee8547b38f637ab89e200, type: 2}
+  - {fileID: 11400000, guid: cf50f48d7e48f324ab12bc6233042d5a, type: 2}
+  - {fileID: 11400000, guid: 0a30921417990cf46b1d002df5ff3e89, type: 2}
+  - {fileID: 11400000, guid: 3706de4cf7044f7448318a9d39a2063e, type: 2}
+  - {fileID: 11400000, guid: e16da0a08f9d89b4ea3620fcc5c73db7, type: 2}
+  - {fileID: 11400000, guid: 7888a499985720c439c8a90eb6c89044, type: 2}
+  - {fileID: 11400000, guid: a838703ffc53f1f49bad1b1123ede041, type: 2}
+  - {fileID: 11400000, guid: 3ca6c5e17dd9ad04f9eddadf7df3127e, type: 2}
+  - {fileID: 11400000, guid: a514f9d3349fdcd4aafc869f76cc2818, type: 2}
+  - {fileID: 11400000, guid: 12b1d7f7269c96e40a9bbd8f915c4235, type: 2}
+  - {fileID: 11400000, guid: 93c2158a0f251f249b9d0298beee5026, type: 2}
   Map: {fileID: 11400000, guid: 0c4da03f26fa0374985711ee999b2c03, type: 2}
   Board: {fileID: 11400000, guid: 52d3acd3995d71847a8587b3ebdd9c15, type: 2}
   BattleRules: {fileID: 11400000, guid: 88c5bd293086e3e4e9d20a78b9f016f1, type: 2}

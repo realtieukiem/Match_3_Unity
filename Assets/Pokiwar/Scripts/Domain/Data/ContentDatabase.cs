@@ -13,6 +13,7 @@ namespace Pokiwar.Domain
         public readonly List<AIPolicy> AiPolicies = new List<AIPolicy>();
         public readonly List<EncounterDef> Encounters = new List<EncounterDef>();
         public readonly List<RewardTable> RewardTables = new List<RewardTable>();
+        public readonly List<AvatarItemDef> AvatarItems = new List<AvatarItemDef>();
         public MapDef Map = new MapDef();
         public BoardRuleProfile Board = new BoardRuleProfile();
         public BattleRules Rules = new BattleRules();
@@ -31,6 +32,7 @@ namespace Pokiwar.Domain
 
         public CardDef TryCard(string id) => Cards.Find(c => c.Id == id);
         public CreatureDef TryCreature(string id) => Creatures.Find(c => c.Id == id);
+        public AvatarItemDef TryAvatarItem(string id) => AvatarItems.Find(c => c.Id == id);
 
         private static T Find<T>(List<T> list, Predicate<T> p, string id) where T : class
         {
@@ -60,6 +62,8 @@ namespace Pokiwar.Domain
                     foreach (var s in p.UnlockSkillIds)
                         if (Skills.Find(x => x.Id == s) == null) errors.Add("Phase " + p.Id + " skill " + s);
             }
+            foreach (var id in Progression.StarterAvatarIds)
+                if (TryAvatarItem(id) == null) errors.Add("Starter avatar item " + id);
             return errors;
         }
     }

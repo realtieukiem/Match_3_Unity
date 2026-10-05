@@ -55,6 +55,7 @@ namespace Pokiwar.Domain
             foreach (var item in cfg.StarterItems) GrantItem(d, item, null);
             d.SelectedPetUid = d.Pets.Count > 0 ? d.Pets[0].Uid : null;
             d.SelectedCardIds.AddRange(d.Cards.GetRange(0, Math.Min(5, d.Cards.Count)));
+            new AvatarService(Db).GrantStarter(d);
             return d;
         }
 

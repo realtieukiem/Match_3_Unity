@@ -35,7 +35,7 @@ namespace Pokiwar.Domain
     [Serializable]
     public class SaveData
     {
-        public const int CurrentVersion = 2;
+        public const int CurrentVersion = 3;
 
         public int Version = CurrentVersion;
         public int Gold;
@@ -58,6 +58,9 @@ namespace Pokiwar.Domain
         public bool MusicOn = true;
         public bool SfxOn = true;
         public bool ShakeOn = true;
+        public string PlayerName;
+        public List<string> AvatarOwned = new List<string>();
+        public List<string> AvatarWorn = new List<string>();
 
         public OwnedPet Pet(string uid) => Pets.Find(p => p.Uid == uid);
 
@@ -114,6 +117,20 @@ namespace Pokiwar.Domain
                 }
                 d.Version = 2;
             }
+            if (d.Version == 2)
+            {
+                if (d.AvatarOwned == null) d.AvatarOwned = new List<string>();
+                if (d.AvatarWorn == null) d.AvatarWorn = new List<string>();
+                if (string.IsNullOrEmpty(d.PlayerName)) d.PlayerName = cfg.DefaultPlayerName;
+                foreach (var id in cfg.StarterAvatarIds)
+                {
+                    if (!d.AvatarOwned.Contains(id)) d.AvatarOwned.Add(id);
+                    if (!d.AvatarWorn.Contains(id)) d.AvatarWorn.Add(id);
+                }
+                d.Version = 3;
+            }
+            if (d.AvatarOwned == null) d.AvatarOwned = new List<string>();
+            if (d.AvatarWorn == null) d.AvatarWorn = new List<string>();
             if (d.Pets == null) d.Pets = new List<OwnedPet>();
             if (d.Cards == null) d.Cards = new List<string>();
             if (d.Stones == null) d.Stones = new List<StoneStack>();

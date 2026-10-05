@@ -28,9 +28,29 @@ namespace Pokiwar.Domain
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Wood, Tier = 1, Count = 2 },
                     new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1 },
                     new RewardDrop { Kind = RewardKind.ProtectionCharm, Count = 1 }
-                }
+                },
+                DefaultPlayerName = "Trainer",
+                StarterAvatarIds = new List<string> { "avatar.hair.spiky", "avatar.top.tee", "avatar.bottom.shorts" }
             };
+            AddAvatarItems(db);
             return db;
+        }
+
+        private static void AddAvatarItems(ContentDatabase db)
+        {
+            void A(string id, string name, AvatarSlot slot, int price) =>
+                db.AvatarItems.Add(new AvatarItemDef { Id = id, Name = name, Slot = slot, Price = price, SpriteKey = id });
+            A("avatar.hair.spiky", "Spiky Hair", AvatarSlot.Hair, 0);
+            A("avatar.hair.bob", "Bob Cut", AvatarSlot.Hair, 300);
+            A("avatar.hair.ponytail", "Ponytail", AvatarSlot.Hair, 300);
+            A("avatar.top.tee", "Canyon Tee", AvatarSlot.Top, 0);
+            A("avatar.top.jacket", "Explorer Jacket", AvatarSlot.Top, 400);
+            A("avatar.top.robe", "Mage Robe", AvatarSlot.Top, 600);
+            A("avatar.bottom.shorts", "Shorts", AvatarSlot.Bottom, 0);
+            A("avatar.bottom.pants", "Cargo Pants", AvatarSlot.Bottom, 300);
+            A("avatar.bottom.skirt", "Pleated Skirt", AvatarSlot.Bottom, 300);
+            A("avatar.hat.cap", "Trainer Cap", AvatarSlot.Hat, 250);
+            A("avatar.hat.wizard", "Wizard Hat", AvatarSlot.Hat, 500);
         }
 
         private static void AddGemProfiles(ContentDatabase db)

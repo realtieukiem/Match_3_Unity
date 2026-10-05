@@ -27,6 +27,7 @@ namespace Pokiwar.EditorTools
             catalog.AiPolicies.Clear();
             catalog.Encounters.Clear();
             catalog.Rewards.Clear();
+            catalog.AvatarItems.Clear();
 
             foreach (var c in db.Creatures)
             {
@@ -43,7 +44,15 @@ namespace Pokiwar.EditorTools
             catalog.Board = Asset<BoardRuleAsset, BoardRuleProfile>("Rules", "board.default", db.Board, overwrite, (a, d) => a.Def = d);
             catalog.BattleRules = Asset<BattleRulesAsset, BattleRules>("Rules", "battle.rules", db.Rules, overwrite, (a, d) => a.Def = d);
             catalog.Upgrades = Asset<UpgradeConfigAsset, UpgradeConfig>("Rules", "upgrade.config", db.Upgrades, overwrite, (a, d) => a.Def = d);
+            foreach (var i in db.AvatarItems) catalog.AvatarItems.Add(Asset<AvatarItemAsset, AvatarItemDef>("Avatar", i.Id, i, overwrite, (a, d) => a.Def = d));
             catalog.Progression = Asset<ProgressionConfigAsset, ProgressionConfig>("Rules", "progression.config", db.Progression, overwrite, (a, d) => a.Def = d);
+            var prog = catalog.Progression.Def;
+            if (prog.StarterAvatarIds == null || prog.StarterAvatarIds.Count == 0)
+            {
+                prog.StarterAvatarIds = new List<string>(db.Progression.StarterAvatarIds);
+                if (string.IsNullOrEmpty(prog.DefaultPlayerName)) prog.DefaultPlayerName = db.Progression.DefaultPlayerName;
+                EditorUtility.SetDirty(catalog.Progression);
+            }
             EditorUtility.SetDirty(catalog);
             AssetDatabase.SaveAssets();
             Debug.Log("[POKIWAR-BUILD] content: " + catalog.Pets.Count + " pets, " + catalog.Monsters.Count + " monsters, " + catalog.Cards.Count + " cards, " + catalog.Encounters.Count + " encounters");

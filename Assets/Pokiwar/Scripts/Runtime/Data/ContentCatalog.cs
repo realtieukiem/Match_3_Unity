@@ -16,6 +16,7 @@ namespace Pokiwar.Data
         public List<AIPolicyAsset> AiPolicies = new List<AIPolicyAsset>();
         public List<EncounterAsset> Encounters = new List<EncounterAsset>();
         public List<RewardTableAsset> Rewards = new List<RewardTableAsset>();
+        public List<AvatarItemAsset> AvatarItems = new List<AvatarItemAsset>();
         public MapAsset Map;
         public BoardRuleAsset Board;
         public BattleRulesAsset BattleRules;
@@ -33,6 +34,7 @@ namespace Pokiwar.Data
             foreach (var a in AiPolicies) if (a != null) db.AiPolicies.Add(a.Def);
             foreach (var a in Encounters) if (a != null) db.Encounters.Add(a.Def);
             foreach (var a in Rewards) if (a != null) db.RewardTables.Add(a.Def);
+            foreach (var a in AvatarItems) if (a != null) db.AvatarItems.Add(a.Def);
             if (Map != null) db.Map = Map.Def;
             if (Board != null) db.Board = Board.Def;
             if (BattleRules != null) db.Rules = BattleRules.Def;

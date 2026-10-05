@@ -35,6 +35,8 @@ Status: **CONFIRMED_BY_VIDEO** read off a frame here, **CONFIRMED_BY_USER** stat
 | A 01:57, 04:17, B 11:02 | "Sân" room: player and pet left, opponent right with its name, READY button, five "CHỌN CARD" slots with X, "Chọn PET" | `PrepScreen`: pet left, opponent right, READY, 5 slots (tap = picker, X = remove), CHOOSE PET picker | CONFIRMED_BY_VIDEO |
 | A 04:10, B 10:50 | Gold "TẶNG PHẨM" popup over the battle listing the rewards (A: 1 pokemon Flygon + 20 points; B: chest of stones); close X | `ResultScreen` popup over the battle, X returns to the room | CONFIRMED_BY_VIDEO |
 | A 04:17 | Back in the room the panel shows "+20 EXP" | reward lines in the popup | partial |
+| A 01:57, B 11:02 | Player avatar is a chibi paper doll (bald body in underwear when nothing is worn, dressed in B) standing in the room beside the pet; bottom menu has "đổi avatar" and "shop avatar" | `AvatarView` in hub, room and wardrobe; `AvatarScreen` buys / wears pieces | CONFIRMED_BY_VIDEO, items and prices INFERRED |
+| A 02:12, B 01:20 | Battle: avatar card (face + name) top-left; a wild monster opponent (Flygon, BlueWings) has none | `BattleController.PlayerCard`, `EnemyCard` hidden for monsters | CONFIRMED_BY_VIDEO |
 | A 08:00 | Lucky wheel | not built (event meta, out of the offline slice) | out of scope |
 | B 01:20 | Team portraits at the left, chat box at the bottom | not built (online room features) | out of scope |
 

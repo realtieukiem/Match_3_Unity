@@ -395,5 +395,7 @@ namespace Pokiwar.Domain
         public List<int> StarterPetLevels = new List<int>();
         public List<string> StarterCardIds = new List<string>();
         public List<RewardDrop> StarterItems = new List<RewardDrop>();
+        public string DefaultPlayerName = "Trainer";
+        public List<string> StarterAvatarIds = new List<string>();
     }
 }
