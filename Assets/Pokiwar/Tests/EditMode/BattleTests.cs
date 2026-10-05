@@ -162,6 +162,39 @@ namespace Pokiwar.Tests
         }
 
         [Test]
+        public void Card_IsUsedUp_DuplicateSlotStillWorks()
+        {
+            var potion = TestKit.Card("potion", 0, 0, new EffectSpec(EffectKind.AddMana, TargetKind.Self, 10));
+            var e = TestKit.Engine(player: s => { s.Cards.Add(potion); s.Cards.Add(potion); s.StartMana = 0; });
+            e.BeginTurn();
+            Assert.IsTrue(e.UseCard(Side.Player, 0).Accepted);
+            var again = e.UseCard(Side.Player, 0);
+            Assert.IsFalse(again.Accepted);
+            Assert.AreEqual("no uses left", again.RejectReason);
+            Assert.IsTrue(e.UseCard(Side.Player, 1).Accepted, "a second copy is its own slot");
+            Assert.AreEqual(20, e.State.Get(Side.Player).Mana.Current);
+        }
+
+        [Test]
+        public void Shield_HoldsThroughTheOpponentsTurn_ExpiresOnOwnNextTurn()
+        {
+            var e = TestKit.Engine();
+            e.BeginTurn();
+            Assert.AreEqual(Side.Player, e.State.Current);
+            e.State.Get(Side.Player).Shield.Set(80);
+            e.EndTurn();
+            e.BeginTurn();
+            Assert.AreEqual(Side.Enemy, e.State.Current);
+            Assert.AreEqual(80, e.State.Get(Side.Player).Shield.Current, "still up while the enemy acts");
+            e.EndTurn();
+            var start = e.BeginTurn();
+            Assert.AreEqual(0, e.State.Get(Side.Player).Shield.Current);
+            var ev = start.Events.Find(x => x.Kind == CombatEventKind.ResourceChange && x.Resource == ResourceKind.Shield);
+            Assert.AreEqual(-80, ev.Applied);
+            Assert.AreEqual("shield-expire", ev.SourceId);
+        }
+
+        [Test]
         public void ElementRelation_ChangesRealHpDamage()
         {
             var bolt = TestKit.Card("bolt", 0, 0, new EffectSpec(EffectKind.FlatDamage, TargetKind.Opponent, 400));
@@ -218,7 +251,7 @@ namespace Pokiwar.Tests
         {
             var nuke = TestKit.Card("nuke", 0, 0, new EffectSpec(EffectKind.FlatDamage, TargetKind.Opponent, 200));
             var ult = new SkillDef { Id = "ult", Name = "ult", ManaCost = 0, AtkMultiplier = 1 };
-            var e = TestKit.Engine(player: s => s.Cards.Add(nuke), enemy: s => { s.StartHpPct = 0.4f; s.LockedSkills.Add(ult); }, enemyDef: Boss());
+            var e = TestKit.Engine(player: s => s.Cards.AddRange(new[] { nuke, nuke, nuke }), enemy: s => { s.StartHpPct = 0.4f; s.LockedSkills.Add(ult); }, enemyDef: Boss());
             e.BeginTurn();
             var boss = e.State.Get(Side.Enemy);
 
@@ -230,8 +263,8 @@ namespace Pokiwar.Tests
             Assert.AreEqual(1, boss.Skills.Count, "phase unlocked its action");
             Assert.AreEqual(Side.Enemy, e.State.ContinueTurnFor);
 
-            e.UseCard(Side.Player, 0);
-            var r3 = e.UseCard(Side.Player, 0);
+            e.UseCard(Side.Player, 1);
+            var r3 = e.UseCard(Side.Player, 2);
             Assert.AreEqual(0, r3.Of(CombatEventKind.PhaseTriggered).Count, "one-shot");
             Assert.AreEqual(100, boss.Hp.Current);
         }
@@ -240,12 +273,12 @@ namespace Pokiwar.Tests
         public void BossPhase_LethalHitTransformsInsteadOfKilling()
         {
             var nuke = TestKit.Card("nuke", 0, 0, new EffectSpec(EffectKind.FlatDamage, TargetKind.Opponent, 5000));
-            var e = TestKit.Engine(player: s => s.Cards.Add(nuke), enemyDef: Boss());
+            var e = TestKit.Engine(player: s => s.Cards.AddRange(new[] { nuke, nuke }), enemyDef: Boss());
             e.BeginTurn();
             var r = e.UseCard(Side.Player, 0);
             Assert.IsFalse(r.BattleEnded);
             Assert.AreEqual(500, e.State.Get(Side.Enemy).Hp.Current);
-            var r2 = e.UseCard(Side.Player, 0);
+            var r2 = e.UseCard(Side.Player, 1);
             Assert.IsTrue(r2.BattleEnded);
             Assert.AreEqual(Side.Player, r2.Winner);
         }

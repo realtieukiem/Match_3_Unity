@@ -14,13 +14,24 @@ namespace Pokiwar.UI
         public BarView Hp;
         public BarView Mana;
         public BarView Rage;
-        public BarView Shield;
+        public Image ShieldBubble;
+        public GameObject ShieldBadge;
+        public Text ShieldLabel;
         public GameObject TurnMarker;
+        public RectTransform AttackArrow;
         public RectTransform FloatAnchor;
         public Text StatusLabel;
 
+        [Tooltip("How far the turn arrow nudges toward the opponent (px).")]
+        public float ArrowNudge = 16f;
+        [Tooltip("Turn arrow nudges per second.")]
+        public float ArrowSpeed = 1.6f;
+
         private Vector2 portraitHome;
         private bool homeSet;
+        private Vector2 arrowHome;
+        private bool arrowHomeSet;
+        private int shownShield;
         private float direction = 1f;
         private SpriteLibrary lib;
         private string key;
@@ -57,7 +68,21 @@ namespace Pokiwar.UI
             Hp.Set(s.Hp, s.MaxHp);
             Mana.Set(s.Mana, s.MaxMana);
             Rage.Set(s.Rage, s.MaxRage);
-            Shield.Set(s.Shield, s.MaxShield);
+            SetShield(s.Shield);
+        }
+
+        private void SetShield(int amount)
+        {
+            bool on = amount > 0;
+            if (ShieldBubble != null)
+            {
+                bool appeared = on && !ShieldBubble.gameObject.activeSelf;
+                ShieldBubble.gameObject.SetActive(on);
+                if (appeared && isActiveAndEnabled) StartCoroutine(Pop(ShieldBubble.rectTransform, 1.18f));
+            }
+            if (ShieldBadge != null) ShieldBadge.SetActive(on);
+            if (ShieldLabel != null && amount != shownShield) ShieldLabel.text = amount.ToString();
+            shownShield = amount;
         }
 
         public void SetStatus(Combatant c)
@@ -83,6 +108,11 @@ namespace Pokiwar.UI
 
         private void Update()
         {
+            if (AttackArrow != null && AttackArrow.gameObject.activeSelf)
+            {
+                float n = Mathf.Abs(Mathf.Sin(Time.unscaledTime * ArrowSpeed * Mathf.PI));
+                AttackArrow.anchoredPosition = arrowHome + new Vector2(ArrowNudge * direction * n, 0f);
+            }
             if (busy || dead || Portrait == null) return;
             float s = Mathf.Sin((Time.unscaledTime / 1.2f + bobPhase) * Mathf.PI * 2f);
             Portrait.rectTransform.localScale = new Vector3(1f + 0.006f * s, 1f + 0.016f * s, 1f);
@@ -95,7 +125,7 @@ namespace Pokiwar.UI
                 case ResourceKind.Hp: return (RectTransform)Hp.transform;
                 case ResourceKind.Mana: return (RectTransform)Mana.transform;
                 case ResourceKind.Rage: return (RectTransform)Rage.transform;
-                case ResourceKind.Shield: return (RectTransform)Shield.transform;
+                case ResourceKind.Shield: return ShieldBubble != null ? ShieldBubble.rectTransform : Portrait.rectTransform;
                 default: return Portrait.rectTransform;
             }
         }
@@ -118,6 +148,14 @@ namespace Pokiwar.UI
         public void SetTurn(bool on)
         {
             if (TurnMarker != null) TurnMarker.SetActive(on);
+            if (AttackArrow == null) return;
+            if (!arrowHomeSet)
+            {
+                arrowHome = AttackArrow.anchoredPosition;
+                arrowHomeSet = true;
+            }
+            AttackArrow.anchoredPosition = arrowHome;
+            AttackArrow.gameObject.SetActive(on);
         }
 
         public IEnumerator Lunge()

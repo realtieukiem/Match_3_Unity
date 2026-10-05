@@ -11,7 +11,7 @@ namespace Pokiwar.Domain
         public CardSlot(CardDef def)
         {
             Def = def;
-            UsesLeft = def.UsesPerBattle;
+            UsesLeft = 1;
         }
     }
 

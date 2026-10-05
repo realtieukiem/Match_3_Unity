@@ -28,7 +28,9 @@ namespace Pokiwar.EditorTools
             made["ui.map"] = WriteMap();
             made["fx.dot"] = Write("fx_dot", 64, (x, y) => { float d = Mathf.Clamp01(1f - Mathf.Sqrt(x * x + y * y)); return new Color(1, 1, 1, d * d); });
             made["fx.star"] = Write("fx_star", 64, (x, y) => Star(x, y) ? Color.white : Color.clear);
-            made["stone"] = Write("stone", 128, (x, y) => Mathf.Abs(x) * 0.9f + Mathf.Abs(y) * 0.75f <= 0.9f ? Shade(Color.white, x, y) : Color.clear);
+            made["battle.arrow"] = Write("battle_arrow", 256, BattleArrow);
+            made["fx.bubble"] = Write("fx_bubble", 512, ShieldBubble, 2);
+            made["stone"] =Write("stone", 128, (x, y) => Mathf.Abs(x) * 0.9f + Mathf.Abs(y) * 0.75f <= 0.9f ? Shade(Color.white, x, y) : Color.clear);
 
             foreach (var g in Gems.All) made["gem." + g] = WriteGem(g);
 
@@ -363,6 +365,53 @@ namespace Pokiwar.EditorTools
         private static bool Leaf(float x, float y) => Mathf.Abs(y) < 0.8f * (1f - x * x) && Mathf.Abs(x) < 1f;
 
         private static bool Drop(float x, float y) => x * x + (y + 0.3f) * (y + 0.3f) < 0.3f || Tri(x, y, -0.5f, -0.1f, 0.5f, -0.1f, 0f, 0.95f);
+
+        private static bool AttackArrowShape(float x, float y) =>
+            (x > -0.78f && x < 0.12f && Mathf.Abs(y) < 0.19f) ||
+            (x <= -0.78f && (x + 0.78f) * (x + 0.78f) + y * y < 0.19f * 0.19f) ||
+            Tri(x, y, 0.0f, 0.56f, 0.0f, -0.56f, 0.92f, 0f);
+
+        private static Color BattleArrow(float x, float y)
+        {
+            if (AttackArrowShape(x, y))
+            {
+                float t = Mathf.Clamp01((x + 0.9f) / 1.8f);
+                var c = Color.Lerp(Hex("#FFE36B"), Hex("#FF5A1F"), t);
+                if (y > 0.04f) c = Color.Lerp(c, Color.white, 0.28f * Mathf.Clamp01(1f - Mathf.Abs(y - 0.12f) * 6f));
+                if (y < -0.08f) c = Mul(c, 0.82f);
+                return c;
+            }
+            const float d = 0.075f;
+            for (int i = 0; i < 12; i++)
+            {
+                float a = i * Mathf.PI / 6f;
+                if (AttackArrowShape(x + Mathf.Cos(a) * d, y + Mathf.Sin(a) * d)) return Hex("#3A1606");
+            }
+            const float g = 0.16f;
+            for (int i = 0; i < 12; i++)
+            {
+                float a = i * Mathf.PI / 6f;
+                if (AttackArrowShape(x + Mathf.Cos(a) * g, y + Mathf.Sin(a) * g)) return new Color(1f, 0.75f, 0.3f, 0.35f);
+            }
+            return Color.clear;
+        }
+
+        private static Color ShieldBubble(float x, float y)
+        {
+            float r = Mathf.Sqrt(x * x + y * y);
+            if (r > 0.98f) return Color.clear;
+            var c = new Color(0.55f, 0.85f, 1f, 0.08f + 0.5f * Mathf.Pow(r, 4f));
+            float rim = Mathf.Clamp01(1f - Mathf.Abs(r - 0.94f) / 0.04f);
+            c = Color.Lerp(c, new Color(0.85f, 0.97f, 1f, 0.9f), rim);
+            float ca = Mathf.Cos(-0.6f), sa = Mathf.Sin(-0.6f);
+            float hx = (x + 0.38f) * ca - (y - 0.45f) * sa, hy = (x + 0.38f) * sa + (y - 0.45f) * ca;
+            float spec = Mathf.Clamp01(1f - Mathf.Sqrt(hx * hx / 0.075f + hy * hy / 0.022f));
+            float dot = Mathf.Clamp01(1f - Mathf.Sqrt((x + 0.12f) * (x + 0.12f) + (y - 0.66f) * (y - 0.66f)) / 0.06f);
+            float ang = Mathf.Atan2(y, x) * Mathf.Rad2Deg;
+            float arc = r > 0.76f && r < 0.84f && ang > -70f && ang < -15f ? 0.35f * Mathf.Clamp01(1f - Mathf.Abs(r - 0.8f) / 0.04f) : 0f;
+            float w = Mathf.Clamp01(spec * 1.4f + dot + arc);
+            return new Color(Mathf.Lerp(c.r, 1f, w), Mathf.Lerp(c.g, 1f, w), Mathf.Lerp(c.b, 1f, w), Mathf.Max(c.a, w * 0.85f));
+        }
 
         private static bool Arrow(float x, float y) =>
             Tri(x, y, -0.75f, 0.05f, 0.75f, 0.05f, 0f, 0.9f) || (Mathf.Abs(x) < 0.28f && y > -0.85f && y <= 0.1f);

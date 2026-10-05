@@ -88,10 +88,10 @@ lasting layout changes go into its `Portrait(...)` calls.
 | Asset | Fields |
 |---|---|
 | `Rules/board.default` | size, spawn weights, x2/x3 odds, invalid-swap revert, reshuffle, extra turn on 4/5, turn seconds |
-| `Rules/battle.rules` | element advantage/disadvantage/neutral, bonus per point, defense mode (Barrier / FlatDef / PercentReduction) |
+| `Rules/battle.rules` | element advantage/disadvantage/neutral, bonus per point, defense mode (Barrier / FlatDef / PercentReduction), shield expires at its owner's next turn start |
 | `GemProfiles/*` | per-actor Heart/Lightning % of max, Fire rage, Shield %, shield cap, YinYang amounts, Sword ATK factor, variation, rounding |
 | `Pets/*`, `Monsters/*` | base stats + per-level growth, element + bonus, rage profile (threshold/cost/strong x/HP-damage rage/turn-start rage), skills, cards, boss phases |
-| `Cards/*` | mana/rage cost, uses, can use before/after match, end turn after use, effect chain |
+| `Cards/*` | mana/rage cost (each copy in a loadout is one use; copies allowed), can use before/after match, end turn after use, effect chain |
 | `Skills/*` | costs, ATK multiplier, QTE profile, post-effect chain |
 | `Encounters/*` | creature, level, start HP %, AI policy, reward table, energy, first turn |
 | `Rewards/*` | EXP, pet EXP, gold, drops (stone/card/charm/pet, chance, first clear only) |
@@ -182,7 +182,7 @@ Files in `Assets/Pokiwar/Art/Placeholder` (keep the name, or point `SpriteLibrar
 - Pets / monsters: `pet_emberkit`, `pet_leafling`, `pet_tidepup`, `pet_dunewing`, `pet_psyling`, `pet_azurewing`, `pet_azurewing_ascended`
 - Card icons: `card_mana_potion`, `card_herbal_salve`, `card_fire_bolt`, `card_summon_sprite`, `card_iron_skin`, `card_mana_leech`, `card_war_cry`, `card_meteor`
 - Skill icons: `skill_blaze_burst`, `skill_thorn_bind`, `skill_tide_lance`, `skill_mind_spark`, `skill_tidal_siphon`
-- UI: `ui_round` (9-slice 24px), `ui_frame`, `ui_circle`, `ui_ring`, `ui_arrow`, `ui_gradient`, `map`, `stone`
+- UI: `ui_round` (9-slice 24px), `ui_frame`, `ui_circle`, `ui_ring`, `ui_arrow`, `ui_gradient`, `map`, `stone`, `battle_arrow` (turn arrow beside the acting pet), `fx_bubble` (shield bubble over the pet)
 
 "Rebuild Scene + Art" only writes PNGs that are missing, so final art dropped in under the same name is kept. It does rebuild the scene layout.
 

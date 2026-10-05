@@ -83,30 +83,30 @@ namespace Pokiwar.Domain
             });
         }
 
-        private static CardDef Card(string id, string name, string desc, int mana, int rage, int uses, params EffectSpec[] fx)
+        private static CardDef Card(string id, string name, string desc, int mana, int rage, params EffectSpec[] fx)
         {
-            var c = new CardDef { Id = id, Name = name, Description = desc, IconKey = id, ManaCost = mana, RageCost = rage, UsesPerBattle = uses };
+            var c = new CardDef { Id = id, Name = name, Description = desc, IconKey = id, ManaCost = mana, RageCost = rage };
             c.Effects.AddRange(fx);
             return c;
         }
 
         private static void AddCards(ContentDatabase db)
         {
-            db.Cards.Add(Card("card.mana_potion", "Mana Potion", "+100 mana. You can still match this turn.", 0, 0, 2,
+            db.Cards.Add(Card("card.mana_potion", "Mana Potion", "+100 mana. You can still match this turn.", 0, 0,
                 new EffectSpec(EffectKind.AddMana, TargetKind.Self, 100)));
-            db.Cards.Add(Card("card.herbal_salve", "Herbal Salve", "Heal 15% max HP.", 120, 0, 2,
+            db.Cards.Add(Card("card.herbal_salve", "Herbal Salve", "Heal 15% max HP.", 120, 0,
                 new EffectSpec(EffectKind.HealPctMax, TargetKind.Self, 0.15f)));
-            db.Cards.Add(Card("card.fire_bolt", "Fire Bolt", "Deal 150% ATK damage.", 200, 0, 2,
+            db.Cards.Add(Card("card.fire_bolt", "Fire Bolt", "Deal 150% ATK damage.", 200, 0,
                 new EffectSpec(EffectKind.AtkDamage, TargetKind.Opponent, 1.5f)));
-            db.Cards.Add(Card("card.summon_sprite", "Summon Sprite", "Sprite hits for 35% ATK on your next 3 turns.", 250, 0, 1,
+            db.Cards.Add(Card("card.summon_sprite", "Summon Sprite", "Sprite hits for 35% ATK on your next 3 turns.", 250, 0,
                 new EffectSpec(EffectKind.Summon, TargetKind.Self, 0.35f, 3, "Sprite")));
-            db.Cards.Add(Card("card.iron_skin", "Iron Skin", "Gain a shield of 12% max HP.", 0, 40, 2,
+            db.Cards.Add(Card("card.iron_skin", "Iron Skin", "Gain a shield of 12% max HP.", 0, 40,
                 new EffectSpec(EffectKind.AddShieldPctMax, TargetKind.Self, 0.12f)));
-            db.Cards.Add(Card("card.mana_leech", "Mana Leech", "Drain 30% of the enemy's current mana.", 0, 30, 1,
+            db.Cards.Add(Card("card.mana_leech", "Mana Leech", "Drain 30% of the enemy's current mana.", 0, 30,
                 new EffectSpec(EffectKind.DrainManaPctOfCurrent, TargetKind.Opponent, 0.30f)));
-            db.Cards.Add(Card("card.war_cry", "War Cry", "+25% ATK for 2 turns.", 0, 50, 1,
+            db.Cards.Add(Card("card.war_cry", "War Cry", "+25% ATK for 2 turns.", 0, 50,
                 new EffectSpec(EffectKind.BuffAtk, TargetKind.Self, 0.25f, 2, "War Cry")));
-            var finisher = Card("card.meteor", "Meteor", "Deal 300% ATK damage. Ends your turn.", 450, 0, 1,
+            var finisher = Card("card.meteor", "Meteor", "Deal 300% ATK damage. Ends your turn.", 450, 0,
                 new EffectSpec(EffectKind.AtkDamage, TargetKind.Opponent, 3.0f));
             finisher.EndTurnAfterUse = true;
             db.Cards.Add(finisher);

@@ -14,6 +14,8 @@ namespace Pokiwar.UI
         public Image[] SlotIcons = new Image[6];
         public Text[] SlotLabels = new Text[6];
         public SpriteLibrary Sprites;
+        [Tooltip("Distance between gem icons (px); the row is always centred.")]
+        public float SlotSpacing = 100f;
 
         private void Awake()
         {
@@ -33,6 +35,11 @@ namespace Pokiwar.UI
                 SlotIcons[slot].sprite = Sprites.Gem(t);
                 SlotLabels[slot].text = "x" + eff + (phys != eff ? "\n(" + phys + ")" : "");
                 slot++;
+            }
+            for (int i = 0; i < slot; i++)
+            {
+                var rt = SlotIcons[i].rectTransform;
+                rt.anchoredPosition = new Vector2((i - (slot - 1) * 0.5f) * SlotSpacing, rt.anchoredPosition.y);
             }
             for (; slot < SlotIcons.Length; slot++) SlotIcons[slot].gameObject.SetActive(false);
             yield return Tween.Run(0.15f, t => Group.alpha = t);

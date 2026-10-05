@@ -232,6 +232,13 @@ namespace Pokiwar.EditorTools
             Log("audio output " + AudioSettings.outputSampleRate + " Hz, voices playing now " + playing);
             yield return new WaitForSecondsRealtime(0.08f);
             yield return Capture("04b_match_fx");
+            yield return WaitFor(() => bc.Summary.Group.alpha > 0.95f, 8);
+            float sumX = 0f;
+            int icons = 0;
+            foreach (var ic in bc.Summary.SlotIcons)
+                if (ic.gameObject.activeSelf) { sumX += ic.rectTransform.anchoredPosition.x; icons++; }
+            Check(icons > 0 && Mathf.Abs(sumX / icons) < 1f, "gem summary row is centred (" + icons + " icons, mean x " + (icons > 0 ? sumX / icons : 0f).ToString("0.0") + ")");
+            yield return Capture("04c_summary");
             yield return WaitFor(() => bc.Engine.State.Current == Side.Enemy || bc.Engine.State.Ended, 20);
             Check(bc.Engine.State.Current == Side.Enemy || bc.Engine.State.Ended, "drag swap resolved and passed the turn");
             Check(bc.Engine.State.Log.Exists(e => e.Kind == CombatEventKind.GemSummary && e.Actor == Side.Player), "player match produced a gem summary");
@@ -249,11 +256,19 @@ namespace Pokiwar.EditorTools
 
             yield return WaitFor(() => bc.Engine.IsTurnOf(Side.Player) && bc.Board.InputEnabled, 30);
             int manaBefore = bc.Engine.State.Get(Side.Player).Mana.Current;
+            Check(bc.PlayerHud.AttackArrow.gameObject.activeSelf && !bc.EnemyHud.AttackArrow.gameObject.activeSelf, "attack arrow shows beside the pet whose turn it is");
+            int cardsBefore = ActiveCount(bc.CardButtons);
             bc.CardButtons[0].Button.onClick.Invoke();
             yield return WaitFor(() => bc.Engine.State.Log.Exists(e => e.Kind == CombatEventKind.CardUsed && e.Actor == Side.Player), 5);
             yield return WaitFor(() => bc.Board.InputEnabled, 5);
             Check(bc.Engine.IsTurnOf(Side.Player) && bc.Board.InputEnabled, "mana card did not end the turn");
             Check(bc.Engine.State.Get(Side.Player).Mana.Current > manaBefore || bc.Engine.State.Get(Side.Player).Mana.IsFull, "mana card added mana");
+            Check(ActiveCount(bc.CardButtons) == cardsBefore - 1, "a used card leaves the bar (" + cardsBefore + " -> " + ActiveCount(bc.CardButtons) + ")");
+            bc.Engine.State.Get(Side.Player).Shield.Set(240);
+            bc.PlayerHud.Set(bc.Engine.State.Get(Side.Player).Snapshot());
+            Check(bc.PlayerHud.ShieldBubble.gameObject.activeSelf && bc.PlayerHud.ShieldLabel.text == "240", "shield bubble and value show over the pet");
+            Check(!bc.EnemyHud.ShieldBubble.gameObject.activeSelf || bc.Engine.State.Get(Side.Enemy).Shield.Current > 0, "no bubble without a shield");
+            yield return new WaitForSecondsRealtime(0.3f);
             yield return Capture("05_battle_mid");
 
             bc.AnimationSpeed = 8f;
@@ -355,6 +370,13 @@ namespace Pokiwar.EditorTools
                 }
             }
             Check(off.Count == 0, name + ": every control fully on screen" + (off.Count > 0 ? " (off: " + string.Join(",", off) + ")" : ""));
+        }
+
+        private static int ActiveCount(ActionButtonView[] buttons)
+        {
+            int n = 0;
+            foreach (var b in buttons) if (b.gameObject.activeSelf) n++;
+            return n;
         }
 
         private static bool Played(AudioDirector a, string key) => a.PlayCounts.TryGetValue(key, out var n) && n > 0;

@@ -24,8 +24,6 @@ namespace Pokiwar.UI
         public Text TimerLabel;
         public Image TimerFill;
         public Text TurnLabel;
-        public GameObject ArrowToPlayer;
-        public GameObject ArrowToEnemy;
         public CanvasGroup Banner;
         public Text BannerLabel;
         public Text EncounterLabel;
@@ -59,6 +57,7 @@ namespace Pokiwar.UI
         private PendingKind pending;
         private Pos pendingA, pendingB;
         private int pendingIndex;
+        private int[] cardSlotOf;
 
         private void Awake()
         {
@@ -67,10 +66,15 @@ namespace Pokiwar.UI
             {
                 if (index >= 1 && Floating != null) Floating.Spawn("COMBO x" + (index + 1) + "!", new Color(1f, 0.9f, 0.3f), Board.GemRoot, new Vector2(0, 250), 52);
             };
+            cardSlotOf = new int[CardButtons.Length];
             for (int i = 0; i < CardButtons.Length; i++)
             {
+                cardSlotOf[i] = -1;
                 int k = i;
-                CardButtons[i].Button.onClick.AddListener(() => Queue(PendingKind.Card, default, default, k));
+                CardButtons[i].Button.onClick.AddListener(() =>
+                {
+                    if (cardSlotOf[k] >= 0) Queue(PendingKind.Card, default, default, cardSlotOf[k]);
+                });
             }
             for (int i = 0; i < SkillButtons.Length; i++)
             {
@@ -604,8 +608,6 @@ namespace Pokiwar.UI
         {
             PlayerHud.SetTurn(s == Side.Player);
             EnemyHud.SetTurn(s == Side.Enemy);
-            if (ArrowToPlayer != null) ArrowToPlayer.SetActive(s == Side.Player);
-            if (ArrowToEnemy != null) ArrowToEnemy.SetActive(s == Side.Enemy);
             TurnLabel.text = (s == Side.Player ? "YOUR TURN" : "ENEMY TURN") + "  #" + Engine.State.TurnNumber;
             if (s == Side.Player) AudioDirector.Sfx("turn");
             StartCoroutine(CombatantHud.Pop(TurnLabel.rectTransform, 1.25f));
@@ -616,20 +618,24 @@ namespace Pokiwar.UI
             if (Engine == null) return;
             var me = Engine.State.Get(Side.Player);
             bool myTurn = Engine.IsTurnOf(Side.Player) && !AutoPlay;
-            for (int i = 0; i < CardButtons.Length; i++)
+            int shown = 0;
+            for (int i = 0; i < me.Cards.Count && shown < CardButtons.Length; i++)
             {
-                var b = CardButtons[i];
-                if (i >= me.Cards.Count)
-                {
-                    b.Hide();
-                    continue;
-                }
                 var c = me.Cards[i];
+                if (c.UsesLeft <= 0) continue;
+                var b = CardButtons[shown];
+                cardSlotOf[shown] = i;
                 string cost = c.Def.ManaCost > 0 ? c.Def.ManaCost + " MP" : "";
                 if (c.Def.RageCost > 0) cost += (cost.Length > 0 ? " " : "") + c.Def.RageCost + " RG";
                 if (cost.Length == 0) cost = "Free";
-                b.Bind(c.Def.Name, cost, c.UsesLeft + "/" + c.Def.UsesPerBattle, sprites.Get(c.Def.IconKey), new Color(0.35f, 0.55f, 0.85f));
+                b.Bind(c.Def.Name, cost, "", sprites.Get(c.Def.IconKey), new Color(0.35f, 0.55f, 0.85f));
                 b.SetUsable(myTurn && Engine.CardBlockReason(Side.Player, i) == null);
+                shown++;
+            }
+            for (int k = shown; k < CardButtons.Length; k++)
+            {
+                cardSlotOf[k] = -1;
+                CardButtons[k].Hide();
             }
             for (int i = 0; i < SkillButtons.Length; i++)
             {

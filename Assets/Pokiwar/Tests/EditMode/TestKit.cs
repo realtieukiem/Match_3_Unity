@@ -93,7 +93,7 @@ namespace Pokiwar.Tests
 
         public static CardDef Card(string id, int mana, int rage, params EffectSpec[] fx)
         {
-            var c = new CardDef { Id = id, Name = id, ManaCost = mana, RageCost = rage, UsesPerBattle = 9 };
+            var c = new CardDef { Id = id, Name = id, ManaCost = mana, RageCost = rage };
             c.Effects.AddRange(fx);
             return c;
         }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Pokiwar.UI
 {
-    /// <summary>Preparation: preview the opponent, pick 1 pet and up to 5 cards.</summary>
+    /// <summary>Preparation: preview the opponent, pick 1 pet and up to 5 cards (copies allowed; each copy is used once).</summary>
     public sealed class PrepScreen : MonoBehaviour
     {
         public const int MaxCards = 5;
@@ -107,17 +107,26 @@ namespace Pokiwar.UI
                 var card = app.Db.TryCard(id);
                 if (card == null) continue;
                 var row = cardRows.Add();
-                bool on = s.SelectedCardIds.Contains(id);
-                string cost = (card.ManaCost > 0 ? card.ManaCost + " MP " : "") + (card.RageCost > 0 ? card.RageCost + " RG " : "") + (card.ManaCost == 0 && card.RageCost == 0 ? "Free " : "") + "x" + card.UsesPerBattle + (card.EndTurnAfterUse ? "  ends turn" : "");
-                row.Set(card.Name, cost + "\n" + card.Description, app.Sprites.Get(card.IconKey), on);
+                int copies = s.SelectedCardIds.FindAll(x => x == id).Count;
+                string cost = (card.ManaCost > 0 ? card.ManaCost + " MP " : "") + (card.RageCost > 0 ? card.RageCost + " RG " : "") + (card.ManaCost == 0 && card.RageCost == 0 ? "Free " : "") + (card.EndTurnAfterUse ? " ends turn" : "");
+                row.Set(card.Name + (copies > 0 ? "   x" + copies : ""), cost + "\n" + card.Description, app.Sprites.Get(card.IconKey), copies > 0);
                 var cid = id;
                 row.Button.onClick.AddListener(() =>
                 {
-                    if (s.SelectedCardIds.Contains(cid)) s.SelectedCardIds.Remove(cid);
-                    else if (s.SelectedCardIds.Count < MaxCards) s.SelectedCardIds.Add(cid);
+                    if (s.SelectedCardIds.Count < MaxCards) s.SelectedCardIds.Add(cid);
                     else app.Toast("Max " + MaxCards + " cards");
                     Refresh();
                 });
+                if (row.ExtraA != null)
+                {
+                    row.ExtraA.gameObject.SetActive(copies > 0);
+                    if (row.ExtraALabel != null) row.ExtraALabel.text = "REMOVE";
+                    row.ExtraA.onClick.AddListener(() =>
+                    {
+                        s.SelectedCardIds.Remove(cid);
+                        Refresh();
+                    });
+                }
             }
             CardCountLabel.text = "Cards " + s.SelectedCardIds.Count + "/" + MaxCards;
             var enc = app.Db.Encounter(node.EncounterId);

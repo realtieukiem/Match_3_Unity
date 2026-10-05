@@ -127,6 +127,7 @@ namespace Pokiwar.Domain
         public DefenseRules Defense = new DefenseRules();
         public float AiThinkSeconds = 0.9f;
         public int MinimumHpDamageOnHit = 1;
+        public bool ShieldExpiresOnOwnTurnStart = true;
     }
 
     public enum TargetKind { Self, Opponent }
@@ -178,7 +179,6 @@ namespace Pokiwar.Domain
         public string IconKey;
         public int ManaCost;
         public int RageCost;
-        public int UsesPerBattle = 1;
         public bool CanUseBeforeMatch = true;
         public bool CanUseAfterMatch;
         public bool EndTurnAfterUse;

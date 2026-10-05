@@ -38,6 +38,10 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: b4da576ee6d0ab3418dfb22da9a3b112, type: 3}
   - Key: fx.star
     Sprite: {fileID: 21300000, guid: cb924a45217362846b755efc30916386, type: 3}
+  - Key: battle.arrow
+    Sprite: {fileID: 21300000, guid: f74c95d8afef5ab42a2dbb8b5797c445, type: 3}
+  - Key: fx.bubble
+    Sprite: {fileID: 21300000, guid: 4d734891f71166540bb4d2eb81d37d28, type: 3}
   - Key: stone
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   - Key: emberkit
@@ -49,7 +53,7 @@ MonoBehaviour:
   - Key: dunewing
     Sprite: {fileID: 21300000, guid: 872cf3963d288d04da5e34b650be4eda, type: 3}
   - Key: psyling
-    Sprite: {fileID: 21300000, guid: d376fe6e0f96a504a9142258b53c4379, type: 3}
+    Sprite: {fileID: 21300000, guid: 67ce5662eb1637e40bb1e80d51ace58e, type: 3}
   - Key: azurewing
     Sprite: {fileID: 21300000, guid: 2ac29d4ef5127674b89e96eba5c56cc9, type: 3}
   - Key: azurewing_ascended
@@ -136,6 +140,16 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 81e90ab1292233748b66efd556eff54c, type: 3}
   - Key: tidepup.attack
     Sprite: {fileID: 21300000, guid: 34aa7386b0585924f85433d2d8d6b6e2, type: 3}
+  - Key: tidepup.hit
+    Sprite: {fileID: 21300000, guid: 4f16685a7ef771e4f876bbbc5386234d, type: 3}
+  - Key: tidepup.defeat
+    Sprite: {fileID: 21300000, guid: 9f91e6a7c0883cd45be6f132621f67ed, type: 3}
+  - Key: psyling.attack
+    Sprite: {fileID: 21300000, guid: abcf8b86c97782344a5bacba57b905ec, type: 3}
+  - Key: psyling.hit
+    Sprite: {fileID: 21300000, guid: 909c11a73ad87ad469b87c24572e2715, type: 3}
+  - Key: psyling.defeat
+    Sprite: {fileID: 21300000, guid: 5156564eda515cb438c001fe6c9e2dce, type: 3}
   - Key: stone.Neutral
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   - Key: stone.Metal

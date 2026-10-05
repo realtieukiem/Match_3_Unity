@@ -132,6 +132,8 @@ namespace Pokiwar.Domain
             var me = State.Get(State.Current);
             var foe = State.Opponent(State.Current);
             Emit(r, new CombatEvent { Kind = CombatEventKind.TurnStart, Actor = me.Side, Target = me.Side, Text = "Turn " + State.TurnNumber });
+            if (Rules.ShieldExpiresOnOwnTurnStart && me.Shield.Current > 0)
+                ChangeResource(r, me, me, ResourceKind.Shield, -me.Shield.Current, "shield-expire", null);
             if (me.RageRules.RageOnOwnTurnStart != 0)
                 ChangeResource(r, me, me, ResourceKind.Rage, me.RageRules.RageOnOwnTurnStart, "turn-start", null);
             for (int i = me.Summons.Count - 1; i >= 0; i--)
