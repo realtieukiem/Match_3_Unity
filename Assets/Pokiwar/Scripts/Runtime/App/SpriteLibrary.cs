@@ -24,14 +24,21 @@ namespace Pokiwar.App
 
         public Sprite Gem(GemType t) => t == GemType.None ? null : Gems[(int)t];
 
-        public Sprite Get(string key)
+        public Sprite Get(string key) => key != null && Map.TryGetValue(key, out var s) && s != null ? s : Fallback;
+
+        public bool Has(string key) => key != null && Map.TryGetValue(key, out var s) && s != null;
+
+        private Dictionary<string, Sprite> Map
         {
-            if (map == null)
+            get
             {
-                map = new Dictionary<string, Sprite>();
-                foreach (var k in Sprites) if (k != null && !string.IsNullOrEmpty(k.Key)) map[k.Key] = k.Sprite;
+                if (map == null)
+                {
+                    map = new Dictionary<string, Sprite>();
+                    foreach (var k in Sprites) if (k != null && !string.IsNullOrEmpty(k.Key)) map[k.Key] = k.Sprite;
+                }
+                return map;
             }
-            return key != null && map.TryGetValue(key, out var s) && s != null ? s : Fallback;
         }
 
         public static Color GemColor(GemType t)

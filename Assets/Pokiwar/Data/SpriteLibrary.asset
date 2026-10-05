@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: SpriteLibrary
   m_EditorClassIdentifier: 
   Gems:
-  - {fileID: 21300000, guid: cc81605109cc41848ba341ad57c519ab, type: 3}
-  - {fileID: 21300000, guid: 0f1d00e3c9e25c34796a1c5d07598014, type: 3}
-  - {fileID: 21300000, guid: a73fc0d7a65f55b4ca252bf2ad9f3ece, type: 3}
-  - {fileID: 21300000, guid: 264e94621ffbbd042900b69f9aba0577, type: 3}
-  - {fileID: 21300000, guid: 6ec3c0fe479bad440b23194755461921, type: 3}
-  - {fileID: 21300000, guid: a720d2dddeb01d54ab8cbdf89f85ee03, type: 3}
+  - {fileID: 21300000, guid: 54bf61edcb972324dbca7eda77bf854c, type: 3}
+  - {fileID: 21300000, guid: 19fbeb1881407a64c9f0d42164d2d75e, type: 3}
+  - {fileID: 21300000, guid: ad5eca4255658f94e83207d8afd6951b, type: 3}
+  - {fileID: 21300000, guid: 6b343fd0a0078fe45b1ca86a69e2caa3, type: 3}
+  - {fileID: 21300000, guid: 6fc7c85eca9990746a2e88ebe30312a5, type: 3}
+  - {fileID: 21300000, guid: b1315c9ef97270e49af226df550a83c4, type: 3}
   Sprites:
   - Key: ui.round
     Sprite: {fileID: 21300000, guid: fab597d5283cc1e4cb58a65d6358415e, type: 3}
@@ -29,7 +29,7 @@ MonoBehaviour:
   - Key: ui.ring
     Sprite: {fileID: 21300000, guid: 7dacdb0f04490e746a93cbe6bbc666ac, type: 3}
   - Key: ui.arrow
-    Sprite: {fileID: 21300000, guid: 7a547169fb66d444192e20ed2ac36232, type: 3}
+    Sprite: {fileID: 21300000, guid: 6f47b99cead581e448a6a6976b2193ae, type: 3}
   - Key: ui.gradient
     Sprite: {fileID: 21300000, guid: 95944a00d6c4a0f4fba1e78baec7c5e1, type: 3}
   - Key: ui.map
@@ -41,33 +41,33 @@ MonoBehaviour:
   - Key: stone
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   - Key: emberkit
-    Sprite: {fileID: 21300000, guid: 5d15792071a6ef84ca3819b679c224ab, type: 3}
+    Sprite: {fileID: 21300000, guid: 258bc4773cd85d044aa4329e163be108, type: 3}
   - Key: leafling
     Sprite: {fileID: 21300000, guid: a5d0eba0bc4686b46837db8075063d2a, type: 3}
   - Key: tidepup
     Sprite: {fileID: 21300000, guid: e6b911824603d9646b07e6ddd6f737fd, type: 3}
   - Key: dunewing
-    Sprite: {fileID: 21300000, guid: 00496d63cc8960142a1660eff6d38bac, type: 3}
+    Sprite: {fileID: 21300000, guid: 872cf3963d288d04da5e34b650be4eda, type: 3}
   - Key: psyling
     Sprite: {fileID: 21300000, guid: d376fe6e0f96a504a9142258b53c4379, type: 3}
   - Key: azurewing
-    Sprite: {fileID: 21300000, guid: 3aeca837237445c4db4fab044c690d1e, type: 3}
+    Sprite: {fileID: 21300000, guid: 2ac29d4ef5127674b89e96eba5c56cc9, type: 3}
   - Key: azurewing_ascended
-    Sprite: {fileID: 21300000, guid: 75342375f1478724fb714573eb1c2ce6, type: 3}
+    Sprite: {fileID: 21300000, guid: ca387b37a12b6904db93b53517649ff0, type: 3}
   - Key: card.mana_potion
-    Sprite: {fileID: 21300000, guid: 1b8c849ef07eee449912f7e403178522, type: 3}
+    Sprite: {fileID: 21300000, guid: e0cb03505b56a70448b9447b36c10dc6, type: 3}
   - Key: card.herbal_salve
-    Sprite: {fileID: 21300000, guid: 79e441f7b7d1978438c9403baf340a59, type: 3}
+    Sprite: {fileID: 21300000, guid: 6669109b36f36f1409b874cf12ac8803, type: 3}
   - Key: card.fire_bolt
-    Sprite: {fileID: 21300000, guid: f0113aa439457d341b434e0c6f994158, type: 3}
+    Sprite: {fileID: 21300000, guid: 5af2776509730e741b48e9605355bef0, type: 3}
   - Key: card.summon_sprite
     Sprite: {fileID: 21300000, guid: 5b43bb59c0c56e9458c78a29387db8f8, type: 3}
   - Key: card.iron_skin
-    Sprite: {fileID: 21300000, guid: 840e9394ab05fe045bf3d5a2d29e83a2, type: 3}
+    Sprite: {fileID: 21300000, guid: 6099e9debfa946e4ea7940919e003fc2, type: 3}
   - Key: card.mana_leech
     Sprite: {fileID: 21300000, guid: aad4d192c09ed3f4489ba8e1c5f72c36, type: 3}
   - Key: card.war_cry
-    Sprite: {fileID: 21300000, guid: 39b35e3040510724dbb4decda28a7475, type: 3}
+    Sprite: {fileID: 21300000, guid: 4fc4e2a05dba3ec4d962223ebc74d90c, type: 3}
   - Key: card.meteor
     Sprite: {fileID: 21300000, guid: 97789c1dc842b0349be6d6f4018150ae, type: 3}
   - Key: skill.blaze_burst
@@ -80,6 +80,54 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 546003cfced39604d948be6bcda19a76, type: 3}
   - Key: skill.tidal_siphon
     Sprite: {fileID: 21300000, guid: ddc802b7b19f9f14a8e50c12ce27dedc, type: 3}
+  - Key: bg.battle
+    Sprite: {fileID: 21300000, guid: b8de233205c4d554fada8cd355ea4db0, type: 3}
+  - Key: bg.hub
+    Sprite: {fileID: 21300000, guid: 275daf989293a5d458b5659052e2f496, type: 3}
+  - Key: bg.map
+    Sprite: {fileID: 21300000, guid: 30e84bb07de558849bde647cda737478, type: 3}
+  - Key: board.frame
+    Sprite: {fileID: 21300000, guid: 65a2c9d96b8d11d43b414d061d458c56, type: 3}
+  - Key: board.tile
+    Sprite: {fileID: 21300000, guid: ad4f2fccf7bfd654cb358c1b82d73782, type: 3}
+  - Key: board.selected
+    Sprite: {fileID: 21300000, guid: dc105f70631621449a47fa43f9e7f0eb, type: 3}
+  - Key: emberkit.attack
+    Sprite: {fileID: 21300000, guid: 1021dba991aca294d804d638f80a8fe3, type: 3}
+  - Key: emberkit.hit
+    Sprite: {fileID: 21300000, guid: 226fde80ad0165247a6ecddae5074c69, type: 3}
+  - Key: emberkit.defeat
+    Sprite: {fileID: 21300000, guid: 20fcc0ce35bcc7140adff5f0bf2686c6, type: 3}
+  - Key: dunewing.attack
+    Sprite: {fileID: 21300000, guid: 07574b319acf132429db6ef9cc856c06, type: 3}
+  - Key: dunewing.hit
+    Sprite: {fileID: 21300000, guid: 4fd5333dc28b49e45821e1b427a12c26, type: 3}
+  - Key: dunewing.defeat
+    Sprite: {fileID: 21300000, guid: a52c1d3101903c041b77bb83c136c29e, type: 3}
+  - Key: azurewing_ascended.attack
+    Sprite: {fileID: 21300000, guid: c5deeee2fca70fc4e80148c7b62e741c, type: 3}
+  - Key: azurewing_ascended.hit
+    Sprite: {fileID: 21300000, guid: 15b7d0daaedd746478d7929f15f8bfc7, type: 3}
+  - Key: azurewing_ascended.defeat
+    Sprite: {fileID: 21300000, guid: 7d285298e8b39f040b28d48f2a9374ee, type: 3}
+  - Key: hud.bar
+    Sprite: {fileID: 21300000, guid: 9719f6bd60c487d4da4fda9ad1c0d817, type: 3}
+  - Key: ui.button.green
+    Sprite: {fileID: 21300000, guid: ee0e6e0d71c90824bbd2276bb820f2ca, type: 3}
+  - Key: card.slot
+    Sprite: {fileID: 21300000, guid: b1f71e96010878e499e4375bf8ff828d, type: 3}
+  - Key: fx.slash
+    Sprite: {fileID: 21300000, guid: a8dd9f23dc7714e4ba03f11a498d142f, type: 3}
+  - Key: fx.heal
+    Sprite: {fileID: 21300000, guid: 9e855f456c000e449a9231c2a5a5febb, type: 3}
+  - Key: fx.mana
+    Sprite: {fileID: 21300000, guid: de5e812867cd19c4987ac1d5dffdfb75, type: 3}
+  - Key: fx.rage
+    Sprite: {fileID: 21300000, guid: f6f9988bf51c0864eba5ae525eeb7d75, type: 3}
+  - Key: fx.shield
+    Sprite: {fileID: 21300000, guid: de1e98a21ade616458a11c83e372c763, type: 3}
+  - Key: fx.transform
+    Sprite: {fileID: 21300000, guid: 6a7e1491ab4b1474783b47479d2c1f76, type: 3}
   - Key: stone.Neutral
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   - Key: stone.Metal

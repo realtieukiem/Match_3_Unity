@@ -80,10 +80,11 @@ namespace Pokiwar.EditorTools
 
         public static bool OverwriteExisting;
 
-        private static string Write(string name, int size, Func<float, float, Color> shader, int ss = 3)
+        private static string Write(string name, int size, Func<float, float, Color> shader, int ss = 3) => WriteTo(Folder + "/" + name + ".png", size, shader, ss);
+
+        private static string WriteTo(string path, int size, Func<float, float, Color> shader, int ss = 3)
         {
-            string existing = Folder + "/" + name + ".png";
-            if (!OverwriteExisting && File.Exists(existing)) return existing;
+            if (!OverwriteExisting && File.Exists(path)) return path;
             var tex = new Texture2D(size, size, TextureFormat.RGBA32, false);
             var px = new Color[size * size];
             for (int py = 0; py < size; py++)
@@ -107,7 +108,6 @@ namespace Pokiwar.EditorTools
             }
             tex.SetPixels(px);
             tex.Apply();
-            string path = Folder + "/" + name + ".png";
             File.WriteAllBytes(path, tex.EncodeToPNG());
             UnityEngine.Object.DestroyImmediate(tex);
             return path;
@@ -133,6 +133,63 @@ namespace Pokiwar.EditorTools
                 if (icon(ix - 0.07f, iy + 0.07f)) return new Color(0, 0, 0, 0.0f) + Shade(baseCol, x, y) * 0.55f + new Color(0, 0, 0, 0.45f);
                 if (!RoundRect(x, y, 0.84f, 0.84f, 0.22f)) return Shade(baseCol, x, y) * 0.7f + new Color(0, 0, 0, 0.3f);
                 return Shade(baseCol, x, y);
+            });
+        }
+
+        private static Color Hex(string h) => ColorUtility.TryParseHtmlString(h, out var c) ? c : Color.magenta;
+
+        private static Color Mul(Color c, float k) => new Color(Mathf.Clamp01(c.r * k), Mathf.Clamp01(c.g * k), Mathf.Clamp01(c.b * k), 1f);
+
+        /// <summary>Square match-3 gem in the FG38 style: ink outline, bevelled rim, dark emblem with a cream rim light.</summary>
+        internal static string WriteSquareGem(GemType g, string folder)
+        {
+            string hex = g == GemType.Sword ? "#F7C744" : g == GemType.Lightning ? "#188EE9" : g == GemType.Fire ? "#EA473B" : g == GemType.Heart ? "#69CE30" : g == GemType.Shield ? "#9F46D6" : "#F2EEE5";
+            Color c = Hex(hex), ink = Hex("#21191F"), cream = Hex("#FFF0BE");
+            Shape icon = g == GemType.Sword ? Sword : g == GemType.Lightning ? Lightning : g == GemType.Fire ? Flame : g == GemType.Heart ? Heart : g == GemType.Shield ? ShieldShape : (Shape)YinYangOuter;
+            const float s = 0.57f, o = 0.08f;
+            bool Emblem(float ex, float ey) => icon(ex / s, ey / s);
+            bool Outline(float ex, float ey)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    float a = i * Mathf.PI / 4f;
+                    if (Emblem(ex + Mathf.Cos(a) * o, ey + Mathf.Sin(a) * o)) return true;
+                }
+                return false;
+            }
+            return WriteTo(folder + "/gem_" + g.ToString().ToLowerInvariant() + ".png", 256, (x, y) =>
+            {
+                if (!RoundRect(x, y, 0.97f, 0.97f, 0.26f)) return Color.clear;
+                if (!RoundRect(x, y, 0.88f, 0.88f, 0.2f)) return ink;
+                float ax = Mathf.Abs(x), ay = Mathf.Abs(y);
+                if (!RoundRect(x, y, 0.66f, 0.66f, 0.1f))
+                {
+                    if (Mathf.Abs(ax - ay) < 0.022f) return Mul(c, 0.5f);
+                    if (y >= ax) return Color.Lerp(c, cream, 0.5f);
+                    if (x <= -ay) return Color.Lerp(c, cream, 0.22f);
+                    if (y <= -ax) return Mul(c, 0.6f);
+                    return Mul(c, 0.78f);
+                }
+                if (!RoundRect(x, y, 0.62f, 0.62f, 0.08f)) return Mul(c, 0.42f);
+                if (g == GemType.YinYang)
+                {
+                    float yx = x / s, yy = y / s;
+                    if (YinYangOuter(yx, yy)) return YinYangWhite(yx, yy) ? cream : ink;
+                    if (Outline(x, y)) return ink;
+                }
+                else
+                {
+                    if (Emblem(x, y))
+                    {
+                        Color fill = Color.Lerp(Mul(c, 0.36f), ink, 0.25f);
+                        return Emblem(x - 0.045f, y + 0.045f) ? fill : Color.Lerp(fill, cream, 0.55f);
+                    }
+                    if (Outline(x, y)) return ink;
+                }
+                float dx = (x + 0.3f) / 0.2f, dy = (y - 0.4f) / 0.075f;
+                if (dx * dx + dy * dy < 1f) return Color.Lerp(c, cream, 0.75f);
+                float k = Mathf.Clamp01((0.62f - y) / 1.24f);
+                return Color.Lerp(Color.Lerp(c, cream, 0.18f), Mul(c, 0.82f), k);
             });
         }
 

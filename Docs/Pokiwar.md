@@ -133,6 +133,28 @@ Labels: **VIDEO** seen in the clips, **USER_CONFIRMED** stated in the brief, **I
 
 Balance (AI vs AI, 40 seeds, pet Lv 3/5/8/12): nodes 1-2 always won in ~15 turns; boss 12% / 67% / 87% / 100%.
 
+## Art (FG38 set)
+
+`Assets/Pokiwar/Art/FG38` holds the canyon-fantasy set made from `D:\Project\Pokiwar_Art_FG38` (Codex, 2026-10-05). `Fg38Art.Apply`
+runs inside Rebuild Scene: it copies any file still missing from that folder, draws the six square gems itself (FG38 palette,
+ink outline, bevel, dark emblem), sets importers and 9-slice borders, and overrides the sprite keys below. Drop a new PNG
+under the same name in `Art/FG38` to replace one.
+
+| Key | File |
+|---|---|
+| `emberkit` (+ `.attack` `.hit` `.defeat`) | `char_emberkit*` (FG38 player pet) |
+| `dunewing` (+ poses) | `char_dunewing*` (FG38 beetle) |
+| `azurewing` / `azurewing_ascended` (+ poses) | `char_azurewing*` (crystal drake form 1 / 2) |
+| `gem.*` | `gem_*` (generated square gems) |
+| `bg.battle` `bg.hub` `bg.map` | backgrounds; Prep reuses the hub one |
+| `board.frame` `board.tile` `board.selected` `hud.bar` `card.slot` `ui.button.green` `ui.arrow` | frames, tiles, primary button, arrows |
+| `card.fire_bolt` `card.herbal_salve` `card.mana_potion` `card.iron_skin` `card.war_cry` | card illustrations |
+| `fx.slash` `fx.heal` `fx.mana` `fx.rage` `fx.shield` `fx.transform` | effect sprites shown by `VfxLayer.Decal` |
+
+A key `<creature>.<pose>` is optional: `CombatantHud` shows it during the lunge (attack), the hit and death, and falls back to
+the idle sprite. Creature art is drawn facing the opponent, so nothing is mirrored.
+Still placeholder (no FG38 art yet): leafling, tidepup, psyling, cards summon_sprite / mana_leech / meteor, every skill icon.
+
 ## Placeholder assets to replace
 
 Files in `Assets/Pokiwar/Art/Placeholder` (keep the name, or point `SpriteLibrary` at the new sprite):

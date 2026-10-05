@@ -433,9 +433,11 @@ namespace Pokiwar.UI
                     var at = targetHud.FloatAnchor.position;
                     bool big = ev.Strong || ev.SourceId != null && ev.SourceId.StartsWith("skill:");
                     AudioDirector.Sfx(big ? "hit.strong" : "hit");
+                    Decal("fx.slash", targetHud.BodyCenter, big ? 560f : 420f, 0.42f, ev.Actor == Side.Player ? 0f : 180f);
                     if (ev.ShieldAbsorbed > 0)
                     {
                         AudioDirector.Sfx("block");
+                        Decal("fx.shield", targetHud.BodyCenter, 300f, 0.4f);
                         vfx?.Ring(at, new Color(0.75f, 0.5f, 1f, 0.9f), 320f, 0.35f);
                     }
                     if (vfx != null)
@@ -506,7 +508,8 @@ namespace Pokiwar.UI
                         vfx.Burst(at, new Color(0.4f, 0.9f, 1f), 40, 1100f, 30f, 0.8f, 500f, vfx.Star);
                     }
                     Shake?.Add(0.9f);
-                    yield return actorHud.Transform(sprites.Get(ev.ActorAfter.SpriteKey));
+                    Decal("fx.transform", actorHud.BodyCenter, 900f, 0.9f);
+                    yield return actorHud.Transform(ev.ActorAfter.SpriteKey);
                     vfx?.Burst(at, new Color(1f, 0.9f, 0.5f), 20, 300f, 18f, 0.9f, -300f, vfx.Star);
                     Float(actorHud, "HP " + ev.Before + " -> " + ev.After, new Color(0.5f, 1f, 0.6f), 38);
                     EnemyKitLabel.text = DescribeKit(Engine.State.Get(Side.Enemy));
@@ -534,21 +537,31 @@ namespace Pokiwar.UI
             {
                 case ResourceKind.Hp:
                     AudioDirector.Sfx("heal");
+                    Decal("fx.heal", hud.BodyCenter, 320f, 0.7f);
                     vfx?.Burst(hud.FloatAnchor.position, new Color(0.45f, 1f, 0.5f), 14, 260f, 18f, 0.8f, -260f, vfx.Star);
                     break;
                 case ResourceKind.Mana:
                     AudioDirector.Sfx("mana");
+                    Decal("fx.mana", hud.BodyCenter, 260f, 0.55f);
                     vfx?.Burst(at, new Color(0.45f, 0.7f, 1f), 8, 260f, 14f, 0.45f, -100f);
                     break;
                 case ResourceKind.Rage:
                     AudioDirector.Sfx("rage");
+                    Decal("fx.rage", hud.BodyCenter, 300f, 0.55f);
                     vfx?.Burst(at, new Color(1f, 0.55f, 0.2f), 8, 300f, 14f, 0.45f, -200f);
                     break;
                 case ResourceKind.Shield:
                     AudioDirector.Sfx("shield");
+                    Decal("fx.shield", hud.BodyCenter, 360f, 0.6f);
                     vfx?.Ring(hud.FloatAnchor.position, new Color(0.75f, 0.5f, 1f, 0.85f), 420f, 0.45f);
                     break;
             }
+        }
+
+        private void Decal(string key, Vector3 at, float size, float life, float rot = 0f)
+        {
+            var vfx = VfxLayer.Instance;
+            if (vfx != null && sprites != null && sprites.Has(key)) vfx.Decal(at, sprites.Get(key), size, life, rot);
         }
 
         private static List<Vector3> Sample(List<Vector3> src, int max)

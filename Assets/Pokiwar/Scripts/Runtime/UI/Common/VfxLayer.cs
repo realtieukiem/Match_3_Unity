@@ -21,7 +21,7 @@ namespace Pokiwar.UI
         public int ActiveCount { get; private set; }
         public int SpawnedTotal { get; private set; }
 
-        private enum Kind { Burst, RingFx, Orb }
+        private enum Kind { Burst, RingFx, Orb, Decal }
 
         private sealed class P
         {
@@ -121,6 +121,14 @@ namespace Pokiwar.UI
             Spawn(Kind.RingFx, RingSprite, color, ToLocal(world), life, size * 0.2f, size);
         }
 
+        /// <summary>Authored effect sprite: pops in with overshoot, holds, then fades. Rot in degrees.</summary>
+        public void Decal(Vector3 world, Sprite sprite, float size, float life = 0.6f, float rot = 0f, Color? tint = null)
+        {
+            if (sprite == null) return;
+            var p = Spawn(Kind.Decal, sprite, tint ?? Color.white, ToLocal(world), life, size * 0.55f, size);
+            if (p != null) p.Rot = rot;
+        }
+
         /// <summary>Homing orbs on a curved path; onFirstArrive fires once when the first lands. Returns the time until then.</summary>
         public float Orbs(IList<Vector3> fromWorld, Vector3 toWorld, Color color, int perSource = 2, float travel = 0.42f, float size = 26f, Action onFirstArrive = null)
         {
@@ -203,6 +211,11 @@ namespace Pokiwar.UI
                         break;
                     case Kind.RingFx:
                         Draw(p, Mathf.Lerp(p.Size0, p.Size1, 1f - (1f - k) * (1f - k)), 1f - k);
+                        break;
+                    case Kind.Decal:
+                        float q = Mathf.Clamp01(k / 0.22f) - 1f;
+                        float pop = 1f + 2.70158f * q * q * q + 1.70158f * q * q;
+                        Draw(p, Mathf.LerpUnclamped(p.Size0, p.Size1, pop), k < 0.55f ? 1f : (1f - k) / 0.45f);
                         break;
                     case Kind.Orb:
                         float e = k * k;

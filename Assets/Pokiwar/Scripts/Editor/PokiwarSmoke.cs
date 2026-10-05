@@ -293,7 +293,8 @@ namespace Pokiwar.EditorTools
             Check(phaseEv == null || Played(audio, "transform"), "transform sound played");
             yield return WaitFor(() => app.Result.gameObject.activeSelf, 300);
             Check(app.Result.gameObject.activeSelf, "boss battle finished");
-            Check(bc.EnemyHud.Portrait.sprite == app.Sprites.Get("azurewing_ascended"), "boss portrait switched to the ascended form");
+            var bossSprite = bc.EnemyHud.Portrait.sprite;
+            Check(bossSprite == app.Sprites.Get("azurewing_ascended") || bossSprite == app.Sprites.Get("azurewing_ascended.defeat") || bossSprite == app.Sprites.Get("azurewing_ascended.hit") || bossSprite == app.Sprites.Get("azurewing_ascended.attack"), "boss portrait switched to the ascended form (" + (bossSprite != null ? bossSprite.name : "null") + ")");
             Log("boss battle " + app.Result.Title.text + " turns " + bc.Engine.State.TurnNumber);
             int commits = app.Save.CommittedBattleIds.Count;
             yield return new WaitForSecondsRealtime(0.5f);

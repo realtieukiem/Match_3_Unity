@@ -22,6 +22,11 @@ namespace Pokiwar.UI
         private Vector2 portraitHome;
         private bool homeSet;
         private float direction = 1f;
+        private SpriteLibrary lib;
+        private string key;
+        private bool busy;
+        private bool dead;
+        private float bobPhase;
 
         public void Setup(Combatant c, SpriteLibrary sprites, bool facesRight)
         {
@@ -33,8 +38,13 @@ namespace Pokiwar.UI
             }
             Portrait.rectTransform.anchoredPosition = portraitHome;
             Portrait.color = Color.white;
-            Portrait.sprite = sprites.Get(c.SpriteKey);
-            Portrait.rectTransform.localScale = new Vector3(facesRight ? 1f : -1f, 1f, 1f);
+            lib = sprites;
+            key = c.SpriteKey;
+            busy = false;
+            dead = false;
+            bobPhase = facesRight ? 0f : 1.3f;
+            Portrait.sprite = Pose(null);
+            Portrait.rectTransform.localScale = Vector3.one;
             InfoLabel.text = "Lv " + c.Level + "  " + c.Element + (c.ElementBonus > 0 ? " +" + c.ElementBonus : "") + "  ATK " + c.EffectiveAtk;
             Set(c.Snapshot());
             SetTurn(false);
@@ -61,6 +71,22 @@ namespace Pokiwar.UI
         }
 
         public void SetSprite(Sprite s) => Portrait.sprite = s;
+
+        public Vector3 BodyCenter => Portrait.rectTransform.TransformPoint(Portrait.rectTransform.rect.center);
+
+        /// <summary>Sprite for "key.pose" when authored, else the idle sprite.</summary>
+        public Sprite Pose(string pose)
+        {
+            if (lib == null) return Portrait.sprite;
+            return pose != null && lib.Has(key + "." + pose) ? lib.Get(key + "." + pose) : lib.Get(key);
+        }
+
+        private void Update()
+        {
+            if (busy || dead || Portrait == null) return;
+            float s = Mathf.Sin((Time.unscaledTime / 1.2f + bobPhase) * Mathf.PI * 2f);
+            Portrait.rectTransform.localScale = new Vector3(1f + 0.006f * s, 1f + 0.016f * s, 1f);
+        }
 
         public RectTransform BarRect(ResourceKind k)
         {
@@ -97,32 +123,51 @@ namespace Pokiwar.UI
         public IEnumerator Lunge()
         {
             var rt = Portrait.rectTransform;
-            yield return Tween.Run(0.12f, t => rt.anchoredPosition = portraitHome + new Vector2(60f * direction * t, 0));
-            yield return Tween.Run(0.12f, t => rt.anchoredPosition = portraitHome + new Vector2(60f * direction * (1f - t), 0));
+            busy = true;
+            rt.localScale = Vector3.one;
+            yield return Tween.Run(0.1f, t => rt.anchoredPosition = portraitHome + new Vector2(-14f * direction * t, 0));
+            Portrait.sprite = Pose("attack");
+            yield return Tween.Run(0.1f, t => rt.anchoredPosition = portraitHome + new Vector2(direction * Mathf.Lerp(-14f, 60f, t), 0));
+            yield return Tween.Run(0.16f, t => rt.anchoredPosition = portraitHome + new Vector2(60f * direction * (1f - t), 0));
+            if (!dead) Portrait.sprite = Pose(null);
+            busy = false;
         }
 
         public IEnumerator Shake()
         {
             var rt = Portrait.rectTransform;
-            Portrait.color = new Color(1f, 0.55f, 0.55f);
-            yield return Tween.Run(0.25f, t => rt.anchoredPosition = portraitHome + new Vector2(Mathf.Sin(t * 40f) * 14f * (1f - t), 0));
+            busy = true;
+            rt.localScale = Vector3.one;
+            Portrait.sprite = Pose("hit");
+            Portrait.color = new Color(1f, 0.6f, 0.6f);
+            yield return Tween.Run(0.28f, t => rt.anchoredPosition = portraitHome + new Vector2(Mathf.Sin(t * 40f) * 14f * (1f - t), 0));
             rt.anchoredPosition = portraitHome;
             Portrait.color = Color.white;
+            if (!dead) Portrait.sprite = Pose(null);
+            busy = false;
         }
 
-        public IEnumerator Transform(Sprite newSprite)
+        public IEnumerator Transform(string newKey)
         {
             var rt = Portrait.rectTransform;
-            var baseScale = rt.localScale;
+            busy = true;
+            var baseScale = Vector3.one;
             yield return Tween.Run(0.3f, t => rt.localScale = new Vector3(baseScale.x * (1f - t), baseScale.y * (1f + 0.3f * t), 1f));
-            Portrait.sprite = newSprite;
+            key = newKey;
+            Portrait.sprite = Pose(null);
             yield return Tween.Run(0.35f, t => rt.localScale = new Vector3(baseScale.x * t, baseScale.y * (1.3f - 0.3f * t), 1f));
             rt.localScale = baseScale;
+            busy = false;
         }
 
         public IEnumerator Die()
         {
-            yield return Tween.Run(0.5f, t => Portrait.color = new Color(1f, 1f, 1f, 1f - 0.8f * t));
+            dead = true;
+            Portrait.rectTransform.localScale = Vector3.one;
+            bool authored = lib != null && lib.Has(key + ".defeat");
+            Portrait.sprite = Pose("defeat");
+            float floor = authored ? 0.75f : 0.2f;
+            yield return Tween.Run(0.5f, t => Portrait.color = new Color(1f, 1f, 1f, 1f - (1f - floor) * t));
         }
     }
 }
