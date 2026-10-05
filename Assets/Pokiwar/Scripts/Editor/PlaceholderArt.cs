@@ -26,6 +26,8 @@ namespace Pokiwar.EditorTools
             made["ui.arrow"] = Write("ui_arrow", 128, (x, y) => Arrow(x, y) ? Color.white : Color.clear);
             made["ui.gradient"] = Write("ui_gradient", 64, (x, y) => new Color(1, 1, 1, (y + 1f) * 0.5f));
             made["ui.map"] = WriteMap();
+            made["fx.dot"] = Write("fx_dot", 64, (x, y) => { float d = Mathf.Clamp01(1f - Mathf.Sqrt(x * x + y * y)); return new Color(1, 1, 1, d * d); });
+            made["fx.star"] = Write("fx_star", 64, (x, y) => Star(x, y) ? Color.white : Color.clear);
             made["stone"] = Write("stone", 128, (x, y) => Mathf.Abs(x) * 0.9f + Mathf.Abs(y) * 0.75f <= 0.9f ? Shade(Color.white, x, y) : Color.clear);
 
             foreach (var g in Gems.All) made["gem." + g] = WriteGem(g);

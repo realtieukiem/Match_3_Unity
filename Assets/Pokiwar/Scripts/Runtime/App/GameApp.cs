@@ -23,6 +23,7 @@ namespace Pokiwar.App
         public ResultScreen Result;
         public UpgradeScreen Upgrade;
         public ToastView ToastView;
+        public AudioDirector Audio;
 
         public ContentDatabase Db { get; private set; }
         public ProgressionService Progression { get; private set; }
@@ -48,12 +49,20 @@ namespace Pokiwar.App
 
         private void Start()
         {
+            ApplySettings();
             ShowHub();
         }
 
         private void OnDestroy()
         {
             if (Instance == this) Instance = null;
+        }
+
+        public void ApplySettings()
+        {
+            if (Audio != null) Audio.Apply(Save.MusicOn, Save.SfxOn);
+            if (Battle != null && Battle.Shake != null) Battle.Shake.Enabled = Save.ShakeOn;
+            Persist();
         }
 
         public void Persist()
@@ -66,6 +75,7 @@ namespace Pokiwar.App
         {
             Save = saves.Reset();
             Rng = new SeededRng(Save.RngState);
+            ApplySettings();
             ShowHub();
             Toast("Save reset");
         }
@@ -85,6 +95,7 @@ namespace Pokiwar.App
             Progression.TickEnergy(Save, DateTime.UtcNow.Ticks);
             HideAll();
             Hub.gameObject.SetActive(true);
+            if (Audio != null) Audio.PlayMusic("music.menu");
             Hub.Show(this);
         }
 
@@ -93,6 +104,7 @@ namespace Pokiwar.App
             Progression.TickEnergy(Save, DateTime.UtcNow.Ticks);
             HideAll();
             Map.gameObject.SetActive(true);
+            if (Audio != null) Audio.PlayMusic("music.menu");
             Map.Show(this);
         }
 
@@ -108,6 +120,7 @@ namespace Pokiwar.App
         {
             HideAll();
             Upgrade.gameObject.SetActive(true);
+            if (Audio != null) Audio.PlayMusic("music.menu");
             Upgrade.Show(this);
         }
 

@@ -14,6 +14,7 @@ Unity 2022.3.27f1, uGUI, mouse + touch, 16:9 landscape (1920x1080 reference, `Ex
    - AUTO lets the AI play your side, LOG shows every CombatEvent with before/after values, GIVE UP forfeits.
 4. Win -> reward -> next node unlocks. Lose -> RETRY. Boss: Azure Peak (transforms once).
 5. Hub -> PETS & STONES: merge 3 stones, enhance a pet, socket stones. RESET SAVE starts over.
+6. Hub top right: MUSIC / SOUND / SHAKE toggles, saved with the game.
 
 Save file: `Application.persistentDataPath/pokiwar_save.json` (versioned, migrated on load).
 
@@ -21,7 +22,8 @@ Save file: `Application.persistentDataPath/pokiwar_save.json` (versioned, migrat
 
 ```
 Assets/Pokiwar/
-  Scenes/Pokiwar.unity          entry scene, every screen pre-placed (Hub, Map, Prep, Battle, Result, Upgrade, Toast)
+  Scenes/Pokiwar.unity          entry scene, every screen pre-placed (Hub, Map, Prep, Battle, Result, Upgrade, VfxLayer, Toast, PokiwarApp/Audio)
+  Audio/                        generated SFX (sfx_*.wav) and bar-exact music loops (music_*.wav)
   Prefabs/GemView.prefab        pooled gem view (the only runtime-instantiated prefab)
   Data/                         ScriptableObject content (tune here)
     ContentCatalog.asset        the one asset GameApp loads; lists all others
@@ -48,7 +50,8 @@ Rule of the code: the domain computes everything synchronously and returns `Acti
 
 | Item | Effect |
 |---|---|
-| Rebuild Scene + Art (overwrites scene layout) | writes missing placeholder PNGs, refreshes SpriteLibrary and GemView prefab, rebuilds the whole scene |
+| Rebuild Scene + Art (overwrites scene layout) | writes missing placeholder PNGs and WAVs, refreshes SpriteLibrary and GemView prefab, rebuilds the whole scene |
+| Regenerate Audio (overwrites) | re-renders every WAV from the recipes in `PokiwarAudioBuilder` |
 | Seed Missing Content Assets | creates content SOs that do not exist yet; never overwrites tuning |
 | Reset Content Assets To Defaults | overwrites every content SO with `DefaultContent` |
 | Balance Report (AI vs AI) | 40 seeded AI-vs-AI fights per node and pet level, win rate + turns in Console |
@@ -77,6 +80,20 @@ Unity.exe -batchmode -projectPath <p> -executeMethod Pokiwar.EditorTools.Pokiwar
 | `Rules/upgrade.config` | merge chance/cost per tier, lucky bonus, enhance chance/cost per level, fail accumulation, downgrade, sockets |
 | `Rules/progression.config` | starter pets/cards/items, energy, EXP curves |
 | `Rules/map.main` | regions and nodes (position, encounter, unlock requirement, wins required) |
+
+## Sound and effects
+
+- `PokiwarApp/Audio` (`AudioDirector`): one list of key -> clip -> volume. Buses in dB (SFX -2, music -9), 12 pooled voices,
+  at most 3 of one key at once, 40 ms per-key cooldown, +-5% pitch jitter. Cascade steps raise the match pitch by
+  2 semitones each. The boss transform ducks the music.
+- Keys: ui.click, swap, invalid, match, shuffle, heal, mana, rage, shield, block, steal, swing, hit, hit.strong, card,
+  skill, buff, summon, transform, death, fight, turn, tick, timeout, victory, defeat, qte.ok, qte.bad, qte.perfect,
+  qte.good, qte.miss, upgrade.ok, upgrade.fail, music.menu, music.battle, music.boss.
+- All sounds are synthesized (sfxr port, `Scripts/Editor/SfxSynth.cs`) - placeholders that are consistent and loop-clean;
+  replace a WAV under the same name to swap in final audio. Mix the per-key volume on the Audio object.
+- `Canvas/VfxLayer` (`VfxLayer`): pooled UI-sprite particles (bursts, rings, orbs that fly from cleared gems to the
+  bar they fill, screen flash), because an overlay canvas cannot draw a ParticleSystem.
+- `BattleScreen` (`ScreenShake`): trauma shake on hits, death and the boss transform; strong hits add a 50-110 ms hit-stop.
 
 ## Formulas in use
 
@@ -131,4 +148,4 @@ Files in `Assets/Pokiwar/Art/Placeholder` (keep the name, or point `SpriteLibrar
 ## Not in this slice
 
 Online, PvP, chat, server select, rooms, events, shop prices, Pokiwar 2 star/event pricing (kept out on purpose).
-Sound, VFX particles and per-pet animations are placeholders (tweens only).
+Final (recorded) audio, per-pet animations and particle art: the current sound and VFX are generated placeholders.

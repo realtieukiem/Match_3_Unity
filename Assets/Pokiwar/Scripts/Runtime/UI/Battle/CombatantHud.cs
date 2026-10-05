@@ -62,6 +62,33 @@ namespace Pokiwar.UI
 
         public void SetSprite(Sprite s) => Portrait.sprite = s;
 
+        public RectTransform BarRect(ResourceKind k)
+        {
+            switch (k)
+            {
+                case ResourceKind.Hp: return (RectTransform)Hp.transform;
+                case ResourceKind.Mana: return (RectTransform)Mana.transform;
+                case ResourceKind.Rage: return (RectTransform)Rage.transform;
+                case ResourceKind.Shield: return (RectTransform)Shield.transform;
+                default: return Portrait.rectTransform;
+            }
+        }
+
+        public void PopBar(ResourceKind k)
+        {
+            if (isActiveAndEnabled) StartCoroutine(Pop(BarRect(k), 1.12f));
+        }
+
+        public static IEnumerator Pop(RectTransform rt, float peak)
+        {
+            yield return Tween.Run(0.18f, t =>
+            {
+                float back = 1f + 2.70158f * Mathf.Pow(t - 1f, 3) + 1.70158f * Mathf.Pow(t - 1f, 2);
+                rt.localScale = Vector3.one * Mathf.LerpUnclamped(peak, 1f, back);
+            });
+            rt.localScale = Vector3.one;
+        }
+
         public void SetTurn(bool on)
         {
             if (TurnMarker != null) TurnMarker.SetActive(on);

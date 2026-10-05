@@ -57,7 +57,8 @@ namespace Pokiwar.EditorTools
             var catalog = PokiwarContentSeeder.Seed(false);
             var lib = PokiwarContentSeeder.BuildSprites(art);
             var gem = BuildGemPrefab();
-            if (overwriteScene || !File.Exists(ScenePath)) BuildScene(catalog, lib, gem);
+            var clips = PokiwarAudioBuilder.BuildAll();
+            if (overwriteScene || !File.Exists(ScenePath)) BuildScene(catalog, lib, gem, clips);
             var scenes = new List<EditorBuildSettingsScene> { new EditorBuildSettingsScene(ScenePath, true) };
             foreach (var s in EditorBuildSettings.scenes)
                 if (s.path != ScenePath) scenes.Add(new EditorBuildSettingsScene(s.path, false));
@@ -83,7 +84,7 @@ namespace Pokiwar.EditorTools
             return prefab.GetComponent<GemView>();
         }
 
-        private static void BuildScene(ContentCatalog catalog, SpriteLibrary lib, GemView gemPrefab)
+        private static void BuildScene(ContentCatalog catalog, SpriteLibrary lib, GemView gemPrefab, List<KeyedClip> clips)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(ScenePath));
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
@@ -114,6 +115,7 @@ namespace Pokiwar.EditorTools
             var battle = BuildBattle(root, lib, gemPrefab);
             var result = BuildResult(root);
             var upgrade = BuildUpgrade(root);
+            BuildVfx(root);
             var toast = BuildToast(root);
 
             var appGo = new GameObject("PokiwarApp");
@@ -128,6 +130,10 @@ namespace Pokiwar.EditorTools
             app.Result = result;
             app.Upgrade = upgrade;
             app.ToastView = toast;
+            var audio = new GameObject("Audio").AddComponent<AudioDirector>();
+            audio.transform.SetParent(appGo.transform, false);
+            audio.Clips = clips;
+            app.Audio = audio;
 
             hub.gameObject.SetActive(true);
             map.gameObject.SetActive(false);
@@ -167,6 +173,12 @@ namespace Pokiwar.EditorTools
             At(Rt(hub.UpgradeButton), 0.5f, 0.5f, 420, -140, 560, 120);
             hub.ResetButton = Btn(s, "ResetButton", "RESET SAVE", Red, 28, out _);
             At(Rt(hub.ResetButton), 0.5f, 0.5f, 420, -290, 300, 80);
+            hub.MusicButton = Btn(s, "MusicButton", "MUSIC: ON", Gray, 24, out hub.MusicLabel);
+            At(Rt(hub.MusicButton), 1, 1, -560, -50, 190, 64);
+            hub.SfxButton = Btn(s, "SfxButton", "SOUND: ON", Gray, 24, out hub.SfxLabel);
+            At(Rt(hub.SfxButton), 1, 1, -360, -50, 190, 64);
+            hub.ShakeButton = Btn(s, "ShakeButton", "SHAKE: ON", Gray, 24, out hub.ShakeLabel);
+            At(Rt(hub.ShakeButton), 1, 1, -160, -50, 190, 64);
             At(Txt(s, "Hint", "Drag or tap two neighbouring gems to swap. 10 seconds per turn.", 26, new Color(1, 1, 1, 0.8f), TextAnchor.MiddleCenter).rectTransform, 0.5f, 0, 0, 50, 1600, 40);
             return hub;
         }
@@ -249,6 +261,8 @@ namespace Pokiwar.EditorTools
             Fill(Img(s, "Bg", null, new Color(0.09f, 0.13f, 0.21f)).rectTransform);
             Fill(Img(s, "Glow", "ui.gradient", new Color(0.35f, 0.5f, 0.75f, 0.45f)).rectTransform);
             var bc = s.gameObject.AddComponent<BattleController>();
+            bc.Shake = s.gameObject.AddComponent<ScreenShake>();
+            bc.Shake.Target = s;
 
             bc.EncounterLabel = Txt(s, "EncounterLabel", "", 38, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
             At(bc.EncounterLabel.rectTransform, 0.5f, 1, 0, -34, 1000, 54);
@@ -527,6 +541,21 @@ namespace Pokiwar.EditorTools
             return up;
         }
 
+        private static VfxLayer BuildVfx(Transform root)
+        {
+            var rt = Screen(root, "VfxLayer");
+            var v = rt.gameObject.AddComponent<VfxLayer>();
+            v.Flash = Img(rt, "Flash", null, new Color(1, 1, 1, 0));
+            Fill(v.Flash.rectTransform);
+            v.Template = Img(rt, "ParticleTemplate", "fx.dot", Color.white);
+            At(v.Template.rectTransform, 0.5f, 0.5f, 0, 0, 22, 22);
+            v.Template.gameObject.SetActive(false);
+            v.Dot = art["fx.dot"];
+            v.RingSprite = art["ui.ring"];
+            v.Star = art["fx.star"];
+            return v;
+        }
+
         private static ToastView BuildToast(Transform root)
         {
             var bg = Img(root, "Toast", "ui.round", new Color(0, 0, 0, 0.82f));
@@ -588,6 +617,7 @@ namespace Pokiwar.EditorTools
             var v = bg.gameObject.AddComponent<ActionButtonView>();
             v.Button = bg.gameObject.AddComponent<Button>();
             v.Button.targetGraphic = bg;
+            bg.gameObject.AddComponent<ClickSound>();
             v.Group = bg.gameObject.AddComponent<CanvasGroup>();
             v.Frame = Img(bg.transform, "Frame", "ui.frame", frame);
             Fill(v.Frame.rectTransform, -2, -2, -2, -2);
@@ -610,6 +640,7 @@ namespace Pokiwar.EditorTools
             row.Background = bg;
             row.Button = bg.gameObject.AddComponent<Button>();
             row.Button.targetGraphic = bg;
+            bg.gameObject.AddComponent<ClickSound>();
             var le = bg.gameObject.AddComponent<LayoutElement>();
             le.preferredWidth = w;
             le.preferredHeight = h;
@@ -659,6 +690,7 @@ namespace Pokiwar.EditorTools
             rt.offsetMin = new Vector2(66, 0);
             rt.offsetMax = Vector2.zero;
             t.targetGraphic = box;
+            root.gameObject.AddComponent<ClickSound>();
             t.graphic = check;
             t.isOn = false;
             return t;
@@ -766,6 +798,7 @@ namespace Pokiwar.EditorTools
             var img = Img(parent, name, "ui.round", c, true);
             var b = img.gameObject.AddComponent<Button>();
             b.targetGraphic = img;
+            img.gameObject.AddComponent<ClickSound>();
             var colors = b.colors;
             colors.highlightedColor = new Color(1.1f, 1.1f, 1.1f);
             colors.pressedColor = new Color(0.8f, 0.8f, 0.8f);

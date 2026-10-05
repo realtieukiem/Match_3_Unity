@@ -19,6 +19,9 @@ namespace Pokiwar.UI
         public SpriteLibrary Sprites;
 
         public event Action<Pos, Pos> SwapRequested;
+        public event Action<CascadeStep, int> StepCleared;
+
+        public readonly Dictionary<GemType, List<Vector3>> LastCleared = new Dictionary<GemType, List<Vector3>>();
         public bool InputEnabled;
 
         private readonly Dictionary<int, GemView> byId = new Dictionary<int, GemView>();
@@ -63,6 +66,8 @@ namespace Pokiwar.UI
 
         public Vector2 CellPos(int x, float y) => new Vector2((x - (width - 1) * 0.5f) * CellSize, (y - (height - 1) * 0.5f) * CellSize);
 
+        public Vector3 CellWorld(Pos p) => GemRoot.TransformPoint(CellPos(p.X, p.Y));
+
         public RectTransform CellAnchorFor(Pos p) => byId.TryGetValue(grid[p.X, p.Y], out var v) ? v.Rect : GemRoot;
 
         public IEnumerator AnimateSwap(Pos a, Pos b, bool keep)
@@ -71,6 +76,7 @@ namespace Pokiwar.UI
             byId.TryGetValue(grid[a.X, a.Y], out var va);
             byId.TryGetValue(grid[b.X, b.Y], out var vb);
             Vector2 pa = CellPos(a.X, a.Y), pb = CellPos(b.X, b.Y);
+            AudioDirector.Sfx("swap");
             yield return Tween.Run(0.16f, t =>
             {
                 float e = Tween.EaseOut(t);
@@ -84,6 +90,7 @@ namespace Pokiwar.UI
                 grid[b.X, b.Y] = t0;
                 yield break;
             }
+            AudioDirector.Sfx("invalid");
             yield return Tween.Run(0.16f, t =>
             {
                 float e = Tween.EaseOut(t);
@@ -92,9 +99,20 @@ namespace Pokiwar.UI
             });
         }
 
-        public IEnumerator AnimateStep(CascadeStep step)
+        public IEnumerator AnimateStep(CascadeStep step, int stepIndex = 0)
         {
             var dying = new List<GemView>();
+            var vfx = VfxLayer.Instance;
+            int perGem = step.Cleared.Count > 9 ? 3 : 5;
+            foreach (var cc in step.Cleared)
+            {
+                var w = CellWorld(cc.At);
+                if (!LastCleared.TryGetValue(cc.Cell.Type, out var list)) LastCleared[cc.Cell.Type] = list = new List<Vector3>();
+                list.Add(w);
+                if (vfx != null) vfx.Burst(w, SpriteLibrary.GemColor(cc.Cell.Type), perGem + (cc.Cell.Multiplier > 1 ? 4 : 0), 520f, 20f, 0.5f, 900f, vfx.Star);
+            }
+            AudioDirector.Sfx("match", Mathf.Pow(2f, Mathf.Min(stepIndex, 8) / 12f * 2f), 1f, false);
+            StepCleared?.Invoke(step, stepIndex);
             foreach (var cc in step.Cleared)
             {
                 if (byId.TryGetValue(cc.Cell.Id, out var v)) dying.Add(v);
@@ -136,13 +154,15 @@ namespace Pokiwar.UI
 
         public IEnumerator AnimateResolution(SwapResolution res, BoardState finalBoard)
         {
+            LastCleared.Clear();
             yield return AnimateSwap(res.Move.A, res.Move.B, res.Valid);
             if (!res.Valid) yield break;
-            foreach (var step in res.Steps) yield return AnimateStep(step);
+            for (int i = 0; i < res.Steps.Count; i++) yield return AnimateStep(res.Steps[i], i);
             if (res.Reshuffled || !Matches(finalBoard))
             {
                 yield return Tween.Run(0.2f, t => GemRoot.localScale = Vector3.one * (1f - 0.1f * t));
                 Rebuild(finalBoard);
+                AudioDirector.Sfx("shuffle");
                 yield return Tween.Run(0.2f, t => GemRoot.localScale = Vector3.one * (0.9f + 0.1f * t));
             }
         }

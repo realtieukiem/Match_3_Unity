@@ -168,6 +168,19 @@ namespace Pokiwar.EditorTools
             yield return null;
             Check(app.Hub.gameObject.activeSelf && !app.Map.gameObject.activeSelf, "hub screen visible");
             yield return Capture("01_hub");
+            var audio = app.Audio;
+            var vfx = VfxLayer.Instance;
+            Check(audio != null && audio.Clips.Count >= 36 && audio.Clips.TrueForAll(c => c.Clip != null), "audio director has every clip (" + (audio != null ? audio.Clips.Count : 0) + ")");
+            Check(vfx != null && vfx.Template != null && vfx.Star != null, "vfx layer wired");
+            bool sfxBefore = app.Save.SfxOn;
+            app.Hub.SfxButton.onClick.Invoke();
+            var reread = new SaveService(new FileSaveStore(), new JsonSaveSerializer(), app.Progression).LoadOrCreate();
+            Check(app.Save.SfxOn == !sfxBefore && audio.SfxOn == app.Save.SfxOn && reread.SfxOn == app.Save.SfxOn && app.Hub.SfxLabel.text.EndsWith(app.Save.SfxOn ? "ON" : "OFF"), "sound toggle applies and persists");
+            app.Hub.SfxButton.onClick.Invoke();
+            app.Hub.ShakeButton.onClick.Invoke();
+            Check(!app.Battle.Shake.Enabled && !app.Save.ShakeOn, "shake toggle reaches the battle shake");
+            app.Hub.ShakeButton.onClick.Invoke();
+            Check(app.Battle.Shake.Enabled && audio.SfxOn, "settings restored");
 
             app.Hub.AdventureButton.onClick.Invoke();
             yield return null;
@@ -199,10 +212,20 @@ namespace Pokiwar.EditorTools
             var moves = BoardEngine.FindMoves(bc.Engine.State.Board, 3);
             Check(moves.Count > 0, "board has moves");
             int turn = bc.Engine.State.TurnNumber;
+            int spawnedBefore = vfx.SpawnedTotal;
             Drag(bc.Board, moves[0].A, moves[0].B);
+            yield return WaitFor(() => vfx.ActiveCount > 0, 5);
+            Check(vfx.ActiveCount > 0, "match spawned particles");
+            int playing = 0;
+            foreach (var src in audio.GetComponents<AudioSource>()) if (src.isPlaying) playing++;
+            Log("audio output " + AudioSettings.outputSampleRate + " Hz, voices playing now " + playing);
+            yield return new WaitForSecondsRealtime(0.08f);
+            yield return Capture("04b_match_fx");
             yield return WaitFor(() => bc.Engine.State.Current == Side.Enemy || bc.Engine.State.Ended, 20);
             Check(bc.Engine.State.Current == Side.Enemy || bc.Engine.State.Ended, "drag swap resolved and passed the turn");
             Check(bc.Engine.State.Log.Exists(e => e.Kind == CombatEventKind.GemSummary && e.Actor == Side.Player), "player match produced a gem summary");
+            Check(Played(audio, "swap") && Played(audio, "match"), "swap and match sounds played");
+            Check(vfx.SpawnedTotal > spawnedBefore, "vfx spawned on the match (" + (vfx.SpawnedTotal - spawnedBefore) + ")");
 
             yield return WaitFor(() => bc.Engine.IsTurnOf(Side.Player) && bc.Board.InputEnabled, 30);
             Check(bc.Engine.IsTurnOf(Side.Player), "turn came back after AI acted on the shared board");
@@ -226,6 +249,8 @@ namespace Pokiwar.EditorTools
             bc.AutoPlay = true;
             yield return WaitFor(() => app.Result.gameObject.activeSelf, 300);
             Check(app.Result.gameObject.activeSelf, "battle reached the result screen");
+            Check(Played(audio, "turn") && (Played(audio, "hit") || Played(audio, "hit.strong")) && Played(audio, "fight"), "turn, hit and fight sounds played");
+            Check(Played(audio, "victory") || Played(audio, "defeat"), "end sound played");
             yield return Capture("06_result");
             bool won = app.Result.Title.text == "VICTORY";
             Log("first battle " + (won ? "won" : "lost") + " in " + bc.Engine.State.TurnNumber + " turns");
@@ -238,6 +263,9 @@ namespace Pokiwar.EditorTools
             app.Result.RetryButton.onClick.Invoke();
             yield return null;
             Check(app.Prep.gameObject.activeSelf, "retry returns to preparation");
+            yield return new WaitForSecondsRealtime(2.5f);
+            Check(vfx.ActiveCount == 0, "particles all returned to the pool (" + vfx.ActiveCount + " live)");
+            Check(bc.Shake.AtRest, "battle screen shake at rest");
 
             app.Save.Node("node.1", true).Wins = Math.Max(1, app.Save.Wins("node.1"));
             app.Save.Node("node.2", true).Wins = 1;
@@ -262,6 +290,7 @@ namespace Pokiwar.EditorTools
             Check(phaseEv != null, "boss transformed");
             if (phaseEv != null) Check(phaseEv.After == bc.Engine.State.Get(Side.Enemy).Hp.Max / 2, "transform set HP to 50% (" + phaseEv.Before + " -> " + phaseEv.After + ")");
             Check(bc.Engine.State.Log.FindAll(e => e.Kind == CombatEventKind.PhaseTriggered).Count == 1, "phase fired once");
+            Check(phaseEv == null || Played(audio, "transform"), "transform sound played");
             yield return WaitFor(() => app.Result.gameObject.activeSelf, 300);
             Check(app.Result.gameObject.activeSelf, "boss battle finished");
             Check(bc.EnemyHud.Portrait.sprite == app.Sprites.Get("azurewing_ascended"), "boss portrait switched to the ascended form");
@@ -291,8 +320,13 @@ namespace Pokiwar.EditorTools
             app.ShowHub();
             yield return null;
             yield return Capture("09_hub_after");
+            Check(audio.MissingKeys.Count == 0, "no missing audio keys (" + string.Join(",", audio.MissingKeys) + ")");
+            Log("audio plays " + audio.TotalPlays + " distinct " + audio.PlayCounts.Count + ": " + string.Join(" ", System.Linq.Enumerable.Select(audio.PlayCounts, kv => kv.Key + "=" + kv.Value)));
+            Log("vfx spawned " + vfx.SpawnedTotal);
             Finish();
         }
+
+        private static bool Played(AudioDirector a, string key) => a.PlayCounts.TryGetValue(key, out var n) && n > 0;
 
         private static Vector2 CellScreen(BoardView board, Pos p)
         {

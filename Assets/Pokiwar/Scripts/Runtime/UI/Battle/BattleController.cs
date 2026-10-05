@@ -33,6 +33,7 @@ namespace Pokiwar.UI
         public Button AutoButton;
         public Text AutoLabel;
         public Button GiveUpButton;
+        public ScreenShake Shake;
 
         [Header("Tuning")]
         [Tooltip("Animation speed multiplier (1 = normal).")]
@@ -52,6 +53,7 @@ namespace Pokiwar.UI
         private SeededRng aiRng;
         private bool reported;
         private bool giveUp;
+        private int lastTick = -1;
 
         private enum PendingKind { None, Swap, Card, Skill }
         private PendingKind pending;
@@ -61,6 +63,10 @@ namespace Pokiwar.UI
         private void Awake()
         {
             Board.SwapRequested += (a, b) => Queue(PendingKind.Swap, a, b, 0);
+            Board.StepCleared += (step, index) =>
+            {
+                if (index >= 1 && Floating != null) Floating.Spawn("COMBO x" + (index + 1) + "!", new Color(1f, 0.9f, 0.3f), Board.GemRoot, new Vector2(0, 250), 52);
+            };
             for (int i = 0; i < CardButtons.Length; i++)
             {
                 int k = i;
@@ -89,6 +95,10 @@ namespace Pokiwar.UI
             giveUp = false;
             pending = PendingKind.None;
             Tween.Speed = AnimationSpeed;
+            lastTick = -1;
+            Shake?.Stop();
+            VfxLayer.Instance?.Clear();
+            AudioDirector.Instance?.PlayMusic(encounter.IsBoss ? "music.boss" : "music.battle");
             Engine = new BattleEngine(setup);
             Clock = new TurnClock(setup.Board.TurnSeconds);
             aiRng = new SeededRng(setup.Seed ^ 0xA1A1A1u);
@@ -135,7 +145,18 @@ namespace Pokiwar.UI
         private void Update()
         {
             if (Clock == null) return;
-            TimerLabel.text = Mathf.CeilToInt(Clock.Remaining).ToString();
+            int sec = Mathf.CeilToInt(Clock.Remaining);
+            TimerLabel.text = sec.ToString();
+            if (Clock.Running && sec != lastTick)
+            {
+                if (sec <= 3 && sec > 0 && Engine != null && Engine.IsTurnOf(Side.Player) && !AutoPlay)
+                {
+                    AudioDirector.Sfx("tick", sec == 1 ? 1.5f : 1.2f, 1f, false);
+                    StartCoroutine(CombatantHud.Pop(TimerLabel.rectTransform, 1.4f));
+                }
+                lastTick = sec;
+            }
+            TimerLabel.color = Clock.Running && sec <= 3 ? new Color(1f, 0.45f, 0.4f) : Color.white;
             if (TimerFill != null) TimerFill.fillAmount = Clock.Duration <= 0 ? 0 : Clock.Remaining / Clock.Duration;
             Tween.Speed = AnimationSpeed;
         }
@@ -143,6 +164,7 @@ namespace Pokiwar.UI
         private IEnumerator MainLoop()
         {
             Running = true;
+            AudioDirector.Sfx("fight");
             yield return ShowBanner("FIGHT!", 0.8f);
             var s = Engine.State;
             while (!s.Ended && !giveUp)
@@ -165,6 +187,14 @@ namespace Pokiwar.UI
             Board.InputEnabled = false;
             Clock.Freeze();
             bool won = !giveUp && s.Ended && s.Winner == Side.Player;
+            AudioDirector.Instance?.StopMusic();
+            AudioDirector.Sfx(won ? "victory" : "defeat", 1f, 1f, false);
+            if (won && VfxLayer.Instance != null)
+            {
+                var v = VfxLayer.Instance;
+                v.Burst(PlayerHud.FloatAnchor.position, new Color(1f, 0.85f, 0.3f), 30, 1000f, 22f, 1.2f, 900f, v.Star, 70f, 70f);
+                v.Burst(EnemyHud.FloatAnchor.position, new Color(0.5f, 0.9f, 1f), 30, 1000f, 22f, 1.2f, 900f, v.Star, 70f, 110f);
+            }
             yield return ShowBanner(won ? "VICTORY!" : "DEFEAT", 1.0f);
             report.Won = won;
             report.Turns = s.TurnNumber;
@@ -341,14 +371,23 @@ namespace Pokiwar.UI
         {
             var actorHud = Hud(ev.Actor);
             var targetHud = Hud(ev.Target);
+            var vfx = VfxLayer.Instance;
             switch (ev.Kind)
             {
                 case CombatEventKind.TurnSkipped:
+                    AudioDirector.Sfx("timeout");
                     Float(actorHud, "TIME OUT", Color.gray, 0);
                     yield return Tween.Wait(0.4f);
                     break;
                 case CombatEventKind.GemEffect:
                 case CombatEventKind.ResourceChange:
+                {
+                    bool fromGem = ev.Kind == CombatEventKind.GemEffect;
+                    if (fromGem && vfx != null && Board.LastCleared.TryGetValue(ev.Gem, out var cells) && cells.Count > 0)
+                    {
+                        float wait = vfx.Orbs(Sample(cells, 6), targetHud.BarRect(ev.Resource).position, ResourceColor(ev.Resource), 2);
+                        yield return Tween.Wait(wait);
+                    }
                     targetHud.Set(ev.TargetAfter);
                     actorHud.Set(ev.ActorAfter);
                     if (ev.Applied != 0 || ev.Computed != 0)
@@ -356,43 +395,95 @@ namespace Pokiwar.UI
                         string label = (ev.Applied >= 0 ? "+" : "") + ev.Applied + " " + ResourceShort(ev.Resource);
                         if (ev.Applied != ev.Computed && ev.Computed > 0) label += " (" + ev.Computed + ")";
                         Float(targetHud, label, ResourceColor(ev.Resource), ev.SourceId == "turn-start" ? 30 : 40);
-                        yield return Tween.Wait(ev.Kind == CombatEventKind.GemEffect ? 0.35f : 0.15f);
+                        if (ev.Applied > 0 && ev.SourceId != "turn-start" && ev.SourceId != "hp-damage") GainFeedback(targetHud, ev.Resource);
+                        yield return Tween.Wait(fromGem ? 0.3f : 0.15f);
                     }
                     break;
+                }
                 case CombatEventKind.Steal:
+                    AudioDirector.Sfx("steal");
+                    if (vfx != null && ev.Applied > 0)
+                    {
+                        var from = new List<Vector3> { targetHud.BarRect(ev.Resource).position };
+                        float wait = vfx.Orbs(from, actorHud.BarRect(ev.Resource).position, new Color(0.85f, 0.85f, 0.95f), 6);
+                        yield return Tween.Wait(wait);
+                        actorHud.PopBar(ev.Resource);
+                    }
                     actorHud.Set(ev.ActorAfter);
                     targetHud.Set(ev.TargetAfter);
                     Float(targetHud, "-" + ev.Applied + " " + ResourceShort(ev.Resource) + (ev.Applied < ev.Computed ? " (" + ev.Computed + ")" : ""), new Color(0.85f, 0.85f, 0.85f), 36);
                     Float(actorHud, "STEAL " + ResourceShort(ev.Resource), Color.white, 32);
-                    yield return Tween.Wait(0.4f);
+                    yield return Tween.Wait(0.3f);
                     break;
                 case CombatEventKind.Attack:
+                    if (ev.Gem == GemType.Sword && vfx != null && Board.LastCleared.TryGetValue(GemType.Sword, out var swords) && swords.Count > 0)
+                    {
+                        float wait = vfx.Orbs(Sample(swords, 6), targetHud.FloatAnchor.position, SpriteLibrary.GemColor(GemType.Sword), 2, 0.36f, 30f);
+                        AudioDirector.Sfx("swing");
+                        yield return Tween.Wait(wait * 0.7f);
+                    }
+                    else AudioDirector.Sfx("swing");
                     yield return actorHud.Lunge();
                     break;
                 case CombatEventKind.Damage:
+                {
+                    yield return Tween.Wait(ev.Strong ? 0.11f : 0.05f);
                     targetHud.Set(ev.TargetAfter);
                     actorHud.Set(ev.ActorAfter);
+                    var at = targetHud.FloatAnchor.position;
+                    bool big = ev.Strong || ev.SourceId != null && ev.SourceId.StartsWith("skill:");
+                    AudioDirector.Sfx(big ? "hit.strong" : "hit");
+                    if (ev.ShieldAbsorbed > 0)
+                    {
+                        AudioDirector.Sfx("block");
+                        vfx?.Ring(at, new Color(0.75f, 0.5f, 1f, 0.9f), 320f, 0.35f);
+                    }
+                    if (vfx != null)
+                    {
+                        vfx.Burst(at, big ? new Color(1f, 0.6f, 0.15f) : new Color(1f, 0.85f, 0.6f), big ? 28 : 12, big ? 900f : 650f, big ? 26f : 20f, 0.5f, 700f, vfx.Star);
+                        if (big)
+                        {
+                            vfx.Ring(at, new Color(1f, 0.8f, 0.4f, 0.9f), 520f, 0.4f);
+                            vfx.ScreenFlash(Color.white, 0.3f, 0.2f);
+                        }
+                    }
+                    float ratio = targetHud == null || ev.TargetAfter.MaxHp <= 0 ? 0f : (float)ev.Applied / ev.TargetAfter.MaxHp;
+                    Shake?.Add(Mathf.Clamp((big ? 0.55f : 0.25f) + ratio * 2f, 0f, 0.95f));
                     string dmg = (ev.Strong ? "RAGE! " : "") + "-" + ev.Applied;
                     if (ev.ShieldAbsorbed > 0) dmg += "  [shield -" + ev.ShieldAbsorbed + "]";
-                    Float(targetHud, dmg, ev.Strong ? new Color(1f, 0.55f, 0.1f) : new Color(1f, 0.3f, 0.3f), ev.Strong ? 54 : 46);
+                    Float(targetHud, dmg, ev.Strong ? new Color(1f, 0.55f, 0.1f) : new Color(1f, 0.3f, 0.3f), big ? 56 : 46);
                     yield return targetHud.Shake();
                     break;
+                }
                 case CombatEventKind.CardUsed:
+                    AudioDirector.Sfx("card");
+                    vfx?.Ring(actorHud.FloatAnchor.position, new Color(0.45f, 0.7f, 1f, 0.9f), 380f, 0.4f);
                     yield return ShowBanner((ev.Actor == Side.Player ? "" : "Enemy: ") + ev.Text, 0.6f);
                     break;
                 case CombatEventKind.SkillUsed:
+                    AudioDirector.Sfx("skill");
+                    if (vfx != null)
+                    {
+                        vfx.Ring(actorHud.FloatAnchor.position, new Color(1f, 0.75f, 0.3f, 0.95f), 460f, 0.45f);
+                        vfx.Burst(actorHud.FloatAnchor.position, new Color(1f, 0.7f, 0.25f), 18, 500f, 22f, 0.6f, -200f, vfx.Star);
+                    }
                     yield return ShowBanner((ev.Actor == Side.Player ? "" : "Enemy: ") + ev.Text + "!", 0.6f);
                     break;
                 case CombatEventKind.QteResolved:
                     Float(actorHud, ev.Text + "  " + ev.Computed, Color.yellow, 34);
+                    AudioDirector.Sfx("swing");
                     yield return actorHud.Lunge();
                     break;
                 case CombatEventKind.Buff:
+                    AudioDirector.Sfx("buff");
+                    vfx?.Ring(targetHud.FloatAnchor.position, ev.Actor == ev.Target ? new Color(0.5f, 0.9f, 1f, 0.9f) : new Color(1f, 0.4f, 0.4f, 0.9f), 380f, 0.4f);
                     targetHud.SetStatus(Engine.State.Get(ev.Target));
                     Float(targetHud, ev.Text, new Color(0.6f, 0.9f, 1f), 32);
                     yield return Tween.Wait(0.3f);
                     break;
                 case CombatEventKind.SummonCreated:
+                    AudioDirector.Sfx("summon");
+                    vfx?.Burst(actorHud.FloatAnchor.position, new Color(0.6f, 1f, 0.6f), 16, 400f, 20f, 0.7f, -250f, vfx.Star);
                     actorHud.SetStatus(Engine.State.Get(ev.Actor));
                     Float(actorHud, "Summon: " + ev.Text, new Color(0.7f, 1f, 0.7f), 32);
                     yield return Tween.Wait(0.3f);
@@ -402,14 +493,30 @@ namespace Pokiwar.UI
                     yield return Tween.Wait(0.25f);
                     break;
                 case CombatEventKind.PhaseTriggered:
+                {
                     actorHud.Set(ev.ActorAfter);
+                    var at = actorHud.FloatAnchor.position;
+                    AudioDirector.Instance?.Duck(-12f, 1.6f);
+                    AudioDirector.Sfx("transform");
                     yield return ShowBanner(ev.Text + " transforms!", 0.4f);
+                    if (vfx != null)
+                    {
+                        vfx.ScreenFlash(Color.white, 0.75f, 0.45f);
+                        vfx.Ring(at, new Color(0.5f, 0.95f, 1f, 1f), 900f, 0.6f);
+                        vfx.Burst(at, new Color(0.4f, 0.9f, 1f), 40, 1100f, 30f, 0.8f, 500f, vfx.Star);
+                    }
+                    Shake?.Add(0.9f);
                     yield return actorHud.Transform(sprites.Get(ev.ActorAfter.SpriteKey));
+                    vfx?.Burst(at, new Color(1f, 0.9f, 0.5f), 20, 300f, 18f, 0.9f, -300f, vfx.Star);
                     Float(actorHud, "HP " + ev.Before + " -> " + ev.After, new Color(0.5f, 1f, 0.6f), 38);
                     EnemyKitLabel.text = DescribeKit(Engine.State.Get(Side.Enemy));
                     yield return Tween.Wait(0.6f);
                     break;
+                }
                 case CombatEventKind.Death:
+                    AudioDirector.Sfx("death");
+                    vfx?.Burst(actorHud.FloatAnchor.position, new Color(0.8f, 0.8f, 0.85f), 36, 800f, 26f, 0.9f, 800f);
+                    Shake?.Add(0.5f);
                     yield return actorHud.Die();
                     break;
                 case CombatEventKind.Reshuffled:
@@ -418,6 +525,39 @@ namespace Pokiwar.UI
             }
         }
 
+        private void GainFeedback(CombatantHud hud, ResourceKind k)
+        {
+            hud.PopBar(k);
+            var vfx = VfxLayer.Instance;
+            var at = hud.BarRect(k).position;
+            switch (k)
+            {
+                case ResourceKind.Hp:
+                    AudioDirector.Sfx("heal");
+                    vfx?.Burst(hud.FloatAnchor.position, new Color(0.45f, 1f, 0.5f), 14, 260f, 18f, 0.8f, -260f, vfx.Star);
+                    break;
+                case ResourceKind.Mana:
+                    AudioDirector.Sfx("mana");
+                    vfx?.Burst(at, new Color(0.45f, 0.7f, 1f), 8, 260f, 14f, 0.45f, -100f);
+                    break;
+                case ResourceKind.Rage:
+                    AudioDirector.Sfx("rage");
+                    vfx?.Burst(at, new Color(1f, 0.55f, 0.2f), 8, 300f, 14f, 0.45f, -200f);
+                    break;
+                case ResourceKind.Shield:
+                    AudioDirector.Sfx("shield");
+                    vfx?.Ring(hud.FloatAnchor.position, new Color(0.75f, 0.5f, 1f, 0.85f), 420f, 0.45f);
+                    break;
+            }
+        }
+
+        private static List<Vector3> Sample(List<Vector3> src, int max)
+        {
+            if (src.Count <= max) return src;
+            var r = new List<Vector3>(max);
+            for (int i = 0; i < max; i++) r.Add(src[i * src.Count / max]);
+            return r;
+        }
         private void Float(CombatantHud hud, string text, Color c, int size)
         {
             if (Floating != null) Floating.Spawn(text, c, hud.FloatAnchor, new Vector2(UnityEngine.Random.Range(-40f, 40f), 0), size == 0 ? 40 : size);
@@ -454,6 +594,8 @@ namespace Pokiwar.UI
             if (ArrowToPlayer != null) ArrowToPlayer.SetActive(s == Side.Player);
             if (ArrowToEnemy != null) ArrowToEnemy.SetActive(s == Side.Enemy);
             TurnLabel.text = (s == Side.Player ? "YOUR TURN" : "ENEMY TURN") + "  #" + Engine.State.TurnNumber;
+            if (s == Side.Player) AudioDirector.Sfx("turn");
+            StartCoroutine(CombatantHud.Pop(TurnLabel.rectTransform, 1.25f));
         }
 
         private void RefreshActionBar()

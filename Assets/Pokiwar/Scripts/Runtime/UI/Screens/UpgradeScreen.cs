@@ -112,6 +112,12 @@ namespace Pokiwar.UI
             MessageLabel.text = r.Message;
             if (r.Attempted)
             {
+                AudioDirector.Sfx(r.Success ? "upgrade.ok" : "upgrade.fail", 1f, 1f, false);
+                if (r.Success && VfxLayer.Instance != null)
+                {
+                    VfxLayer.Instance.Burst(PetImage.rectTransform.position, new Color(1f, 0.85f, 0.3f), 30, 700f, 22f, 0.8f, 500f, VfxLayer.Instance.Star);
+                    VfxLayer.Instance.Ring(PetImage.rectTransform.position, new Color(1f, 0.9f, 0.5f), 480f, 0.45f);
+                }
                 app.Persist();
                 app.Toast(r.Success ? "Success!" : "Failed");
             }

@@ -55,6 +55,9 @@ namespace Pokiwar.Domain
         public List<string> SelectedCardIds = new List<string>();
         public List<string> CommittedBattleIds = new List<string>();
         public int BattlesStarted;
+        public bool MusicOn = true;
+        public bool SfxOn = true;
+        public bool ShakeOn = true;
 
         public OwnedPet Pet(string uid) => Pets.Find(p => p.Uid == uid);
 

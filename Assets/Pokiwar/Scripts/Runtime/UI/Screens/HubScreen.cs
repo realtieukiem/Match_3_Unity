@@ -13,6 +13,12 @@ namespace Pokiwar.UI
         public Button AdventureButton;
         public Button UpgradeButton;
         public Button ResetButton;
+        public Button MusicButton;
+        public Text MusicLabel;
+        public Button SfxButton;
+        public Text SfxLabel;
+        public Button ShakeButton;
+        public Text ShakeLabel;
 
         private GameApp app;
 
@@ -21,6 +27,9 @@ namespace Pokiwar.UI
             AdventureButton.onClick.AddListener(() => app.ShowMap());
             UpgradeButton.onClick.AddListener(() => app.ShowUpgrade());
             ResetButton.onClick.AddListener(() => app.ResetSave());
+            MusicButton.onClick.AddListener(() => { app.Save.MusicOn = !app.Save.MusicOn; app.ApplySettings(); Show(app); });
+            SfxButton.onClick.AddListener(() => { app.Save.SfxOn = !app.Save.SfxOn; app.ApplySettings(); Show(app); });
+            ShakeButton.onClick.AddListener(() => { app.Save.ShakeOn = !app.Save.ShakeOn; app.ApplySettings(); Show(app); });
         }
 
         public void Show(GameApp a)
@@ -30,6 +39,9 @@ namespace Pokiwar.UI
             PlayerLabel.text = "Trainer Lv " + s.PlayerLevel + "   EXP " + s.PlayerExp + "/" + a.Progression.PlayerExpToNext(s.PlayerLevel);
             ResourcesLabel.text = "Gold " + s.Gold + "    Energy " + s.Energy + "/" + a.Db.Progression.MaxEnergy +
                                   "    Lucky " + s.LuckyCharms + "    Protect " + s.ProtectionCharms;
+            MusicLabel.text = "MUSIC: " + (s.MusicOn ? "ON" : "OFF");
+            SfxLabel.text = "SOUND: " + (s.SfxOn ? "ON" : "OFF");
+            ShakeLabel.text = "SHAKE: " + (s.ShakeOn ? "ON" : "OFF");
             var pet = s.Pet(s.SelectedPetUid);
             if (pet != null)
             {

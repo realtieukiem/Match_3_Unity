@@ -34,6 +34,10 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 95944a00d6c4a0f4fba1e78baec7c5e1, type: 3}
   - Key: ui.map
     Sprite: {fileID: 21300000, guid: bc672df2408d4db43a7c6be8eb0436db, type: 3}
+  - Key: fx.dot
+    Sprite: {fileID: 21300000, guid: b4da576ee6d0ab3418dfb22da9a3b112, type: 3}
+  - Key: fx.star
+    Sprite: {fileID: 21300000, guid: cb924a45217362846b755efc30916386, type: 3}
   - Key: stone
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   - Key: emberkit

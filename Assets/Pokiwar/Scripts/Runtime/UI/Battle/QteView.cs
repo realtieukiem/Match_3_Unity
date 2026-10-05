@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Pokiwar.App;
 using Pokiwar.Domain;
 using UnityEngine;
 using UnityEngine.UI;
@@ -121,6 +122,8 @@ namespace Pokiwar.UI
                     bool ok = input.Value == check.Sequence[idx];
                     Arrows[idx].color = ok ? new Color(0.35f, 1f, 0.4f) : new Color(1f, 0.3f, 0.3f);
                     if (ok) correct++;
+                    AudioDirector.Sfx(ok ? "qte.ok" : "qte.bad", ok ? Mathf.Pow(2f, correct * 2f / 12f) : 1f, 1f, false);
+                    if (ok && VfxLayer.Instance != null) VfxLayer.Instance.Burst(Arrows[idx].rectTransform.position, new Color(0.4f, 1f, 0.5f), 10, 420f, 16f, 0.4f, 600f, VfxLayer.Instance.Star);
                     DamageLabel.text = "DMG " + QteMath.Stepped(check.PreviewBase, qte, correct);
                     idx++;
                 }
@@ -165,6 +168,13 @@ namespace Pokiwar.UI
             Feedback.text = timing == QteTiming.Perfect ? "PERFECT!" : timing == QteTiming.Good ? "GOOD" : "MISS";
             Feedback.color = timing == QteTiming.Perfect ? new Color(1f, 0.85f, 0.2f) : timing == QteTiming.Good ? new Color(0.4f, 1f, 0.5f) : new Color(1f, 0.4f, 0.4f);
             DamageLabel.text = "DMG " + QteMath.Apply(check.PreviewBase, qte, result);
+            AudioDirector.Sfx(timing == QteTiming.Perfect ? "qte.perfect" : timing == QteTiming.Good ? "qte.good" : "qte.miss", 1f, 1f, false);
+            if (timing != QteTiming.Miss && VfxLayer.Instance != null)
+            {
+                VfxLayer.Instance.Burst(Feedback.rectTransform.position, timing == QteTiming.Perfect ? new Color(1f, 0.85f, 0.2f) : new Color(0.4f, 1f, 0.5f), timing == QteTiming.Perfect ? 30 : 14, 800f, 22f, 0.6f, 600f, VfxLayer.Instance.Star);
+                VfxLayer.Instance.Ring(Marker.position, Feedback.color, 300f, 0.35f);
+            }
+            StartCoroutine(CombatantHud.Pop(Feedback.rectTransform, 1.5f));
             SetButtons(false, false);
             yield return Tween.Wait(0.7f);
             Root.SetActive(false);
