@@ -62,7 +62,7 @@ namespace Pokiwar.EditorTools
             if (overwriteScene || !File.Exists(ScenePath)) BuildScene(catalog, lib, gem, clips);
             var scenes = new List<EditorBuildSettingsScene> { new EditorBuildSettingsScene(ScenePath, true) };
             foreach (var s in EditorBuildSettings.scenes)
-                if (s.path != ScenePath) scenes.Add(new EditorBuildSettingsScene(s.path, false));
+                if (s.path != ScenePath && File.Exists(s.path)) scenes.Add(new EditorBuildSettingsScene(s.path, false));
             EditorBuildSettings.scenes = scenes.ToArray();
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.AutoRotation;
             PlayerSettings.allowedAutorotateToPortrait = true;

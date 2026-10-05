@@ -1,11 +1,11 @@
-[![unofficial Google Analytics for GitHub](https://gaforgithub.azurewebsites.net/api?repo=Match3StyleGame)](https://github.com/dgkanatsios/gaforgithub)
+# Pokiwar
 
-# Match-3 game 
+Offline match-3 pet battle in Unity 6 (6000.0.79f1), rebuilt after the Zing Me game Pokiwar: you are a trainer
+with a dressable avatar, your pet fights on a shared 8x8 board, cards and skills cost mana and rage.
 
-![Match three game](https://dgkanatsios.files.wordpress.com/2015/02/image_5062f746.png)
+- Game: `Assets/Pokiwar` (scene `Assets/Pokiwar/Scenes/Pokiwar.unity`)
+- How it is built, tuned and tested: [Docs/Pokiwar.md](Docs/Pokiwar.md)
+- What the original shows and where: [Docs/Evidence.md](Docs/Evidence.md)
+- Art still to come from Codex: [Docs/Pokiwar_Art_Codex_Next.md](Docs/Pokiwar_Art_Codex_Next.md)
 
-A match-3 game in Unity (like Candy Crush and Bejeweled). Tutorial and source code commenting can be found in the blog post: http://dgkanatsios.com/2015/02/25/building-a-match-3-game-in-unity-3/
-
-### Assets
-Graphics: http://opengameart.org/content/candy-pack-1
-Sounds: http://freesound.org/people/volivieri/sounds/37171/
+The project started from the open-source dgkanatsios match-3 tutorial; none of its code or assets remain.
