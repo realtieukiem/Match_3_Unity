@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Pokiwar.UI
 {
-    /// <summary>Shows the whole turn's tally (effective count, physical count when different) in resolve order.</summary>
+    /// <summary>Shows the whole turn's tally in resolve order while the board is hidden; each icon goes once its effect has played.</summary>
     public sealed class GemSummaryView : MonoBehaviour
     {
         public CanvasGroup Group;
@@ -17,6 +17,9 @@ namespace Pokiwar.UI
         [Tooltip("Distance between gem icons (px); the row is always centred.")]
         public float SlotSpacing = 100f;
 
+        private readonly GemType[] slotGem = new GemType[6];
+        private int shown;
+
         private void Awake()
         {
             Group.alpha = 0f;
@@ -24,7 +27,7 @@ namespace Pokiwar.UI
 
         public IEnumerator Show(Side side, GemTally tally)
         {
-            Header.text = side == Side.Player ? "YOU COLLECTED" : "ENEMY COLLECTED";
+            if (Header != null) Header.text = side == Side.Player ? "YOU" : "ENEMY";
             int slot = 0;
             foreach (var t in Gems.ResolveOrder)
             {
@@ -33,9 +36,11 @@ namespace Pokiwar.UI
                 int phys = tally.PhysicalOf(t);
                 SlotIcons[slot].gameObject.SetActive(true);
                 SlotIcons[slot].sprite = Sprites.Gem(t);
-                SlotLabels[slot].text = "x" + eff + (phys != eff ? "\n(" + phys + ")" : "");
+                SlotLabels[slot].text = eff + (phys != eff ? " (" + phys + ")" : "");
+                slotGem[slot] = t;
                 slot++;
             }
+            shown = slot;
             for (int i = 0; i < slot; i++)
             {
                 var rt = SlotIcons[i].rectTransform;
@@ -43,7 +48,16 @@ namespace Pokiwar.UI
             }
             for (; slot < SlotIcons.Length; slot++) SlotIcons[slot].gameObject.SetActive(false);
             yield return Tween.Run(0.15f, t => Group.alpha = t);
-            yield return Tween.Wait(0.55f);
+            yield return Tween.Wait(0.45f);
+        }
+
+        /// <summary>Hides the icon of this gem and of every gem resolved before it.</summary>
+        public void Consume(GemType gem)
+        {
+            int order = System.Array.IndexOf(Gems.ResolveOrder, gem);
+            if (order < 0) return;
+            for (int i = 0; i < shown; i++)
+                if (System.Array.IndexOf(Gems.ResolveOrder, slotGem[i]) <= order) SlotIcons[i].gameObject.SetActive(false);
         }
 
         public IEnumerator Hide()

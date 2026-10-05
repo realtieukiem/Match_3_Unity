@@ -137,12 +137,13 @@ Labels: **VIDEO** seen in the clips, **USER_CONFIRMED** stated in the brief, **I
 | Rage from HP damage | `floor(100 x HPDamage / MaxHP)` on the target, from HP damage after shield | INFERRED (4 Manaphy samples) |
 | Turn-start rage | +3 to the actor whose turn starts | PROVISIONAL |
 | YinYang | 50% mana / 50% rage (seeded); mana `target MaxMana x 2-2.5% x eff`, rage `5-8 x eff`; taken = min(computed, target current), received capped by receiver max | transfer rule USER_CONFIRMED, amounts PROVISIONAL |
-| Shield | barrier absorbs before HP; cap 35% MaxHP; `MaxHP x 1.2-1.5% x eff` | PROVISIONAL |
+| Shield | barrier absorbs before HP; cap 35% MaxHP; `MaxHP x 1.2-1.5% x eff`; expires at its owner's next turn start | amounts PROVISIONAL, expiry USER_CONFIRMED (2026-10-05) |
 | Sword damage | `floor(ATK x SwordAtkPerGem x eff)` -> x strong -> x element -> defense policy | structure USER_CONFIRMED, factor 0.65-0.75 PROVISIONAL |
 | Element | Metal>Wood>Earth>Water>Fire>Metal; 1.25 / 0.80 / 1.00; +N bonus = +1% per point | PROVISIONAL |
 | QTE | `base + correct x floor(20% base)`, then x1.24 good / x1.25 perfect, rounded (2836 -> 5671 -> 7032 / 7089) | VIDEO (calibration sample) |
 | Skill drain | pay 200 MP + 200 RG, then drain `floor(70% x target current mana)` (893 - 200 + 383 = 1076) | VIDEO |
 | Card +100 mana | does not end the turn; matching afterwards is allowed | VIDEO |
+| Card uses | every copy in the 5-slot loadout is one use and leaves the bar; copies allowed | USER_CONFIRMED (2026-10-05) |
 | Boss phase | one-shot; sets HP to 50% MaxHP (VIDEO); trigger HP <= 32% and on a lethal hit (PROVISIONAL); ATK x1.15; unlocks Tidal Siphon; boss acts next (ContinueTurn) | mixed, per field |
 | Reward commit | once per battle id, after the battle's event replay; second commit is a no-op | USER_CONFIRMED |
 | Stone merge | 3 same tier+element -> 1 next tier; failure loses all 3; 90/75/60/45/32/20/12%; lucky +15%; gold per tier | rule USER_CONFIRMED, numbers PROVISIONAL |

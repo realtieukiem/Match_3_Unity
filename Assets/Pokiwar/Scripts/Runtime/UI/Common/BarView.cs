@@ -15,7 +15,7 @@ namespace Pokiwar.UI
         public void Set(int current, int max)
         {
             if (Fill != null) Fill.fillAmount = max <= 0 ? 0f : Mathf.Clamp01((float)current / max);
-            if (Label != null) Label.text = (string.IsNullOrEmpty(Prefix) ? "" : Prefix + " ") + current + " / " + max;
+            if (Label != null) Label.text = (string.IsNullOrEmpty(Prefix) ? "" : Prefix + " ") + current + "/" + max;
         }
     }
 }

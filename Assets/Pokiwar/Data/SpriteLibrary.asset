@@ -43,17 +43,17 @@ MonoBehaviour:
   - Key: fx.bubble
     Sprite: {fileID: 21300000, guid: 4d734891f71166540bb4d2eb81d37d28, type: 3}
   - Key: element.Neutral
-    Sprite: {fileID: 21300000, guid: b1e1ec758a56fce449b84d3060afd888, type: 3}
+    Sprite: {fileID: 21300000, guid: 64c9bd120e0691c4898e35a02331d692, type: 3}
   - Key: element.Metal
-    Sprite: {fileID: 21300000, guid: 7153488fbeafa3e47bea9463b9d40ba3, type: 3}
+    Sprite: {fileID: 21300000, guid: b3e3b36086ee36649bd880e93e94642d, type: 3}
   - Key: element.Wood
-    Sprite: {fileID: 21300000, guid: 5ff30f758e90db14cbb7607e6f7cba53, type: 3}
+    Sprite: {fileID: 21300000, guid: 7500e6120e59c7341951c6cd946d441d, type: 3}
   - Key: element.Water
-    Sprite: {fileID: 21300000, guid: c5e32e3206220a24ab247cf671e76505, type: 3}
+    Sprite: {fileID: 21300000, guid: 3191554c9c15f8a4aa786aaf9e09b652, type: 3}
   - Key: element.Fire
-    Sprite: {fileID: 21300000, guid: d82213afacf52234a9eaf45df66b1f97, type: 3}
+    Sprite: {fileID: 21300000, guid: 7c67078e7d9bb164ea1b4145c19ad40d, type: 3}
   - Key: element.Earth
-    Sprite: {fileID: 21300000, guid: 0f4991cc42c989e458e3ba039db78026, type: 3}
+    Sprite: {fileID: 21300000, guid: 8c235aed66b51c9428437391ad7f6651, type: 3}
   - Key: stone
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   - Key: emberkit

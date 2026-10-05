@@ -11,6 +11,7 @@ namespace Pokiwar.UI
         public Image Portrait;
         public Text NameLabel;
         public Image ElementIcon;
+        public Image NameStrip;
         public BarView Hp;
         public BarView Mana;
         public BarView Rage;
@@ -96,7 +97,6 @@ namespace Pokiwar.UI
             var parts = new System.Collections.Generic.List<string>();
             foreach (var b in c.Buffs) parts.Add(b.Label + " x" + b.AtkMultiplier.ToString("0.##") + " (" + b.TurnsLeft + "t)");
             foreach (var s in c.Summons) parts.Add(s.Name + " " + s.DamagePerTurn + "/t (" + s.TurnsLeft + "t)");
-            if (c.Rage.Current >= c.RageRules.AttackThreshold) parts.Add("RAGE READY");
             StatusLabel.text = string.Join("   ", parts);
         }
 
@@ -153,6 +153,7 @@ namespace Pokiwar.UI
         public void SetTurn(bool on)
         {
             if (TurnMarker != null) TurnMarker.SetActive(on);
+            if (NameStrip != null) NameStrip.color = on ? new Color(1f, 0.82f, 0.25f, 1f) : new Color(1f, 1f, 1f, 0f);
             if (AttackArrow == null) return;
             if (!arrowHomeSet)
             {

@@ -17,9 +17,9 @@ namespace Pokiwar.UI
         public void Bind(string title, string cost, string uses, Sprite icon, Color frame)
         {
             gameObject.SetActive(true);
-            Title.text = title;
-            Cost.text = cost;
-            Uses.text = uses;
+            if (Title != null) Title.text = title;
+            if (Cost != null) Cost.text = cost;
+            if (Uses != null) Uses.text = uses;
             if (Icon != null && icon != null) Icon.sprite = icon;
             if (Frame != null) Frame.color = frame;
         }

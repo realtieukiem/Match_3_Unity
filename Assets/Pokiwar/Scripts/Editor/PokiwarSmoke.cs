@@ -201,6 +201,19 @@ namespace Pokiwar.EditorTools
             Check(app.Save.SelectedCardIds.Count == 5, "5 cards preselected");
             CheckOnScreen(app.Prep.transform, "prep");
             yield return Capture("03_prep");
+            app.Prep.CardSlotRemove[4].onClick.Invoke();
+            yield return null;
+            Check(app.Save.SelectedCardIds.Count == 4 && !app.Prep.CardSlotIcons[4].gameObject.activeSelf, "X empties a card slot");
+            app.Prep.CardSlots[4].onClick.Invoke();
+            yield return null;
+            Check(app.Prep.CardPicker.activeSelf, "a card slot opens the card picker");
+            foreach (Transform t in app.Prep.CardTemplate.transform.parent)
+                if (t.gameObject.activeSelf) { t.GetComponent<RowView>().Button.onClick.Invoke(); break; }
+            yield return null;
+            Check(app.Save.SelectedCardIds.Count == 5 && app.Prep.CardSlotIcons[4].gameObject.activeSelf, "picking a card fills the slot");
+            yield return Capture("03b_card_picker");
+            app.Prep.CardPickerClose.onClick.Invoke();
+            yield return null;
 
             int energy = app.Save.Energy;
             app.Prep.FightButton.onClick.Invoke();
@@ -286,9 +299,10 @@ namespace Pokiwar.EditorTools
             var reloaded = new SaveService(new FileSaveStore(), new JsonSaveSerializer(), app.Progression).LoadOrCreate();
             Check(reloaded.Gold == app.Save.Gold && reloaded.CommittedBattleIds.Count == app.Save.CommittedBattleIds.Count, "save on disk matches memory");
 
-            app.Result.RetryButton.onClick.Invoke();
+            Check(app.BattleScreen.activeSelf, "reward popup shows over the finished battle");
+            app.Result.CloseButton.onClick.Invoke();
             yield return null;
-            Check(app.Prep.gameObject.activeSelf, "retry returns to preparation");
+            Check(app.Prep.gameObject.activeSelf, "closing the reward returns to preparation");
             yield return new WaitForSecondsRealtime(2.5f);
             Check(vfx.ActiveCount == 0, "particles all returned to the pool (" + vfx.ActiveCount + " live)");
             Check(bc.Shake.AtRest, "battle screen shake at rest");

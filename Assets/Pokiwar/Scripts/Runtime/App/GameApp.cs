@@ -149,7 +149,6 @@ namespace Pokiwar.App
                 LastGrant = grant;
                 Persist();
             }
-            HideAll();
             Result.gameObject.SetActive(true);
             Result.Show(this, report, LastGrant);
         }

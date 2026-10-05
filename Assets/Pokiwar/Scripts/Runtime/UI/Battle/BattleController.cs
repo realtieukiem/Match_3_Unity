@@ -23,10 +23,10 @@ namespace Pokiwar.UI
         public EventLogView Log;
         public Text TimerLabel;
         public Image TimerFill;
-        public Text TurnLabel;
+        public CanvasGroup BoardGroup;
+        public CanvasGroup TurnPop;
         public CanvasGroup Banner;
         public Text BannerLabel;
-        public Text EncounterLabel;
         public Button AutoButton;
         public Text AutoLabel;
         public Button GiveUpButton;
@@ -114,7 +114,8 @@ namespace Pokiwar.UI
             Board.InputEnabled = false;
             Log.Clear();
             Log.Add("Battle " + setup.BattleId + " seed " + setup.Seed);
-            EncounterLabel.text = encounter.Name + (encounter.IsBoss ? "  [BOSS]" : "");
+            if (BoardGroup != null) BoardGroup.alpha = 1f;
+            if (TurnPop != null) TurnPop.alpha = 0f;
             RefreshAutoLabel();
             RefreshActionBar();
             StartCoroutine(MainLoop());
@@ -149,7 +150,7 @@ namespace Pokiwar.UI
                 }
                 lastTick = sec;
             }
-            TimerLabel.color = Clock.Running && sec <= 3 ? new Color(1f, 0.45f, 0.4f) : Color.white;
+            TimerLabel.color = Clock.Running && sec <= 3 ? new Color(1f, 0.25f, 0.2f) : new Color(1f, 0.55f, 0.12f);
             if (TimerFill != null) TimerFill.fillAmount = Clock.Duration <= 0 ? 0 : Clock.Remaining / Clock.Duration;
             Tween.Speed = AnimationSpeed;
         }
@@ -341,15 +342,21 @@ namespace Pokiwar.UI
             if (r.Board != null && r.Board.Valid)
             {
                 yield return Board.AnimateResolution(r.Board, Engine.State.Board);
+                yield return FadeBoard(0f);
                 yield return Summary.Show(r.Actor, r.Board.Tally);
             }
             foreach (var ev in r.Events)
             {
                 Log.Add(ev.ToString());
                 if (LogToConsole) Debug.Log("[Pokiwar] " + ev);
+                if (ev.Gem != GemType.None) Summary.Consume(ev.Gem);
                 yield return PlayEvent(ev);
             }
-            if (r.Board != null && r.Board.Valid) yield return Summary.Hide();
+            if (r.Board != null && r.Board.Valid)
+            {
+                yield return Summary.Hide();
+                yield return FadeBoard(1f);
+            }
             PlayerHud.Set(Engine.State.Get(Side.Player).Snapshot());
             EnemyHud.Set(Engine.State.Get(Side.Enemy).Snapshot());
             PlayerHud.SetStatus(Engine.State.Get(Side.Player));
@@ -596,9 +603,30 @@ namespace Pokiwar.UI
         {
             PlayerHud.SetTurn(s == Side.Player);
             EnemyHud.SetTurn(s == Side.Enemy);
-            TurnLabel.text = (s == Side.Player ? "YOUR TURN" : "ENEMY TURN") + "  #" + Engine.State.TurnNumber;
-            if (s == Side.Player) AudioDirector.Sfx("turn");
-            StartCoroutine(CombatantHud.Pop(TurnLabel.rectTransform, 1.25f));
+            if (s != Side.Player) return;
+            AudioDirector.Sfx("turn");
+            if (TurnPop != null) StartCoroutine(PopTurn());
+        }
+
+        private IEnumerator PopTurn()
+        {
+            var rt = (RectTransform)TurnPop.transform;
+            yield return Tween.Run(0.18f, t =>
+            {
+                TurnPop.alpha = t;
+                rt.localScale = Vector3.one * Mathf.Lerp(1.4f, 1f, t);
+            });
+            yield return Tween.Wait(0.6f);
+            yield return Tween.Run(0.25f, t => TurnPop.alpha = 1f - t);
+            rt.localScale = Vector3.one;
+        }
+
+        private IEnumerator FadeBoard(float to)
+        {
+            if (BoardGroup == null) yield break;
+            float from = BoardGroup.alpha;
+            yield return Tween.Run(0.15f, t => BoardGroup.alpha = Mathf.Lerp(from, to, t));
+            BoardGroup.alpha = to;
         }
 
         private void RefreshActionBar()

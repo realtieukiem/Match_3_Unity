@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Pokiwar.App;
 using Pokiwar.Domain;
 using UnityEngine;
@@ -6,19 +5,25 @@ using UnityEngine.UI;
 
 namespace Pokiwar.UI
 {
-    /// <summary>Preparation: preview the opponent, pick 1 pet and up to 5 cards (copies allowed; each copy is used once).</summary>
+    /// <summary>Preparation room: your pet on the left, the opponent on the right, five card slots (copies allowed; each copy is used once).</summary>
     public sealed class PrepScreen : MonoBehaviour
     {
         public const int MaxCards = 5;
 
         public Image EnemyImage;
         public Text EnemyTitle;
-        public Text EnemyDetails;
-        public Text RewardLabel;
+        public Image PetImage;
+        public Text PetName;
+        public Button ChoosePetButton;
+        public GameObject PetPicker;
+        public Button PetPickerClose;
         public RowView PetTemplate;
+        public GameObject CardPicker;
+        public Button CardPickerClose;
         public RowView CardTemplate;
-        public Text PetDetails;
-        public Text CardCountLabel;
+        public Button[] CardSlots = new Button[MaxCards];
+        public Image[] CardSlotIcons = new Image[MaxCards];
+        public Button[] CardSlotRemove = new Button[MaxCards];
         public Button FightButton;
         public Text FightLabel;
         public Button BackButton;
@@ -38,6 +43,20 @@ namespace Pokiwar.UI
                 app.Persist();
                 app.StartBattle(node);
             });
+            ChoosePetButton.onClick.AddListener(() => Open(PetPicker, true));
+            PetPickerClose.onClick.AddListener(() => Open(PetPicker, false));
+            CardPickerClose.onClick.AddListener(() => Open(CardPicker, false));
+            for (int i = 0; i < MaxCards; i++)
+            {
+                int k = i;
+                CardSlots[i].onClick.AddListener(() => Open(CardPicker, true));
+                CardSlotRemove[i].onClick.AddListener(() =>
+                {
+                    var ids = app.Save.SelectedCardIds;
+                    if (k < ids.Count) ids.RemoveAt(k);
+                    Refresh();
+                });
+            }
         }
 
         public void Show(GameApp a, MapNodeDef n)
@@ -46,23 +65,16 @@ namespace Pokiwar.UI
             node = n;
             var enc = a.Db.Encounter(n.EncounterId);
             var c = a.Db.Creature(enc.CreatureId);
-            var st = c.StatsAt(enc.Level);
             EnemyImage.sprite = a.Sprites.Get(c.SpriteKey);
             EnemyTitle.text = enc.Name + "  Lv " + enc.Level;
-            var lines = new List<string>
-            {
-                "Element: " + a.ElementLabel(c.Element, c.ElementBonus),
-                "HP " + Mathf.RoundToInt(st.MaxHp * enc.StartHpPct) + "/" + st.MaxHp + "   ATK " + st.Atk,
-                "Mana " + st.MaxMana + "   Rage " + st.MaxRage
-            };
-            var kit = new List<string>();
-            foreach (var id in c.SkillIds) kit.Add(a.Db.Skill(id).Name);
-            foreach (var id in c.CardIds) kit.Add(a.Db.Card(id).Name);
-            if (kit.Count > 0) lines.Add("Kit: " + string.Join(", ", kit));
-            if (c.Phases.Count > 0) lines.Add("Boss: transforms " + c.Phases.Count + " time(s)!");
-            EnemyDetails.text = string.Join("\n", lines);
-            var table = a.Db.Reward(enc.RewardTableId);
-            RewardLabel.text = "Reward: " + table.Gold + " Gold, " + table.PlayerExp + " EXP, Pet EXP " + table.PetExp + (table.Drops.Count > 0 ? " + items" : "");
+            PetPicker.SetActive(false);
+            CardPicker.SetActive(false);
+            Refresh();
+        }
+
+        private void Open(GameObject picker, bool on)
+        {
+            picker.SetActive(on);
             Refresh();
         }
 
@@ -72,67 +84,75 @@ namespace Pokiwar.UI
             if (s.Pet(s.SelectedPetUid) == null && s.Pets.Count > 0) s.SelectedPetUid = s.Pets[0].Uid;
             s.SelectedCardIds.RemoveAll(id => !s.Cards.Contains(id));
 
-            petRows.Clear();
-            foreach (var pet in s.Pets)
-            {
-                var def = app.Db.Creature(pet.PetId);
-                var st = app.Progression.PetStats(pet);
-                var row = petRows.Add();
-                bool sel = pet.Uid == s.SelectedPetUid;
-                row.Set(def.Name + "  Lv " + pet.Level + (pet.EnhanceLevel > 0 ? " +" + pet.EnhanceLevel : ""),
-                    def.Element + "  HP " + st.MaxHp + "  ATK " + st.Atk, app.Sprites.Get(def.SpriteKey), sel);
-                var uid = pet.Uid;
-                row.Button.onClick.AddListener(() =>
-                {
-                    s.SelectedPetUid = uid;
-                    Refresh();
-                });
-            }
             var selected = s.Pet(s.SelectedPetUid);
             if (selected != null)
             {
                 var def = app.Db.Creature(selected.PetId);
-                var skills = new List<string>();
-                foreach (var id in def.SkillIds)
-                {
-                    var sk = app.Db.Skill(id);
-                    skills.Add(sk.Name + " (" + sk.ManaCost + " MP" + (sk.RageCost > 0 ? " " + sk.RageCost + " RG" : "") + ")");
-                }
-                PetDetails.text = "Skill: " + string.Join(", ", skills);
+                PetImage.sprite = app.Sprites.Get(def.SpriteKey);
+                PetName.text = def.Name;
             }
 
-            cardRows.Clear();
-            foreach (var id in s.Cards)
+            for (int i = 0; i < MaxCards; i++)
             {
-                var card = app.Db.TryCard(id);
-                if (card == null) continue;
-                var row = cardRows.Add();
-                int copies = s.SelectedCardIds.FindAll(x => x == id).Count;
-                string cost = (card.ManaCost > 0 ? card.ManaCost + " MP " : "") + (card.RageCost > 0 ? card.RageCost + " RG " : "") + (card.ManaCost == 0 && card.RageCost == 0 ? "Free " : "") + (card.EndTurnAfterUse ? " ends turn" : "");
-                row.Set(card.Name + (copies > 0 ? "   x" + copies : ""), cost + "\n" + card.Description, app.Sprites.Get(card.IconKey), copies > 0);
-                var cid = id;
-                row.Button.onClick.AddListener(() =>
+                bool has = i < s.SelectedCardIds.Count;
+                var card = has ? app.Db.TryCard(s.SelectedCardIds[i]) : null;
+                CardSlotIcons[i].gameObject.SetActive(card != null);
+                if (card != null) CardSlotIcons[i].sprite = app.Sprites.Get(card.IconKey);
+                CardSlotRemove[i].gameObject.SetActive(card != null);
+            }
+
+            petRows.Clear();
+            if (PetPicker.activeSelf)
+            {
+                foreach (var pet in s.Pets)
                 {
-                    if (s.SelectedCardIds.Count < MaxCards) s.SelectedCardIds.Add(cid);
-                    else app.Toast("Max " + MaxCards + " cards");
-                    Refresh();
-                });
-                if (row.ExtraA != null)
-                {
-                    row.ExtraA.gameObject.SetActive(copies > 0);
-                    if (row.ExtraALabel != null) row.ExtraALabel.text = "REMOVE";
-                    row.ExtraA.onClick.AddListener(() =>
+                    var def = app.Db.Creature(pet.PetId);
+                    var st = app.Progression.PetStats(pet);
+                    var row = petRows.Add();
+                    row.Set(def.Name + "  Lv " + pet.Level + (pet.EnhanceLevel > 0 ? " +" + pet.EnhanceLevel : ""),
+                        def.Element + "  HP " + st.MaxHp + "  ATK " + st.Atk, app.Sprites.Get(def.SpriteKey), pet.Uid == s.SelectedPetUid);
+                    var uid = pet.Uid;
+                    row.Button.onClick.AddListener(() =>
                     {
-                        s.SelectedCardIds.Remove(cid);
-                        Refresh();
+                        s.SelectedPetUid = uid;
+                        Open(PetPicker, false);
                     });
                 }
             }
-            CardCountLabel.text = "Cards " + s.SelectedCardIds.Count + "/" + MaxCards;
-            var enc = app.Db.Encounter(node.EncounterId);
+
+            cardRows.Clear();
+            if (CardPicker.activeSelf)
+            {
+                foreach (var id in s.Cards)
+                {
+                    var card = app.Db.TryCard(id);
+                    if (card == null) continue;
+                    var row = cardRows.Add();
+                    int copies = s.SelectedCardIds.FindAll(x => x == id).Count;
+                    string cost = (card.ManaCost > 0 ? card.ManaCost + " MP " : "") + (card.RageCost > 0 ? card.RageCost + " RG " : "") + (card.ManaCost == 0 && card.RageCost == 0 ? "Free " : "") + (card.EndTurnAfterUse ? " ends turn" : "");
+                    row.Set(card.Name + (copies > 0 ? "   x" + copies : ""), cost + "\n" + card.Description, app.Sprites.Get(card.IconKey), copies > 0);
+                    var cid = id;
+                    row.Button.onClick.AddListener(() =>
+                    {
+                        if (s.SelectedCardIds.Count < MaxCards) s.SelectedCardIds.Add(cid);
+                        else app.Toast("Max " + MaxCards + " cards");
+                        Refresh();
+                    });
+                    if (row.ExtraA != null)
+                    {
+                        row.ExtraA.gameObject.SetActive(copies > 0);
+                        row.ExtraA.onClick.AddListener(() =>
+                        {
+                            s.SelectedCardIds.Remove(cid);
+                            Refresh();
+                        });
+                    }
+                }
+            }
+
             var check = app.Progression.CanEnter(s, node);
             FightButton.interactable = check.Ok;
-            FightLabel.text = check.Ok ? "FIGHT  (-" + enc.EnergyCost + " Energy)" : check.Reason;
+            FightLabel.text = check.Ok ? "READY" : check.Reason;
         }
     }
 }

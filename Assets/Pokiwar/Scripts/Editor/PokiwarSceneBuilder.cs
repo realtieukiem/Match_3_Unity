@@ -233,53 +233,95 @@ namespace Pokiwar.EditorTools
         {
             var s = Screen(root, "PrepScreen");
             Fill(Img(s, "Bg", Key("bg.hub", null), art.ContainsKey("bg.hub") ? Color.white : new Color(0.07f, 0.09f, 0.15f)).rectTransform);
-            Fill(Img(s, "Shade", null, new Color(0, 0, 0, 0.45f)).rectTransform);
+            Fill(Img(s, "Shade", null, new Color(0, 0, 0, 0.3f)).rectTransform);
             var prep = s.gameObject.AddComponent<PrepScreen>();
-            At(Txt(s, "Header", "PREPARATION", 56, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -60, 900, 80);
+            var room = Img(s, "Room", "ui.round", new Color(0.42f, 0.66f, 0.92f, 0.9f), true);
+            At(room.rectTransform, 0.5f, 0.5f, 0, -30, 1720, 900);
             prep.BackButton = Btn(s, "BackButton", "BACK", Gray, 36, out _);
             At(Rt(prep.BackButton), 0, 1, 140, -60, 220, 86);
 
-            var lp = Img(s, "OpponentPanel", "ui.round", PanelCol);
-            At(lp.rectTransform, 0.5f, 0.5f, -650, -20, 560, 840);
-            At(Txt(lp.transform, "Label", "OPPONENT", 34, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -40, 500, 50);
-            prep.EnemyImage = Img(lp.transform, "EnemyImage", "dunewing", Color.white);
+            var stand = Img(s, "PetStand", "ui.circle", new Color(1f, 1f, 1f, 0.55f));
+            At(stand.rectTransform, 0.5f, 0.5f, -560, -45, 340, 80);
+            prep.PetImage = Img(s, "PetImage", "emberkit", Color.white);
+            prep.PetImage.preserveAspect = true;
+            At(prep.PetImage.rectTransform, 0.5f, 0.5f, -560, 120, 440, 380);
+            prep.PetName = Txt(s, "PetName", "Emberkit", 36, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(prep.PetName.rectTransform, 0.5f, 0.5f, -560, -140, 500, 50);
+            prep.PetName.gameObject.AddComponent<Outline>().effectColor = new Color(0.05f, 0.15f, 0.4f);
+            prep.ChoosePetButton = Btn(s, "ChoosePetButton", "CHOOSE PET", Blue, 32, out _);
+            At(Rt(prep.ChoosePetButton), 0.5f, 0.5f, -630, -225, 280, 84);
+
+            prep.EnemyImage = Img(s, "EnemyImage", "dunewing", Color.white);
             prep.EnemyImage.preserveAspect = true;
-            At(prep.EnemyImage.rectTransform, 0.5f, 1, 0, -230, 300, 300);
-            prep.EnemyTitle = Txt(lp.transform, "EnemyTitle", "", 40, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(prep.EnemyTitle.rectTransform, 0.5f, 1, 0, -420, 520, 56);
-            prep.EnemyDetails = Txt(lp.transform, "EnemyDetails", "", 27, new Color(0.9f, 0.92f, 1f), TextAnchor.UpperLeft);
-            At(prep.EnemyDetails.rectTransform, 0.5f, 1, 0, -580, 500, 250);
-            prep.RewardLabel = Txt(lp.transform, "RewardLabel", "", 25, Gold, TextAnchor.MiddleCenter);
-            At(prep.RewardLabel.rectTransform, 0.5f, 0, 0, 60, 520, 80);
+            At(prep.EnemyImage.rectTransform, 0.5f, 0.5f, 540, 110, 540, 440);
+            prep.EnemyTitle = Txt(s, "EnemyTitle", "", 36, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(prep.EnemyTitle.rectTransform, 0.5f, 0.5f, 540, -150, 640, 52);
+            prep.EnemyTitle.gameObject.AddComponent<Outline>().effectColor = new Color(0.05f, 0.15f, 0.4f);
 
-            var mp = Img(s, "PetPanel", "ui.round", PanelCol);
-            At(mp.rectTransform, 0.5f, 0.5f, -40, -20, 600, 840);
-            At(Txt(mp.transform, "Label", "CHOOSE 1 PET", 34, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -40, 520, 50);
-            var petContent = ScrollList(mp.transform, "PetList", out var petView);
-            At(petView, 0.5f, 1, 0, -380, 570, 600);
-            prep.PetTemplate = MakeRow(petContent, "PetTemplate", 540, 120, Blue, 100, 0, 30, 24);
-            prep.PetDetails = Txt(mp.transform, "PetDetails", "", 26, Color.white, TextAnchor.MiddleCenter);
-            At(prep.PetDetails.rectTransform, 0.5f, 0, 0, 70, 560, 100);
+            prep.FightButton = Btn(s, "FightButton", "READY", Green, 44, out prep.FightLabel);
+            At(Rt(prep.FightButton), 0.5f, 0.5f, 0, 60, 380, 116);
 
-            var rp = Img(s, "CardPanel", "ui.round", PanelCol);
-            At(rp.rectTransform, 0.5f, 0.5f, 600, 60, 620, 680);
-            prep.CardCountLabel = Txt(rp.transform, "CardCount", "Cards 0/5", 34, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(prep.CardCountLabel.rectTransform, 0.5f, 1, 0, -40, 560, 50);
-            var cardContent = ScrollList(rp.transform, "CardList", out var cardView);
-            At(cardView, 0.5f, 1, 0, -360, 600, 600);
-            prep.CardTemplate = MakeRow(cardContent, "CardTemplate", 570, 104, new Color(0.24f, 0.3f, 0.45f), 84, 1, 26, 19);
+            var row = NewUI("CardRow", s);
+            At(row, 0.5f, 0.5f, 0, -320, 900, 200);
+            for (int i = 0; i < PrepScreen.MaxCards; i++)
+            {
+                var slot = Img(row, "Slot" + i, "ui.round", new Color(0.16f, 0.32f, 0.62f), true);
+                At(slot.rectTransform, 0.5f, 0.5f, -360 + i * 180, 0, 150, 190);
+                var plus = Txt(slot.transform, "Plus", "+", 80, new Color(1f, 1f, 1f, 0.5f), TextAnchor.MiddleCenter, FontStyle.Bold);
+                Fill(plus.rectTransform);
+                var icon = Img(slot.transform, "Icon", "card.mana_potion", Color.white);
+                Fill(icon.rectTransform, 8, 8, 8, 8);
+                if (art.ContainsKey("card.slot"))
+                {
+                    var fr = Img(slot.transform, "Frame", "card.slot", Color.white);
+                    Fill(fr.rectTransform, -6, -6, -6, -6);
+                    SliceTo(fr, 22);
+                }
+                var btn = slot.gameObject.AddComponent<Button>();
+                btn.targetGraphic = slot;
+                slot.gameObject.AddComponent<ClickSound>();
+                var remove = Btn(slot.transform, "Remove", "X", Red, 26, out _);
+                At(Rt(remove), 1, 1, -4, -4, 48, 48);
+                prep.CardSlots[i] = btn;
+                prep.CardSlotIcons[i] = icon;
+                prep.CardSlotRemove[i] = remove;
+            }
+
+            prep.PetPicker = MakePicker(s, "PetPicker", "CHOOSE PET", out var petContent, out prep.PetPickerClose);
+            prep.PetTemplate = MakeRow(petContent, "PetTemplate", 760, 120, Blue, 100, 0, 30, 24);
+            prep.PetTemplate.gameObject.SetActive(false);
+            prep.CardPicker = MakePicker(s, "CardPicker", "CHOOSE CARDS", out var cardContent, out prep.CardPickerClose);
+            prep.CardTemplate = MakeRow(cardContent, "CardTemplate", 760, 110, new Color(0.24f, 0.3f, 0.45f), 90, 1, 28, 20);
             prep.CardTemplate.ExtraALabel.text = "REMOVE";
             prep.CardTemplate.ExtraA.GetComponent<Image>().color = Red;
-
-            prep.FightButton = Btn(s, "FightButton", "FIGHT", Green, 40, out prep.FightLabel);
-            At(Rt(prep.FightButton), 0.5f, 0.5f, 600, -380, 620, 120);
-            prep.PetTemplate.gameObject.SetActive(false);
             prep.CardTemplate.gameObject.SetActive(false);
-            Portrait(lp, 0.5f, 0.5f, -262, 449, 560, 840, 0.86f);
-            Portrait(mp, 0.5f, 0.5f, 262, 449, 600, 840, 0.86f);
-            Portrait(rp, 0.5f, 0.5f, 0, -310, 620, 680, 1.15f);
-            Portrait(prep.FightButton, 0.5f, 0.5f, 0, -780, 620, 120);
+
+            Portrait(room, 0.5f, 0.5f, 0, -20, 1040, 1660);
+            Portrait(prep.EnemyImage, 0.5f, 0.5f, 0, 520, 540, 440);
+            Portrait(prep.EnemyTitle, 0.5f, 0.5f, 0, 260, 640, 52);
+            Portrait(stand, 0.5f, 0.5f, -220, -330, 340, 80);
+            Portrait(prep.PetImage, 0.5f, 0.5f, -220, -140, 440, 380);
+            Portrait(prep.PetName, 0.5f, 0.5f, -220, -400, 440, 50);
+            Portrait(prep.ChoosePetButton, 0.5f, 0.5f, 260, -170, 320, 84);
+            Portrait(prep.FightButton, 0.5f, 0.5f, 260, -320, 380, 116);
+            Portrait(row, 0.5f, 0.5f, 0, -620, 900, 200, 1.05f);
             return prep;
+        }
+
+        private static GameObject MakePicker(Transform parent, string name, string title, out RectTransform content, out Button close)
+        {
+            var dim = Img(parent, name, null, new Color(0, 0, 0, 0.6f), true);
+            Fill(dim.rectTransform);
+            var panel = Img(dim.transform, "Panel", "ui.round", PanelCol, true);
+            At(panel.rectTransform, 0.5f, 0.5f, 0, 0, 860, 860);
+            At(Txt(panel.transform, "Title", title, 38, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -44, 700, 56);
+            content = ScrollList(panel.transform, "List", out var view);
+            At(view, 0.5f, 1, 0, -450, 800, 760);
+            close = Btn(panel.transform, "Close", "X", Gray, 40, out _);
+            At(Rt(close), 1, 1, -16, -16, 80, 80);
+            Portrait(panel, 0.5f, 0.5f, 0, 0, 860, 860, 1.15f);
+            dim.gameObject.SetActive(false);
+            return dim.gameObject;
         }
 
         private static BattleController BuildBattle(Transform root, SpriteLibrary lib, GemView gemPrefab)
@@ -291,31 +333,33 @@ namespace Pokiwar.EditorTools
             bc.Shake = s.gameObject.AddComponent<ScreenShake>();
             bc.Shake.Target = s;
 
-            bc.EncounterLabel = Txt(s, "EncounterLabel", "", 38, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(bc.EncounterLabel.rectTransform, 0.5f, 1, 0, -34, 1000, 54);
-            var timerBg = Img(s, "Timer", "ui.circle", new Color(0.08f, 0.08f, 0.12f, 0.95f));
-            At(timerBg.rectTransform, 0.5f, 1, 0, -100, 92, 92);
-            bc.TimerFill = Img(timerBg.transform, "Fill", "ui.ring", Gold);
-            bc.TimerFill.type = Image.Type.Filled;
-            bc.TimerFill.fillMethod = Image.FillMethod.Radial360;
-            bc.TimerFill.fillOrigin = 2;
-            bc.TimerFill.fillClockwise = false;
-            Fill(bc.TimerFill.rectTransform);
-            bc.TimerLabel = Txt(timerBg.transform, "Label", "10", 44, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
-            Fill(bc.TimerLabel.rectTransform);
-            bc.TurnLabel = Txt(s, "TurnLabel", "", 30, Color.white, TextAnchor.MiddleLeft, FontStyle.Bold);
-            At(bc.TurnLabel.rectTransform, 0.5f, 1, 400, -100, 400, 44);
+            var top = Img(s, "TopHud", "ui.round", new Color(0.07f, 0.15f, 0.38f, 0.93f), true);
+            At(top.rectTransform, 0.5f, 1, 0, -98, 1120, 176);
+            if (art.ContainsKey("hud.bar"))
+            {
+                var topFrame = Img(top.transform, "Frame", "hud.bar", Color.white);
+                Fill(topFrame.rectTransform, -12, -12, -9, -9);
+                SliceTo(topFrame, 16);
+            }
+            bc.TimerLabel = Txt(top.transform, "Timer", "10", 104, new Color(1f, 0.55f, 0.12f), TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(bc.TimerLabel.rectTransform, 0.5f, 0.5f, 0, -6, 160, 130);
+            var timerOutline = bc.TimerLabel.gameObject.AddComponent<Outline>();
+            timerOutline.effectColor = new Color(0.25f, 0.05f, 0f, 1f);
+            timerOutline.effectDistance = new Vector2(3, -3);
 
-            bc.AutoButton = Btn(s, "AutoButton", "AUTO: OFF", Gray, 26, out bc.AutoLabel);
-            At(Rt(bc.AutoButton), 0, 1, 110, -46, 190, 66);
-            bc.GiveUpButton = Btn(s, "GiveUpButton", "GIVE UP", Red, 26, out _);
-            At(Rt(bc.GiveUpButton), 0, 1, 315, -46, 190, 66);
+            bc.AutoButton = Btn(s, "AutoButton", "AUTO: OFF", Gray, 24, out bc.AutoLabel);
+            At(Rt(bc.AutoButton), 0, 1, 100, -46, 170, 62);
+            bc.GiveUpButton = Btn(s, "GiveUpButton", "GIVE UP", Red, 24, out _);
+            At(Rt(bc.GiveUpButton), 0, 1, 280, -46, 170, 62);
 
-            bc.PlayerHud = MakeHud(s, "PlayerHud", -690);
-            bc.EnemyHud = MakeHud(s, "EnemyHud", 690);
+            bc.PlayerHud = MakeHud(s, top.transform, "PlayerHud", true);
+            bc.EnemyHud = MakeHud(s, top.transform, "EnemyHud", false);
 
-            var frame = Img(s, "BoardFrame", "ui.round", new Color(0.13f, 0.1f, 0.12f, 0.9f), true);
-            At(frame.rectTransform, 0.5f, 0.5f, 0, 45, 700, 700);
+            var boardRoot = NewUI("Board", s);
+            At(boardRoot, 0.5f, 0.5f, 0, -8, 704, 704);
+            bc.BoardGroup = boardRoot.gameObject.AddComponent<CanvasGroup>();
+            var frame = Img(boardRoot, "BoardFrame", "ui.round", new Color(0.13f, 0.1f, 0.12f, 0.9f), true);
+            At(frame.rectTransform, 0.5f, 0.5f, 0, 0, 700, 700);
             frame.rectTransform.localScale = Vector3.one * 0.92f;
             frame.gameObject.AddComponent<RectMask2D>();
             var cells = NewUI("Cells", frame.transform);
@@ -341,44 +385,54 @@ namespace Pokiwar.EditorTools
             bc.Board = board;
             if (art.ContainsKey("board.frame"))
             {
-                var frameArt = Img(s, "BoardFrameArt", "board.frame", Color.white);
-                At(frameArt.rectTransform, 0.5f, 0.5f, 0, 45, 704, 704);
+                var frameArt = Img(boardRoot, "BoardFrameArt", "board.frame", Color.white);
+                At(frameArt.rectTransform, 0.5f, 0.5f, 0, 0, 704, 704);
                 SliceTo(frameArt, 34);
             }
 
-            var bar = NewUI("ActionBar", s);
-            At(bar, 0.5f, 0, 0, 112, 1300, 196);
+            var bar = NewUI("CardBar", s);
+            At(bar, 0.5f, 0.5f, 0, -448, 700, 170);
             for (int i = 0; i < 5; i++)
             {
-                bc.CardButtons[i] = MakeAction(bar, "Card" + i, new Color(0.35f, 0.55f, 0.85f));
-                At((RectTransform)bc.CardButtons[i].transform, 0.5f, 0.5f, -560 + i * 162, 0, 150, 186);
+                bc.CardButtons[i] = MakeCard(bar, "Card" + i);
+                At((RectTransform)bc.CardButtons[i].transform, 0.5f, 0.5f, -260 + i * 130, 0, 120, 150);
             }
+            var skills = new RectTransform[2];
             for (int i = 0; i < 2; i++)
             {
-                bc.SkillButtons[i] = MakeAction(bar, "Skill" + i, new Color(0.95f, 0.6f, 0.2f));
-                At((RectTransform)bc.SkillButtons[i].transform, 0.5f, 0.5f, 340 + i * 180, 0, 166, 186);
+                bc.SkillButtons[i] = MakeSkill(s, "Skill" + i);
+                skills[i] = (RectTransform)bc.SkillButtons[i].transform;
+                At(skills[i], 0.5f, 0.5f, 720, 250 - i * 160, 116, 116);
             }
-            var cardsLabel = Txt(bar, "CardsLabel", "CARDS", 22, new Color(1, 1, 1, 0.6f), TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(cardsLabel.rectTransform, 0.5f, 0.5f, -236, 108, 300, 30);
-            var skillLabel = Txt(bar, "SkillsLabel", "PET SKILL", 22, new Color(1, 1, 1, 0.6f), TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(skillLabel.rectTransform, 0.5f, 0.5f, 430, 108, 300, 30);
 
-            var sum = Img(s, "GemSummary", "ui.round", new Color(0, 0, 0, 0.78f));
-            At(sum.rectTransform, 0.5f, 0.5f, 0, 40, 660, 200);
+            var sum = NewUI("GemSummary", s);
+            At(sum, 0.5f, 1, 0, -290, 900, 190);
             var gs = sum.gameObject.AddComponent<GemSummaryView>();
             gs.Group = sum.gameObject.AddComponent<CanvasGroup>();
             gs.Group.blocksRaycasts = false;
             gs.Sprites = lib;
-            gs.Header = Txt(sum.transform, "Header", "YOU COLLECTED", 30, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(gs.Header.rectTransform, 0.5f, 1, 0, -28, 600, 40);
+            gs.SlotSpacing = 132f;
             for (int i = 0; i < 6; i++)
             {
-                gs.SlotIcons[i] = Img(sum.transform, "Slot" + i, "gem.Sword", Color.white);
-                At(gs.SlotIcons[i].rectTransform, 0.5f, 0.5f, -250 + i * 100, -5, 70, 70);
-                gs.SlotLabels[i] = Txt(gs.SlotIcons[i].transform, "Count", "x3", 26, Color.white, TextAnchor.UpperCenter, FontStyle.Bold);
-                At(gs.SlotLabels[i].rectTransform, 0.5f, 0, 0, -36, 100, 64);
+                gs.SlotIcons[i] = Img(sum, "Slot" + i, "gem.Sword", Color.white);
+                gs.SlotIcons[i].preserveAspect = true;
+                At(gs.SlotIcons[i].rectTransform, 0.5f, 0.5f, -330 + i * 132, 22, 112, 112);
+                gs.SlotLabels[i] = Txt(gs.SlotIcons[i].transform, "Count", "3", 46, new Color(0.95f, 0.18f, 0.12f), TextAnchor.UpperCenter, FontStyle.Bold);
+                At(gs.SlotLabels[i].rectTransform, 0.5f, 0, 0, -36, 160, 64);
+                var o = gs.SlotLabels[i].gameObject.AddComponent<Outline>();
+                o.effectColor = Color.white;
+                o.effectDistance = new Vector2(2, -2);
             }
             bc.Summary = gs;
+
+            var pop = Txt(s, "TurnPop", "YOUR TURN", 96, new Color(1f, 0.82f, 0.2f), TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(pop.rectTransform, 0.5f, 0.5f, 0, -8, 900, 140);
+            var popOutline = pop.gameObject.AddComponent<Outline>();
+            popOutline.effectColor = new Color(0.55f, 0.08f, 0.02f, 1f);
+            popOutline.effectDistance = new Vector2(4, -4);
+            bc.TurnPop = pop.gameObject.AddComponent<CanvasGroup>();
+            bc.TurnPop.blocksRaycasts = false;
+            bc.TurnPop.alpha = 0f;
 
             var fl = NewUI("FloatingText", s);
             Fill(fl);
@@ -398,14 +452,17 @@ namespace Pokiwar.EditorTools
 
             bc.Qte = BuildQte(s);
             bc.Log = BuildLog(s);
-            Portrait(bc.TurnLabel, 0.5f, 1, 330, -100, 300, 44);
-            Portrait(bc.PlayerHud, 0.5f, 1, -272, -160, 520, 760, 0.72f, 0.5f, 1f);
-            Portrait(bc.EnemyHud, 0.5f, 1, 272, -160, 520, 760, 0.72f, 0.5f, 1f);
-            Portrait(frame, 0.5f, 0.5f, 0, -255, 700, 700, 0.92f * 1.38f);
-            var frameArtRt = s.Find("BoardFrameArt");
-            if (frameArtRt != null) Portrait(frameArtRt, 0.5f, 0.5f, 0, -255, 704, 704, 1.38f);
-            Portrait(bar, 0.5f, 0, 0, 105, 1300, 196, 0.84f);
-            Portrait(sum, 0.5f, 0.5f, 0, -255, 660, 200, 1.3f);
+            Portrait(top, 0.5f, 1, 0, -190, 1120, 176, 0.94f);
+            Portrait(bc.PlayerHud, 0.5f, 0.5f, -265, 470, 520, 500, 0.78f);
+            Portrait(bc.EnemyHud, 0.5f, 0.5f, 265, 470, 520, 500, 0.78f);
+            Portrait(bc.PlayerHud.ElementIcon, 0, 1, 64, -330, 96, 96);
+            Portrait(bc.EnemyHud.ElementIcon, 1, 1, -64, -330, 96, 96);
+            Portrait(boardRoot, 0.5f, 0.5f, 0, -255, 704, 704, 1.38f);
+            Portrait(bar, 0.5f, 0, -60, 120, 700, 170);
+            Portrait(skills[0], 0.5f, 0, 330, 120, 116, 116);
+            Portrait(skills[1], 0.5f, 0, 460, 120, 116, 116);
+            Portrait(sum, 0.5f, 0.5f, 0, -255, 900, 190, 1.2f);
+            Portrait(pop, 0.5f, 0.5f, 0, -255, 900, 140);
             Portrait(banner, 0.5f, 0.5f, 0, -255, 4000, 150);
             return bc;
         }
@@ -515,20 +572,24 @@ namespace Pokiwar.EditorTools
         private static ResultScreen BuildResult(Transform root)
         {
             var s = Screen(root, "ResultScreen");
-            Fill(Img(s, "Dim", null, new Color(0.03f, 0.04f, 0.08f, 0.96f), true).rectTransform);
+            Fill(Img(s, "Dim", null, new Color(0f, 0f, 0f, 0.45f), true).rectTransform);
             var rs = s.gameObject.AddComponent<ResultScreen>();
-            var panel = Img(s, "Panel", "ui.round", PanelCol);
-            At(panel.rectTransform, 0.5f, 0.5f, 0, 0, 960, 760);
-            rs.Title = Txt(panel.transform, "Title", "VICTORY", 100, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(rs.Title.rectTransform, 0.5f, 0.5f, 0, 280, 900, 130);
-            rs.Lines = Txt(panel.transform, "Lines", "", 32, Color.white, TextAnchor.UpperCenter);
-            At(rs.Lines.rectTransform, 0.5f, 0.5f, 0, 0, 860, 380);
-            rs.ContinueButton = Btn(panel.transform, "MapButton", "MAP", Green, 38, out _);
-            At(Rt(rs.ContinueButton), 0.5f, 0.5f, -290, -290, 260, 100);
-            rs.RetryButton = Btn(panel.transform, "RetryButton", "RETRY", Blue, 38, out _);
-            At(Rt(rs.RetryButton), 0.5f, 0.5f, 0, -290, 260, 100);
-            rs.HubButton = Btn(panel.transform, "HubButton", "HUB", Gray, 38, out _);
-            At(Rt(rs.HubButton), 0.5f, 0.5f, 290, -290, 260, 100);
+            var panel = Img(s, "Panel", "ui.round", new Color(1f, 0.82f, 0.25f), true);
+            At(panel.rectTransform, 0.5f, 0.5f, 0, -20, 940, 500);
+            rs.Panel = panel.rectTransform;
+            var glow = Img(panel.transform, "Glow", "ui.gradient", new Color(1f, 1f, 0.85f, 0.75f));
+            Fill(glow.rectTransform, 10, 10, 10, 10);
+            var pill = Img(panel.transform, "TitlePill", "ui.round", new Color(0.6f, 0.25f, 0.85f), true);
+            At(pill.rectTransform, 0.5f, 1, 0, 0, 340, 76);
+            rs.Title = Txt(pill.transform, "Title", "VICTORY", 44, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            Fill(rs.Title.rectTransform);
+            var titleOutline = rs.Title.gameObject.AddComponent<Outline>();
+            titleOutline.effectColor = new Color(0.3f, 0.05f, 0.4f, 1f);
+            rs.Lines = Txt(panel.transform, "Lines", "", 34, new Color(0.55f, 0.2f, 0.75f), TextAnchor.UpperCenter, FontStyle.Bold);
+            At(rs.Lines.rectTransform, 0.5f, 0.5f, 0, -30, 860, 360);
+            rs.CloseButton = Btn(panel.transform, "CloseButton", "X", Gray, 40, out _);
+            At(Rt(rs.CloseButton), 1, 1, -20, -20, 84, 84);
+            Portrait(panel, 0.5f, 0.5f, 0, -255, 940, 500, 1.05f);
             return rs;
         }
 
@@ -610,30 +671,36 @@ namespace Pokiwar.EditorTools
             return tv;
         }
 
-        private static CombatantHud MakeHud(Transform parent, string name, float x)
+        private static CombatantHud MakeHud(Transform screen, Transform top, string name, bool player)
         {
-            var root = NewUI(name, parent);
-            At(root, 0.5f, 0.5f, x, 90, 520, 760);
+            float side = player ? -1f : 1f;
+            var strip = Img(top, name + "Strip", "ui.round", new Color(1f, 1f, 1f, 0f), true);
+            At(strip.rectTransform, 0.5f, 0.5f, side * 300, 54, 440, 46);
+            var root = NewUI(name, screen);
+            At(root, 0.5f, 0.5f, side * 600, -90, 520, 500);
             var hud = root.gameObject.AddComponent<CombatantHud>();
-            bool player = x < 0;
-            const float feet = -568f;
-            hud.NameLabel = Txt(root, "Name", "Name", 40, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(hud.NameLabel.rectTransform, 0.5f, 1, 0, -30, 520, 52);
-            hud.Hp = MakeBar(root, "Hp", "HP", new Color(0.85f, 0.25f, 0.28f), -76);
-            hud.Mana = MakeBar(root, "Mana", "MP", new Color(0.25f, 0.5f, 1f), -116);
-            hud.Rage = MakeBar(root, "Rage", "RAGE", new Color(1f, 0.55f, 0.15f), -156);
+            hud.NameStrip = strip;
+            hud.NameLabel = Txt(strip.transform, "Name", "Name", 32, Color.white, player ? TextAnchor.MiddleLeft : TextAnchor.MiddleRight, FontStyle.Bold);
+            Fill(hud.NameLabel.rectTransform, 16, 16, 0, 0);
+            var nameOutline = hud.NameLabel.gameObject.AddComponent<Outline>();
+            nameOutline.effectColor = new Color(0.05f, 0.1f, 0.3f, 1f);
+            hud.Hp = MakeThinBar(top, name + "Hp", new Color(0.86f, 0.18f, 0.22f), side * 300, 12, player);
+            hud.Mana = MakeThinBar(top, name + "Mana", new Color(0.2f, 0.62f, 1f), side * 300, -22, player);
+            hud.Rage = MakeThinBar(top, name + "Rage", new Color(0.95f, 0.78f, 0.15f), side * 300, -56, player);
+
+            const float feet = -230f;
             var marker = Img(root, "TurnMarker", "ui.ring", new Color(1f, 0.85f, 0.3f, 0.9f));
-            At(marker.rectTransform, 0.5f, 1, 0, feet, 380, 84);
+            At(marker.rectTransform, 0.5f, 0.5f, 0, feet, 380, 84);
             hud.TurnMarker = marker.gameObject;
             var arrow = Img(root, "AttackArrow", "battle.arrow", player ? Color.white : new Color(1f, 0.55f, 0.5f));
             arrow.preserveAspect = true;
-            At(arrow.rectTransform, 0.5f, 1, player ? 260 : -260, feet + 157, 130, 130);
+            At(arrow.rectTransform, 0.5f, 0.5f, -side * 200, feet + 20, 130, 130);
             if (!player) arrow.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
             hud.AttackArrow = arrow.rectTransform;
             arrow.gameObject.SetActive(false);
             hud.Portrait = Img(root, "Portrait", "emberkit", Color.white);
             hud.Portrait.preserveAspect = true;
-            At(hud.Portrait.rectTransform, 0.5f, 1, 0, feet, 470, 350);
+            At(hud.Portrait.rectTransform, 0.5f, 0.5f, 0, feet, 470, 350);
             hud.Portrait.rectTransform.pivot = new Vector2(0.5f, 0.05f);
             hud.Portrait.rectTransform.anchoredPosition = new Vector2(0, feet);
             hud.ShieldBubble = Img(hud.Portrait.transform, "ShieldBubble", "fx.bubble", Color.white);
@@ -650,38 +717,34 @@ namespace Pokiwar.EditorTools
             hud.ShieldBadge = badge.gameObject;
             hud.ShieldBadge.SetActive(false);
             hud.FloatAnchor = NewUI("FloatAnchor", root);
-            At(hud.FloatAnchor, 0.5f, 1, 0, feet + 230, 10, 10);
-            hud.ElementIcon = Img(root, "ElementIcon", "element.Fire", Color.white);
-            hud.ElementIcon.preserveAspect = true;
-            At(hud.ElementIcon.rectTransform, 0.5f, 1, player ? -212 : 212, -30, 68, 68);
+            At(hud.FloatAnchor, 0.5f, 0.5f, 0, feet + 230, 10, 10);
             hud.StatusLabel = Txt(root, "Status", "", 22, new Color(0.7f, 1f, 0.8f), TextAnchor.UpperCenter);
-            At(hud.StatusLabel.rectTransform, 0.5f, 1, 0, feet - 80, 520, 60);
+            At(hud.StatusLabel.rectTransform, 0.5f, 0.5f, 0, feet - 50, 520, 40);
+            hud.ElementIcon = Img(screen, name + "Element", "element.Fire", Color.white);
+            hud.ElementIcon.preserveAspect = true;
+            At(hud.ElementIcon.rectTransform, player ? 0 : 1, 0, player ? 72 : -72, 72, 104, 104);
             return hud;
         }
 
-        private static BarView MakeBar(Transform parent, string name, string prefix, Color c, float y)
+        private static BarView MakeThinBar(Transform parent, string name, Color c, float x, float y, bool leftToRight)
         {
-            var bg = Img(parent, name, "ui.round", new Color(0, 0, 0, 0.6f));
-            At(bg.rectTransform, 0.5f, 1, 0, y, 480, 36);
+            var bg = Img(parent, name, "ui.round", new Color(0.02f, 0.05f, 0.16f, 0.85f));
+            At(bg.rectTransform, 0.5f, 0.5f, x, y, 440, 28);
             var bv = bg.gameObject.AddComponent<BarView>();
             bv.Fill = Img(bg.transform, "Fill", "ui.round", c);
             bv.Fill.type = Image.Type.Filled;
             bv.Fill.fillMethod = Image.FillMethod.Horizontal;
-            Fill(bv.Fill.rectTransform, 3, 3, 3, 3);
-            if (art.ContainsKey("hud.bar"))
-            {
-                bg.color = new Color(0.13f, 0.1f, 0.12f, 0.85f);
-                var fr = Img(bg.transform, "Frame", "hud.bar", Color.white);
-                Fill(fr.rectTransform, -12, -12, -9, -9);
-                SliceTo(fr, 16);
-            }
-            bv.Label = Txt(bg.transform, "Label", prefix, 22, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
-            Fill(bv.Label.rectTransform);
-            bv.Prefix = prefix;
+            bv.Fill.fillOrigin = leftToRight ? (int)Image.OriginHorizontal.Left : (int)Image.OriginHorizontal.Right;
+            Fill(bv.Fill.rectTransform, 2, 2, 2, 2);
+            bv.Label = Txt(bg.transform, "Label", "0/0", 20, Color.white, leftToRight ? TextAnchor.MiddleLeft : TextAnchor.MiddleRight, FontStyle.Bold);
+            Fill(bv.Label.rectTransform, 12, 12, 0, 0);
+            var o = bv.Label.gameObject.AddComponent<Outline>();
+            o.effectColor = new Color(0f, 0f, 0f, 0.8f);
+            bv.Prefix = "";
             return bv;
         }
 
-        private static ActionButtonView MakeAction(Transform parent, string name, Color frame)
+        private static ActionButtonView MakeCard(Transform parent, string name)
         {
             var bg = Img(parent, name, "ui.round", new Color(0.15f, 0.18f, 0.28f), true);
             var v = bg.gameObject.AddComponent<ActionButtonView>();
@@ -689,19 +752,37 @@ namespace Pokiwar.EditorTools
             v.Button.targetGraphic = bg;
             bg.gameObject.AddComponent<ClickSound>();
             v.Group = bg.gameObject.AddComponent<CanvasGroup>();
-            bool slot = art.ContainsKey("card.slot");
-            v.Frame = Img(bg.transform, "Frame", slot ? "card.slot" : "ui.frame", slot ? Color.white : frame);
-            Fill(v.Frame.rectTransform, slot ? -8 : -2, slot ? -8 : -2, slot ? -8 : -2, slot ? -8 : -2);
-            if (slot) SliceTo(v.Frame, 22);
             v.Icon = Img(bg.transform, "Icon", "card.mana_potion", Color.white);
+            v.Icon.preserveAspect = false;
+            Fill(v.Icon.rectTransform, 6, 6, 6, 6);
+            bool slot = art.ContainsKey("card.slot");
+            v.Frame = Img(bg.transform, "Frame", slot ? "card.slot" : "ui.frame", slot ? Color.white : new Color(0.35f, 0.55f, 0.85f));
+            Fill(v.Frame.rectTransform, -6, -6, -6, -6);
+            if (slot) SliceTo(v.Frame, 22);
+            var costBg = Img(bg.transform, "CostBg", "ui.round", new Color(0f, 0f, 0f, 0.7f));
+            At(costBg.rectTransform, 0.5f, 0, 0, 20, 104, 30);
+            v.Cost = Txt(costBg.transform, "Cost", "0", 19, new Color(0.75f, 0.9f, 1f), TextAnchor.MiddleCenter, FontStyle.Bold);
+            Fill(v.Cost.rectTransform);
+            return v;
+        }
+
+        private static ActionButtonView MakeSkill(Transform parent, string name)
+        {
+            var bg = Img(parent, name, "ui.circle", new Color(0.1f, 0.18f, 0.4f, 0.95f));
+            var v = bg.gameObject.AddComponent<ActionButtonView>();
+            v.Button = bg.gameObject.AddComponent<Button>();
+            v.Button.targetGraphic = bg;
+            bg.gameObject.AddComponent<ClickSound>();
+            v.Group = bg.gameObject.AddComponent<CanvasGroup>();
+            v.Icon = Img(bg.transform, "Icon", "skill.blaze_burst", Color.white);
             v.Icon.preserveAspect = true;
-            At(v.Icon.rectTransform, 0.5f, 1, 0, -60, 130, 100);
-            v.Title = Txt(bg.transform, "Title", "Card", 20, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(v.Title.rectTransform, 0.5f, 0, 0, 62, 144, 46);
-            v.Cost = Txt(bg.transform, "Cost", "0 MP", 19, new Color(0.7f, 0.85f, 1f), TextAnchor.MiddleCenter);
-            At(v.Cost.rectTransform, 0.5f, 0, 0, 24, 150, 28);
-            v.Uses = Txt(bg.transform, "Uses", "1/1", 18, Gold, TextAnchor.MiddleRight, FontStyle.Bold);
-            At(v.Uses.rectTransform, 1, 1, -40, -18, 70, 26);
+            Fill(v.Icon.rectTransform, 14, 14, 14, 14);
+            v.Frame = Img(bg.transform, "Ring", "ui.ring", new Color(1f, 0.8f, 0.3f));
+            Fill(v.Frame.rectTransform, -4, -4, -4, -4);
+            v.Cost = Txt(bg.transform, "Cost", "0", 22, new Color(0.75f, 0.9f, 1f), TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(v.Cost.rectTransform, 0.5f, 0, 0, -12, 160, 30);
+            var o = v.Cost.gameObject.AddComponent<Outline>();
+            o.effectColor = new Color(0f, 0f, 0f, 0.9f);
             return v;
         }
 
