@@ -10,7 +10,7 @@ namespace Pokiwar.UI
     {
         public Image Portrait;
         public Text NameLabel;
-        public Text InfoLabel;
+        public Image ElementIcon;
         public BarView Hp;
         public BarView Mana;
         public BarView Rage;
@@ -56,7 +56,12 @@ namespace Pokiwar.UI
             bobPhase = facesRight ? 0f : 1.3f;
             Portrait.sprite = Pose(null);
             Portrait.rectTransform.localScale = Vector3.one;
-            InfoLabel.text = "Lv " + c.Level + "  " + c.Element + (c.ElementBonus > 0 ? " +" + c.ElementBonus : "") + "  ATK " + c.EffectiveAtk;
+            if (ElementIcon != null)
+            {
+                string ek = "element." + c.Element;
+                ElementIcon.gameObject.SetActive(sprites.Has(ek));
+                if (sprites.Has(ek)) ElementIcon.sprite = sprites.Get(ek);
+            }
             Set(c.Snapshot());
             SetTurn(false);
             SetStatus(c);

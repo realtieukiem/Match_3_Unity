@@ -30,7 +30,13 @@ namespace Pokiwar.EditorTools
             made["fx.star"] = Write("fx_star", 64, (x, y) => Star(x, y) ? Color.white : Color.clear);
             made["battle.arrow"] = Write("battle_arrow", 256, BattleArrow);
             made["fx.bubble"] = Write("fx_bubble", 512, ShieldBubble, 2);
-            made["stone"] =Write("stone", 128, (x, y) => Mathf.Abs(x) * 0.9f + Mathf.Abs(y) * 0.75f <= 0.9f ? Shade(Color.white, x, y) : Color.clear);
+            made["element.Neutral"] = WriteElement("element_neutral", Hex("#B8B2A6"), Star);
+            made["element.Metal"] = WriteElement("element_metal", Hex("#9AA7B8"), Sword);
+            made["element.Wood"] = WriteElement("element_wood", Hex("#4FA83D"), Leaf);
+            made["element.Water"] = WriteElement("element_water", Hex("#2B86E0"), Drop);
+            made["element.Fire"] = WriteElement("element_fire", Hex("#E5492F"), Flame);
+            made["element.Earth"] = WriteElement("element_earth", Hex("#B9803F"), (x, y) => Mathf.Abs(x) * 0.9f + Mathf.Abs(y) * 0.75f <= 0.8f);
+            made["stone"] = Write("stone", 128, (x, y) => Mathf.Abs(x) * 0.9f + Mathf.Abs(y) * 0.75f <= 0.9f ? Shade(Color.white, x, y) : Color.clear);
 
             foreach (var g in Gems.All) made["gem." + g] = WriteGem(g);
 
@@ -192,6 +198,19 @@ namespace Pokiwar.EditorTools
                 if (dx * dx + dy * dy < 1f) return Color.Lerp(c, cream, 0.75f);
                 float k = Mathf.Clamp01((0.62f - y) / 1.24f);
                 return Color.Lerp(Color.Lerp(c, cream, 0.18f), Mul(c, 0.82f), k);
+            });
+        }
+
+        private static string WriteElement(string name, Color bg, Shape icon)
+        {
+            var outline = Hex("#21191F");
+            return Write(name, 128, (x, y) =>
+            {
+                float r = x * x + y * y;
+                if (r > 0.96f) return Color.clear;
+                if (r > 0.74f) return outline;
+                if (icon(x / 0.62f, y / 0.62f)) return new Color(1f, 0.97f, 0.88f);
+                return Shade(bg, x, y);
             });
         }
 

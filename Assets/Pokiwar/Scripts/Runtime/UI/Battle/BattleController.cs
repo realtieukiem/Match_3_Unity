@@ -27,7 +27,6 @@ namespace Pokiwar.UI
         public CanvasGroup Banner;
         public Text BannerLabel;
         public Text EncounterLabel;
-        public Text EnemyKitLabel;
         public Button AutoButton;
         public Text AutoLabel;
         public Button GiveUpButton;
@@ -116,19 +115,9 @@ namespace Pokiwar.UI
             Log.Clear();
             Log.Add("Battle " + setup.BattleId + " seed " + setup.Seed);
             EncounterLabel.text = encounter.Name + (encounter.IsBoss ? "  [BOSS]" : "");
-            EnemyKitLabel.text = DescribeKit(s.Get(Side.Enemy));
             RefreshAutoLabel();
             RefreshActionBar();
             StartCoroutine(MainLoop());
-        }
-
-        private static string DescribeKit(Combatant c)
-        {
-            var parts = new List<string>();
-            foreach (var sk in c.Skills) parts.Add(sk.Name);
-            foreach (var cs in c.Cards) parts.Add(cs.Def.Name);
-            if (c.Phases.Count > 0) parts.Add(c.Phases.Count + 1 + " forms");
-            return parts.Count == 0 ? "" : "Enemy kit: " + string.Join(", ", parts);
         }
 
         private void RefreshAutoLabel()
@@ -516,7 +505,6 @@ namespace Pokiwar.UI
                     yield return actorHud.Transform(ev.ActorAfter.SpriteKey);
                     vfx?.Burst(at, new Color(1f, 0.9f, 0.5f), 20, 300f, 18f, 0.9f, -300f, vfx.Star);
                     Float(actorHud, "HP " + ev.Before + " -> " + ev.After, new Color(0.5f, 1f, 0.6f), 38);
-                    EnemyKitLabel.text = DescribeKit(Engine.State.Get(Side.Enemy));
                     yield return Tween.Wait(0.6f);
                     break;
                 }

@@ -61,6 +61,26 @@ Skill icons: 512x512, square icon with the bible's frame language, no text. Save
 `skill_tide_lance_v01.png` (water spear), `skill_mind_spark_v01.png` (psychic spark),
 `skill_tidal_siphon_v01.png` (water vortex draining mana).
 
+## Batch 5 - six element badges (6 images)
+
+The battle HUD shows a pet's element as a small round badge in the top corner, next to its name, instead
+of text. It is drawn at about 68 px, so it must read by shape and colour alone - NO letters, numbers or text.
+Each: 512x512, transparent background, one circular badge filling ~92% of the canvas, thick near-black
+outline #21191F, a coloured disc with two shade bands and a cream rim highlight, and ONE bold cream/white
+emblem in the centre (about 55% of the disc). Same lighting and outline weight as the square gems.
+
+| File | Element | Disc colour | Emblem |
+|---|---|---|---|
+| `element_fire_v01.png` | Fire | red-orange #E5492F | a single flame |
+| `element_water_v01.png` | Water | blue #2B86E0 | a water drop with a small wave |
+| `element_wood_v01.png` | Wood | green #4FA83D | a leaf with a short stem |
+| `element_earth_v01.png` | Earth | ochre brown #B9803F | a chunky rock / mountain peak |
+| `element_metal_v01.png` | Metal | steel grey-blue #9AA7B8 | a bolt head or a small ingot |
+| `element_neutral_v01.png` | Neutral | warm grey #B8B2A6 | a simple four-point star |
+
+Save to `D:\Project\Pokiwar_Art_FG38\Assets\UI\Elements\` (create the folder). Check all six together on
+one contact sheet at 68 px: every badge must be told apart from the others at that size.
+
 ## After any batch
 
 Tell Claude Code "lấy asset Codex mới vào game" (or run `Pokiwar/Rebuild Scene + Art` in Unity). Painted

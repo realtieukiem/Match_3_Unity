@@ -313,8 +313,6 @@ namespace Pokiwar.EditorTools
 
             bc.PlayerHud = MakeHud(s, "PlayerHud", -690);
             bc.EnemyHud = MakeHud(s, "EnemyHud", 690);
-            bc.EnemyKitLabel = Txt(s, "EnemyKitLabel", "", 22, new Color(1f, 0.8f, 0.75f), TextAnchor.MiddleCenter);
-            At(bc.EnemyKitLabel.rectTransform, 0.5f, 0.5f, 690, -318, 520, 50);
 
             var frame = Img(s, "BoardFrame", "ui.round", new Color(0.13f, 0.1f, 0.12f, 0.9f), true);
             At(frame.rectTransform, 0.5f, 0.5f, 0, 45, 700, 700);
@@ -403,7 +401,6 @@ namespace Pokiwar.EditorTools
             Portrait(bc.TurnLabel, 0.5f, 1, 330, -100, 300, 44);
             Portrait(bc.PlayerHud, 0.5f, 1, -272, -160, 520, 760, 0.72f, 0.5f, 1f);
             Portrait(bc.EnemyHud, 0.5f, 1, 272, -160, 520, 760, 0.72f, 0.5f, 1f);
-            HideInPortrait(bc.EnemyKitLabel);
             Portrait(frame, 0.5f, 0.5f, 0, -255, 700, 700, 0.92f * 1.38f);
             var frameArtRt = s.Find("BoardFrameArt");
             if (frameArtRt != null) Portrait(frameArtRt, 0.5f, 0.5f, 0, -255, 704, 704, 1.38f);
@@ -654,8 +651,9 @@ namespace Pokiwar.EditorTools
             hud.ShieldBadge.SetActive(false);
             hud.FloatAnchor = NewUI("FloatAnchor", root);
             At(hud.FloatAnchor, 0.5f, 1, 0, feet + 230, 10, 10);
-            hud.InfoLabel = Txt(root, "Info", "", 24, new Color(0.85f, 0.9f, 1f), TextAnchor.MiddleCenter);
-            At(hud.InfoLabel.rectTransform, 0.5f, 1, 0, feet - 44, 520, 34);
+            hud.ElementIcon = Img(root, "ElementIcon", "element.Fire", Color.white);
+            hud.ElementIcon.preserveAspect = true;
+            At(hud.ElementIcon.rectTransform, 0.5f, 1, player ? -212 : 212, -30, 68, 68);
             hud.StatusLabel = Txt(root, "Status", "", 22, new Color(0.7f, 1f, 0.8f), TextAnchor.UpperCenter);
             At(hud.StatusLabel.rectTransform, 0.5f, 1, 0, feet - 80, 520, 60);
             return hud;
@@ -857,7 +855,6 @@ namespace Pokiwar.EditorTools
             };
         }
 
-        private static void HideInPortrait(Component c) => Dual(c).VisibleInPortrait = false;
 
         private static void SliceTo(Image img, float borderPx)
         {
