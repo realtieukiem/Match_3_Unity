@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6ab8951934559d4ba8b3004df24ec4f, type: 3}
+  m_Name: SpriteLibrary
+  m_EditorClassIdentifier: 
+  Gems:
+  - {fileID: 21300000, guid: cc81605109cc41848ba341ad57c519ab, type: 3}
+  - {fileID: 21300000, guid: 0f1d00e3c9e25c34796a1c5d07598014, type: 3}
+  - {fileID: 21300000, guid: a73fc0d7a65f55b4ca252bf2ad9f3ece, type: 3}
+  - {fileID: 21300000, guid: 264e94621ffbbd042900b69f9aba0577, type: 3}
+  - {fileID: 21300000, guid: 6ec3c0fe479bad440b23194755461921, type: 3}
+  - {fileID: 21300000, guid: a720d2dddeb01d54ab8cbdf89f85ee03, type: 3}
+  Sprites:
+  - Key: ui.round
+    Sprite: {fileID: 21300000, guid: fab597d5283cc1e4cb58a65d6358415e, type: 3}
+  - Key: ui.frame
+    Sprite: {fileID: 21300000, guid: 70afb74a7763bea409f49a26c5ec9fa3, type: 3}
+  - Key: ui.circle
+    Sprite: {fileID: 21300000, guid: 47a677a696f0f5f419663a7ebdd0c7e3, type: 3}
+  - Key: ui.ring
+    Sprite: {fileID: 21300000, guid: 7dacdb0f04490e746a93cbe6bbc666ac, type: 3}
+  - Key: ui.arrow
+    Sprite: {fileID: 21300000, guid: 7a547169fb66d444192e20ed2ac36232, type: 3}
+  - Key: ui.gradient
+    Sprite: {fileID: 21300000, guid: 95944a00d6c4a0f4fba1e78baec7c5e1, type: 3}
+  - Key: ui.map
+    Sprite: {fileID: 21300000, guid: bc672df2408d4db43a7c6be8eb0436db, type: 3}
+  - Key: stone
+    Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
+  - Key: emberkit
+    Sprite: {fileID: 21300000, guid: 5d15792071a6ef84ca3819b679c224ab, type: 3}
+  - Key: leafling
+    Sprite: {fileID: 21300000, guid: a5d0eba0bc4686b46837db8075063d2a, type: 3}
+  - Key: tidepup
+    Sprite: {fileID: 21300000, guid: e6b911824603d9646b07e6ddd6f737fd, type: 3}
+  - Key: dunewing
+    Sprite: {fileID: 21300000, guid: 00496d63cc8960142a1660eff6d38bac, type: 3}
+  - Key: psyling
+    Sprite: {fileID: 21300000, guid: d376fe6e0f96a504a9142258b53c4379, type: 3}
+  - Key: azurewing
+    Sprite: {fileID: 21300000, guid: 3aeca837237445c4db4fab044c690d1e, type: 3}
+  - Key: azurewing_ascended
+    Sprite: {fileID: 21300000, guid: 75342375f1478724fb714573eb1c2ce6, type: 3}
+  - Key: card.mana_potion
+    Sprite: {fileID: 21300000, guid: 1b8c849ef07eee449912f7e403178522, type: 3}
+  - Key: card.herbal_salve
+    Sprite: {fileID: 21300000, guid: 79e441f7b7d1978438c9403baf340a59, type: 3}
+  - Key: card.fire_bolt
+    Sprite: {fileID: 21300000, guid: f0113aa439457d341b434e0c6f994158, type: 3}
+  - Key: card.summon_sprite
+    Sprite: {fileID: 21300000, guid: 5b43bb59c0c56e9458c78a29387db8f8, type: 3}
+  - Key: card.iron_skin
+    Sprite: {fileID: 21300000, guid: 840e9394ab05fe045bf3d5a2d29e83a2, type: 3}
+  - Key: card.mana_leech
+    Sprite: {fileID: 21300000, guid: aad4d192c09ed3f4489ba8e1c5f72c36, type: 3}
+  - Key: card.war_cry
+    Sprite: {fileID: 21300000, guid: 39b35e3040510724dbb4decda28a7475, type: 3}
+  - Key: card.meteor
+    Sprite: {fileID: 21300000, guid: 97789c1dc842b0349be6d6f4018150ae, type: 3}
+  - Key: skill.blaze_burst
+    Sprite: {fileID: 21300000, guid: ceaae4bbd95e7f7428f7231ecb24a86c, type: 3}
+  - Key: skill.thorn_bind
+    Sprite: {fileID: 21300000, guid: 24333a9cffbc8814397b327ea007de5d, type: 3}
+  - Key: skill.tide_lance
+    Sprite: {fileID: 21300000, guid: 494033e6ab3b99b428c6d80376fbfa1b, type: 3}
+  - Key: skill.mind_spark
+    Sprite: {fileID: 21300000, guid: 546003cfced39604d948be6bcda19a76, type: 3}
+  - Key: skill.tidal_siphon
+    Sprite: {fileID: 21300000, guid: ddc802b7b19f9f14a8e50c12ce27dedc, type: 3}
+  - Key: stone.Neutral
+    Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
+  - Key: stone.Metal
+    Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
+  - Key: stone.Wood
+    Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
+  - Key: stone.Water
+    Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
+  - Key: stone.Fire
+    Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
+  - Key: stone.Earth
+    Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
+  Fallback: {fileID: 21300000, guid: 47a677a696f0f5f419663a7ebdd0c7e3, type: 3}

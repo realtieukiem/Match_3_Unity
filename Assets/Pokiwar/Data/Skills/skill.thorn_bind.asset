@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcbaa161909a32c44b7a691bb809986d, type: 3}
+  m_Name: skill.thorn_bind
+  m_EditorClassIdentifier: 
+  Def:
+    Id: skill.thorn_bind
+    Name: Thorn Bind
+    Description: Arrow combo, then -20% enemy ATK for 2 turns.
+    IconKey: skill.thorn_bind
+    ManaCost: 350
+    RageCost: 0
+    AtkMultiplier: 3
+    FlatBase: 0
+    UseQte: 1
+    Qte:
+      ArrowCount: 5
+      PerCorrectBonus: 0.2
+      MissMultiplier: 1
+      GoodMultiplier: 1.24
+      PerfectMultiplier: 1.25
+      ArrowSeconds: 4
+      BarSeconds: 3
+      BarCyclesPerSecond: 0.9
+      GoodHalfWidth: 0.16
+      PerfectHalfWidth: 0.05
+      Confidence: 0
+    EndTurnAfterUse: 1
+    PostEffects:
+    - Kind: 10
+      Target: 1
+      Value: 0.2
+      Turns: 2
+      Label: Thorn Bind

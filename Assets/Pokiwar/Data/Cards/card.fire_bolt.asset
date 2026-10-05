@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2368c87848b050845bd9a7b8090be942, type: 3}
+  m_Name: card.fire_bolt
+  m_EditorClassIdentifier: 
+  Def:
+    Id: card.fire_bolt
+    Name: Fire Bolt
+    Description: Deal 150% ATK damage.
+    IconKey: card.fire_bolt
+    ManaCost: 200
+    RageCost: 0
+    UsesPerBattle: 2
+    CanUseBeforeMatch: 1
+    CanUseAfterMatch: 0
+    EndTurnAfterUse: 0
+    Effects:
+    - Kind: 1
+      Target: 1
+      Value: 1.5
+      Turns: 0
+      Label: 

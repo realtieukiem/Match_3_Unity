@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c068c818496f6774aa2b0fb6a8163609, type: 3}
+  m_Name: ContentCatalog
+  m_EditorClassIdentifier: 
+  Pets:
+  - {fileID: 11400000, guid: 11861c5fc55c7d043b3f7f998cbe60c4, type: 2}
+  - {fileID: 11400000, guid: 4aee574855055a243b966fc1500d9606, type: 2}
+  - {fileID: 11400000, guid: 38c32eaa4a206f94fbf678f35c663f3f, type: 2}
+  Monsters:
+  - {fileID: 11400000, guid: 33488b3c9bed852449a1aa2d61bc1bef, type: 2}
+  - {fileID: 11400000, guid: 39244cbfa4351f64a995bab9ff61e2aa, type: 2}
+  - {fileID: 11400000, guid: c377a9b117320ed489ac7df0b293ac07, type: 2}
+  Cards:
+  - {fileID: 11400000, guid: 117a7344c6aad7f4ab98ae1d9c8662c5, type: 2}
+  - {fileID: 11400000, guid: 9423931d5c61cd2429dbd67f2df8bbb5, type: 2}
+  - {fileID: 11400000, guid: fd2aa33cbf4cfed4caea797361f083c4, type: 2}
+  - {fileID: 11400000, guid: 689b1a5d273c7e444b15f688049eea0a, type: 2}
+  - {fileID: 11400000, guid: 0961f84551b17744d8fc7aebdf219699, type: 2}
+  - {fileID: 11400000, guid: 9ef3f509343a2a147b5a3deddda0e236, type: 2}
+  - {fileID: 11400000, guid: 487d6f7a1953916489f8954ea1b38a83, type: 2}
+  - {fileID: 11400000, guid: 9dab4fdff6caf3146a5c65f0788b83f8, type: 2}
+  Skills:
+  - {fileID: 11400000, guid: 21e8c3347b0a2a2438f125a92769fe98, type: 2}
+  - {fileID: 11400000, guid: 3a9e9831089b1ab45b67a1f0789d6d34, type: 2}
+  - {fileID: 11400000, guid: 0cad7f5140f4e03419a0ced4d1fd1ce9, type: 2}
+  - {fileID: 11400000, guid: ac8157b7dedd06649bf0402965750466, type: 2}
+  - {fileID: 11400000, guid: cd560679606baae4786d6c61c15a062c, type: 2}
+  GemProfiles:
+  - {fileID: 11400000, guid: eaac1c19f992b6e468593a906a013908, type: 2}
+  - {fileID: 11400000, guid: 3e901857d01c5ab4b919f110e1fef381, type: 2}
+  - {fileID: 11400000, guid: d737c09739c75224d99bc30c0dec9a43, type: 2}
+  - {fileID: 11400000, guid: 4d269cb521b35424b91f772bcdef0f33, type: 2}
+  AiPolicies:
+  - {fileID: 11400000, guid: 8af0411da525f0e46a72359910251dd6, type: 2}
+  - {fileID: 11400000, guid: 77867d52ef3069c4ea25181629d3f725, type: 2}
+  - {fileID: 11400000, guid: 3b17dae30ceba7341b6997b3f1959ffe, type: 2}
+  - {fileID: 11400000, guid: e44be8854badf55419d7489f0f90605d, type: 2}
+  Encounters:
+  - {fileID: 11400000, guid: d15d3b31d391f024c91c845502e3db8c, type: 2}
+  - {fileID: 11400000, guid: ea290e7651a3c9f499de0df3fd48863e, type: 2}
+  - {fileID: 11400000, guid: b5a5d4c808ae2b44f9679786eced137a, type: 2}
+  Rewards:
+  - {fileID: 11400000, guid: 8ec92a157ca399846a5f61d0e7ee4123, type: 2}
+  - {fileID: 11400000, guid: 69b2b5339ba94784183814be61541240, type: 2}
+  - {fileID: 11400000, guid: 889c12276b0f66b4da44877f36096a7d, type: 2}
+  Map: {fileID: 11400000, guid: 0c4da03f26fa0374985711ee999b2c03, type: 2}
+  Board: {fileID: 11400000, guid: 52d3acd3995d71847a8587b3ebdd9c15, type: 2}
+  BattleRules: {fileID: 11400000, guid: 88c5bd293086e3e4e9d20a78b9f016f1, type: 2}
+  Upgrades: {fileID: 11400000, guid: e75b61179ac45844cb4171a130c941d4, type: 2}
+  Progression: {fileID: 11400000, guid: cba71af8c44c76f45b2308895d4d0b0b, type: 2}

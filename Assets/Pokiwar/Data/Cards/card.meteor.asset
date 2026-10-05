@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2368c87848b050845bd9a7b8090be942, type: 3}
+  m_Name: card.meteor
+  m_EditorClassIdentifier: 
+  Def:
+    Id: card.meteor
+    Name: Meteor
+    Description: Deal 300% ATK damage. Ends your turn.
+    IconKey: card.meteor
+    ManaCost: 450
+    RageCost: 0
+    UsesPerBattle: 1
+    CanUseBeforeMatch: 1
+    CanUseAfterMatch: 0
+    EndTurnAfterUse: 1
+    Effects:
+    - Kind: 1
+      Target: 1
+      Value: 3
+      Turns: 0
+      Label: 

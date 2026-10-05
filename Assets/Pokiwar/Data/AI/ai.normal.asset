@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52eb2b88124b4e44bb908058df6d375f, type: 3}
+  m_Name: ai.normal
+  m_EditorClassIdentifier: 
+  Def:
+    Id: ai.normal
+    Temperature: 0.35
+    TopK: 3
+    MistakeChance: 0.08
+    SwordWeight: 1
+    HeartWeight: 1
+    LightningWeight: 0.8
+    FireWeight: 0.8
+    ShieldWeight: 0.6
+    YinYangWeight: 0.7
+    CascadeWeight: 0.4
+    OpponentOpportunityWeight: 0.35
+    UseCards: 1
+    UseSkills: 1
+    QtePerfectChance: 0.25
+    QteGoodChance: 0.5
+    QteAvgCorrect: 3.5

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01ec1040af2e7b7478eeb5be57279f76, type: 3}
+  m_Name: board.default
+  m_EditorClassIdentifier: 
+  Def:
+    Id: board.default
+    Width: 8
+    Height: 8
+    MinMatch: 3
+    SpawnWeights:
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    X2SpawnChance: 0.05
+    X3SpawnChance: 0.015
+    MultipliersOnInitialFill: 1
+    InvalidSwapReverts: 1
+    ReshuffleWhenNoMoves: 1
+    ExtraTurnOnMatch4: 0
+    ExtraTurnOnMatch5: 0
+    MaxCascadeSteps: 40
+    TurnSeconds: 10
+    MultiplierSpawnConfidence: 3
+    InvalidSwapConfidence: 3
+    DeadBoardConfidence: 3
+    ExtraTurnConfidence: 3
+    TurnSecondsConfidence: 0
