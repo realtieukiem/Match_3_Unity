@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 6b343fd0a0078fe45b1ca86a69e2caa3
+guid: eec4fbc973672964a82afd4d11b75426
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2689677529336940483
-    second: gem_heart_0
+      213: 7991924023493227271
+    second: gem_lightning_painted_0
+  - first:
+      213: 6835954228811702931
+    second: gem_lightning_painted_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,10 +75,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +103,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gem_heart_0
+      name: gem_lightning_painted_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 3
-        width: 250
-        height: 250
+        x: 25
+        y: 17
+        width: 462
+        height: 492
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +118,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d38758f99885caad0800000000000000
-      internalID: -2689677529336940483
+      spriteID: 703793c6e8409ee60800000000000000
+      internalID: 7991924023493227271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gem_lightning_painted_1
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 28
+        width: 41
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 392a62517203ede50800000000000000
+      internalID: 6835954228811702931
       vertices: []
       indices: 
       edges: []
@@ -135,7 +160,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      gem_heart_0: -2689677529336940483
+      gem_lightning_painted_0: 7991924023493227271
+      gem_lightning_painted_1: 6835954228811702931
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

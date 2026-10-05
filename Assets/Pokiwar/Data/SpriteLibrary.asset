@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: SpriteLibrary
   m_EditorClassIdentifier: 
   Gems:
-  - {fileID: 21300000, guid: 54bf61edcb972324dbca7eda77bf854c, type: 3}
-  - {fileID: 21300000, guid: 19fbeb1881407a64c9f0d42164d2d75e, type: 3}
-  - {fileID: 21300000, guid: ad5eca4255658f94e83207d8afd6951b, type: 3}
-  - {fileID: 21300000, guid: 6b343fd0a0078fe45b1ca86a69e2caa3, type: 3}
-  - {fileID: 21300000, guid: 6fc7c85eca9990746a2e88ebe30312a5, type: 3}
-  - {fileID: 21300000, guid: b1315c9ef97270e49af226df550a83c4, type: 3}
+  - {fileID: 21300000, guid: 78ec404d258e8aa41a0c92a8be6390d6, type: 3}
+  - {fileID: 21300000, guid: eec4fbc973672964a82afd4d11b75426, type: 3}
+  - {fileID: 21300000, guid: 496f860b7f9bf6b44a6487098d2c4841, type: 3}
+  - {fileID: 21300000, guid: 1973f07698e52f24585a4eee9e07b01b, type: 3}
+  - {fileID: 21300000, guid: add64cbc8ea5fc848ab24ce2b1d2d7e0, type: 3}
+  - {fileID: 21300000, guid: a13c3a81975542e42b72dbe7b01f61b1, type: 3}
   Sprites:
   - Key: ui.round
     Sprite: {fileID: 21300000, guid: fab597d5283cc1e4cb58a65d6358415e, type: 3}

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 19fbeb1881407a64c9f0d42164d2d75e
+guid: add64cbc8ea5fc848ab24ce2b1d2d7e0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4284995020545131496
-    second: gem_lightning_0
+      213: 7004031557938474920
+    second: gem_shield_painted_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gem_lightning_0
+      name: gem_shield_painted_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 3
-        width: 250
-        height: 250
+        x: 39
+        y: 42
+        width: 434
+        height: 426
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 81cf6105bb3a884c0800000000000000
-      internalID: -4284995020545131496
+      spriteID: 8af6c8ec791533160800000000000000
+      internalID: 7004031557938474920
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      gem_lightning_0: -4284995020545131496
+      gem_shield_painted_0: 7004031557938474920
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

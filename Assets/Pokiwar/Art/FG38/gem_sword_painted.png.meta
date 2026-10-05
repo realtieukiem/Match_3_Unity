@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 54bf61edcb972324dbca7eda77bf854c
+guid: 78ec404d258e8aa41a0c92a8be6390d6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5723484336285619153
-    second: gem_sword_0
+      213: -5724991388636823880
+    second: gem_sword_painted_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 256
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: gem_sword_0
+      name: gem_sword_painted_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 3
-        width: 250
-        height: 250
+        x: 26
+        y: 32
+        width: 461
+        height: 449
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f2cee2a02591290b0800000000000000
-      internalID: -5723484336285619153
+      spriteID: 8beb1221aaebc80b0800000000000000
+      internalID: -5724991388636823880
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      gem_sword_0: -5723484336285619153
+      gem_sword_painted_0: -5724991388636823880
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
