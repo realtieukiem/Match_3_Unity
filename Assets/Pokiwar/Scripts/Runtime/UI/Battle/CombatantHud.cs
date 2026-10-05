@@ -153,7 +153,7 @@ namespace Pokiwar.UI
         public void SetTurn(bool on)
         {
             if (TurnMarker != null) TurnMarker.SetActive(on);
-            if (NameStrip != null) NameStrip.color = on ? new Color(1f, 0.82f, 0.25f, 1f) : new Color(1f, 1f, 1f, 0f);
+            if (NameStrip != null) NameStrip.color = on ? new Color(1f, 0.82f, 0.25f, 1f) : new Color(0.02f, 0.05f, 0.16f, 0.75f);
             if (AttackArrow == null) return;
             if (!arrowHomeSet)
             {

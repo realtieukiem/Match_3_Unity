@@ -18,11 +18,15 @@ namespace Pokiwar.EditorTools
             public string Name;
             public int Max;
             public bool Slice;
+            public int Edge;
             public string[] Keys;
         }
 
         private static Item I(string src, string name, int max, bool slice, params string[] keys) =>
             new Item { Src = src, Name = name, Max = max, Slice = slice, Keys = keys };
+
+        private static Item S(string src, string name, int max, int edge, params string[] keys) =>
+            new Item { Src = src, Name = name, Max = max, Slice = true, Edge = edge, Keys = keys };
 
         private static readonly Item[] Items =
         {
@@ -92,6 +96,27 @@ namespace Pokiwar.EditorTools
             I("Battle/Gems/battle_gem_heart_square_v01.png", "gem_heart_painted", 512, false, "gem.Heart"),
             I("Battle/Gems/battle_gem_shield_square_v01.png", "gem_shield_painted", 512, false, "gem.Shield"),
             I("Battle/Gems/battle_gem_yinyang_square_v01.png", "gem_yinyang_painted", 512, false, "gem.YinYang"),
+            S("Meta/UI/ui_reward_panel_v01.png", "popup_reward", 1024, 150, "popup.reward"),
+            I("UI/Battle/battle_top_hud_panel_v01.png", "hud_top", 2048, false, "hud.top"),
+            I("UI/Battle/battle_timer_medallion_v01.png", "hud_timer", 256, false, "hud.timer"),
+            S("UI/Battle/battle_name_ribbon_v01.png", "hud_name", 512, 40, "hud.name"),
+            S("UI/Battle/battle_bar_track_v01.png", "hud_track", 512, 20, "hud.track"),
+            S("UI/Battle/battle_bar_fill_v01.png", "hud_fill", 512, 16, "hud.fill"),
+            I("UI/Battle/battle_turn_arrow_flame_v01.png", "battle_arrow_flame", 512, false, "battle.arrow"),
+            I("UI/Battle/battle_shield_bubble_v01.png", "fx_bubble_painted", 512, false, "fx.bubble"),
+            I("UI/Battle/battle_skill_frame_v01.png", "skill_frame", 256, false, "skill.frame"),
+            I("UI/Battle/text_your_turn_v01.png", "text_your_turn", 1024, false, "text.yourturn"),
+            S("UI/Common/ui_button_blue_v01.png", "button_blue", 512, 48, "ui.button.blue"),
+            S("UI/Common/ui_button_red_v01.png", "button_red", 512, 48, "ui.button.red"),
+            S("UI/Common/ui_button_gray_v01.png", "button_gray", 512, 48, "ui.button.gray"),
+            S("UI/Common/ui_button_orange_v01.png", "button_orange", 512, 48, "ui.button.orange"),
+            S("UI/Common/ui_panel_dark_v01.png", "panel_dark", 512, 96, "ui.panel"),
+            I("UI/Common/ui_button_close_v01.png", "button_close", 256, false, "ui.close"),
+            S("UI/Common/ui_title_ribbon_v01.png", "title_ribbon", 1024, 120, "ui.ribbon"),
+            I("UI/Common/ui_reward_rays_v01.png", "reward_rays", 1024, false, "ui.rays"),
+            S("UI/Room/room_panel_v01.png", "room_panel", 1024, 120, "room.panel"),
+            I("UI/Room/room_pet_pedestal_v01.png", "room_stand", 512, false, "room.stand"),
+            S("UI/Room/room_card_slot_add_v01.png", "card_add", 512, 40, "card.add"),
         };
 
         /// <summary>Copies missing files from Source, draws the square gems, and overrides the matching keys in art.</summary>
@@ -104,7 +129,7 @@ namespace Pokiwar.EditorTools
                 string dest = Folder + "/" + it.Name + ".png";
                 string src = Path.Combine(Source, it.Src);
                 if (!File.Exists(dest) && File.Exists(src)) File.Copy(src, dest);
-                if (File.Exists(dest)) made.Add(new Item { Src = dest, Max = it.Max, Slice = it.Slice, Keys = it.Keys });
+                if (File.Exists(dest)) made.Add(new Item { Src = dest, Max = it.Max, Slice = it.Slice, Edge = it.Edge, Keys = it.Keys });
             }
             foreach (var g in Gems.All)
             {
@@ -115,14 +140,14 @@ namespace Pokiwar.EditorTools
             AssetDatabase.Refresh();
             foreach (var it in made)
             {
-                Configure(it.Src, it.Max, it.Slice);
+                Configure(it.Src, it.Max, it.Slice, it.Edge);
                 var sp = AssetDatabase.LoadAssetAtPath<Sprite>(it.Src);
                 if (sp == null) continue;
                 foreach (var k in it.Keys) art[k] = sp;
             }
         }
 
-        private static void Configure(string path, int max, bool slice)
+        private static void Configure(string path, int max, bool slice, int edge = 0)
         {
             var ti = (TextureImporter)AssetImporter.GetAtPath(path);
             if (ti == null) return;
@@ -134,8 +159,19 @@ namespace Pokiwar.EditorTools
             ti.wrapMode = TextureWrapMode.Clamp;
             ti.maxTextureSize = max;
             ti.textureCompression = max <= 256 ? TextureImporterCompression.Uncompressed : TextureImporterCompression.CompressedHQ;
-            ti.spriteBorder = slice ? Border(path, max) : Vector4.zero;
+            ti.spriteBorder = !slice ? Vector4.zero : edge > 0 ? Fixed(path, max, edge) : Border(path, max);
             ti.SaveAndReimport();
+        }
+
+        private static Vector4 Fixed(string path, int max, int edge)
+        {
+            var tex = new Texture2D(2, 2);
+            tex.LoadImage(File.ReadAllBytes(path));
+            int w = tex.width, h = tex.height;
+            Object.DestroyImmediate(tex);
+            float scale = Mathf.Min(1f, (float)max / Mathf.Max(w, h));
+            float e = Mathf.Min(edge, Mathf.Min(w, h) / 2 - 1) * scale;
+            return new Vector4(e, e, e, e);
         }
 
         private static Vector4 Border(string path, int max)
