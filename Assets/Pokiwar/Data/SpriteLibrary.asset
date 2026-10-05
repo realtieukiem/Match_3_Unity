@@ -97,29 +97,29 @@ MonoBehaviour:
   - Key: skill.tidal_siphon
     Sprite: {fileID: 21300000, guid: ddc802b7b19f9f14a8e50c12ce27dedc, type: 3}
   - Key: avatar.base
-    Sprite: {fileID: 21300000, guid: 13cb5dfe2684b934593900b531bbefc9, type: 3}
+    Sprite: {fileID: 21300000, guid: ddb7d393898afb84fb80eb585003c345, type: 3}
   - Key: avatar.hair.spiky
-    Sprite: {fileID: 21300000, guid: de9503fc1988eba48a02c0ae50751f0c, type: 3}
+    Sprite: {fileID: 21300000, guid: 8c233f770fb88e14a86ea00ed0eb0bcc, type: 3}
   - Key: avatar.hair.bob
-    Sprite: {fileID: 21300000, guid: af59d110fd519354eafd17d63b0a701f, type: 3}
+    Sprite: {fileID: 21300000, guid: 305874278cbea3e49a810afc17b56989, type: 3}
   - Key: avatar.hair.ponytail
-    Sprite: {fileID: 21300000, guid: a8049a2a1f81db04298a9091f0e56e88, type: 3}
+    Sprite: {fileID: 21300000, guid: 2bef7e1b411979049ae5db0af79ff31c, type: 3}
   - Key: avatar.top.tee
-    Sprite: {fileID: 21300000, guid: 0325aa9736b9c8042b9d7c752226acb7, type: 3}
+    Sprite: {fileID: 21300000, guid: 16eef45c887166e47bb14fa407c99503, type: 3}
   - Key: avatar.top.jacket
-    Sprite: {fileID: 21300000, guid: 2ba6ecaef1dbe9f48a4bc67d2d013efb, type: 3}
+    Sprite: {fileID: 21300000, guid: 1e8cccde66ad454459d990baa8d76f60, type: 3}
   - Key: avatar.top.robe
-    Sprite: {fileID: 21300000, guid: a69fcee29b626174fb1174de99b5649e, type: 3}
+    Sprite: {fileID: 21300000, guid: 8436e0c83034cda419520e59898375be, type: 3}
   - Key: avatar.bottom.shorts
-    Sprite: {fileID: 21300000, guid: ee907c5f6de65914ab063695751ae9d0, type: 3}
+    Sprite: {fileID: 21300000, guid: a3950ad9b02665c43a18ebbf451dbbae, type: 3}
   - Key: avatar.bottom.pants
-    Sprite: {fileID: 21300000, guid: 3e30d622d2248c04e937f3364b67061a, type: 3}
+    Sprite: {fileID: 21300000, guid: b58cced702681a34d92e64a81db9ca1b, type: 3}
   - Key: avatar.bottom.skirt
-    Sprite: {fileID: 21300000, guid: ad44ae887adb62141a725096c8481c74, type: 3}
+    Sprite: {fileID: 21300000, guid: dc5efe542a7690445bbe79211f7b47eb, type: 3}
   - Key: avatar.hat.cap
-    Sprite: {fileID: 21300000, guid: 4b8401c31e7830943be2aea60b2d6a6d, type: 3}
+    Sprite: {fileID: 21300000, guid: dd2291b6d84daa44b94b87e3107271b6, type: 3}
   - Key: avatar.hat.wizard
-    Sprite: {fileID: 21300000, guid: 873d202ac0654a24e9d5305967c6fa95, type: 3}
+    Sprite: {fileID: 21300000, guid: 6bf4b596dccbebc49a8cfff912306329, type: 3}
   - Key: bg.battle
     Sprite: {fileID: 21300000, guid: b8de233205c4d554fada8cd355ea4db0, type: 3}
   - Key: bg.hub
@@ -202,8 +202,52 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 7fb4416b7ae8cd14397389a5fda73301, type: 3}
   - Key: text.yourturn
     Sprite: {fileID: 21300000, guid: 4e9c612c3ebff8942b615794a1bb1e74, type: 3}
+  - Key: ui.button.blue
+    Sprite: {fileID: 21300000, guid: 02b161bd9aca9b34f90e7ce6b6169e22, type: 3}
+  - Key: ui.button.red
+    Sprite: {fileID: 21300000, guid: c8f1c893c4649c544b5d1a82d5af3640, type: 3}
+  - Key: ui.button.gray
+    Sprite: {fileID: 21300000, guid: b4139bf64094b1a4a826558bed579079, type: 3}
+  - Key: ui.button.orange
+    Sprite: {fileID: 21300000, guid: 19219b76281b71a40805f0888c18a877, type: 3}
+  - Key: ui.panel
+    Sprite: {fileID: 21300000, guid: 2632e0a5675be7a40804de5e742edff2, type: 3}
+  - Key: ui.close
+    Sprite: {fileID: 21300000, guid: d5d23cc438a432a478899a3e9a98a396, type: 3}
+  - Key: ui.ribbon
+    Sprite: {fileID: 21300000, guid: a43fd706628436748832174bc1e608a8, type: 3}
+  - Key: ui.rays
+    Sprite: {fileID: 21300000, guid: 39fead87cf546de48954b9ab8fd30cb3, type: 3}
+  - Key: room.panel
+    Sprite: {fileID: 21300000, guid: 58fe2bce0d0c6ab44850c07d0a1df0f5, type: 3}
+  - Key: room.stand
+    Sprite: {fileID: 21300000, guid: fb0e2a22a53d86b41abc847286cabadd, type: 3}
+  - Key: card.add
+    Sprite: {fileID: 21300000, guid: abb6ae2cfc95561418ec136be04f4f01, type: 3}
   - Key: icon.gold
     Sprite: {fileID: 21300000, guid: 2a20ada942b54f14a9f89a2a6164d355, type: 3}
+  - Key: avatar.hair.spiky.icon
+    Sprite: {fileID: 21300000, guid: 08d82802bd0bb6b4095533c7af29ccec, type: 3}
+  - Key: avatar.hair.bob.icon
+    Sprite: {fileID: 21300000, guid: 5cb0b18339bca4646a3d2b4cce4ccd68, type: 3}
+  - Key: avatar.hair.ponytail.icon
+    Sprite: {fileID: 21300000, guid: 4c4df093fe0d31947a52ef24eeecbf2e, type: 3}
+  - Key: avatar.top.tee.icon
+    Sprite: {fileID: 21300000, guid: c8436afe72b082341be6d843a99bdab7, type: 3}
+  - Key: avatar.top.jacket.icon
+    Sprite: {fileID: 21300000, guid: c0961294d19230948b82a2d40a7396b7, type: 3}
+  - Key: avatar.top.robe.icon
+    Sprite: {fileID: 21300000, guid: d8b8e0d448ea5354b8e96707c450a50c, type: 3}
+  - Key: avatar.bottom.shorts.icon
+    Sprite: {fileID: 21300000, guid: 1475c2af53b6fb243bd8cc5eb2b60d76, type: 3}
+  - Key: avatar.bottom.pants.icon
+    Sprite: {fileID: 21300000, guid: d7518cf8e3df50a4a8d176e6fc277282, type: 3}
+  - Key: avatar.bottom.skirt.icon
+    Sprite: {fileID: 21300000, guid: 04a0c4eefa517564c8726b4c3a16d579, type: 3}
+  - Key: avatar.hat.cap.icon
+    Sprite: {fileID: 21300000, guid: 37062443a71faf34dbc4b617927db959, type: 3}
+  - Key: avatar.hat.wizard.icon
+    Sprite: {fileID: 21300000, guid: ab3d3ea09024cad41bb2a827cee57c57, type: 3}
   - Key: stone.Neutral
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   - Key: stone.Metal

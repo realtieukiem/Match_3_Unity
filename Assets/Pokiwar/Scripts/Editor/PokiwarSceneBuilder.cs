@@ -174,7 +174,7 @@ namespace Pokiwar.EditorTools
 
             var card = Img(s, "PetCard", "ui.round", PanelCol);
             At(card.rectTransform, 0.5f, 0.5f, -360, -110, 620, 560);
-            Skin(card, "ui.panel", 48);
+            SkinPanel(card, 48);
             hub.Avatar = MakeAvatar(card.transform, "Avatar");
             At((RectTransform)hub.Avatar.transform, 0.5f, 0.5f, -130, 70, 400, 400);
             hub.PetImage = Img(card.transform, "PetImage", "emberkit", Color.white);
@@ -335,7 +335,7 @@ namespace Pokiwar.EditorTools
             Fill(dim.rectTransform);
             var panel = Img(dim.transform, "Panel", "ui.round", PanelCol, true);
             At(panel.rectTransform, 0.5f, 0.5f, 0, 0, 860, 860);
-            Skin(panel, "ui.panel", 48);
+            SkinPanel(panel, 48);
             At(Txt(panel.transform, "Title", title, 38, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -44, 700, 56);
             content = ScrollList(panel.transform, "List", out var view);
             At(view, 0.5f, 1, 0, -450, 800, 760);
@@ -674,7 +674,7 @@ namespace Pokiwar.EditorTools
 
             var lp = Img(s, "PetPanel", "ui.round", PanelCol);
             At(lp.rectTransform, 0.5f, 0.5f, -680, -40, 500, 860);
-            Skin(lp, "ui.panel", 48);
+            SkinPanel(lp, 48);
             At(Txt(lp.transform, "Label", "PETS", 34, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -40, 460, 50);
             var petContent = ScrollList(lp.transform, "PetList", out var petView);
             At(petView, 0.5f, 1, 0, -440, 480, 780);
@@ -682,7 +682,7 @@ namespace Pokiwar.EditorTools
 
             var cp = Img(s, "DetailPanel", "ui.round", PanelCol);
             At(cp.rectTransform, 0.5f, 0.5f, -110, -40, 600, 860);
-            Skin(cp, "ui.panel", 48);
+            SkinPanel(cp, 48);
             up.PetImage = Img(cp.transform, "PetImage", "emberkit", Color.white);
             up.PetImage.preserveAspect = true;
             At(up.PetImage.rectTransform, 0.5f, 1, 0, -170, 280, 280);
@@ -699,7 +699,7 @@ namespace Pokiwar.EditorTools
 
             var rp = Img(s, "StonePanel", "ui.round", PanelCol);
             At(rp.rectTransform, 0.5f, 0.5f, 560, -40, 720, 860);
-            Skin(rp, "ui.panel", 48);
+            SkinPanel(rp, 48);
             At(Txt(rp.transform, "Label", "STONES", 34, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -40, 680, 50);
             var stoneContent = ScrollList(rp.transform, "StoneList", out var stoneView);
             At(stoneView, 0.5f, 1, 0, -440, 700, 780);
@@ -733,7 +733,7 @@ namespace Pokiwar.EditorTools
 
             var left = Img(s, "PreviewPanel", "ui.round", PanelCol);
             At(left.rectTransform, 0.5f, 0.5f, -500, -50, 680, 860);
-            Skin(left, "ui.panel", 48);
+            SkinPanel(left, 48);
             var stand = Img(left.transform, "Stand", "ui.circle", new Color(1f, 1f, 1f, 0.35f));
             At(stand.rectTransform, 0.5f, 0.5f, 0, -170, 360, 90);
             if (Skin(stand, "room.stand"))
@@ -750,7 +750,7 @@ namespace Pokiwar.EditorTools
 
             var right = Img(s, "ItemPanel", "ui.round", PanelCol);
             At(right.rectTransform, 0.5f, 0.5f, 360, -50, 960, 860);
-            Skin(right, "ui.panel", 48);
+            SkinPanel(right, 48);
             string[] tabs = { "PANTS", "TOP", "HAIR", "HAT" };
             for (int i = 0; i < 4; i++)
             {
@@ -791,7 +791,7 @@ namespace Pokiwar.EditorTools
         private static AvatarCard MakeAvatarCard(Transform parent, string name, bool player)
         {
             var bg = Img(parent, name, "ui.round", new Color(0.07f, 0.15f, 0.38f, 0.93f), true);
-            Skin(bg, "ui.panel", 24);
+            SkinPanel(bg, 24);
             var card = bg.gameObject.AddComponent<AvatarCard>();
             var mask = Img(bg.transform, "Window", "ui.round", new Color(0.55f, 0.8f, 1f, 1f));
             At(mask.rectTransform, 0.5f, 1, 0, -84, 144, 136);
@@ -1088,6 +1088,16 @@ namespace Pokiwar.EditorTools
         private static RectTransform Rt(Component c) => (RectTransform)c.transform;
 
         private static string Key(string preferred, string fallback) => art.ContainsKey(preferred) ? preferred : fallback;
+
+        private static void SkinPanel(Image img, float edgePx)
+        {
+            if (!Skin(img, "ui.panel", edgePx)) return;
+            img.fillCenter = false;
+            var inner = Img(img.transform, "Inner", null, new Color(0.1f, 0.12f, 0.19f, 0.97f));
+            float inset = edgePx * 0.6f;
+            Fill(inner.rectTransform, inset, inset, inset, inset);
+            inner.transform.SetAsFirstSibling();
+        }
 
         private static bool Skin(Image img, string key, float edgePx = 0f)
         {
