@@ -60,6 +60,32 @@ namespace Pokiwar.EditorTools
             I("Cards/card_lightning_arc_v01.png", "card_mana_potion", 512, false, "card.mana_potion"),
             I("Cards/card_shield_ward_v01.png", "card_iron_skin", 512, false, "card.iron_skin"),
             I("Cards/card_stone_strike_v01.png", "card_war_cry", 512, false, "card.war_cry"),
+            I("Cards/card_summon_sprite_v01.png", "card_summon_sprite", 512, false, "card.summon_sprite"),
+            I("Cards/card_mana_leech_v01.png", "card_mana_leech", 512, false, "card.mana_leech"),
+            I("Cards/card_meteor_v01.png", "card_meteor", 512, false, "card.meteor"),
+            I("Battle/Skills/skill_blaze_burst_v01.png", "skill_blaze_burst", 512, false, "skill.blaze_burst"),
+            I("Battle/Skills/skill_thorn_bind_v01.png", "skill_thorn_bind", 512, false, "skill.thorn_bind"),
+            I("Battle/Skills/skill_tide_lance_v01.png", "skill_tide_lance", 512, false, "skill.tide_lance"),
+            I("Battle/Skills/skill_mind_spark_v01.png", "skill_mind_spark", 512, false, "skill.mind_spark"),
+            I("Battle/Skills/skill_tidal_siphon_v01.png", "skill_tidal_siphon", 512, false, "skill.tidal_siphon"),
+            I("Battle/Characters/pet_leafling_idle_01.png", "char_leafling", 1024, false, "leafling"),
+            I("Battle/Characters/pet_leafling_attack_01.png", "char_leafling_attack", 1024, false, "leafling.attack"),
+            I("Battle/Characters/pet_leafling_hit_01.png", "char_leafling_hit", 1024, false, "leafling.hit"),
+            I("Battle/Characters/pet_leafling_defeat_01.png", "char_leafling_defeat", 1024, false, "leafling.defeat"),
+            I("Battle/Characters/pet_tidepup_idle_01.png", "char_tidepup", 1024, false, "tidepup"),
+            I("Battle/Characters/pet_tidepup_attack_01.png", "char_tidepup_attack", 1024, false, "tidepup.attack"),
+            I("Battle/Characters/pet_tidepup_hit_01.png", "char_tidepup_hit", 1024, false, "tidepup.hit"),
+            I("Battle/Characters/pet_tidepup_defeat_01.png", "char_tidepup_defeat", 1024, false, "tidepup.defeat"),
+            I("Battle/Characters/enemy_psyling_idle_01.png", "char_psyling", 1024, false, "psyling"),
+            I("Battle/Characters/enemy_psyling_attack_01.png", "char_psyling_attack", 1024, false, "psyling.attack"),
+            I("Battle/Characters/enemy_psyling_hit_01.png", "char_psyling_hit", 1024, false, "psyling.hit"),
+            I("Battle/Characters/enemy_psyling_defeat_01.png", "char_psyling_defeat", 1024, false, "psyling.defeat"),
+            I("Battle/Gems/battle_gem_sword_square_v01.png", "gem_sword_painted", 512, false, "gem.Sword"),
+            I("Battle/Gems/battle_gem_lightning_square_v01.png", "gem_lightning_painted", 512, false, "gem.Lightning"),
+            I("Battle/Gems/battle_gem_fire_square_v01.png", "gem_fire_painted", 512, false, "gem.Fire"),
+            I("Battle/Gems/battle_gem_heart_square_v01.png", "gem_heart_painted", 512, false, "gem.Heart"),
+            I("Battle/Gems/battle_gem_shield_square_v01.png", "gem_shield_painted", 512, false, "gem.Shield"),
+            I("Battle/Gems/battle_gem_yinyang_square_v01.png", "gem_yinyang_painted", 512, false, "gem.YinYang"),
         };
 
         /// <summary>Copies missing files from Source, draws the square gems, and overrides the matching keys in art.</summary>
@@ -75,7 +101,10 @@ namespace Pokiwar.EditorTools
                 if (File.Exists(dest)) made.Add(new Item { Src = dest, Max = it.Max, Slice = it.Slice, Keys = it.Keys });
             }
             foreach (var g in Gems.All)
+            {
+                if (made.Exists(m => System.Array.IndexOf(m.Keys, "gem." + g) >= 0)) continue;
                 made.Add(new Item { Src = PlaceholderArt.WriteSquareGem(g, Folder), Max = 256, Keys = new[] { "gem." + g } });
+            }
 
             AssetDatabase.Refresh();
             foreach (var it in made)
