@@ -43,9 +43,9 @@ MonoBehaviour:
   - Key: emberkit
     Sprite: {fileID: 21300000, guid: 258bc4773cd85d044aa4329e163be108, type: 3}
   - Key: leafling
-    Sprite: {fileID: 21300000, guid: a5d0eba0bc4686b46837db8075063d2a, type: 3}
+    Sprite: {fileID: 21300000, guid: 30f7c36fb22980649aa937cb33f37530, type: 3}
   - Key: tidepup
-    Sprite: {fileID: 21300000, guid: e6b911824603d9646b07e6ddd6f737fd, type: 3}
+    Sprite: {fileID: 21300000, guid: 97a645b3308a8214ca7fd2efbb79bc21, type: 3}
   - Key: dunewing
     Sprite: {fileID: 21300000, guid: 872cf3963d288d04da5e34b650be4eda, type: 3}
   - Key: psyling
@@ -128,6 +128,14 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: de1e98a21ade616458a11c83e372c763, type: 3}
   - Key: fx.transform
     Sprite: {fileID: 21300000, guid: 6a7e1491ab4b1474783b47479d2c1f76, type: 3}
+  - Key: leafling.attack
+    Sprite: {fileID: 21300000, guid: 0f3b6ade3ad97714b84a8f65b7bd0a2a, type: 3}
+  - Key: leafling.hit
+    Sprite: {fileID: 21300000, guid: ff0ea14296d09094c9042337fdbac60c, type: 3}
+  - Key: leafling.defeat
+    Sprite: {fileID: 21300000, guid: 81e90ab1292233748b66efd556eff54c, type: 3}
+  - Key: tidepup.attack
+    Sprite: {fileID: 21300000, guid: 34aa7386b0585924f85433d2d8d6b6e2, type: 3}
   - Key: stone.Neutral
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   - Key: stone.Metal

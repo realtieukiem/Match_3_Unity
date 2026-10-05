@@ -64,6 +64,11 @@ namespace Pokiwar.EditorTools
             foreach (var s in EditorBuildSettings.scenes)
                 if (s.path != ScenePath) scenes.Add(new EditorBuildSettingsScene(s.path, false));
             EditorBuildSettings.scenes = scenes.ToArray();
+            PlayerSettings.defaultInterfaceOrientation = UIOrientation.AutoRotation;
+            PlayerSettings.allowedAutorotateToPortrait = true;
+            PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
+            PlayerSettings.allowedAutorotateToLandscapeLeft = true;
+            PlayerSettings.allowedAutorotateToLandscapeRight = true;
             AssetDatabase.SaveAssets();
         }
 
@@ -118,6 +123,8 @@ namespace Pokiwar.EditorTools
             var upgrade = BuildUpgrade(root);
             BuildVfx(root);
             var toast = BuildToast(root);
+            Portrait(toast, 0.5f, 0.5f, 0, -40, 900, 84);
+            canvasGo.AddComponent<ResponsiveCanvas>();
 
             var appGo = new GameObject("PokiwarApp");
             var app = appGo.AddComponent<GameApp>();
@@ -153,8 +160,10 @@ namespace Pokiwar.EditorTools
             Fill(Img(s, "Bg", Key("bg.hub", "ui.map"), Color.white).rectTransform);
             Fill(Img(s, "Shade", null, new Color(0, 0, 0, 0.18f)).rectTransform);
             var hub = s.gameObject.AddComponent<HubScreen>();
-            At(Txt(s, "Title", "POKIWAR", 120, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 0.5f, 0, 410, 1200, 150);
-            At(Txt(s, "Subtitle", "Offline Pet Battle Adventure", 36, Color.white, TextAnchor.MiddleCenter).rectTransform, 0.5f, 0.5f, 0, 325, 1000, 50);
+            var title = Txt(s, "Title", "POKIWAR", 120, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(title.rectTransform, 0.5f, 0.5f, 0, 410, 1200, 150);
+            var subtitle = Txt(s, "Subtitle", "Offline Pet Battle Adventure", 36, Color.white, TextAnchor.MiddleCenter);
+            At(subtitle.rectTransform, 0.5f, 0.5f, 0, 325, 1000, 50);
             hub.PlayerLabel = Txt(s, "PlayerLabel", "", 34, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
             At(hub.PlayerLabel.rectTransform, 0.5f, 0.5f, 0, 260, 1400, 48);
             hub.ResourcesLabel = Txt(s, "ResourcesLabel", "", 30, new Color(0.9f, 0.95f, 1f), TextAnchor.MiddleCenter);
@@ -180,7 +189,17 @@ namespace Pokiwar.EditorTools
             At(Rt(hub.SfxButton), 1, 1, -360, -50, 190, 64);
             hub.ShakeButton = Btn(s, "ShakeButton", "SHAKE: ON", Gray, 24, out hub.ShakeLabel);
             At(Rt(hub.ShakeButton), 1, 1, -160, -50, 190, 64);
-            At(Txt(s, "Hint", "Drag or tap two neighbouring gems to swap. 10 seconds per turn.", 26, new Color(1, 1, 1, 0.8f), TextAnchor.MiddleCenter).rectTransform, 0.5f, 0, 0, 50, 1600, 40);
+            var hint = Txt(s, "Hint", "Drag or tap two neighbouring gems to swap. 10 seconds per turn.", 26, new Color(1, 1, 1, 0.8f), TextAnchor.MiddleCenter);
+            At(hint.rectTransform, 0.5f, 0, 0, 50, 1600, 40);
+            Portrait(title, 0.5f, 0.5f, 0, 700, 1000, 150);
+            Portrait(subtitle, 0.5f, 0.5f, 0, 615, 1000, 50);
+            Portrait(hub.PlayerLabel, 0.5f, 0.5f, 0, 545, 1000, 48);
+            Portrait(hub.ResourcesLabel, 0.5f, 0.5f, 0, 495, 1000, 44);
+            Portrait(card, 0.5f, 0.5f, 0, 120, 620, 560);
+            Portrait(hub.AdventureButton, 0.5f, 0.5f, 0, -320, 560, 160);
+            Portrait(hub.UpgradeButton, 0.5f, 0.5f, 0, -480, 560, 120);
+            Portrait(hub.ResetButton, 0.5f, 0.5f, 0, -610, 300, 80);
+            Portrait(hint, 0.5f, 0, 0, 60, 1000, 80);
             return hub;
         }
 
@@ -205,6 +224,8 @@ namespace Pokiwar.EditorTools
             map.NodeTemplate = MakeRow(area, "NodeTemplate", 330, 150, Blue, 110, 0, 28, 22);
             map.PathTemplate.gameObject.SetActive(false);
             map.NodeTemplate.gameObject.SetActive(false);
+            PortraitStretch(area, 40, 40, 230, 120);
+            Portrait(map.InfoLabel, 0.5f, 1, 0, -150, 900, 50);
             return map;
         }
 
@@ -252,6 +273,10 @@ namespace Pokiwar.EditorTools
             At(Rt(prep.FightButton), 0.5f, 0.5f, 600, -380, 620, 120);
             prep.PetTemplate.gameObject.SetActive(false);
             prep.CardTemplate.gameObject.SetActive(false);
+            Portrait(lp, 0.5f, 0.5f, -262, 449, 560, 840, 0.86f);
+            Portrait(mp, 0.5f, 0.5f, 262, 449, 600, 840, 0.86f);
+            Portrait(rp, 0.5f, 0.5f, 0, -310, 620, 680, 1.15f);
+            Portrait(prep.FightButton, 0.5f, 0.5f, 0, -780, 620, 120);
             return prep;
         }
 
@@ -381,6 +406,16 @@ namespace Pokiwar.EditorTools
 
             bc.Qte = BuildQte(s);
             bc.Log = BuildLog(s);
+            Portrait(bc.TurnLabel, 0.5f, 1, 330, -100, 300, 44);
+            Portrait(bc.PlayerHud, 0.5f, 1, -272, -160, 520, 760, 0.72f, 0.5f, 1f);
+            Portrait(bc.EnemyHud, 0.5f, 1, 272, -160, 520, 760, 0.72f, 0.5f, 1f);
+            HideInPortrait(bc.EnemyKitLabel);
+            Portrait(frame, 0.5f, 0.5f, 0, -255, 700, 700, 0.92f * 1.38f);
+            var frameArtRt = s.Find("BoardFrameArt");
+            if (frameArtRt != null) Portrait(frameArtRt, 0.5f, 0.5f, 0, -255, 704, 704, 1.38f);
+            Portrait(bar, 0.5f, 0, 0, 105, 1300, 196, 0.84f);
+            Portrait(sum, 0.5f, 0.5f, 0, -255, 660, 200, 1.3f);
+            Portrait(banner, 0.5f, 0.5f, 0, -255, 4000, 150);
             return bc;
         }
 
@@ -433,6 +468,7 @@ namespace Pokiwar.EditorTools
             qv.Strike = Btn(p, "Strike", "STRIKE", Red, 40, out _);
             At(Rt(qv.Strike), 0.5f, 0.5f, 440, -195, 240, 120);
             dim.gameObject.SetActive(false);
+            Portrait(panel, 0.5f, 0.5f, 0, 0, 1200, 660, 0.86f);
             return qv;
         }
 
@@ -481,6 +517,7 @@ namespace Pokiwar.EditorTools
             lv.Content = text;
             lv.Scroll = sr;
             panel.gameObject.SetActive(false);
+            Portrait(panel, 0.5f, 0.5f, 0, -100, 1000, 1300);
             return lv;
         }
 
@@ -546,6 +583,9 @@ namespace Pokiwar.EditorTools
 
             up.PetTemplate.gameObject.SetActive(false);
             up.StoneTemplate.gameObject.SetActive(false);
+            Portrait(lp, 0.5f, 0.5f, -305, 449, 500, 860, 0.86f);
+            Portrait(cp, 0.5f, 0.5f, 262, 449, 600, 860, 0.86f);
+            Portrait(rp, 0.5f, 0.5f, 0, -470, 720, 860, 1.0f);
             return up;
         }
 
@@ -766,6 +806,44 @@ namespace Pokiwar.EditorTools
         private static RectTransform Rt(Component c) => (RectTransform)c.transform;
 
         private static string Key(string preferred, string fallback) => art.ContainsKey(preferred) ? preferred : fallback;
+
+        private static OrientationLayout Dual(Component c)
+        {
+            var rt = (RectTransform)c.transform;
+            var ol = rt.GetComponent<OrientationLayout>();
+            if (ol == null) ol = rt.gameObject.AddComponent<OrientationLayout>();
+            ol.Landscape = RectState.Capture(rt);
+            ol.Portrait = ol.Landscape;
+            return ol;
+        }
+
+        private static void Portrait(Component c, float ax, float ay, float x, float y, float w, float h, float scale = 1f, float px = 0.5f, float py = 0.5f)
+        {
+            Dual(c).Portrait = new RectState
+            {
+                AnchorMin = new Vector2(ax, ay),
+                AnchorMax = new Vector2(ax, ay),
+                Pivot = new Vector2(px, py),
+                Position = new Vector2(x, y),
+                Size = new Vector2(w, h),
+                Scale = Vector3.one * scale
+            };
+        }
+
+        private static void PortraitStretch(Component c, float l, float r, float t, float b)
+        {
+            Dual(c).Portrait = new RectState
+            {
+                AnchorMin = Vector2.zero,
+                AnchorMax = Vector2.one,
+                Pivot = new Vector2(0.5f, 0.5f),
+                Position = new Vector2((l - r) * 0.5f, (b - t) * 0.5f),
+                Size = new Vector2(-(l + r), -(t + b)),
+                Scale = Vector3.one
+            };
+        }
+
+        private static void HideInPortrait(Component c) => Dual(c).VisibleInPortrait = false;
 
         private static void SliceTo(Image img, float borderPx)
         {

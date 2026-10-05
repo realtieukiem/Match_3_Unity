@@ -64,6 +64,25 @@ Unity.exe -batchmode -nographics -projectPath <p> -runTests -testPlatform EditMo
 Unity.exe -batchmode -projectPath <p> -executeMethod Pokiwar.EditorTools.PokiwarSmoke.Run -smokeOut <dir> -logFile smoke.log
 ```
 
+Add `-smokePortrait` to run the smoke at 1080x1920. Both orientations check that every button is fully on
+screen and that a board cell is at least 9.5% (portrait) / 6.5% (landscape) of the short screen side.
+
+## Portrait and landscape
+
+The game rotates freely (portrait + both landscape sides). `ResponsiveCanvas` on the Canvas picks the
+orientation from the screen shape, switches the CanvasScaler reference (1920x1080 / 1080x1920) and applies
+every `OrientationLayout` in the scene. Each laid-out element stores one rect per orientation.
+
+To adjust a layout in the Editor:
+
+1. On the Canvas, `ResponsiveCanvas` context menu -> `Preview Portrait` (or set `Force`).
+2. Move/resize the element in the Scene view.
+3. On that element, `OrientationLayout` context menu -> `Capture current as Portrait`.
+4. Same for landscape with `Preview Landscape` / `Capture current as Landscape`. Set `Force` back to `Auto`.
+
+`Pokiwar/Build All` regenerates the scene from `PokiwarSceneBuilder` and overwrites hand-made captures;
+lasting layout changes go into its `Portrait(...)` calls.
+
 ## Where to tune (Inspector)
 
 | Asset | Fields |

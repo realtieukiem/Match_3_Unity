@@ -40,7 +40,8 @@ namespace Pokiwar.EditorTools
             SessionState.SetString(StageKey, "start");
             SessionState.SetString(DeadlineKey, (EditorApplication.timeSinceStartup + 900).ToString(CultureInfo.InvariantCulture));
             EditorSceneManager.OpenScene(PokiwarSceneBuilder.ScenePath);
-            PlayModeWindow.SetCustomRenderingResolution(1920, 1080, "PokiwarSmoke");
+            bool portrait = Array.IndexOf(Environment.GetCommandLineArgs(), "-smokePortrait") >= 0;
+            PlayModeWindow.SetCustomRenderingResolution(portrait ? 1080u : 1920u, portrait ? 1920u : 1080u, "PokiwarSmoke");
             EditorApplication.EnterPlaymode();
         }
 
@@ -158,6 +159,8 @@ namespace Pokiwar.EditorTools
         private IEnumerator Start()
         {
             Log("screen " + Screen.width + "x" + Screen.height);
+            yield return null;
+            Check(ResponsiveCanvas.IsPortrait == (Screen.height > Screen.width), "layout matches screen shape (" + (ResponsiveCanvas.IsPortrait ? "portrait" : "landscape") + ")");
             yield return WaitFor(() => GameApp.Instance != null, 10);
             var app = GameApp.Instance;
             Check(app != null, "GameApp present");
@@ -167,6 +170,7 @@ namespace Pokiwar.EditorTools
             app.ResetSave();
             yield return null;
             Check(app.Hub.gameObject.activeSelf && !app.Map.gameObject.activeSelf, "hub screen visible");
+            CheckOnScreen(app.Hub.transform, "hub");
             yield return Capture("01_hub");
             var audio = app.Audio;
             var vfx = VfxLayer.Instance;
@@ -188,12 +192,14 @@ namespace Pokiwar.EditorTools
             var nodes = app.Map.NodeArea.GetComponentsInChildren<RowView>(false);
             Check(nodes.Length == 3, "map shows 3 nodes (" + nodes.Length + ")");
             Check(nodes.Length == 3 && nodes[0].Button.interactable && !nodes[1].Button.interactable, "only first node unlocked");
+            CheckOnScreen(app.Map.transform, "map");
             yield return Capture("02_map");
 
             nodes[0].Button.onClick.Invoke();
             yield return null;
             Check(app.Prep.gameObject.activeSelf, "preparation opens");
             Check(app.Save.SelectedCardIds.Count == 5, "5 cards preselected");
+            CheckOnScreen(app.Prep.transform, "prep");
             yield return Capture("03_prep");
 
             int energy = app.Save.Energy;
@@ -207,6 +213,11 @@ namespace Pokiwar.EditorTools
             yield return WaitFor(() => bc.Engine.IsTurnOf(Side.Player) && bc.Board.InputEnabled, 20);
             Check(bc.Board.InputEnabled, "player turn waits for input");
             Check(bc.Board.Matches(bc.Engine.State.Board), "board view mirrors domain board");
+            CheckOnScreen(app.BattleScreen.transform, "battle");
+            float cell = Vector2.Distance(CellScreen(bc.Board, new Pos(0, 0)), CellScreen(bc.Board, new Pos(1, 0)));
+            float shortSide = Mathf.Min(Screen.width, Screen.height);
+            Log("board cell " + cell.ToString("0") + " px on a " + Screen.width + "x" + Screen.height + " screen");
+            Check(cell >= shortSide * (ResponsiveCanvas.IsPortrait ? 0.095f : 0.065f), "board cells are big enough to tap (" + cell.ToString("0") + " px)");
             yield return Capture("04_battle_start");
 
             var moves = BoardEngine.FindMoves(bc.Engine.State.Board, 3);
@@ -303,6 +314,7 @@ namespace Pokiwar.EditorTools
             app.ShowUpgrade();
             yield return null;
             Check(app.Upgrade.gameObject.activeSelf, "upgrade screen opens");
+            CheckOnScreen(app.Upgrade.transform, "upgrade");
             yield return Capture("08_upgrade");
             var stoneRows = app.Upgrade.GetComponentsInChildren<RowView>(false);
             RowView mergeRow = null;
@@ -325,6 +337,24 @@ namespace Pokiwar.EditorTools
             Log("audio plays " + audio.TotalPlays + " distinct " + audio.PlayCounts.Count + ": " + string.Join(" ", System.Linq.Enumerable.Select(audio.PlayCounts, kv => kv.Key + "=" + kv.Value)));
             Log("vfx spawned " + vfx.SpawnedTotal);
             Finish();
+        }
+
+        private void CheckOnScreen(Transform screen, string name)
+        {
+            Canvas.ForceUpdateCanvases();
+            var off = new System.Collections.Generic.List<string>();
+            var corners = new Vector3[4];
+            foreach (var b in screen.GetComponentsInChildren<Selectable>(false))
+            {
+                if (b.GetComponentInParent<ScrollRect>() != null) continue;
+                ((RectTransform)b.transform).GetWorldCorners(corners);
+                for (int i = 0; i < 4; i++)
+                {
+                    var p = RectTransformUtility.WorldToScreenPoint(null, corners[i]);
+                    if (p.x < -1 || p.y < -1 || p.x > Screen.width + 1 || p.y > Screen.height + 1) { off.Add(b.name); break; }
+                }
+            }
+            Check(off.Count == 0, name + ": every control fully on screen" + (off.Count > 0 ? " (off: " + string.Join(",", off) + ")" : ""));
         }
 
         private static bool Played(AudioDirector a, string key) => a.PlayCounts.TryGetValue(key, out var n) && n > 0;
@@ -352,7 +382,7 @@ namespace Pokiwar.EditorTools
         {
             yield return new WaitForEndOfFrame();
             var canvas = FindFirstObjectByType<Canvas>();
-            const int w = 1920, h = 1080;
+            int w = Screen.width, h = Screen.height;
             var rt = new RenderTexture(w, h, 24);
             var camGo = new GameObject("CaptureCam");
             var cam = camGo.AddComponent<Camera>();

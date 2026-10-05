@@ -25,6 +25,15 @@ namespace Pokiwar.UI
             BackButton.onClick.AddListener(() => app.ShowHub());
         }
 
+        private void OnEnable() => ResponsiveCanvas.Changed += Relayout;
+
+        private void OnDisable() => ResponsiveCanvas.Changed -= Relayout;
+
+        private void Relayout(bool portrait)
+        {
+            if (app != null) Show(app);
+        }
+
         public void Show(GameApp a)
         {
             app = a;
