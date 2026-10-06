@@ -188,12 +188,22 @@ namespace Pokiwar.Domain
             d.Energy -= enc.EnergyCost;
             d.BattlesStarted++;
             var pet = d.Pet(d.SelectedPetUid);
+            var player = BuildPlayer(d, pet, d.SelectedCardIds);
+            var enemy = BuildEnemy(enc);
+            player.StartHpPct = Db.Rules.StartHpPct;
+            enemy.StartHpPct = enc.StartHpPct * Db.Rules.StartHpPct;
+            if (enc.HpVsPlayer > 0f)
+            {
+                var st = enemy.Creature.StatsAt(enc.Level);
+                st.MaxHp = Math.Max(st.MaxHp, (int)Math.Ceiling(player.Stats.MaxHp * enc.HpVsPlayer));
+                enemy.Stats = st;
+            }
             return new BattleSetup
             {
                 BattleId = node.Id + "#" + d.BattlesStarted + "#" + seed,
                 Seed = seed,
-                Player = BuildPlayer(d, pet, d.SelectedCardIds),
-                Enemy = BuildEnemy(enc),
+                Player = player,
+                Enemy = enemy,
                 Board = Db.Board,
                 Rules = Db.Rules,
                 FirstTurn = enc.FirstTurn

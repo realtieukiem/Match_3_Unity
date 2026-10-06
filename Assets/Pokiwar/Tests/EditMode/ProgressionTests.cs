@@ -99,6 +99,39 @@ namespace Pokiwar.Tests
         }
 
         [Test]
+        public void Battle_StartsBelowFullHp_OnBothSides()
+        {
+            var db = DefaultContent.Create();
+            var prog = new ProgressionService(db);
+            var save = prog.CreateNewSave(0);
+            var e = new BattleEngine(prog.StartBattle(save, db.Node("node.1"), 3));
+            foreach (var side in new[] { Side.Player, Side.Enemy })
+            {
+                var c = e.State.Get(side);
+                Assert.AreEqual((int)System.Math.Round(c.Hp.Max * db.Rules.StartHpPct), c.Hp.Current, side + " starts at the rule's share of max HP");
+                Assert.Less(c.Hp.Current, c.Hp.Max);
+            }
+        }
+
+        [Test]
+        public void Boss_AlwaysHasMoreHpThanThePlayer()
+        {
+            var db = DefaultContent.Create();
+            var prog = new ProgressionService(db);
+            foreach (int level in new[] { 1, 8, 30, 60 })
+            {
+                var save = prog.CreateNewSave(0);
+                var pet = save.Pet(save.SelectedPetUid);
+                pet.Level = level;
+                pet.EnhanceLevel = level / 6;
+                var setup = prog.StartBattle(save, db.Node("node.3"), 5);
+                int mine = setup.Player.Stats.MaxHp;
+                Assert.GreaterOrEqual(setup.Enemy.Stats.MaxHp, (int)System.Math.Ceiling(mine * db.Encounter("enc.azurewing").HpVsPlayer), "pet Lv " + level);
+                Assert.Greater(setup.Enemy.Stats.MaxHp, mine);
+            }
+        }
+
+        [Test]
         public void Loss_GrantsNothing_AndCanBeRetried()
         {
             var db = DefaultContent.Create();

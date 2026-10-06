@@ -24,3 +24,5 @@ MonoBehaviour:
     EnergyCost: 3
     Difficulty: 4
     FirstTurn: 0
+    CaptureOnFirstWin: 1
+    HpVsPlayer: 2.2

@@ -128,6 +128,7 @@ namespace Pokiwar.Domain
         public float AiThinkSeconds = 0.9f;
         public int MinimumHpDamageOnHit = 1;
         public bool ShieldExpiresOnOwnTurnStart = true;
+        public float StartHpPct = 0.75f;
     }
 
     public enum TargetKind { Self, Opponent }
@@ -327,6 +328,7 @@ namespace Pokiwar.Domain
         public int Difficulty = 1;
         public Side FirstTurn = Side.Player;
         public bool CaptureOnFirstWin = true;
+        public float HpVsPlayer;
     }
 
     [Serializable]

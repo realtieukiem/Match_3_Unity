@@ -498,6 +498,22 @@ namespace Pokiwar.EditorTools
             bc.TurnPop.blocksRaycasts = false;
             bc.TurnPop.alpha = 0f;
 
+            var combo = NewUI("Combo", s);
+            At(combo, 0.5f, 0.5f, 0, -8, 900, 220);
+            bc.ComboLabel = Txt(combo, "Label", "COMBO x2", 76, new Color(1f, 0.88f, 0.2f), TextAnchor.MiddleCenter, FontStyle.BoldAndItalic);
+            Fill(bc.ComboLabel.rectTransform);
+            bc.ComboLabel.raycastTarget = false;
+            bc.ComboLabel.rectTransform.localEulerAngles = new Vector3(0, 0, 5f);
+            var comboInk = bc.ComboLabel.gameObject.AddComponent<Outline>();
+            comboInk.effectColor = new Color(0.42f, 0.05f, 0.02f, 1f);
+            comboInk.effectDistance = new Vector2(4, -4);
+            comboInk.useGraphicAlpha = true;
+            var comboRim = bc.ComboLabel.gameObject.AddComponent<Outline>();
+            comboRim.effectColor = Color.white;
+            comboRim.effectDistance = new Vector2(2, -2);
+            comboRim.useGraphicAlpha = true;
+            bc.ComboLabel.gameObject.SetActive(false);
+
             var fl = NewUI("FloatingText", s);
             Fill(fl);
             var flv = fl.gameObject.AddComponent<FloatingTextLayer>();
@@ -530,6 +546,7 @@ namespace Pokiwar.EditorTools
             Portrait(bar, 0.5f, 0, 0, 120, 920, 170);
             Portrait(sum, 0.5f, 0.5f, 0, -255, 900, 190, 1.2f);
             Portrait(pop, 0.5f, 0.5f, 0, -255, 900, 140);
+            Portrait(combo, 0.5f, 0.5f, 0, -255, 900, 220);
             Portrait(banner, 0.5f, 0.5f, 0, -255, 4000, 150);
             return bc;
         }
@@ -877,7 +894,7 @@ namespace Pokiwar.EditorTools
         {
             float side = player ? -1f : 1f;
             var root = NewUI(name, screen);
-            At(root, 0.5f, 0.5f, side * 600, -90, 520, 500);
+            At(root, 0.5f, 0.5f, side * 640, -90, 520, 500);
             var hud = root.gameObject.AddComponent<CombatantHud>();
             hud.Hp = MakeThinBar(top, name + "Hp", new Color(0.92f, 0.2f, 0.22f), side * 295, 40, player);
             hud.Mana = MakeThinBar(top, name + "Mana", new Color(0.2f, 0.62f, 1f), side * 295, 0, player);
@@ -896,9 +913,9 @@ namespace Pokiwar.EditorTools
             var marker = Img(root, "TurnMarker", "ui.ring", new Color(1f, 0.85f, 0.3f, 0.9f));
             At(marker.rectTransform, 0.5f, 0.5f, 0, feet, 380, 84);
             hud.TurnMarker = marker.gameObject;
-            var arrow = Img(root, "AttackArrow", "battle.arrow", player ? Color.white : new Color(1f, 0.55f, 0.5f));
+            var arrow = Img(root, "AttackArrow", "battle.arrow", Color.white);
             arrow.preserveAspect = true;
-            At(arrow.rectTransform, 0.5f, 0.5f, -side * 190, feet - 64, 84, 84);
+            At(arrow.rectTransform, 0.5f, 0.5f, -side * 190, feet - 64, 100, 100);
             if (!player) arrow.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
             hud.AttackArrow = arrow.rectTransform;
             arrow.gameObject.SetActive(false);

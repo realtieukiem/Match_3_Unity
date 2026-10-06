@@ -102,7 +102,7 @@ namespace Pokiwar.EditorTools
             S("UI/Battle/battle_name_ribbon_v01.png", "hud_name", 512, 40, "hud.name"),
             S("UI/Battle/battle_bar_track_v01.png", "hud_track", 512, 20, "hud.track"),
             S("UI/Battle/battle_bar_fill_v01.png", "hud_fill", 512, 16, "hud.fill"),
-            I("UI/Battle/battle_turn_arrow_flame_v01.png", "battle_arrow_flame", 512, false, "battle.arrow"),
+            I("UI/Battle/battle_turn_arrow_flame_v01.png", "battle_arrow_flame", 256, false, "battle.arrow"),
             I("UI/Battle/battle_shield_bubble_v01.png", "fx_bubble_painted", 512, false, "fx.bubble"),
             I("UI/Battle/battle_skill_frame_v01.png", "skill_frame", 256, false, "skill.frame"),
             I("UI/Battle/text_your_turn_v01.png", "text_your_turn", 1024, false, "text.yourturn"),

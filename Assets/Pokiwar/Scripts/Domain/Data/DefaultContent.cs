@@ -242,8 +242,8 @@ namespace Pokiwar.Domain
         private static void AddEncounters(ContentDatabase db)
         {
             db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 3, AiPolicyId = "ai.easy", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1 });
-            db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 6, StartHpPct = 0.9f, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2 });
-            db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 8, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 6, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 8, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4, HpVsPlayer = 2.2f });
         }
 
         private static void AddMap(ContentDatabase db)

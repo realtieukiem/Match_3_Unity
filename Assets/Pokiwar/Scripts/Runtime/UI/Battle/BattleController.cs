@@ -17,6 +17,9 @@ namespace Pokiwar.UI
         public CombatantHud EnemyHud;
         public ActionButtonView[] CardButtons = new ActionButtonView[5];
         public ActionButtonView[] SkillButtons = new ActionButtonView[2];
+        public Text ComboLabel;
+        [Tooltip("Font size of the combo count beside the word COMBO.")]
+        public int ComboCountSize = 128;
         public GemSummaryView Summary;
         public FloatingTextLayer Floating;
         public QteView Qte;
@@ -59,13 +62,14 @@ namespace Pokiwar.UI
         private Pos pendingA, pendingB;
         private int pendingIndex;
         private int[] cardSlotOf;
+        private Coroutine comboRoutine;
 
         private void Awake()
         {
             Board.SwapRequested += (a, b) => Queue(PendingKind.Swap, a, b, 0);
             Board.StepCleared += (step, index) =>
             {
-                if (index >= 1 && Floating != null) Floating.Spawn("COMBO x" + (index + 1) + "!", new Color(1f, 0.9f, 0.3f), Board.GemRoot, new Vector2(0, 250), 52);
+                if (index >= 1) ShowCombo(index + 1);
             };
             cardSlotOf = new int[CardButtons.Length];
             for (int i = 0; i < CardButtons.Length; i++)
@@ -668,6 +672,32 @@ namespace Pokiwar.UI
                 b.Bind(sk.Name, cost, "SKILL", sprites.Get(sk.IconKey), new Color(0.9f, 0.6f, 0.2f));
                 b.SetUsable(myTurn && Engine.SkillBlockReason(Side.Player, i) == null);
             }
+        }
+
+        public void ShowCombo(int count)
+        {
+            if (ComboLabel == null || !isActiveAndEnabled) return;
+            if (comboRoutine != null) StopCoroutine(comboRoutine);
+            comboRoutine = StartCoroutine(ComboPop(count));
+        }
+
+        private IEnumerator ComboPop(int count)
+        {
+            var rt = ComboLabel.rectTransform;
+            var c = count >= 4 ? new Color(1f, 0.36f, 0.3f) : count == 3 ? new Color(1f, 0.62f, 0.15f) : new Color(1f, 0.88f, 0.2f);
+            ComboLabel.text = "COMBO <size=" + ComboCountSize + ">x" + count + "</size>";
+            ComboLabel.gameObject.SetActive(true);
+            yield return Tween.Run(0.16f, t =>
+            {
+                rt.localScale = Vector3.one * Mathf.Lerp(1.7f, 1f, t);
+                ComboLabel.color = new Color(c.r, c.g, c.b, t);
+            });
+            rt.localScale = Vector3.one;
+            ComboLabel.color = c;
+            yield return Tween.Wait(0.45f);
+            yield return Tween.Run(0.2f, t => ComboLabel.color = new Color(c.r, c.g, c.b, 1f - t));
+            ComboLabel.gameObject.SetActive(false);
+            comboRoutine = null;
         }
 
         private IEnumerator ShowBanner(string text, float hold)

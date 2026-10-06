@@ -15,4 +15,6 @@ formula table with labels is in `Pokiwar.md` ("Formulas in use"). What would set
 | Strong multiplier | x1.70 | `Pets/*`, `Monsters/*` rage profile | more rage strikes with HP before/after |
 | Boss phase trigger | HP <= 32% or a lethal hit | `Monsters/*` phases | several transforms at different HP |
 | Stone merge / enhance chances | 90..12% per tier | `Rules/upgrade.config` | upgrade success and failure on video |
+| Start HP | both sides start at 75% of max HP (`BattleRules.StartHpPct`; clip A 02:12: 2405/3207 and 1650/2200, clip B: 81000/108000) | `Rules/battle.rules` | whether 75% holds for every battle type |
+| Boss HP vs player | boss max HP is at least 2.2x the player pet's max HP (`EncounterDef.HpVsPlayer`; clip M: Manaphy 28400 vs 12815 = 2.2x, clip B: BlueWings 108000 vs 13895 = 7.8x). AI-vs-AI win rate at 2.2x: pet Lv 8 40%, Lv 12 72% (was 75% / 97% with the rule off) | `Encounters/enc.azurewing` | the real formula - two bosses give two different ratios |
 | Pet capture | first win gives the creature just fought, at the encounter's level, every encounter (`CaptureOnFirstWin`) | `Encounters/*` | whether every monster or only some give themselves; the level it arrives at |

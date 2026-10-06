@@ -277,6 +277,10 @@ namespace Pokiwar.EditorTools
             Log("audio output " + AudioSettings.outputSampleRate + " Hz, voices playing now " + playing);
             yield return new WaitForSecondsRealtime(0.08f);
             yield return Capture("04b_match_fx");
+            bc.ShowCombo(4);
+            yield return new WaitForSecondsRealtime(0.3f);
+            Check(bc.ComboLabel.gameObject.activeSelf && bc.ComboLabel.text.Contains("COMBO"), "combo call-out shows over the board");
+            yield return Capture("04b2_combo");
             yield return WaitFor(() => bc.Summary.Group.alpha > 0.95f, 8);
             float sumX = 0f;
             int icons = 0;
