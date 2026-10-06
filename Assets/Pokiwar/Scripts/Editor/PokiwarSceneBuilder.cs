@@ -174,8 +174,14 @@ namespace Pokiwar.EditorTools
         private static HomeScreen BuildHome(Transform root)
         {
             var s = Screen(root, "HomeScreen");
-            Fill(Img(s, "Bg", Key("bg.home", Key("bg.lobby", "ui.map")), Color.white).rectTransform);
+            Fill(Img(s, "Bg", null, new Color(0.03f, 0.08f, 0.2f)).rectTransform);
             var home = s.gameObject.AddComponent<HomeScreen>();
+            var fitter = NewUI("Map", s).gameObject.AddComponent<MapFitter>();
+            Fill((RectTransform)fitter.transform);
+            var town = NewUI("Town", fitter.transform);
+            At(town, 0.5f, 0.5f, 0, 0, 1920, 1080);
+            Fill(Img(town, "Art", Key("bg.home", Key("bg.lobby", "ui.map")), Color.white).rectTransform);
+            fitter.Content = town;
             var bar = Img(s, "TopBar", null, new Color(0.03f, 0.08f, 0.2f, 0.6f));
             At(bar.rectTransform, 0.5f, 1, 0, -50, 4000, 100);
             home.PlayerLabel = Txt(s, "PlayerLabel", "", 34, Color.white, TextAnchor.MiddleLeft, FontStyle.Bold);
@@ -187,15 +193,15 @@ namespace Pokiwar.EditorTools
             home.EnergyLabel = Chip(info, "Energy", "gem.Lightning", Color.white, 115, 210);
 
             var soon = new List<Button>();
-            soon.Add(HomeSpot(s, "RankSpot", "RANKING", "home.rank", Gold, -785, 362, 130));
-            soon.Add(HomeSpot(s, "WheelSpot", "LUCKY WHEEL", "home.wheel", Gold, -730, 178, 140));
-            soon.Add(HomeSpot(s, "CardShopSpot", "CARD SHOP", "home.shopcard", Blue, -790, -25, 160));
-            home.AvatarShopButton = HomeSpot(s, "AvatarShopSpot", "AVATAR SHOP", "home.shopavatar", Blue, -480, -130, 200);
-            soon.Add(HomeSpot(s, "GiftSpot", "GIFT SHOP", "home.gift", Green, -260, 305, 170));
-            soon.Add(HomeSpot(s, "ArenaSpot", "ARENA", "home.arena", Red, -200, -15, 260));
-            home.HuntButton = HomeSpot(s, "HuntSpot", "BOSS HUNT", "home.hunt", Green, 300, 225, 230);
-            soon.Add(HomeSpot(s, "ChallengeSpot", "CHALLENGE", "home.challenge", Red, 480, 35, 200));
-            home.EvolveButton = HomeSpot(s, "EvolveSpot", "EVOLVE", "home.evolve", Blue, 760, 280, 210);
+            soon.Add(HomeSpot(town, "RankSpot", "RANKING", "home.rank", Gold, -785, 362, 130));
+            soon.Add(HomeSpot(town, "WheelSpot", "LUCKY WHEEL", "home.wheel", Gold, -730, 178, 140));
+            soon.Add(HomeSpot(town, "CardShopSpot", "CARD SHOP", "home.shopcard", Blue, -790, -25, 160));
+            home.AvatarShopButton = HomeSpot(town, "AvatarShopSpot", "AVATAR SHOP", "home.shopavatar", Blue, -480, -130, 200);
+            soon.Add(HomeSpot(town, "GiftSpot", "GIFT SHOP", "home.gift", Green, -260, 305, 170));
+            soon.Add(HomeSpot(town, "ArenaSpot", "ARENA", "home.arena", Red, -200, -15, 260));
+            home.HuntButton = HomeSpot(town, "HuntSpot", "BOSS HUNT", "home.hunt", Green, 300, 225, 230);
+            soon.Add(HomeSpot(town, "ChallengeSpot", "CHALLENGE", "home.challenge", Red, 480, 35, 200));
+            home.EvolveButton = HomeSpot(town, "EvolveSpot", "EVOLVE", "home.evolve", Blue, 760, 280, 210);
             home.SoonButtons = soon.ToArray();
 
             var nav = Img(s, "NavBar", null, new Color(0.03f, 0.08f, 0.2f, 0.72f));

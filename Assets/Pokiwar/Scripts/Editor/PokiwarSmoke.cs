@@ -41,7 +41,16 @@ namespace Pokiwar.EditorTools
             SessionState.SetString(DeadlineKey, (EditorApplication.timeSinceStartup + 900).ToString(CultureInfo.InvariantCulture));
             EditorSceneManager.OpenScene(PokiwarSceneBuilder.ScenePath);
             bool portrait = Array.IndexOf(Environment.GetCommandLineArgs(), "-smokePortrait") >= 0;
-            PlayModeWindow.SetCustomRenderingResolution(portrait ? 1080u : 1920u, portrait ? 1920u : 1080u, "PokiwarSmoke");
+            uint width = portrait ? 1080u : 1920u, height = portrait ? 1920u : 1080u;
+            var args = Environment.GetCommandLineArgs();
+            int sizeArg = Array.IndexOf(args, "-smokeSize");
+            if (sizeArg >= 0 && sizeArg + 1 < args.Length)
+            {
+                var parts = args[sizeArg + 1].Split('x');
+                if (parts.Length != 2 || !uint.TryParse(parts[0], out width) || !uint.TryParse(parts[1], out height))
+                    throw new ArgumentException("-smokeSize expects <width>x<height>, got " + args[sizeArg + 1]);
+            }
+            PlayModeWindow.SetCustomRenderingResolution(width, height, "PokiwarSmoke");
             EditorApplication.EnterPlaymode();
         }
 
