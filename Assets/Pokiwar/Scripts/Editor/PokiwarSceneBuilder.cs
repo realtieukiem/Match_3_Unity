@@ -187,15 +187,15 @@ namespace Pokiwar.EditorTools
             home.EnergyLabel = Chip(info, "Energy", "gem.Lightning", Color.white, 115, 210);
 
             var soon = new List<Button>();
-            soon.Add(HomeSpot(s, "RankSpot", "RANKING", "home.rank", Gold, -820, 330, 170));
-            soon.Add(HomeSpot(s, "WheelSpot", "LUCKY WHEEL", "home.wheel", Gold, -830, 120, 170));
-            soon.Add(HomeSpot(s, "CardShopSpot", "CARD SHOP", "home.shopcard", Blue, -760, -110, 170));
-            home.AvatarShopButton = HomeSpot(s, "AvatarShopSpot", "AVATAR SHOP", "home.shopavatar", Blue, -520, -230, 170);
-            soon.Add(HomeSpot(s, "GiftSpot", "GIFT SHOP", "home.gift", Green, -270, -100, 170));
-            soon.Add(HomeSpot(s, "ArenaSpot", "ARENA", "home.arena", Red, -90, 150, 300));
-            home.HuntButton = HomeSpot(s, "HuntSpot", "BOSS HUNT", "home.hunt", Green, 260, 250, 240);
-            soon.Add(HomeSpot(s, "ChallengeSpot", "CHALLENGE", "home.challenge", Red, 520, 60, 190));
-            home.EvolveButton = HomeSpot(s, "EvolveSpot", "EVOLVE", "home.evolve", Blue, 790, 230, 210);
+            soon.Add(HomeSpot(s, "RankSpot", "RANKING", "home.rank", Gold, -785, 362, 130));
+            soon.Add(HomeSpot(s, "WheelSpot", "LUCKY WHEEL", "home.wheel", Gold, -730, 178, 140));
+            soon.Add(HomeSpot(s, "CardShopSpot", "CARD SHOP", "home.shopcard", Blue, -790, -25, 160));
+            home.AvatarShopButton = HomeSpot(s, "AvatarShopSpot", "AVATAR SHOP", "home.shopavatar", Blue, -480, -130, 200);
+            soon.Add(HomeSpot(s, "GiftSpot", "GIFT SHOP", "home.gift", Green, -260, 305, 170));
+            soon.Add(HomeSpot(s, "ArenaSpot", "ARENA", "home.arena", Red, -200, -15, 260));
+            home.HuntButton = HomeSpot(s, "HuntSpot", "BOSS HUNT", "home.hunt", Green, 300, 225, 230);
+            soon.Add(HomeSpot(s, "ChallengeSpot", "CHALLENGE", "home.challenge", Red, 480, 35, 200));
+            home.EvolveButton = HomeSpot(s, "EvolveSpot", "EVOLVE", "home.evolve", Blue, 760, 280, 210);
             home.SoonButtons = soon.ToArray();
 
             var nav = Img(s, "NavBar", null, new Color(0.03f, 0.08f, 0.2f, 0.72f));
@@ -267,7 +267,7 @@ namespace Pokiwar.EditorTools
             b.targetGraphic = img;
             img.gameObject.AddComponent<ClickSound>();
             var text = Txt(img.transform, "Label", label, 30, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(text.rectTransform, 0.5f, painted ? 0f : 0.5f, 0, painted ? -14 : 0, 320, 44);
+            At(text.rectTransform, 0.5f, painted ? 0f : 0.5f, 0, painted ? 4 : 0, 320, 44);
             text.gameObject.AddComponent<Outline>().effectColor = new Color(0.03f, 0.08f, 0.2f);
             return b;
         }
