@@ -46,7 +46,7 @@ namespace Pokiwar.UI
             paths = new TemplateList<Image>(PathTemplate);
             if (RegionTemplate != null) regions = new TemplateList<RowView>(RegionTemplate);
             BackButton.onClick.AddListener(() => app.ShowHub());
-            if (CloseButton != null) CloseButton.onClick.AddListener(() => app.ShowHome());
+            if (CloseButton != null) CloseButton.onClick.AddListener(() => app.ShowWorld());
             if (AvatarButton != null) AvatarButton.onClick.AddListener(() => app.ShowWardrobe());
             if (CardsButton != null) CardsButton.onClick.AddListener(() => app.ShowCardForge());
             if (PetsButton != null) PetsButton.onClick.AddListener(() => app.ShowUpgrade());

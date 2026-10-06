@@ -16,6 +16,7 @@ namespace Pokiwar.App
 
         [Header("Screens")]
         public HomeScreen Home;
+        public WorldScreen World;
         public HubScreen Hub;
         public MapScreen Map;
         public PrepScreen Prep;
@@ -88,6 +89,7 @@ namespace Pokiwar.App
         private void HideAll()
         {
             if (Home != null) Home.gameObject.SetActive(false);
+            if (World != null) World.gameObject.SetActive(false);
             Hub.gameObject.SetActive(false);
             Map.gameObject.SetActive(false);
             Prep.gameObject.SetActive(false);
@@ -124,6 +126,20 @@ namespace Pokiwar.App
             Home.gameObject.SetActive(true);
             if (Audio != null) Audio.PlayMusic("music.menu");
             Home.Show(this);
+        }
+
+        public void ShowWorld()
+        {
+            if (World == null)
+            {
+                ShowMap();
+                return;
+            }
+            cameFromLobby = false;
+            HideAll();
+            World.gameObject.SetActive(true);
+            if (Audio != null) Audio.PlayMusic("music.menu");
+            World.Show(this);
         }
 
         public void ShowHub()

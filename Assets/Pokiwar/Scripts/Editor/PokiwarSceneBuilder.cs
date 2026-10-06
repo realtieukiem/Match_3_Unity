@@ -121,6 +121,7 @@ namespace Pokiwar.EditorTools
             var root = canvasGo.transform;
 
             var home = BuildHome(root);
+            var world = BuildWorld(root);
             var hub = BuildHub(root);
             var map = BuildMap(root);
             var prep = BuildPrep(root);
@@ -139,6 +140,7 @@ namespace Pokiwar.EditorTools
             app.Catalog = catalog;
             app.Sprites = lib;
             app.Home = home;
+            app.World = world;
             app.Hub = hub;
             app.Map = map;
             app.Prep = prep;
@@ -155,6 +157,7 @@ namespace Pokiwar.EditorTools
             app.Audio = audio;
 
             home.gameObject.SetActive(true);
+            world.gameObject.SetActive(false);
             hub.gameObject.SetActive(false);
             map.gameObject.SetActive(false);
             prep.gameObject.SetActive(false);
@@ -203,6 +206,56 @@ namespace Pokiwar.EditorTools
             home.PetsButton = NavButton(s, "PetsButton", "PETS", "nav.pets", Green, 3);
             return home;
         }
+
+        private static WorldScreen BuildWorld(Transform root)
+        {
+            var s = Screen(root, "WorldScreen");
+            Fill(Img(s, "Bg", Key("bg.world", Key("bg.lobby", "ui.map")), Color.white).rectTransform);
+            var world = s.gameObject.AddComponent<WorldScreen>();
+            var locked = new List<Button>();
+            locked.Add(WorldIsland(s, "LockedIslandA", "", "world.locked", Gray, -640, 250, 380, 285));
+            locked.Add(WorldIsland(s, "LockedIslandB", "", "world.locked", Gray, 620, 270, 420, 315));
+            locked.Add(WorldIsland(s, "LockedIslandC", "", "world.locked", Gray, 640, -270, 360, 270));
+            world.LockedIslands = locked.ToArray();
+            world.IslandButton = WorldIsland(s, "SunnyIsle", "SUNNY ISLE", "world.sunny", Green, -40, -60, 690, 460);
+            var ship = Img(s, "Ship", Key("world.ship", "ui.circle"), art.ContainsKey("world.ship") ? Color.white : Gold);
+            ship.preserveAspect = true;
+            At(ship.rectTransform, 0.5f, 0.5f, -520, -270, 170, 170);
+            world.Ship = ship.rectTransform;
+            var title = Txt(s, "Header", "WORLD MAP", 56, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(title.rectTransform, 0.5f, 1, 0, -60, 900, 80);
+            title.gameObject.AddComponent<Outline>().effectColor = new Color(0.03f, 0.08f, 0.2f);
+            world.BackButton = Btn(s, "BackButton", "BACK", Gray, 36, out _);
+            At(Rt(world.BackButton), 0, 1, 140, -60, 220, 86);
+            return world;
+        }
+
+        private static Button WorldIsland(Transform parent, string name, string label, string artKey, Color c, float x, float y, float w, float h)
+        {
+            bool painted = art.ContainsKey(artKey);
+            var img = Img(parent, name, painted ? artKey : "ui.circle", painted ? Color.white : new Color(c.r, c.g, c.b, 0.85f), true);
+            img.preserveAspect = true;
+            At(img.rectTransform, 0.5f, 0.5f, x, y, w, h);
+            var b = img.gameObject.AddComponent<Button>();
+            b.targetGraphic = img;
+            img.gameObject.AddComponent<ClickSound>();
+            if (label.Length > 0)
+            {
+                var text = Txt(img.transform, "Label", label, 40, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+                At(text.rectTransform, 0.5f, 0f, 0, 6, 520, 56);
+                text.gameObject.AddComponent<Outline>().effectColor = new Color(0.03f, 0.08f, 0.2f);
+            }
+            return b;
+        }
+
+        private static void ForgeHeader(Transform s)
+        {
+            if (!art.ContainsKey("forge.tab")) return;
+            var plate = Img(s, "HeaderPlate", "forge.tab", Color.white);
+            At(plate.rectTransform, 0.5f, 1, 0, -60, 760, 140);
+        }
+
+        private static Color ForgeHeaderInk => art.ContainsKey("forge.tab") ? new Color(0.27f, 0.11f, 0.03f) : Gold;
 
         private static Button HomeSpot(Transform parent, string name, string label, string artKey, Color c, float x, float y, float size)
         {
@@ -904,7 +957,9 @@ namespace Pokiwar.EditorTools
             Fill(Img(s, "Bg", Key("bg.hub", null), art.ContainsKey("bg.hub") ? Color.white : new Color(0.08f, 0.08f, 0.14f)).rectTransform);
             Fill(Img(s, "Shade", null, new Color(0, 0, 0, 0.4f)).rectTransform);
             var up = s.gameObject.AddComponent<UpgradeScreen>();
-            At(Txt(s, "Header", "PETS & STONES", 56, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -60, 900, 80);
+            up.PaintedStones = art.ContainsKey("stone.Fire");
+            ForgeHeader(s);
+            At(Txt(s, "Header", "PETS & STONES", 56, ForgeHeaderInk, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -60, 900, 80);
             up.BackButton = Btn(s, "BackButton", "BACK", Gray, 36, out _);
             At(Rt(up.BackButton), 0, 1, 140, -60, 220, 86);
 
@@ -919,9 +974,23 @@ namespace Pokiwar.EditorTools
             var cp = Img(s, "DetailPanel", "ui.round", PanelCol);
             At(cp.rectTransform, 0.5f, 0.5f, -185, -50, 570, 860);
             SkinPanel(cp, 48);
+            if (art.ContainsKey("forge.pedestal"))
+            {
+                var petPedestal = Img(cp.transform, "Pedestal", "forge.pedestal", Color.white);
+                petPedestal.preserveAspect = true;
+                At(petPedestal.rectTransform, 0.5f, 1, 0, -262, 270, 180);
+            }
             up.PetImage = Img(cp.transform, "PetImage", "emberkit", Color.white);
             up.PetImage.preserveAspect = true;
-            At(up.PetImage.rectTransform, 0.5f, 1, 0, -190, 280, 280);
+            At(up.PetImage.rectTransform, 0.5f, 1, 0, -160, 240, 240);
+            if (art.ContainsKey("forge.slot"))
+            {
+                var slot = Img(cp.transform, "StoneSlot", "forge.slot", Color.white);
+                At(slot.rectTransform, 0.5f, 1, 205, -110, 110, 110);
+                up.StoneSlotIcon = Img(slot.transform, "Stone", "stone.Fire", Color.white);
+                up.StoneSlotIcon.preserveAspect = true;
+                At(up.StoneSlotIcon.rectTransform, 0.5f, 0.5f, 0, 0, 72, 72);
+            }
             up.PetDetails = Txt(cp.transform, "PetDetails", "", 22, Color.white, TextAnchor.UpperLeft);
             At(up.PetDetails.rectTransform, 0.5f, 1, 0, -445, 490, 190);
             up.LuckyToggle = MakeToggle(cp.transform, "LuckyToggle", "Use Lucky Charm (+chance)");
@@ -959,7 +1028,8 @@ namespace Pokiwar.EditorTools
             Fill(Img(s, "Shade", null, new Color(0.1f, 0f, 0.2f, 0.5f)).rectTransform);
             var f = s.gameObject.AddComponent<CardForgeScreen>();
             f.PaintedStone = art.ContainsKey("stone.card");
-            At(Txt(s, "Header", "CARD FORGE", 56, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -60, 900, 80);
+            ForgeHeader(s);
+            At(Txt(s, "Header", "CARD FORGE", 56, ForgeHeaderInk, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -60, 900, 80);
             f.BackButton = Btn(s, "BackButton", "BACK", Gray, 36, out _);
             At(Rt(f.BackButton), 0, 1, 140, -60, 220, 86);
 
@@ -974,11 +1044,14 @@ namespace Pokiwar.EditorTools
             var cp = Img(s, "DetailPanel", "ui.round", PanelCol);
             At(cp.rectTransform, 0.5f, 0.5f, -185, -50, 570, 860);
             SkinPanel(cp, 48);
-            var pedestal = Img(cp.transform, "Pedestal", "ui.circle", new Color(0.6f, 0.3f, 0.95f, 0.55f));
-            At(pedestal.rectTransform, 0.5f, 1, 0, -400, 380, 90);
+            bool paintedPedestal = art.ContainsKey("forge.pedestal");
+            var pedestal = Img(cp.transform, "Pedestal", paintedPedestal ? "forge.pedestal" : "ui.circle", paintedPedestal ? Color.white : new Color(0.6f, 0.3f, 0.95f, 0.55f));
+            pedestal.preserveAspect = paintedPedestal;
+            if (paintedPedestal) At(pedestal.rectTransform, 0.5f, 1, 0, -345, 270, 180);
+            else At(pedestal.rectTransform, 0.5f, 1, 0, -400, 380, 90);
             f.CardFace = MakeCard(cp.transform, "CardFace");
-            At((RectTransform)f.CardFace.transform, 0.5f, 1, 0, -235, 120, 150);
-            f.CardFace.transform.localScale = Vector3.one * 2f;
+            At((RectTransform)f.CardFace.transform, 0.5f, 1, 0, paintedPedestal ? -215 : -235, 120, 150);
+            f.CardFace.transform.localScale = Vector3.one * (paintedPedestal ? 1.8f : 2f);
             f.CardFace.Button.interactable = false;
             f.CardFace.Icon.preserveAspect = true;
             f.CardDetails = Txt(cp.transform, "CardDetails", "", 20, Color.white, TextAnchor.UpperCenter);

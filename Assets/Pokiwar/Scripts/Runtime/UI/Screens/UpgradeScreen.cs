@@ -12,6 +12,10 @@ namespace Pokiwar.UI
         public RowView PetTemplate;
         public RowView StoneTemplate;
         public Image PetImage;
+        [Tooltip("Socket beside the pet that shows the stone its element needs.")]
+        public Image StoneSlotIcon;
+        [Tooltip("On when the pet stones have painted art, so they are drawn without the element tint.")]
+        public bool PaintedStones;
         public Text PetDetails;
         public Text GoldLabel;
         public Text LuckyLabel;
@@ -34,6 +38,8 @@ namespace Pokiwar.UI
             LuckyToggle.onValueChanged.AddListener(_ => Refresh());
             ProtectToggle.onValueChanged.AddListener(_ => Refresh());
         }
+
+        private Color StoneTint(Element e) => PaintedStones && e != Element.Neutral ? Color.white : SpriteLibrary.ElementColor(e);
 
         public void Show(GameApp a)
         {
@@ -74,6 +80,11 @@ namespace Pokiwar.UI
                 var def = app.Db.Creature(pet.PetId);
                 var st = app.Progression.PetStats(pet);
                 PetImage.sprite = app.PetSprite(pet);
+                if (StoneSlotIcon != null)
+                {
+                    StoneSlotIcon.sprite = app.Sprites.Get("stone." + def.Element);
+                    StoneSlotIcon.color = StoneTint(def.Element);
+                }
                 var sockets = new List<string>();
                 for (int i = 0; i < pet.SocketTiers.Count; i++)
                     sockets.Add(pet.SocketTiers[i] > 0 ? pet.SocketElements[i] + " T" + pet.SocketTiers[i] : "empty");
@@ -91,7 +102,7 @@ namespace Pokiwar.UI
                 var row = stoneRows.Add();
                 float mc = app.Upgrades.MergeChance(st.Tier, lucky);
                 row.Set(st.Element + " Stone  T" + st.Tier + "   x" + st.Count, "", app.Sprites.Get("stone." + st.Element), false);
-                row.Icon.color = SpriteLibrary.ElementColor(st.Element);
+                row.Icon.color = StoneTint(st.Element);
                 var element = st.Element;
                 int tier = st.Tier;
                 row.ExtraALabel.text = "Merge 3\n" + Mathf.RoundToInt(mc * 100) + "%  " + app.Upgrades.MergeCost(tier) + "g";

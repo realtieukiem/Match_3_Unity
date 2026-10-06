@@ -182,7 +182,12 @@ namespace Pokiwar.EditorTools
             yield return Capture("00_home");
             app.Home.HuntButton.onClick.Invoke();
             yield return null;
-            Check(app.Map.gameObject.activeSelf && !app.Home.gameObject.activeSelf, "the hunt building opens the lobby");
+            Check(app.World.gameObject.activeSelf && !app.Home.gameObject.activeSelf && !app.Map.gameObject.activeSelf, "the hunt building opens the world map");
+            CheckOnScreen(app.World.transform, "world");
+            yield return Capture("00_world");
+            app.World.IslandButton.onClick.Invoke();
+            yield return null;
+            Check(app.Map.gameObject.activeSelf && !app.World.gameObject.activeSelf, "the open island leads to the lobby");
             var regionTiles = app.Map.RegionTemplate.transform.parent.GetComponentsInChildren<RowView>(false);
             Check(regionTiles.Length == app.Map.RegionSlots && regionTiles[0].Button.interactable && !regionTiles[1].Button.interactable, "lobby lists " + regionTiles.Length + " regions, only the first open");
             CheckOnScreen(app.Map.transform, "lobby");

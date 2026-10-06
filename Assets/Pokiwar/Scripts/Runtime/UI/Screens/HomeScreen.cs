@@ -25,7 +25,7 @@ namespace Pokiwar.UI
 
         private void Awake()
         {
-            HuntButton.onClick.AddListener(() => app.ShowMap());
+            HuntButton.onClick.AddListener(() => app.ShowWorld());
             EvolveButton.onClick.AddListener(() => app.ShowUpgrade());
             AvatarShopButton.onClick.AddListener(() => app.ShowWardrobe());
             InfoButton.onClick.AddListener(() => app.ShowHub());

@@ -11,13 +11,9 @@ batch moves to the "Already painted" table below - never leave a finished prompt
 again. Before painting anything, check the file name under `D:\Project\Pokiwar_Art_FG38\Assets`: a file that
 exists is finished, do not repaint or overwrite it unless the user asks for a new version by name.
 
-## Still to paint (checked 2026-10-06 14:40 against `D:\Project\Pokiwar_Art_FG38\Assets`)
+## Still to paint (checked 2026-10-06 15:30 against `D:\Project\Pokiwar_Art_FG38\Assets`)
 
-| Batch | What | Images | The game today |
-|---|---|---|---|
-| 11 (rest) | world map: sea background, two islands, ship | 4 | no world map screen yet; not wired in code |
-
-Nothing else is waiting.
+Nothing. Every image ordered so far is painted and in the game. New orders are added below as new batches.
 
 ## Already painted - do NOT repaint
 
@@ -33,7 +29,7 @@ Nothing else is waiting.
 | 8 | avatar paper doll | `Avatar`, `Avatar/Icons` | `avatar_*_v01.png` and their `_icon_v01.png` |
 | 9 | word art, card stone | `UI/Battle`, `Meta/UI` | `text_vs_v01.png`, `text_fight_v01.png`, `stone_card_v01.png` |
 | 10 | lobby | `Meta/Background`, `Meta/Lobby` | `lobby_bg_sky`, `lobby_planet`, `lobby_lock`, `region_sunny_isle`, `nav_{info,avatar,cards,pets}` |
-| 11 (part) | forge and pet stones | `Meta/Forge`, `Meta/Stones` | `forge_pedestal`, `forge_slot`, `forge_tab`, `stone_{metal,wood,water,fire,earth}` (`_v01.png`) |
+| 11 | forge, pet stones, world map | `Meta/Forge`, `Meta/Stones`, `Meta/World` | `forge_pedestal`, `forge_slot`, `forge_tab`, `stone_{metal,wood,water,fire,earth}`, `world_bg_sea`, `world_island_sunny`, `world_island_locked`, `world_ship` (`_v01.png`) |
 | 12 | second forms | `Battle/Characters` | `enemy_beetle_form02_*`, `enemy_psyling_form02_*` x8 |
 | 13 | town map | `Meta/Background`, `Meta/Home` | `home_bg_town_v01.png`, `home_{hunt,arena,evolve,challenge,shopcard,shopavatar,gift,wheel,rank}_v01.png` |
 
@@ -56,15 +52,6 @@ Thread budget rules - this thread dies above ~30 inline images:
 The game picks files up by these exact names (Fg38Art in D:\Project\GitHub\Match_3_Unity); do not rename.
 Do not edit anything inside D:\Project\GitHub\Match_3_Unity.
 ```
-
-## Batch 11 (rest) - world map (4 images)
-
-Save into `D:\Project\Pokiwar_Art_FG38\Assets\Meta\World\`:
-
-- `world_bg_sea_v01.png` - 2048x1152, opaque. Open sea seen from above with drifting cloud banks.
-- `world_island_sunny_v01.png` - 768x512, transparent. The Sunny Isle as a whole island seen from above.
-- `world_island_locked_v01.png` - 512x384, transparent. A pale island hidden in cloud.
-- `world_ship_v01.png` - 256x256, transparent. A small cartoon sailing ship, the player's marker.
 
 ## After any batch
 
