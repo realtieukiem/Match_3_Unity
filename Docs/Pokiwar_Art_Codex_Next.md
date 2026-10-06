@@ -246,6 +246,32 @@ Save into `D:\Project\Pokiwar_Art_FG38\Assets\Meta\World\`:
 - `world_island_locked_v01.png` - 512x384, transparent. A pale island hidden in cloud.
 - `world_ship_v01.png` - 256x256, transparent. A small cartoon sailing ship, the player's marker.
 
+## Batch 12 - second forms of the five creatures (20 images)
+
+A pet the player has enhanced to +5 changes into its second form for good (the boss already has one:
+`boss_crystaldrake_form02_*`). Until these files exist an evolved pet keeps its first-form art.
+
+For each creature paint the SAME four poses as its first form - `idle`, `attack`, `hit`, `defeat` - 1024x1024,
+transparent background, same canvas position, same facing as the first-form file (pets face right, enemies
+face left; the game mirrors enemies itself), feet on the same ground line. The second form is the same animal
+grown up: about 20% bigger inside the canvas, sharper silhouette, one new signature feature, same palette with
+a brighter accent. It must read as "the same creature, evolved", not a new species.
+
+Save into `D:\Project\Pokiwar_Art_FG38\Assets\Battle\Characters\`:
+
+- `pet_player_form02_{idle,attack,hit,defeat}_01.png` - Emberkit (fire fox cub with crystal tufts): taller,
+  a flame-tipped double tail, larger glowing crystal crest.
+- `pet_leafling_form02_{idle,attack,hit,defeat}_01.png` - Leafling: a leafy mane, vine whips on the forelegs,
+  a blooming flower on the back.
+- `pet_tidepup_form02_{idle,attack,hit,defeat}_01.png` - Tidepup: fin crest along the spine, a wave-shaped
+  tail, small water orbs circling.
+- `enemy_beetle_form02_{idle,attack,hit,defeat}_01.png` - Dunewing (spiked desert beetle): heavier armour
+  plates, longer horned antennae, sand-gold edges on the spikes.
+- `enemy_psyling_form02_{idle,attack,hit,defeat}_01.png` - Psyling (dark psychic imp): open wings, a glowing
+  third eye gem, floating rune shards.
+
+Final check: for each creature, form 01 idle and form 02 idle side by side at the same scale.
+
 ## After any batch
 
 Tell Claude Code "lấy asset Codex mới vào game" (or run `Pokiwar/Rebuild Scene + Art` in Unity). Painted

@@ -175,13 +175,13 @@ namespace Pokiwar.Domain
             db.Creatures.Add(new CreatureDef
             {
                 Id = "mon.dunewing", Name = "Dunewing", SpriteKey = "dunewing", Element = Element.Earth, ElementBonus = 1,
-                BaseStats = new StatBlock(1300, 85, 15, 800, 100), PerLevel = new StatBlock(130, 8, 2, 50, 0),
+                BaseStats = new StatBlock(2800, 150, 20, 800, 100), PerLevel = new StatBlock(130, 8, 2, 50, 0),
                 GemProfileId = "gem.monster", CardIds = { "card.herbal_salve" }
             });
             db.Creatures.Add(new CreatureDef
             {
                 Id = "mon.psyling", Name = "Psyling", SpriteKey = "psyling", Element = Element.Metal, ElementBonus = 1,
-                BaseStats = new StatBlock(3300, 155, 22, 1000, 100), PerLevel = new StatBlock(140, 8, 2, 60, 0),
+                BaseStats = new StatBlock(3800, 175, 24, 1000, 100), PerLevel = new StatBlock(140, 8, 2, 60, 0),
                 GemProfileId = "gem.monster", SkillIds = { "skill.mind_spark" }, CardIds = { "card.mana_leech" }
             });
             var boss = new CreatureDef
@@ -248,7 +248,7 @@ namespace Pokiwar.Domain
 
         private static void AddEncounters(ContentDatabase db)
         {
-            db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 3, AiPolicyId = "ai.easy", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1, ManaVsPlayer = 1f });
+            db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 3, AiPolicyId = "ai.normal", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1, ManaVsPlayer = 1f });
             db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 6, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2, SkillLevel = 2, ManaVsPlayer = 1f });
             db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 8, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4, ManaVsPlayer = 1.6f, SkillLevel = 3 });
         }

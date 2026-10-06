@@ -422,7 +422,7 @@ namespace Pokiwar.EditorTools
             app.Prep.FightButton.onClick.Invoke();
             yield return null;
             Check(app.BattleScreen.activeSelf && bc.PlayerHud.Portrait.sprite == app.Sprites.Get("right.azurewing"), "captured boss fights on the player side facing the opponent");
-            Check(bc.Engine.State.Get(Side.Player).Phases.Count == 1 && bc.Engine.State.Get(Side.Player).LockedSkills.Count == 1, "captured boss keeps its ascended form");
+            Check(bc.Engine.State.Get(Side.Player).Phases.Count == 0 && bc.Engine.State.Get(Side.Player).LockedSkills.Count == 0, "a captured boss has no second phase on the player side");
             yield return new WaitForSecondsRealtime(0.3f);
             yield return Capture("07c_captured_battle");
             bc.AnimationSpeed = 8f;

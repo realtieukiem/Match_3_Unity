@@ -96,6 +96,8 @@ namespace Pokiwar.App
             if (CardForge != null) CardForge.gameObject.SetActive(false);
         }
 
+        public Sprite PetSprite(OwnedPet pet) => Sprites.Owned(Progression.PetSpriteKey(pet));
+
         public void ShowWardrobe()
         {
             HideAll();

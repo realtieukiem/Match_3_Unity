@@ -98,6 +98,18 @@ namespace Pokiwar.Domain
             if (d.Energy >= cfg.MaxEnergy) d.EnergyStampUtcTicks = nowUtcTicks;
         }
 
+        public bool IsEvolved(OwnedPet pet) => pet.EnhanceLevel >= Db.Progression.EvolveAtEnhanceLevel;
+
+        /// <summary>An evolved pet wears its second form: the creature's phase sprite when it has one, else "<key>_evolved".</summary>
+        public string PetSpriteKey(OwnedPet pet)
+        {
+            var def = Db.Creature(pet.PetId);
+            if (!IsEvolved(pet)) return def.SpriteKey;
+            foreach (var ph in def.Phases)
+                if (!string.IsNullOrEmpty(ph.SpriteKey)) return ph.SpriteKey;
+            return def.SpriteKey + SpriteKeys.EvolvedSuffix;
+        }
+
         public bool IsNodeUnlocked(SaveData d, MapNodeDef node)
         {
             if (string.IsNullOrEmpty(node.RequiresNodeId)) return true;
@@ -149,6 +161,8 @@ namespace Pokiwar.Domain
             var s = new CombatantSetup
             {
                 Creature = def,
+                SpriteKey = PetSpriteKey(pet),
+                NoPhases = true,
                 Level = pet.Level,
                 Stats = PetStats(pet),
                 ElementBonus = PetElementBonus(pet),
@@ -162,9 +176,6 @@ namespace Pokiwar.Domain
                 s.Skills.Add(Db.Skill(id));
                 s.SkillLevels[id] = owned.Level;
             }
-            foreach (var ph in def.Phases)
-                foreach (var id in ph.UnlockSkillIds)
-                    s.LockedSkills.Add(Db.Skill(id));
             int n = s.Skills.Count;
             foreach (var id in cardIds)
             {

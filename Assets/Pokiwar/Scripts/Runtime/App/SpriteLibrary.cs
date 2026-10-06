@@ -24,12 +24,23 @@ namespace Pokiwar.App
 
         public Sprite Gem(GemType t) => t == GemType.None ? null : Gems[(int)t];
 
-        public Sprite Get(string key) => key != null && Map.TryGetValue(key, out var s) && s != null ? s : Fallback;
+        public Sprite Get(string key)
+        {
+            key = Resolve(key);
+            return key != null && Map.TryGetValue(key, out var s) && s != null ? s : Fallback;
+        }
+
+        public string Resolve(string key) =>
+            key != null && !Has(key) && key.EndsWith(SpriteKeys.EvolvedSuffix) ? key.Substring(0, key.Length - SpriteKeys.EvolvedSuffix.Length) : key;
 
         public bool Has(string key) => key != null && Map.TryGetValue(key, out var s) && s != null;
 
         /// <summary>The key of the art that faces the given way: "right." + key when the library has one, else key.</summary>
-        public string Facing(string key, bool right) => right && Has("right." + key) ? "right." + key : key;
+        public string Facing(string key, bool right)
+        {
+            key = Resolve(key);
+            return right && Has("right." + key) ? "right." + key : key;
+        }
 
         public Sprite Owned(string key) => Get(Facing(key, true));
 

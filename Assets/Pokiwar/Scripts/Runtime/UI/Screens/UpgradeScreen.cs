@@ -59,7 +59,7 @@ namespace Pokiwar.UI
             {
                 var def = app.Db.Creature(p.PetId);
                 var row = petRows.Add();
-                row.Set(def.Name + " Lv " + p.Level, "Enhance +" + p.EnhanceLevel, app.Sprites.Owned(def.SpriteKey), p.Uid == petUid);
+                row.Set(def.Name + " Lv " + p.Level, "Enhance +" + p.EnhanceLevel, app.PetSprite(p), p.Uid == petUid);
                 var uid = p.Uid;
                 row.Button.onClick.AddListener(() =>
                 {
@@ -73,7 +73,7 @@ namespace Pokiwar.UI
             {
                 var def = app.Db.Creature(pet.PetId);
                 var st = app.Progression.PetStats(pet);
-                PetImage.sprite = app.Sprites.Owned(def.SpriteKey);
+                PetImage.sprite = app.PetSprite(pet);
                 var sockets = new List<string>();
                 for (int i = 0; i < pet.SocketTiers.Count; i++)
                     sockets.Add(pet.SocketTiers[i] > 0 ? pet.SocketElements[i] + " T" + pet.SocketTiers[i] : "empty");

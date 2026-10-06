@@ -90,7 +90,7 @@ namespace Pokiwar.UI
             if (selected != null)
             {
                 var def = app.Db.Creature(selected.PetId);
-                PetImage.sprite = app.Sprites.Owned(def.SpriteKey);
+                PetImage.sprite = app.PetSprite(selected);
                 PetName.text = def.Name;
             }
 
@@ -115,7 +115,7 @@ namespace Pokiwar.UI
                     var st = app.Progression.PetStats(pet);
                     var row = petRows.Add();
                     row.Set(def.Name + "  Lv " + pet.Level + (pet.EnhanceLevel > 0 ? " +" + pet.EnhanceLevel : ""),
-                        def.Element + "  HP " + st.MaxHp + "  ATK " + st.Atk, app.Sprites.Owned(def.SpriteKey), pet.Uid == s.SelectedPetUid);
+                        def.Element + "  HP " + st.MaxHp + "  ATK " + st.Atk, app.PetSprite(pet), pet.Uid == s.SelectedPetUid);
                     var uid = pet.Uid;
                     row.Button.onClick.AddListener(() =>
                     {

@@ -82,7 +82,8 @@ namespace Pokiwar.Tests
             Assert.AreEqual("boss.azurewing", won.CapturedPetId);
             Assert.IsFalse(save.Pets.Exists(p => p.PetId == "pet.tidepup"));
             var mine = prog.BuildPlayer(save, save.Pets.Find(p => p.PetId == "boss.azurewing"), save.SelectedCardIds);
-            Assert.AreEqual(1, mine.LockedSkills.Count, "the owned boss can still ascend");
+            Assert.AreEqual(0, mine.LockedSkills.Count, "an owned boss does not ascend in battle");
+            Assert.IsTrue(mine.NoPhases);
         }
 
         [Test]
@@ -342,6 +343,33 @@ namespace Pokiwar.Tests
             Assert.AreEqual(e0 - db.Encounter("enc.dunewing").EnergyCost, save.Energy);
             prog.TickEnergy(save, System.TimeSpan.FromSeconds(db.Progression.EnergyRegenSeconds * 3).Ticks);
             Assert.AreEqual(e0, save.Energy);
+        }
+
+        [Test]
+        public void Pet_EvolvesAtEnhanceFive_AndNeverChangesPhaseInBattle()
+        {
+            var db = DefaultContent.Create();
+            var prog = new ProgressionService(db);
+            var save = prog.CreateNewSave(0);
+            var pet = save.Pet(save.SelectedPetUid);
+            string baseKey = db.Creature(pet.PetId).SpriteKey;
+            pet.EnhanceLevel = db.Progression.EvolveAtEnhanceLevel - 1;
+            Assert.AreEqual(baseKey, prog.PetSpriteKey(pet));
+            pet.EnhanceLevel = db.Progression.EvolveAtEnhanceLevel;
+            Assert.AreEqual(baseKey + SpriteKeys.EvolvedSuffix, prog.PetSpriteKey(pet));
+
+            var boss = db.Creature("boss.azurewing");
+            var owned = prog.AddPet(save, boss.Id);
+            Assert.AreEqual(boss.SpriteKey, prog.PetSpriteKey(owned));
+            owned.EnhanceLevel = db.Progression.EvolveAtEnhanceLevel;
+            Assert.AreEqual(boss.Phases[0].SpriteKey, prog.PetSpriteKey(owned));
+
+            save.SelectedPetUid = owned.Uid;
+            save.Energy = 10;
+            var setup = prog.StartBattle(save, db.Node("node.3"), 7);
+            Assert.AreEqual(0, Combatant.Create(Side.Player, setup.Player).Phases.Count, "a pet has no second phase in battle");
+            Assert.AreEqual(boss.Phases[0].SpriteKey, Combatant.Create(Side.Player, setup.Player).SpriteKey);
+            Assert.AreEqual(1, Combatant.Create(Side.Enemy, setup.Enemy).Phases.Count, "the boss keeps its second phase");
         }
     }
 }

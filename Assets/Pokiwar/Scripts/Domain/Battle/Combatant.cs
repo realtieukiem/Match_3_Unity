@@ -32,6 +32,8 @@ namespace Pokiwar.Domain
     public sealed class CombatantSetup
     {
         public CreatureDef Creature;
+        public string SpriteKey;
+        public bool NoPhases;
         public int Level = 1;
         public StatBlock Stats;
         public int ElementBonus;
@@ -101,7 +103,7 @@ namespace Pokiwar.Domain
                 CreatureId = c.Id,
                 Name = c.Name,
                 FormName = c.Name,
-                SpriteKey = c.SpriteKey,
+                SpriteKey = s.SpriteKey ?? c.SpriteKey,
                 Element = c.Element,
                 ElementBonus = c.ElementBonus + s.ElementBonus,
                 Level = s.Level,
@@ -119,7 +121,7 @@ namespace Pokiwar.Domain
             foreach (var sk in s.Skills) if (sk != null) cb.Skills.Add(sk);
             foreach (var kv in s.SkillLevels) cb.SkillLevels[kv.Key] = kv.Value;
             foreach (var sk in s.LockedSkills) if (sk != null) cb.LockedSkills.Add(sk);
-            cb.Phases.AddRange(c.Phases);
+            if (!s.NoPhases) cb.Phases.AddRange(c.Phases);
             return cb;
         }
 

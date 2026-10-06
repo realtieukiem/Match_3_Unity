@@ -117,6 +117,26 @@ namespace Pokiwar.EditorTools
             I("Meta/Lobby/nav_avatar_v01.png", "nav_avatar", 256, false, "nav.avatar"),
             I("Meta/Lobby/nav_cards_v01.png", "nav_cards", 256, false, "nav.cards"),
             I("Meta/Lobby/nav_pets_v01.png", "nav_pets", 256, false, "nav.pets"),
+            I("Battle/Characters/pet_player_form02_idle_01.png", "char_emberkit_evolved", 1024, false, "emberkit_evolved"),
+            I("Battle/Characters/pet_player_form02_attack_01.png", "char_emberkit_evolved_attack", 1024, false, "emberkit_evolved.attack"),
+            I("Battle/Characters/pet_player_form02_hit_01.png", "char_emberkit_evolved_hit", 1024, false, "emberkit_evolved.hit"),
+            I("Battle/Characters/pet_player_form02_defeat_01.png", "char_emberkit_evolved_defeat", 1024, false, "emberkit_evolved.defeat"),
+            I("Battle/Characters/pet_leafling_form02_idle_01.png", "char_leafling_evolved", 1024, false, "leafling_evolved"),
+            I("Battle/Characters/pet_leafling_form02_attack_01.png", "char_leafling_evolved_attack", 1024, false, "leafling_evolved.attack"),
+            I("Battle/Characters/pet_leafling_form02_hit_01.png", "char_leafling_evolved_hit", 1024, false, "leafling_evolved.hit"),
+            I("Battle/Characters/pet_leafling_form02_defeat_01.png", "char_leafling_evolved_defeat", 1024, false, "leafling_evolved.defeat"),
+            I("Battle/Characters/pet_tidepup_form02_idle_01.png", "char_tidepup_evolved", 1024, false, "tidepup_evolved"),
+            I("Battle/Characters/pet_tidepup_form02_attack_01.png", "char_tidepup_evolved_attack", 1024, false, "tidepup_evolved.attack"),
+            I("Battle/Characters/pet_tidepup_form02_hit_01.png", "char_tidepup_evolved_hit", 1024, false, "tidepup_evolved.hit"),
+            I("Battle/Characters/pet_tidepup_form02_defeat_01.png", "char_tidepup_evolved_defeat", 1024, false, "tidepup_evolved.defeat"),
+            I("Battle/Characters/enemy_beetle_form02_idle_01.png", "char_dunewing_evolved", 1024, false, "dunewing_evolved"),
+            I("Battle/Characters/enemy_beetle_form02_attack_01.png", "char_dunewing_evolved_attack", 1024, false, "dunewing_evolved.attack"),
+            I("Battle/Characters/enemy_beetle_form02_hit_01.png", "char_dunewing_evolved_hit", 1024, false, "dunewing_evolved.hit"),
+            I("Battle/Characters/enemy_beetle_form02_defeat_01.png", "char_dunewing_evolved_defeat", 1024, false, "dunewing_evolved.defeat"),
+            I("Battle/Characters/enemy_psyling_form02_idle_01.png", "char_psyling_evolved", 1024, false, "psyling_evolved"),
+            I("Battle/Characters/enemy_psyling_form02_attack_01.png", "char_psyling_evolved_attack", 1024, false, "psyling_evolved.attack"),
+            I("Battle/Characters/enemy_psyling_form02_hit_01.png", "char_psyling_evolved_hit", 1024, false, "psyling_evolved.hit"),
+            I("Battle/Characters/enemy_psyling_form02_defeat_01.png", "char_psyling_evolved_defeat", 1024, false, "psyling_evolved.defeat"),
             S("UI/Common/ui_button_blue_v01.png", "button_blue", 512, 48, "ui.button.blue"),
             S("UI/Common/ui_button_red_v01.png", "button_red", 512, 48, "ui.button.red"),
             S("UI/Common/ui_button_gray_v01.png", "button_gray", 512, 48, "ui.button.gray"),
@@ -193,6 +213,7 @@ namespace Pokiwar.EditorTools
                 {
                     if (c.Id.StartsWith("pet.")) continue;
                     capturable.Add(c.SpriteKey);
+                    capturable.Add(c.SpriteKey + SpriteKeys.EvolvedSuffix);
                     foreach (var p in c.Phases) capturable.Add(p.SpriteKey);
                 }
             }

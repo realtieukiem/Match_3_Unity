@@ -264,7 +264,7 @@ namespace Pokiwar.EditorTools
             sky.rectTransform.offsetMax = new Vector2(-40, -125);
             var planet = Img(sky.transform, "Planet", Key("lobby.planet", "ui.circle"), art.ContainsKey("lobby.planet") ? Color.white : new Color(0.55f, 0.8f, 1f, 0.35f));
             planet.preserveAspect = true;
-            At(planet.rectTransform, 0.5f, 0.5f, 0, 0, 330, 330);
+            At(planet.rectTransform, 0.5f, 0.5f, 0, 0, 520, 520);
             var area = NewUI("NodeArea", sky.transform);
             Fill(area);
             map.NodeArea = area;
@@ -480,8 +480,8 @@ namespace Pokiwar.EditorTools
                 medal.preserveAspect = true;
                 At(medal.rectTransform, 0.5f, 0.5f, 0, 0, 180, 180);
             }
-            bc.TimerLabel = Txt(top.transform, "Timer", "10", 104, new Color(1f, 0.55f, 0.12f), TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(bc.TimerLabel.rectTransform, 0.5f, 0.5f, 0, -6, 160, 130);
+            bc.TimerLabel = Txt(top.transform, "Timer", "10", 92, new Color(1f, 0.55f, 0.12f), TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(bc.TimerLabel.rectTransform, 0.5f, 0.5f, 0, 3, 160, 130);
             var timerOutline = bc.TimerLabel.gameObject.AddComponent<Outline>();
             timerOutline.effectColor = new Color(0.25f, 0.05f, 0f, 1f);
             timerOutline.effectDistance = new Vector2(3, -3);

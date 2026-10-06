@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace Pokiwar.Domain
 {
+    public static class SpriteKeys
+    {
+        public const string EvolvedSuffix = "_evolved";
+    }
+
     [Serializable]
     public class StatBlock
     {
@@ -397,6 +402,7 @@ namespace Pokiwar.Domain
     public class ProgressionConfig
     {
         public int StartGold = 500;
+        public int EvolveAtEnhanceLevel = 5;
         public int MaxEnergy = 30;
         public int EnergyRegenSeconds = 300;
         public int[] PlayerExpToNext = { 100, 160, 240, 340, 460, 600, 780, 1000, 1300, 1700 };

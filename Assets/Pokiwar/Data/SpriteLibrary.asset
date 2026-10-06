@@ -208,6 +208,28 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 7fb4416b7ae8cd14397389a5fda73301, type: 3}
   - Key: text.yourturn
     Sprite: {fileID: 21300000, guid: 4e9c612c3ebff8942b615794a1bb1e74, type: 3}
+  - Key: text.vs
+    Sprite: {fileID: 21300000, guid: 38bc212ca8e5c6b449c3aee98db963b1, type: 3}
+  - Key: text.fight
+    Sprite: {fileID: 21300000, guid: c9214be63eb1c8e47b0c2559c87a094c, type: 3}
+  - Key: stone.card
+    Sprite: {fileID: 21300000, guid: c68b9ccc68f9d3a41af0489d6306d01f, type: 3}
+  - Key: bg.lobby
+    Sprite: {fileID: 21300000, guid: 930d1c84a07b0104d8728809836d28f7, type: 3}
+  - Key: lobby.planet
+    Sprite: {fileID: 21300000, guid: 3d9494127f2f3824f9d5eb430786a372, type: 3}
+  - Key: lobby.lock
+    Sprite: {fileID: 21300000, guid: 8b85f2d9d5120454b9f581bcf3b82910, type: 3}
+  - Key: region.sunny
+    Sprite: {fileID: 21300000, guid: 11c587f900fbb7a4dae9b334fc69f0b7, type: 3}
+  - Key: nav.info
+    Sprite: {fileID: 21300000, guid: 5b15b08f9c0b1044698168a8aa2d7d9b, type: 3}
+  - Key: nav.avatar
+    Sprite: {fileID: 21300000, guid: 6d2ade8ed7883cb439d2c16f3600015b, type: 3}
+  - Key: nav.cards
+    Sprite: {fileID: 21300000, guid: a071ae14dab344f498bb63327e42642e, type: 3}
+  - Key: nav.pets
+    Sprite: {fileID: 21300000, guid: 6582d0e5a7153724aa7fa5e3fc54b543, type: 3}
   - Key: ui.button.blue
     Sprite: {fileID: 21300000, guid: 02b161bd9aca9b34f90e7ce6b6169e22, type: 3}
   - Key: ui.button.red
@@ -291,7 +313,5 @@ MonoBehaviour:
   - Key: stone.Fire
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   - Key: stone.Earth
-    Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
-  - Key: stone.card
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   Fallback: {fileID: 21300000, guid: 47a677a696f0f5f419663a7ebdd0c7e3, type: 3}
