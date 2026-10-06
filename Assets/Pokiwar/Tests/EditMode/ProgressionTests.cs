@@ -124,10 +124,15 @@ namespace Pokiwar.Tests
                 var pet = save.Pet(save.SelectedPetUid);
                 pet.Level = level;
                 pet.EnhanceLevel = level / 6;
-                var setup = prog.StartBattle(save, db.Node("node.3"), 5);
-                int mine = setup.Player.Stats.MaxHp;
-                Assert.GreaterOrEqual(setup.Enemy.Stats.MaxHp, (int)System.Math.Ceiling(mine * db.Encounter("enc.azurewing").HpVsPlayer), "pet Lv " + level);
-                Assert.Greater(setup.Enemy.Stats.MaxHp, mine);
+                foreach (var node in db.Map.Nodes)
+                {
+                    var enc = db.Encounter(node.EncounterId);
+                    save.Energy = enc.EnergyCost;
+                    var setup = prog.StartBattle(save, node, 5);
+                    int mine = setup.Player.Stats.MaxHp;
+                    Assert.GreaterOrEqual(setup.Enemy.Stats.MaxHp, (int)System.Math.Ceiling(mine * enc.HpVsPlayer), node.Id + " pet Lv " + level);
+                    Assert.Greater(setup.Enemy.Stats.MaxHp, mine, node.Id + " pet Lv " + level);
+                }
             }
         }
 

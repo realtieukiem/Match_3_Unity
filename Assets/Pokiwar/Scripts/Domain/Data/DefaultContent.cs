@@ -248,8 +248,8 @@ namespace Pokiwar.Domain
 
         private static void AddEncounters(ContentDatabase db)
         {
-            db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 3, AiPolicyId = "ai.easy", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1 });
-            db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 6, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2, SkillLevel = 2 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 3, AiPolicyId = "ai.easy", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1, HpVsPlayer = 1.2f });
+            db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 6, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2, SkillLevel = 2, HpVsPlayer = 1.6f });
             db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 8, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4, HpVsPlayer = 2.2f, SkillLevel = 3 });
         }
 

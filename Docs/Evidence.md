@@ -26,6 +26,37 @@ is `Landscape` and autorotate to portrait is off. The portrait rects stay in the
 | B 01:22 -> 04:37 | The `360` and `200` cards stay all battle; the `+350` cards are gone after use | reusable cards = `SkillDef` owned by the player (`SaveData.SkillCards`, level per card), any pet carries them, bosses use theirs at `EncounterDef.SkillLevel` | CONFIRMED_BY_VIDEO + CONFIRMED_BY_USER |
 | B 10:52 | Reward popup lists stones by element and tier, each with an icon and count | text lines only | CONFIRMED_BY_VIDEO |
 
+## Boss stats against the player (read 2026-10-06)
+
+Every number below is the `cur/max` text in the top HUD at the first frame of the battle. "Hunt level" is the
+"độ khó săn cấp N" under the boss in the room; the same number is printed on the boss's tag in the lobby
+(A 04:20: Flygon 2, Abra 3, Whiscash 14, Cubone 25, Purifly 27, Dramangon 40 ... Qilong 92; B 00:20: 97 to
+about 125), so it belongs to the boss, not to the player.
+
+| Clip @ time | Boss (hunt level) | Boss HP | Boss mana | Player pet HP | Player mana |
+|---|---|---|---|---|---|
+| A 02:12 | Flygon (2) | 1650/2200 | 770 | 2405/3207 | 770 |
+| A 04:41 | Abra (3) | 1650/2200 | 300 | 382/510 | 300 |
+| A 05:40 | Abra (3) | 1650/2200 | 770 | 2405/3207 | 770 |
+| A 11:21 | Abra (3) | 1650/2200 | 305 | 378/505 | 305 |
+| M 00:20 | Manaphy (84) | 28400 max | 3856 | 12815 max | 2410 |
+| B 01:22 | BlueWings (108), three players | 81000/108000 | 4650 | 13895 max | 2326 |
+
+What that settles:
+
+- Start HP is 75% of max on both sides in every clean first frame (1650/2200, 2405/3207, 382/510, 378/505,
+  81000/108000). CONFIRMED_BY_VIDEO.
+- Boss max HP does NOT follow the pet that is fielded: Abra has 2200 against 3207, 510 and 505. HP looks like a
+  value of the boss (hunt level 2 and 3 -> 2200, 84 -> 28400, 108 -> 108000 = 1000 per level). Three points, no
+  single formula fits. CONFIRMED_BY_VIDEO for "not scaled in clip A", formula UNKNOWN.
+- Boss max MANA does follow the player: equal at hunt level 2-3 (three different pets, three matching values),
+  x1.6 at level 84 (2410 -> 3856, exact), x2.0 at level 108. CONFIRMED_BY_VIDEO, not built.
+- The game scales boss HP from the pet anyway (`EncounterDef.HpVsPlayer`) because the user asked for it
+  (CONFIRMED_BY_USER); see `Docs/UnverifiedRules.md`.
+
+Lobby tags also show `THẮNG x/y` (wins / wins needed: 0/1, 1/1, 0/3, 4/3), `YÊU CẦU` (a rank-point
+requirement) and `CHIẾN TÍCH +10` (rank points for the win). Not built.
+
 ## Battle layout and rhythm
 
 | Clip @ time | Seen | Game | Status |
