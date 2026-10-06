@@ -44,4 +44,17 @@ MonoBehaviour:
     - skill.mind_spark
     CardIds:
     - card.mana_leech
-    Phases: []
+    Phases:
+    - Id: phase.psyling.second
+      FormName: Psyling Awakened
+      SpriteKey: psyling_evolved
+      Trigger: 0
+      TriggerValue: 0.3
+      OneShot: 1
+      TriggerOnLethal: 0
+      SetHpPctOfMax: 0.45
+      AtkMultiplier: 1.12
+      UnlockSkillIds: []
+      ContinueTurn: 1
+      TriggerConfidence: 3
+      SetHpConfidence: 0

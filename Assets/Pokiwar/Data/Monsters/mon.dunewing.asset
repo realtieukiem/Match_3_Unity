@@ -19,8 +19,8 @@ MonoBehaviour:
     Element: 5
     ElementBonus: 1
     BaseStats:
-      MaxHp: 2800
-      Atk: 150
+      MaxHp: 2450
+      Atk: 140
       Def: 20
       MaxMana: 800
       MaxRage: 100
@@ -43,4 +43,17 @@ MonoBehaviour:
     SkillIds: []
     CardIds:
     - card.herbal_salve
-    Phases: []
+    Phases:
+    - Id: phase.dunewing.second
+      FormName: Dunewing Enraged
+      SpriteKey: dunewing_evolved
+      Trigger: 0
+      TriggerValue: 0.3
+      OneShot: 1
+      TriggerOnLethal: 0
+      SetHpPctOfMax: 0.4
+      AtkMultiplier: 1.1
+      UnlockSkillIds: []
+      ContinueTurn: 1
+      TriggerConfidence: 3
+      SetHpConfidence: 0

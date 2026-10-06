@@ -8,12 +8,16 @@ and cannot be used again.
 
 | Batch | What | Images | The game today |
 |---|---|---|---|
-| 4 | three single-use cards and five reusable cards | 8 | blank card faces with only cost, level and damage |
-| 11 | forge pedestal and slots, five pet stones, world map | 12 | plain lists, tinted stone icon; not wired in code yet |
-| 12 | second forms of the five creatures | 20 | an evolved pet keeps its first-form art |
 | 13 | town map background and nine buildings | 10 | coloured discs with labels on the sky |
+| 4 | three single-use cards and four reusable cards | 7 | blank card faces with only cost, level and damage |
+| 12 | second forms of the two creatures the player can collect | 8 | the first two bosses change phase without changing looks; a collected one keeps its first-form art at level 5 |
+| 11 | forge pedestal and slots, five pet stones, world map | 12 | plain lists, tinted stone icon; not wired in code yet |
 
 Order that helps the game most: 13, 4, 12, 11. Batches 9 and 10 are painted and in the game.
+
+Do NOT paint (decided 2026-10-06, they would never be shown): second forms for Emberkit, Leafling or Tidepup -
+the free starter never changes form and the other two are not obtainable; a card for Tidal Siphon - only the
+boss uses it and boss cards are not drawn.
 
 ## Shared preamble (put at the top of every batch)
 
@@ -61,11 +65,11 @@ Psyling (Metal element, small psychic cave creature), facing LEFT, same frame an
 `enemy_beetle_idle_01.png`. Save to `...\Assets\Battle\Characters\`: `enemy_psyling_idle_01.png`,
 `enemy_psyling_attack_01.png`, `enemy_psyling_hit_01.png`, `enemy_psyling_defeat_01.png`.
 
-## Batch 4 - eight card illustrations (8 images) - STILL UNPAINTED
+## Batch 4 - seven card illustrations (7 images) - STILL UNPAINTED
 
-All eight are card art now: the five skills became reusable cards the player owns, so they sit in the same card
-row as the single-use cards and need the same kind of picture. 768x1152 illustration only, no frame, no text,
-no numbers (the game draws cost, level and damage on top), subject in the middle 70% of the canvas, like
+All seven are card art: the skills became reusable cards the player owns, so they sit in the same card row as
+the single-use cards and need the same kind of picture. 768x1152 illustration only, no frame, no text, no
+numbers (the game draws cost, level and damage on top), subject in the middle 70% of the canvas, like
 `card_fire_rage_v01.png`.
 
 Single-use cards, save to `...\Assets\Cards\`:
@@ -77,8 +81,7 @@ Reusable cards, save to `...\Assets\Battle\Skills\` (create the folder; keep the
 `skill_blaze_burst_v01.png` (an explosive fire blast, orange and red),
 `skill_thorn_bind_v01.png` (thorn vines wrapping a target, green),
 `skill_tide_lance_v01.png` (a spear of water thrust forward, blue),
-`skill_mind_spark_v01.png` (a violet psychic spark with rings),
-`skill_tidal_siphon_v01.png` (a water vortex draining light into its centre, deep blue).
+`skill_mind_spark_v01.png` (a violet psychic spark with rings).
 
 ## Batch 5 - six element badges (6 images)
 
@@ -265,25 +268,20 @@ Save into `D:\Project\Pokiwar_Art_FG38\Assets\Meta\World\`:
 - `world_island_locked_v01.png` - 512x384, transparent. A pale island hidden in cloud.
 - `world_ship_v01.png` - 256x256, transparent. A small cartoon sailing ship, the player's marker.
 
-## Batch 12 - second forms of the five creatures (20 images)
+## Batch 12 - second forms of the two collectable creatures (8 images)
 
-A pet the player has enhanced to +5 changes into its second form for good (the boss already has one:
-`boss_crystaldrake_form02_*`). Until these files exist an evolved pet keeps its first-form art.
+Every boss changes into a second form partway through its fight (the big boss already has one:
+`boss_crystaldrake_form02_*`). A boss the player has collected wears that same second form for good once it
+reaches level 5. The free starter pet never changes, so it needs nothing here.
 
 For each creature paint the SAME four poses as its first form - `idle`, `attack`, `hit`, `defeat` - 1024x1024,
-transparent background, same canvas position, same facing as the first-form file (pets face right, enemies
-face left; the game mirrors enemies itself), feet on the same ground line. The second form is the same animal
-grown up: about 20% bigger inside the canvas, sharper silhouette, one new signature feature, same palette with
-a brighter accent. It must read as "the same creature, evolved", not a new species.
+transparent background, same canvas position and same facing as the first-form file (enemies face left; the
+game mirrors them itself), feet on the same ground line. The second form is the same animal powered up: about
+20% bigger inside the canvas, sharper silhouette, one new signature feature, same palette with a brighter
+accent. It must read as "the same creature, stronger", not a new species.
 
 Save into `D:\Project\Pokiwar_Art_FG38\Assets\Battle\Characters\`:
 
-- `pet_player_form02_{idle,attack,hit,defeat}_01.png` - Emberkit (fire fox cub with crystal tufts): taller,
-  a flame-tipped double tail, larger glowing crystal crest.
-- `pet_leafling_form02_{idle,attack,hit,defeat}_01.png` - Leafling: a leafy mane, vine whips on the forelegs,
-  a blooming flower on the back.
-- `pet_tidepup_form02_{idle,attack,hit,defeat}_01.png` - Tidepup: fin crest along the spine, a wave-shaped
-  tail, small water orbs circling.
 - `enemy_beetle_form02_{idle,attack,hit,defeat}_01.png` - Dunewing (spiked desert beetle): heavier armour
   plates, longer horned antennae, sand-gold edges on the spikes.
 - `enemy_psyling_form02_{idle,attack,hit,defeat}_01.png` - Psyling (dark psychic imp): open wings, a glowing

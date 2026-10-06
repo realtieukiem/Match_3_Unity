@@ -98,14 +98,14 @@ namespace Pokiwar.Domain
 
         public bool IsEvolved(OwnedPet pet) => pet.Level >= Db.Progression.EvolveAtLevel;
 
-        /// <summary>An evolved pet wears its second form: the creature's phase sprite when it has one, else "<key>_evolved".</summary>
+        /// <summary>A collected creature that reached the evolve level wears its boss second form; one without a second form never changes.</summary>
         public string PetSpriteKey(OwnedPet pet)
         {
             var def = Db.Creature(pet.PetId);
             if (!IsEvolved(pet)) return def.SpriteKey;
             foreach (var ph in def.Phases)
                 if (!string.IsNullOrEmpty(ph.SpriteKey)) return ph.SpriteKey;
-            return def.SpriteKey + SpriteKeys.EvolvedSuffix;
+            return def.SpriteKey;
         }
 
         public bool IsNodeUnlocked(SaveData d, MapNodeDef node)

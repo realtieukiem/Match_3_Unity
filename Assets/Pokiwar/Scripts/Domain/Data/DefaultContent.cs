@@ -19,15 +19,14 @@ namespace Pokiwar.Domain
             db.Progression = new ProgressionConfig
             {
                 StartGold = 500,
-                StarterPetIds = new List<string> { "pet.emberkit", "pet.leafling" },
-                StarterPetLevels = new List<int> { 3, 2 },
+                StarterPetIds = new List<string> { "pet.emberkit" },
+                StarterPetLevels = new List<int> { 1 },
                 StarterCardIds = new List<string> { "card.mana_potion", "card.herbal_salve", "card.fire_bolt", "card.summon_sprite", "card.iron_skin" },
                 StarterSkillIds = new List<string> { "skill.blaze_burst", "skill.thorn_bind" },
                 StarterItems = new List<RewardDrop>
                 {
                     new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 3 },
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 4 },
-                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Wood, Tier = 1, Count = 2 },
                     new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1 },
                     new RewardDrop { Kind = RewardKind.ProtectionCharm, Count = 1 }
                 },
@@ -178,18 +177,30 @@ namespace Pokiwar.Domain
                 GemProfileId = "gem.balanced", SkillIds = { "skill.tide_lance" },
                 Rage = new RageProfile { AttackThreshold = 100, AttackCost = 100 }
             });
-            db.Creatures.Add(new CreatureDef
+            var dunewing = new CreatureDef
             {
                 Id = "mon.dunewing", Name = "Dunewing", SpriteKey = "dunewing", Element = Element.Earth, ElementBonus = 1,
-                BaseStats = new StatBlock(2800, 150, 20, 800, 100), PerLevel = new StatBlock(130, 8, 2, 50, 0),
+                BaseStats = new StatBlock(2450, 140, 20, 800, 100), PerLevel = new StatBlock(130, 8, 2, 50, 0),
                 GemProfileId = "gem.monster", CardIds = { "card.herbal_salve" }
+            };
+            dunewing.Phases.Add(new BossPhaseDef
+            {
+                Id = "phase.dunewing.second", FormName = "Dunewing Enraged", SpriteKey = "dunewing" + SpriteKeys.EvolvedSuffix,
+                TriggerValue = 0.30f, OneShot = true, TriggerOnLethal = false, SetHpPctOfMax = 0.40f, AtkMultiplier = 1.10f
             });
-            db.Creatures.Add(new CreatureDef
+            db.Creatures.Add(dunewing);
+            var psyling = new CreatureDef
             {
                 Id = "mon.psyling", Name = "Psyling", SpriteKey = "psyling", Element = Element.Metal, ElementBonus = 1,
                 BaseStats = new StatBlock(3800, 175, 24, 1000, 100), PerLevel = new StatBlock(140, 8, 2, 60, 0),
                 GemProfileId = "gem.monster", SkillIds = { "skill.mind_spark" }, CardIds = { "card.mana_leech" }
+            };
+            psyling.Phases.Add(new BossPhaseDef
+            {
+                Id = "phase.psyling.second", FormName = "Psyling Awakened", SpriteKey = "psyling" + SpriteKeys.EvolvedSuffix,
+                TriggerValue = 0.30f, OneShot = true, TriggerOnLethal = false, SetHpPctOfMax = 0.45f, AtkMultiplier = 1.12f
             });
+            db.Creatures.Add(psyling);
             var boss = new CreatureDef
             {
                 Id = "boss.azurewing", Name = "Azurewing", SpriteKey = "azurewing", Element = Element.Water, ElementBonus = 2,
@@ -223,7 +234,6 @@ namespace Pokiwar.Domain
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Earth, Tier = 1, Count = 2 },
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 1, Chance = 0.6f },
-                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Wood, Tier = 1, Count = 1, Chance = 0.6f },
                     new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 2 },
                     new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1, Chance = 0.3f }
                 }
@@ -235,7 +245,6 @@ namespace Pokiwar.Domain
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Metal, Tier = 1, Count = 3 },
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 1, Chance = 0.6f },
-                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Wood, Tier = 1, Count = 1, Chance = 0.6f },
                     new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 3 },
                     new RewardDrop { Kind = RewardKind.SkillCard, ItemId = "skill.mind_spark", FirstClearOnly = true },
                     new RewardDrop { Kind = RewardKind.Card, ItemId = "card.mana_leech", FirstClearOnly = true },

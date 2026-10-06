@@ -17,7 +17,7 @@ namespace Pokiwar.EditorTools
             var sb = new StringBuilder("[BALANCE]\n");
             foreach (var node in db.Map.Nodes)
             {
-                foreach (int level in new[] { 3, 5, 8, 12 })
+                foreach (int level in new[] { 1, 3, 5, 8, 12 })
                 {
                     int wins = 0, turns = 0, runs = 40;
                     for (int i = 0; i < runs; i++)

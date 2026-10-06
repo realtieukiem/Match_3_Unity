@@ -4,7 +4,7 @@ What the reference clips show, where, and what the game does with it. Frames wer
 `Pokiwar.EditorTools.PokiwarVideoFrames.Run` (see "Re-checking a frame" below) and read one by one.
 
 Clips (in `C:\Users\TS03128\Downloads`): **A** `Pokiwar trên Zing Me.mp4` (13:03, 1280x720),
-**B** `[POKIWAR] Khi thánh chơi POKIWAR và cái kết.mp4` (11:04, 1276x720), **C** the "Pokiwar 2" troll clip,
+**B** `[POKIWAR] Khi thánh chơi POKIWAR và cái kết.mp4` (11:04, 1276x720), **C** the "Pokiwar 2" troll clip, **D** `danh boss pokiwar 2015 phan 2.mp4`,
 **M** `Pokiwar..mp4` (Manaphy). Numbers for M come from the earlier report `Pokiwar-Video-Analysis-Update.md`.
 
 Status: **CONFIRMED_BY_VIDEO** read off a frame here, **CONFIRMED_BY_USER** stated by the user,
@@ -90,6 +90,19 @@ requirement) and `CHIẾN TÍCH +10` (rank points for the win). Not built.
 | C 02:05 vs M 00:20, B 01:22 | Pet mana at Cấp 14 is 1680 for every pet; in battle LV14 pets show 2410 (trainer 39) and 2326 / 2346 / 2350 (trainers 35-36). Trainer level explains 170-190; 480-540 is left over | bought avatar pieces add HP, mana or ATK | gear adding stats INFERRED, amounts UNKNOWN |
 | A 01:35 | CƯỜNG HÓA: enhance an avatar piece or a badge (HUY HIỆU) with three materials, 50% success, Bùa Thăng Hoa 20000 | not built | CONFIRMED_BY_VIDEO |
 | A 09:08 | "Đổi avatar" tabs: AVATAR BỘ, AVATAR RỜI, NỀN, THÚ CƯNG, HIỆU ỨNG, CÁNH, VŨ KHÍ | wardrobe has hair, top, bottom, hat | CONFIRMED_BY_VIDEO |
+
+## Clip D, team boss fight and the card row (read 2026-10-06)
+
+Clip **D** is `danh boss pokiwar 2015 phan 2.mp4` (about 11:00): three players against Kaiorga.
+
+| Clip @ time | Seen | Game | Status |
+|---|---|---|---|
+| D 00:20 | Kaiorga 1254365/2500000 HP, 4600 mana, 200 rage; player 15506/39559 HP, 2727 mana; many gems carry x2, x3, x4 | bosses have their own HP; x2 / x3 gems only | CONFIRMED_BY_VIDEO |
+| D 00:20, 03:00 | Card row under the board holds four cards: one ornate gold-framed card with a round badge "8" and no cost, two identical white-and-red "+50" cards with a fire icon, one skill card with the pet's portrait and cost 200 | five slots: reusable cards with cost / level / damage, then single-use cards | CONFIRMED_BY_VIDEO |
+| D 09:20 | Tooltip of the gold-framed card: "hồi lại 50% máu trên tổng số máu của người chơi và đồng đội nếu có bất kì ai máu hiện tại thấp hơn 50%. Ràng buộc: chỉ xài 1 lần trong trận" | not built (team heal, once per battle) | CONFIRMED_BY_VIDEO |
+| D 11:00, 07:00, 10:20 | Tooltip of the skill card: "Hao tốn 200 mana, 200 nộ. Kết Ấn - Mega Icarus bắn một mũi tên Lửa Thiêng phong ấn một vùng trên bàn chơi. Khi bộc hỏa ... sát thương gây ra sẽ được x2 và tổng số viên ăn được có thể lên đến 50-80 viên." A glowing square is sealed on the board, later it bursts | not built (seal a board area, then burst it for double damage and a large gem haul) | CONFIRMED_BY_VIDEO |
+| D 00:40, 04:40, 11:00 | A card the player cannot use right now is drawn in grey | the button is disabled, art not greyed | CONFIRMED_BY_VIDEO |
+| D bottom-left | Under the pet: a lightning icon with "1562 (+205)", "1457 (+220)", "1562 (+205)" for the three players - a stat and its bonus | pet ATK plus the clothes bonus is not shown in battle | reading CONFIRMED_BY_VIDEO, meaning INFERRED |
 
 ## Battle layout and rhythm
 

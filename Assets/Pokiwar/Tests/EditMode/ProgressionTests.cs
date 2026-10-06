@@ -357,8 +357,13 @@ namespace Pokiwar.Tests
             string baseKey = db.Creature(pet.PetId).SpriteKey;
             pet.Level = db.Progression.EvolveAtLevel - 1;
             Assert.AreEqual(baseKey, prog.PetSpriteKey(pet));
-            pet.Level = db.Progression.EvolveAtLevel;
-            Assert.AreEqual(baseKey + SpriteKeys.EvolvedSuffix, prog.PetSpriteKey(pet));
+            pet.Level = db.Progression.PetMaxLevel;
+            Assert.AreEqual(baseKey, prog.PetSpriteKey(pet), "the free starter has no second form at any level");
+            Assert.AreEqual(1, save.Pets.Count, "one free pet");
+            Assert.AreEqual(1, prog.CreateNewSave(0).Pets[0].Level, "which starts at level 1");
+            var beetle = prog.AddPet(save, "mon.dunewing");
+            beetle.Level = db.Progression.EvolveAtLevel;
+            Assert.AreEqual(db.Creature("mon.dunewing").Phases[0].SpriteKey, prog.PetSpriteKey(beetle), "a collected creature wears its boss second form");
 
             var boss = db.Creature("boss.azurewing");
             var owned = prog.AddPet(save, boss.Id);
