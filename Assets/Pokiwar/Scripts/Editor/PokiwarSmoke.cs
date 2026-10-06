@@ -167,7 +167,7 @@ namespace Pokiwar.EditorTools
         {
             Log("screen " + Screen.width + "x" + Screen.height);
             yield return null;
-            Check(ResponsiveCanvas.IsPortrait == (Screen.height > Screen.width), "layout matches screen shape (" + (ResponsiveCanvas.IsPortrait ? "portrait" : "landscape") + ")");
+            Check(!ResponsiveCanvas.IsPortrait && Screen.width > Screen.height, "layout is locked to landscape (" + Screen.width + "x" + Screen.height + ")");
             yield return WaitFor(() => GameApp.Instance != null, 10);
             var app = GameApp.Instance;
             Check(app != null, "GameApp present");
@@ -176,7 +176,14 @@ namespace Pokiwar.EditorTools
             FileSaveStore.OverridePath = Path.Combine(PokiwarSmoke.CaptureDir, "smoke_save.json");
             app.ResetSave();
             yield return null;
-            Check(app.Hub.gameObject.activeSelf && !app.Map.gameObject.activeSelf, "hub screen visible");
+            Check(app.Map.gameObject.activeSelf && !app.Hub.gameObject.activeSelf, "lobby is the first screen");
+            var regionTiles = app.Map.RegionTemplate.transform.parent.GetComponentsInChildren<RowView>(false);
+            Check(regionTiles.Length == app.Map.RegionSlots && regionTiles[0].Button.interactable && !regionTiles[1].Button.interactable, "lobby lists " + regionTiles.Length + " regions, only the first open");
+            CheckOnScreen(app.Map.transform, "lobby");
+            yield return Capture("00_lobby");
+            app.Map.BackButton.onClick.Invoke();
+            yield return null;
+            Check(app.Hub.gameObject.activeSelf && !app.Map.gameObject.activeSelf, "info screen opens from the lobby");
             CheckOnScreen(app.Hub.transform, "hub");
             yield return Capture("01_hub");
             var audio = app.Audio;
@@ -215,11 +222,14 @@ namespace Pokiwar.EditorTools
             yield return Capture("01b_wardrobe");
             app.Wardrobe.BackButton.onClick.Invoke();
             yield return null;
+            Check(app.Map.gameObject.activeSelf && app.Map.PlayerLabel.text.StartsWith("Smokey"), "wardrobe returns to the lobby with the new name");
+            app.Map.BackButton.onClick.Invoke();
+            yield return null;
             Check(app.Hub.gameObject.activeSelf && WornLayers(app.Hub.Avatar) == 4 && app.Hub.PlayerLabel.text.StartsWith("Smokey"), "hub shows the new outfit and name");
 
             app.Hub.AdventureButton.onClick.Invoke();
             yield return null;
-            Check(app.Map.gameObject.activeSelf, "map opens from hub");
+            Check(app.Map.gameObject.activeSelf, "lobby opens from the info screen");
             var nodes = app.Map.NodeArea.GetComponentsInChildren<RowView>(false);
             Check(nodes.Length == 3, "map shows 3 nodes (" + nodes.Length + ")");
             Check(nodes.Length == 3 && nodes[0].Button.interactable && !nodes[1].Button.interactable, "only first node unlocked");
@@ -442,9 +452,9 @@ namespace Pokiwar.EditorTools
             }
             app.Save.AddCardStones(1, 6);
             app.Save.Gold += 5000;
-            app.Hub.CardsButton.onClick.Invoke();
+            app.Map.CardsButton.onClick.Invoke();
             yield return null;
-            Check(app.CardForge.gameObject.activeSelf, "card forge opens from the hub");
+            Check(app.CardForge.gameObject.activeSelf, "card forge opens from the lobby");
             CheckOnScreen(app.CardForge.transform, "card forge");
             Check(app.CardForge.CardFace.LevelBadge.activeSelf && app.CardForge.CardFace.Level.text == "1" && app.CardForge.CardFace.Power.text.Length > 0, "card face shows cost, level and damage");
             RowView forgeRow = null;

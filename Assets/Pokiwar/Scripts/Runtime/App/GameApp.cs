@@ -54,7 +54,7 @@ namespace Pokiwar.App
         private void Start()
         {
             ApplySettings();
-            ShowHub();
+            ShowMap();
         }
 
         private void OnDestroy()
@@ -80,7 +80,7 @@ namespace Pokiwar.App
             Save = saves.Reset();
             Rng = new SeededRng(Save.RngState);
             ApplySettings();
-            ShowHub();
+            ShowMap();
             Toast("Save reset");
         }
 

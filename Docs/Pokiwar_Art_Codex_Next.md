@@ -191,6 +191,61 @@ Save into `D:\Project\Pokiwar_Art_FG38\Assets\Meta\UI\`:
 
 Final check: one contact sheet of the three files on a mid-grey background and on the battle background.
 
+## Batch 10 - lobby (8 images)
+
+The lobby is the first screen (landscape only, 1920x1080): a grid of region tiles on the left, the region's
+opponents standing on a ring around a planet on the right, a top bar and a bottom navigation bar. The game
+draws all of it with flat shapes until these files exist. Same FG38 hand as the rest: clean cartoon, thick
+dark outline, soft cel shading, no text baked into any image.
+
+Save into `D:\Project\Pokiwar_Art_FG38\Assets\Meta\Background\`:
+
+- `lobby_bg_sky_v01.png` - 2048x1152, opaque. Bright blue sky sea with soft clouds and faint star sparkles,
+  calm and low-contrast: UI panels and monsters sit on top of every part of it. No horizon objects, no
+  characters.
+
+Save into `D:\Project\Pokiwar_Art_FG38\Assets\Meta\Lobby\` (transparent background, subject centred, at
+least 6% clear margin):
+
+- `lobby_planet_v01.png` - 512x512. A small glowing blue-white planet with one tilted ring around it, the
+  centrepiece the opponents stand around. Soft outer glow that fades out before the canvas edge.
+- `lobby_lock_v01.png` - 256x256. A chunky cartoon padlock, steel blue with a gold keyhole plate; it marks
+  a region that is not open yet.
+- `region_sunny_isle_v01.png` - 256x256. A tiny floating island emblem for the region "Sunny Isle": sandy
+  rock, a few palm trees, a warm sun glint. Readable at 120 px.
+- `nav_info_v01.png` - 256x256. Navigation icon "info": a rolled parchment scroll with a small star seal.
+- `nav_avatar_v01.png` - 256x256. Navigation icon "change avatar": a cap resting on a folded jacket.
+- `nav_cards_v01.png` - 256x256. Navigation icon "card training": two overlapping battle cards with an
+  upward arrow.
+- `nav_pets_v01.png` - 256x256. Navigation icon "pet training": a round paw-print medal with a small anvil
+  hammer.
+
+Final check: one contact sheet of the seven transparent files on the lobby background.
+
+## Batch 11 - forge, reward and world map (not wired yet, paint after Batch 10)
+
+Needed for the screens that are still plain lists. File names are fixed now so the code can pick them up.
+
+Save into `D:\Project\Pokiwar_Art_FG38\Assets\Meta\Forge\` (transparent background):
+
+- `forge_pedestal_v01.png` - 768x512. A round stone pedestal with a glowing rune circle on top, seen
+  slightly from above; the pet or the card stands on it.
+- `forge_slot_v01.png` - 256x256. An empty square socket for one upgrade stone: dark inset, gold rim.
+- `forge_tab_v01.png` - 512x160. A blank tab plate (no text), stretchable in the middle.
+
+Save into `D:\Project\Pokiwar_Art_FG38\Assets\Meta\Stones\` (256x256 each, transparent):
+
+- `stone_metal_v01.png`, `stone_wood_v01.png`, `stone_water_v01.png`, `stone_fire_v01.png`,
+  `stone_earth_v01.png` - one round elemental pet stone per element (the game's five: Metal, Wood, Water,
+  Fire, Earth), same silhouette, element colour and a simple element mark inside.
+
+Save into `D:\Project\Pokiwar_Art_FG38\Assets\Meta\World\`:
+
+- `world_bg_sea_v01.png` - 2048x1152, opaque. Open sea seen from above with drifting cloud banks.
+- `world_island_sunny_v01.png` - 768x512, transparent. The Sunny Isle as a whole island seen from above.
+- `world_island_locked_v01.png` - 512x384, transparent. A pale island hidden in cloud.
+- `world_ship_v01.png` - 256x256, transparent. A small cartoon sailing ship, the player's marker.
+
 ## After any batch
 
 Tell Claude Code "lấy asset Codex mới vào game" (or run `Pokiwar/Rebuild Scene + Art` in Unity). Painted

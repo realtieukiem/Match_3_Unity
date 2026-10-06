@@ -66,7 +66,7 @@ namespace Pokiwar.EditorTools
                 if (s.path != ScenePath && File.Exists(s.path)) scenes.Add(new EditorBuildSettingsScene(s.path, false));
             EditorBuildSettings.scenes = scenes.ToArray();
             PlayerSettings.defaultInterfaceOrientation = UIOrientation.AutoRotation;
-            PlayerSettings.allowedAutorotateToPortrait = true;
+            PlayerSettings.allowedAutorotateToPortrait = false;
             PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
             PlayerSettings.allowedAutorotateToLandscapeLeft = true;
             PlayerSettings.allowedAutorotateToLandscapeRight = true;
@@ -131,7 +131,7 @@ namespace Pokiwar.EditorTools
             BuildVfx(root);
             var toast = BuildToast(root);
             Portrait(toast, 0.5f, 0, 0, 250, 900, 84);
-            canvasGo.AddComponent<ResponsiveCanvas>();
+            canvasGo.AddComponent<ResponsiveCanvas>().Force = ResponsiveCanvas.Mode.Landscape;
 
             var appGo = new GameObject("PokiwarApp");
             var app = appGo.AddComponent<GameApp>();
@@ -152,8 +152,8 @@ namespace Pokiwar.EditorTools
             audio.Clips = clips;
             app.Audio = audio;
 
-            hub.gameObject.SetActive(true);
-            map.gameObject.SetActive(false);
+            hub.gameObject.SetActive(false);
+            map.gameObject.SetActive(true);
             prep.gameObject.SetActive(false);
             battle.gameObject.SetActive(false);
             result.gameObject.SetActive(false);
@@ -197,7 +197,7 @@ namespace Pokiwar.EditorTools
             hub.PetElement.preserveAspect = true;
             At(hub.PetElement.rectTransform, 0.5f, 0.5f, -10, -200, 64, 64);
 
-            hub.AdventureButton = Btn(s, "AdventureButton", "ADVENTURE", Green, 56, out _);
+            hub.AdventureButton = Btn(s, "AdventureButton", "LOBBY", Green, 56, out _);
             At(Rt(hub.AdventureButton), 0.5f, 0.5f, 420, 40, 560, 160);
             hub.UpgradeButton = Btn(s, "UpgradeButton", "PETS", Blue, 42, out _);
             At(Rt(hub.UpgradeButton), 0.5f, 0.5f, 278, -140, 272, 120);
@@ -228,35 +228,121 @@ namespace Pokiwar.EditorTools
         private static MapScreen BuildMap(Transform root)
         {
             var s = Screen(root, "MapScreen");
-            Fill(Img(s, "Bg", Key("bg.map", "ui.map"), Color.white).rectTransform);
+            Fill(Img(s, "Bg", Key("bg.lobby", Key("bg.map", "ui.map")), Color.white).rectTransform);
             var map = s.gameObject.AddComponent<MapScreen>();
-            var bar = Img(s, "TopBar", null, new Color(0, 0, 0, 0.45f));
-            At(bar.rectTransform, 0.5f, 1, 0, -60, 4000, 120);
-            map.Header = Txt(s, "Header", "Sunny Isle", 60, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(map.Header.rectTransform, 0.5f, 1, 0, -60, 900, 90);
+            var bar = Img(s, "TopBar", null, new Color(0.03f, 0.08f, 0.2f, 0.72f));
+            At(bar.rectTransform, 0.5f, 1, 0, -50, 4000, 100);
+            map.PlayerLabel = Txt(s, "PlayerLabel", "", 34, Color.white, TextAnchor.MiddleLeft, FontStyle.Bold);
+            At(map.PlayerLabel.rectTransform, 0, 1, 340, -50, 560, 60);
+            map.PlayerLabel.gameObject.AddComponent<Outline>().effectColor = new Color(0.05f, 0.1f, 0.25f);
+            map.Header = Txt(s, "Header", "Sunny Isle", 52, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(map.Header.rectTransform, 0.5f, 1, 310, -50, 700, 80);
+            map.Header.gameObject.AddComponent<Outline>().effectColor = new Color(0.25f, 0.12f, 0.02f);
             var info = NewUI("Resources", s);
-            At(info, 1, 1, -250, -60, 460, 64);
-            map.EnergyLabel = Chip(info, "Energy", "gem.Lightning", Color.white, -115, 210);
-            map.GoldLabel = Chip(info, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, 115, 210);
-            map.BackButton = Btn(s, "BackButton", "BACK", Gray, 36, out _);
-            At(Rt(map.BackButton), 0, 1, 140, -60, 220, 86);
-            var area = NewUI("NodeArea", s);
-            Fill(area, 160, 160, 170, 110);
+            At(info, 1, 1, -250, -50, 460, 64);
+            map.GoldLabel = Chip(info, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, -115, 210);
+            map.EnergyLabel = Chip(info, "Energy", "gem.Lightning", Color.white, 115, 210);
+
+            var regions = Img(s, "Regions", "ui.round", new Color(0.04f, 0.1f, 0.26f, 0.78f));
+            regions.type = Image.Type.Sliced;
+            At(regions.rectTransform, 0, 0.5f, 340, 15, 600, 800);
+            var grid = regions.gameObject.AddComponent<GridLayoutGroup>();
+            grid.padding = new RectOffset(18, 18, 18, 18);
+            grid.cellSize = new Vector2(180, 182);
+            grid.spacing = new Vector2(12, 12);
+            grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
+            grid.constraintCount = 3;
+            grid.childAlignment = TextAnchor.UpperCenter;
+            map.RegionTemplate = MakeLobbyTile(regions.transform, "RegionTemplate");
+            map.RegionLocked = art.TryGetValue("lobby.lock", out var lockSprite) ? lockSprite : null;
+
+            var sky = Img(s, "Ring", "ui.round", new Color(0.1f, 0.3f, 0.66f, 0.55f));
+            sky.type = Image.Type.Sliced;
+            sky.rectTransform.anchorMin = Vector2.zero;
+            sky.rectTransform.anchorMax = Vector2.one;
+            sky.rectTransform.offsetMin = new Vector2(670, 155);
+            sky.rectTransform.offsetMax = new Vector2(-40, -125);
+            var planet = Img(sky.transform, "Planet", Key("lobby.planet", "ui.circle"), art.ContainsKey("lobby.planet") ? Color.white : new Color(0.55f, 0.8f, 1f, 0.35f));
+            planet.preserveAspect = true;
+            At(planet.rectTransform, 0.5f, 0.5f, 0, 0, 330, 330);
+            var area = NewUI("NodeArea", sky.transform);
+            Fill(area);
             map.NodeArea = area;
             map.PathTemplate = Img(area, "PathTemplate", "ui.round", new Color(1f, 0.9f, 0.5f));
             At(map.PathTemplate.rectTransform, 0.5f, 0.5f, 0, 0, 100, 12);
-            map.NodeTemplate = MakeRow(area, "NodeTemplate", 350, 150, Blue, 104, 0, 28, 22);
-            if (Skin(map.NodeTemplate.Background, "ui.button.blue", 30))
-            {
-                map.NodeOpen = art["ui.button.blue"];
-                map.NodeLocked = art.TryGetValue("ui.button.gray", out var grayNode) ? grayNode : null;
-                map.NodeBoss = art.TryGetValue("ui.button.red", out var redNode) ? redNode : null;
-            }
+            map.NodeTemplate = MakeLobbyNode(area, "NodeTemplate");
             map.PathTemplate.gameObject.SetActive(false);
             map.NodeTemplate.gameObject.SetActive(false);
-            PortraitStretch(area, 40, 40, 230, 120);
-            Portrait(info, 0.5f, 1, 0, -160, 460, 64);
+
+            var nav = Img(s, "NavBar", null, new Color(0.03f, 0.08f, 0.2f, 0.72f));
+            At(nav.rectTransform, 0.5f, 0, 0, 65, 4000, 130);
+            map.BackButton = NavButton(s, "InfoButton", "INFO", "nav.info", Blue, 0);
+            map.AvatarButton = NavButton(s, "AvatarButton", "AVATAR", "nav.avatar", Gold, 1);
+            map.CardsButton = NavButton(s, "CardsButton", "CARDS", "nav.cards", Blue, 2);
+            map.PetsButton = NavButton(s, "PetsButton", "PETS", "nav.pets", Green, 3);
             return map;
+        }
+
+        private static Button NavButton(Transform parent, string name, string label, string iconKey, Color c, int index)
+        {
+            var b = Btn(parent, name, label, c, 34, out var text);
+            At(Rt(b), 0, 0, 180 + index * 300, 65, 280, 104);
+            if (art.ContainsKey(iconKey))
+            {
+                var icon = Img(b.transform, "Icon", iconKey, Color.white);
+                icon.preserveAspect = true;
+                At(icon.rectTransform, 0, 0.5f, 56, 6, 96, 96);
+                Fill(text.rectTransform, 96, 8, 0, 0);
+            }
+            return b;
+        }
+
+        private static RowView MakeLobbyTile(Transform parent, string name)
+        {
+            var bg = Img(parent, name, "ui.round", Blue, true);
+            bg.type = Image.Type.Sliced;
+            var row = bg.gameObject.AddComponent<RowView>();
+            row.Background = bg;
+            row.Button = bg.gameObject.AddComponent<Button>();
+            row.Button.targetGraphic = bg;
+            bg.gameObject.AddComponent<ClickSound>();
+            var hl = Img(bg.transform, "Highlight", "ui.frame", Gold);
+            Fill(hl.rectTransform, -4, -4, -4, -4);
+            row.Highlight = hl.gameObject;
+            row.Icon = Img(bg.transform, "Icon", null, Color.white);
+            row.Icon.preserveAspect = true;
+            At(row.Icon.rectTransform, 0.5f, 1, 0, -70, 124, 124);
+            row.Title = Txt(bg.transform, "Title", "Region", 26, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(row.Title.rectTransform, 0.5f, 0, 0, 26, 172, 40);
+            row.Title.resizeTextForBestFit = true;
+            row.Title.resizeTextMinSize = 16;
+            row.Title.resizeTextMaxSize = 26;
+            row.Title.gameObject.AddComponent<Outline>().effectColor = new Color(0.03f, 0.08f, 0.2f);
+            return row;
+        }
+
+        private static RowView MakeLobbyNode(Transform parent, string name)
+        {
+            var bg = Img(parent, name, "ui.circle", Blue, true);
+            At(bg.rectTransform, 0.5f, 0.5f, 0, 0, 170, 170);
+            var row = bg.gameObject.AddComponent<RowView>();
+            row.Background = bg;
+            row.Button = bg.gameObject.AddComponent<Button>();
+            row.Button.targetGraphic = bg;
+            bg.gameObject.AddComponent<ClickSound>();
+            row.Icon = Img(bg.transform, "Icon", null, Color.white);
+            row.Icon.preserveAspect = true;
+            At(row.Icon.rectTransform, 0.5f, 0.5f, 0, 14, 200, 200);
+            var star = Img(bg.transform, "Highlight", "fx.star", Gold);
+            At(star.rectTransform, 1, 1, -8, -8, 60, 60);
+            row.Highlight = star.gameObject;
+            row.Title = Txt(bg.transform, "Title", "1. Node", 28, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(row.Title.rectTransform, 0.5f, 0, 0, -22, 340, 38);
+            row.Title.gameObject.AddComponent<Outline>().effectColor = new Color(0.03f, 0.08f, 0.2f);
+            row.Subtitle = Txt(bg.transform, "Subtitle", "", 21, new Color(0.9f, 0.95f, 1f), TextAnchor.UpperCenter);
+            At(row.Subtitle.rectTransform, 0.5f, 0, 0, -70, 340, 56);
+            row.Subtitle.gameObject.AddComponent<Outline>().effectColor = new Color(0.03f, 0.08f, 0.2f);
+            return row;
         }
 
         private static PrepScreen BuildPrep(Transform root)
@@ -997,7 +1083,7 @@ namespace Pokiwar.EditorTools
         private static ToastView BuildToast(Transform root)
         {
             var bg = Img(root, "Toast", "ui.round", new Color(0, 0, 0, 0.82f));
-            At(bg.rectTransform, 0.5f, 0.5f, 0, -430, 900, 84);
+            At(bg.rectTransform, 0.5f, 0.5f, 0, -340, 900, 84);
             var tv = bg.gameObject.AddComponent<ToastView>();
             tv.Group = bg.gameObject.AddComponent<CanvasGroup>();
             tv.Group.blocksRaycasts = false;

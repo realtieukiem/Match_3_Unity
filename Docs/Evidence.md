@@ -12,10 +12,13 @@ Status: **CONFIRMED_BY_VIDEO** read off a frame here, **CONFIRMED_BY_USER** stat
 
 ## Clip B, lobby to battle (read 2026-10-06)
 
+The game is locked to landscape (user, 2026-10-06: portrait is not needed for now): `ResponsiveCanvas.Force`
+is `Landscape` and autorotate to portrait is off. The portrait rects stay in the scene builder, unused.
+
 | Clip @ time | Seen | Game | Status |
 |---|---|---|---|
 | B 00:06 | World map "Đại hải trình": sea with islands, tap an island | not built - `MapScreen` is a 3-node path | CONFIRMED_BY_VIDEO |
-| B 00:20 | Hub: grid of 12 regions on the left, ring of 12 numbered bosses on the right, top bar (rank points, gold, server, ĐỘI CHIẾN), bottom nav (thông tin, đổi avatar, luyện thẻ, luyện poke, shop thẻ, shop avatar), energy 36/80 | not built - `HubScreen` is a pet card plus buttons (ADVENTURE, PETS, CARDS, AVATAR) | CONFIRMED_BY_VIDEO |
+| B 00:20 | Hub: grid of 12 regions on the left, ring of 12 numbered bosses on the right, top bar (rank points, gold, server, ĐỘI CHIẾN), bottom nav (thông tin, đổi avatar, luyện thẻ, luyện poke, shop thẻ, shop avatar), energy 36/80 | `MapScreen` is the lobby and the first screen: 12 region tiles on the left (one real, the rest locked), the region's opponents numbered on a ring around a planet (`RingLayout`, `RingRadius`), top bar with name, gold and energy, bottom nav INFO / AVATAR / CARDS / PETS. `HubScreen` is the INFO page. Flat shapes until Codex Batch 10; no rank points, server, team button, shops or chat | layout CONFIRMED_BY_VIDEO |
 | B 00:35, 00:50 | "Luyện poke": pet on a pedestal, three ĐÁ slots, stone grid with counts, NÂNG CẤP, carousel of six pets, lucky and protection charms with a price and MUA | `UpgradeScreen` has the same actions as lists, not the pedestal layout; no charm shop | CONFIRMED_BY_VIDEO |
 | B 01:00 | "Luyện thẻ": tabs Luyện thẻ / Luyện đá / Tặng phẩm; card on a pedestal with three stone slots; YELLOW card stones in their own grid; lucky points stepper; tray of owned cards with mana cost top-left, level badge top-right, damage at the bottom (160 L5 372, 200 L6 675, 140 L6 396, 80 L5 193, 360 L12 3162) | `CardForgeScreen`: card face with cost, level badge and damage; `SaveData.CardStones` are separate from pet `Stones`; `UpgradeService.UpgradeCard`. No lucky points, one stone per attempt | card face and separate stones CONFIRMED_BY_VIDEO, odds INFERRED |
 | B 01:05 | Room "SÂN 8709": five CHỌN CARD slots holding one reusable card and three "+350" consumables, pet carousel, SẴN SÀNG | `PrepScreen`: five slots hold reusable and single-use cards together (max 2 reusable) | CONFIRMED_BY_VIDEO |
