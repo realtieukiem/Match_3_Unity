@@ -14,7 +14,16 @@ namespace Pokiwar.UI
 
         public void Set(int current, int max)
         {
-            if (Fill != null) Fill.fillAmount = max <= 0 ? 0f : Mathf.Clamp01((float)current / max);
+            float pct = max <= 0 ? 0f : Mathf.Clamp01((float)current / max);
+            if (Fill != null)
+            {
+                if (Fill.type == Image.Type.Filled) Fill.fillAmount = pct;
+                else
+                {
+                    Fill.enabled = pct > 0f;
+                    Fill.rectTransform.anchorMax = new Vector2(pct, 1f);
+                }
+            }
             if (Label != null) Label.text = (string.IsNullOrEmpty(Prefix) ? "" : Prefix + " ") + current + "/" + max;
         }
     }

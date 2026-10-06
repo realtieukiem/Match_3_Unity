@@ -29,6 +29,9 @@ namespace Pokiwar.EditorTools
             made["fx.dot"] = Write("fx_dot", 64, (x, y) => { float d = Mathf.Clamp01(1f - Mathf.Sqrt(x * x + y * y)); return new Color(1, 1, 1, d * d); });
             made["fx.star"] = Write("fx_star", 64, (x, y) => Star(x, y) ? Color.white : Color.clear);
             made["battle.arrow"] = Write("battle_arrow", 256, BattleArrow);
+            made["bar.shape"] = Write("bar_shape", 64, (x, y) => BarShape(x, y) ? Color.white : Color.clear, 4);
+            made["bar.gloss"] = Write("bar_gloss", 64, (x, y) => !BarShape(x, y) ? Color.clear : y > 0.2f ? new Color(1f, 1f, 1f, 0.36f) : y < -0.5f ? new Color(0f, 0f, 0f, 0.22f) : Color.clear, 4);
+            made["fx.burst"] = Write("fx_burst", 128, Burst, 4);
             made["fx.bubble"] = Write("fx_bubble", 512, ShieldBubble, 2);
             made["element.Neutral"] = WriteElement("element_neutral", Hex("#B8B2A6"), Star);
             made["element.Metal"] = WriteElement("element_metal", Hex("#9AA7B8"), Sword);
@@ -68,7 +71,7 @@ namespace Pokiwar.EditorTools
             var result = new Dictionary<string, Sprite>();
             foreach (var kv in made)
             {
-                ConfigureImporter(kv.Value, kv.Key == "ui.round" || kv.Key == "ui.frame");
+                ConfigureImporter(kv.Value, kv.Key == "ui.round" || kv.Key == "ui.frame", kv.Key.StartsWith("bar."));
                 result[kv.Key] = AssetDatabase.LoadAssetAtPath<Sprite>(kv.Value);
             }
             return result;
@@ -114,7 +117,20 @@ namespace Pokiwar.EditorTools
             made["avatar.hat.wizard"] = Doll("hat_wizard", (x, y) => Tri(x, y, -0.32f, 0.62f, 0.32f, 0.62f, 0.08f, 1f) || Box(x, y, 0f, 0.62f, 0.42f, 0.04f), Hex("#3B3F9E"));
         }
 
-        private static void ConfigureImporter(string path, bool sliced)
+        private static bool BarShape(float x, float y) => Mathf.Abs(x - 0.25f * y) <= 0.75f;
+
+        private static Color Burst(float x, float y)
+        {
+            float r = Mathf.Sqrt(x * x + y * y);
+            float a = Mathf.Atan2(y, x);
+            float edge = 0.74f + 0.24f * Mathf.Abs(Mathf.Cos(a * 5f));
+            float k = r / edge;
+            if (k > 1f) return Color.clear;
+            if (k > 0.84f) return Hex("#5A1606");
+            return Color.Lerp(Hex("#FF4A1C"), Hex("#C81E12"), Mathf.Clamp01(k * 1.2f - 0.2f + y * -0.25f));
+        }
+
+        private static void ConfigureImporter(string path, bool sliced, bool bar = false)
         {
             var ti = (TextureImporter)AssetImporter.GetAtPath(path);
             ti.textureType = TextureImporterType.Sprite;
@@ -125,6 +141,7 @@ namespace Pokiwar.EditorTools
             ti.textureCompression = TextureImporterCompression.Uncompressed;
             ti.wrapMode = TextureWrapMode.Clamp;
             if (sliced) ti.spriteBorder = new Vector4(24, 24, 24, 24);
+            if (bar) ti.spriteBorder = new Vector4(17, 0, 17, 0);
             ti.SaveAndReimport();
         }
 

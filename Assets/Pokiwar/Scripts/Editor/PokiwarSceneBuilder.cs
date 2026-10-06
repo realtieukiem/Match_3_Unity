@@ -81,11 +81,15 @@ namespace Pokiwar.EditorTools
             var gv = root.gameObject.AddComponent<GemView>();
             gv.Icon = Img(root, "Icon", "gem.Sword", Color.white);
             Fill(gv.Icon.rectTransform);
-            var badge = Img(root, "Badge", "ui.circle", new Color(0.08f, 0.08f, 0.12f, 0.92f));
-            At(badge.rectTransform, 1, 1, -14, -14, 38, 38);
+            var badge = Img(root, "Badge", "fx.burst", Color.white);
+            At(badge.rectTransform, 1, 1, -13, -13, 46, 46);
+            badge.raycastTarget = false;
             gv.MultiplierBadge = badge.gameObject;
-            gv.MultiplierLabel = Txt(badge.transform, "Label", "x2", 22, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
-            Fill(gv.MultiplierLabel.rectTransform);
+            gv.MultiplierLabel = Txt(badge.transform, "Label", "x2", 24, Color.white, TextAnchor.MiddleCenter, FontStyle.BoldAndItalic);
+            Fill(gv.MultiplierLabel.rectTransform, -8, -8, 0, 0);
+            var badgeOutline = gv.MultiplierLabel.gameObject.AddComponent<Outline>();
+            badgeOutline.effectColor = new Color(0.3f, 0.05f, 0.02f, 1f);
+            badgeOutline.effectDistance = new Vector2(1.5f, -1.5f);
             var prefab = PrefabUtility.SaveAsPrefabAsset(root.gameObject, GemPrefabPath);
             UnityEngine.Object.DestroyImmediate(root.gameObject);
             return prefab.GetComponent<GemView>();
@@ -439,23 +443,22 @@ namespace Pokiwar.EditorTools
             }
 
             var bar = NewUI("CardBar", s);
-            At(bar, 0.5f, 0.5f, 0, -448, 700, 170);
+            At(bar, 0.5f, 0.5f, 0, -448, 920, 170);
             var barLayout = bar.gameObject.AddComponent<HorizontalLayoutGroup>();
             barLayout.childAlignment = TextAnchor.MiddleCenter;
             barLayout.spacing = 10;
             barLayout.childControlWidth = barLayout.childControlHeight = false;
             barLayout.childForceExpandWidth = barLayout.childForceExpandHeight = false;
+            for (int i = 0; i < 2; i++)
+            {
+                bc.SkillButtons[i] = MakeCard(bar, "Skill" + i);
+                bc.SkillButtons[i].Icon.preserveAspect = true;
+                At((RectTransform)bc.SkillButtons[i].transform, 0.5f, 0.5f, 0, 0, 120, 150);
+            }
             for (int i = 0; i < 5; i++)
             {
                 bc.CardButtons[i] = MakeCard(bar, "Card" + i);
                 At((RectTransform)bc.CardButtons[i].transform, 0.5f, 0.5f, -260 + i * 130, 0, 120, 150);
-            }
-            var skills = new RectTransform[2];
-            for (int i = 0; i < 2; i++)
-            {
-                bc.SkillButtons[i] = MakeSkill(s, "Skill" + i);
-                skills[i] = (RectTransform)bc.SkillButtons[i].transform;
-                At(skills[i], 0.5f, 0.5f, 450 + i * 140, -440, 116, 116);
             }
 
             var sum = NewUI("GemSummary", s);
@@ -500,6 +503,9 @@ namespace Pokiwar.EditorTools
             var flv = fl.gameObject.AddComponent<FloatingTextLayer>();
             flv.Template = Txt(fl, "Template", "-123", 40, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
             At(flv.Template.rectTransform, 0.5f, 0.5f, 0, 0, 700, 80);
+            var floatOutline = flv.Template.gameObject.AddComponent<Outline>();
+            floatOutline.effectColor = new Color(0.08f, 0.04f, 0.02f, 0.95f);
+            floatOutline.effectDistance = new Vector2(2, -2);
             flv.Template.gameObject.SetActive(false);
             bc.Floating = flv;
 
@@ -514,16 +520,14 @@ namespace Pokiwar.EditorTools
             bc.Qte = BuildQte(s);
             bc.Log = BuildLog(s);
             Portrait(top, 0.5f, 1, 0, -190, 1120, 176, 0.94f);
-            Portrait(bc.PlayerHud, 0.5f, 0.5f, -265, 470, 520, 500, 0.78f);
-            Portrait(bc.EnemyHud, 0.5f, 0.5f, 265, 470, 520, 500, 0.78f);
+            Portrait(bc.PlayerHud, 0.5f, 0.5f, -265, 500, 520, 500, 0.78f);
+            Portrait(bc.EnemyHud, 0.5f, 0.5f, 265, 500, 520, 500, 0.78f);
             Portrait(bc.PlayerHud.ElementIcon, 0, 1, 64, -330, 96, 96);
             Portrait(bc.EnemyHud.ElementIcon, 1, 1, -64, -330, 96, 96);
             Portrait(bc.PlayerCard, 0, 1, 58, -455, 180, 200, 0.6f);
             Portrait(bc.EnemyCard, 1, 1, -58, -455, 180, 200, 0.6f);
             Portrait(boardRoot, 0.5f, 0.5f, 0, -255, 704, 704, 1.38f);
-            Portrait(bar, 0.5f, 0, -75, 120, 700, 170);
-            Portrait(skills[0], 0.5f, 0, 345, 120, 116, 116);
-            Portrait(skills[1], 0.5f, 0, 475, 120, 116, 116);
+            Portrait(bar, 0.5f, 0, 0, 120, 920, 170);
             Portrait(sum, 0.5f, 0.5f, 0, -255, 900, 190, 1.2f);
             Portrait(pop, 0.5f, 0.5f, 0, -255, 900, 140);
             Portrait(banner, 0.5f, 0.5f, 0, -255, 4000, 150);
@@ -872,28 +876,29 @@ namespace Pokiwar.EditorTools
         private static CombatantHud MakeHud(Transform screen, Transform top, string name, bool player)
         {
             float side = player ? -1f : 1f;
-            var strip = Img(top, name + "Strip", "ui.round", new Color(1f, 1f, 1f, 0f), true);
-            At(strip.rectTransform, 0.5f, 0.5f, side * 300, 54, 440, 46);
-            Skin(strip, "hud.name", 20);
             var root = NewUI(name, screen);
             At(root, 0.5f, 0.5f, side * 600, -90, 520, 500);
             var hud = root.gameObject.AddComponent<CombatantHud>();
-            hud.NameStrip = strip;
-            hud.NameLabel = Txt(strip.transform, "Name", "Name", 32, Color.white, player ? TextAnchor.MiddleLeft : TextAnchor.MiddleRight, FontStyle.Bold);
-            Fill(hud.NameLabel.rectTransform, 16, 16, 0, 0);
-            var nameOutline = hud.NameLabel.gameObject.AddComponent<Outline>();
-            nameOutline.effectColor = new Color(0.05f, 0.1f, 0.3f, 1f);
-            hud.Hp = MakeThinBar(top, name + "Hp", new Color(0.86f, 0.18f, 0.22f), side * 300, 12, player);
-            hud.Mana = MakeThinBar(top, name + "Mana", new Color(0.2f, 0.62f, 1f), side * 300, -22, player);
-            hud.Rage = MakeThinBar(top, name + "Rage", new Color(0.95f, 0.78f, 0.15f), side * 300, -56, player);
+            hud.Hp = MakeThinBar(top, name + "Hp", new Color(0.92f, 0.2f, 0.22f), side * 295, 40, player);
+            hud.Mana = MakeThinBar(top, name + "Mana", new Color(0.2f, 0.62f, 1f), side * 295, 0, player);
+            hud.Rage = MakeThinBar(top, name + "Rage", new Color(1f, 0.8f, 0.15f), side * 295, -40, player);
 
             const float feet = -230f;
+            hud.NameLabel = Txt(root, "Name", "Name", 34, player ? Color.white : new Color(1f, 0.5f, 0.42f), TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(hud.NameLabel.rectTransform, 0.5f, 0.5f, 0, feet - 64, 270, 40);
+            hud.NameLabel.resizeTextForBestFit = true;
+            hud.NameLabel.resizeTextMinSize = 22;
+            hud.NameLabel.verticalOverflow = VerticalWrapMode.Truncate;
+            hud.NameLabel.resizeTextMaxSize = 34;
+            var nameOutline = hud.NameLabel.gameObject.AddComponent<Outline>();
+            nameOutline.effectColor = new Color(0.08f, 0.04f, 0.02f, 1f);
+            nameOutline.effectDistance = new Vector2(2, -2);
             var marker = Img(root, "TurnMarker", "ui.ring", new Color(1f, 0.85f, 0.3f, 0.9f));
             At(marker.rectTransform, 0.5f, 0.5f, 0, feet, 380, 84);
             hud.TurnMarker = marker.gameObject;
             var arrow = Img(root, "AttackArrow", "battle.arrow", player ? Color.white : new Color(1f, 0.55f, 0.5f));
             arrow.preserveAspect = true;
-            At(arrow.rectTransform, 0.5f, 0.5f, -side * 200, feet + 20, 130, 130);
+            At(arrow.rectTransform, 0.5f, 0.5f, -side * 190, feet - 64, 84, 84);
             if (!player) arrow.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
             hud.AttackArrow = arrow.rectTransform;
             arrow.gameObject.SetActive(false);
@@ -918,7 +923,7 @@ namespace Pokiwar.EditorTools
             hud.FloatAnchor = NewUI("FloatAnchor", root);
             At(hud.FloatAnchor, 0.5f, 0.5f, 0, feet + 230, 10, 10);
             hud.StatusLabel = Txt(root, "Status", "", 22, new Color(0.7f, 1f, 0.8f), TextAnchor.UpperCenter);
-            At(hud.StatusLabel.rectTransform, 0.5f, 0.5f, 0, feet - 50, 520, 40);
+            At(hud.StatusLabel.rectTransform, 0.5f, 0.5f, 0, feet - 104, 520, 40);
             hud.ElementIcon = Img(screen, name + "Element", "element.Fire", Color.white);
             hud.ElementIcon.preserveAspect = true;
             At(hud.ElementIcon.rectTransform, player ? 0 : 1, 0, player ? 72 : -72, 72, 104, 104);
@@ -927,17 +932,28 @@ namespace Pokiwar.EditorTools
 
         private static BarView MakeThinBar(Transform parent, string name, Color c, float x, float y, bool leftToRight)
         {
-            var bg = Img(parent, name, "ui.round", new Color(0.02f, 0.05f, 0.16f, 0.85f));
-            At(bg.rectTransform, 0.5f, 0.5f, x, y, 440, 28);
-            Skin(bg, "hud.track", 12);
+            var bg = NewUI(name, parent);
+            At(bg, 0.5f, 0.5f, x, y, 420, 32);
             var bv = bg.gameObject.AddComponent<BarView>();
-            bv.Fill = Img(bg.transform, "Fill", Key("hud.fill", "ui.round"), c);
-            bv.Fill.type = Image.Type.Filled;
-            bv.Fill.fillMethod = Image.FillMethod.Horizontal;
-            bv.Fill.fillOrigin = leftToRight ? (int)Image.OriginHorizontal.Left : (int)Image.OriginHorizontal.Right;
-            Fill(bv.Fill.rectTransform, 2, 2, 2, 2);
-            bv.Label = Txt(bg.transform, "Label", "0/0", 20, Color.white, leftToRight ? TextAnchor.MiddleLeft : TextAnchor.MiddleRight, FontStyle.Bold);
-            Fill(bv.Label.rectTransform, 12, 12, 0, 0);
+            var body = NewUI("Body", bg);
+            Fill(body);
+            if (!leftToRight) body.localScale = new Vector3(-1f, 1f, 1f);
+            var rim = Img(body, "Rim", "bar.shape", new Color(0.01f, 0.02f, 0.07f, 1f));
+            Fill(rim.rectTransform);
+            SliceTo(rim, 9);
+            var back = Img(body, "Back", "bar.shape", new Color(0.1f, 0.16f, 0.34f, 1f));
+            Fill(back.rectTransform, 3, 3, 3, 3);
+            SliceTo(back, 8);
+            var area = NewUI("FillArea", body);
+            Fill(area, 3, 3, 3, 3);
+            bv.Fill = Img(area, "Fill", "bar.shape", c);
+            Fill(bv.Fill.rectTransform);
+            SliceTo(bv.Fill, 8);
+            var gloss = Img(bv.Fill.transform, "Gloss", "bar.gloss", Color.white);
+            Fill(gloss.rectTransform);
+            SliceTo(gloss, 8);
+            bv.Label = Txt(bg, "Label", "0/0", 21, Color.white, leftToRight ? TextAnchor.MiddleLeft : TextAnchor.MiddleRight, FontStyle.Bold);
+            Fill(bv.Label.rectTransform, 20, 20, 0, 0);
             var o = bv.Label.gameObject.AddComponent<Outline>();
             o.effectColor = new Color(0f, 0f, 0f, 0.8f);
             bv.Prefix = "";
@@ -963,27 +979,6 @@ namespace Pokiwar.EditorTools
             At(costBg.rectTransform, 0.5f, 0, 0, 20, 104, 30);
             v.Cost = Txt(costBg.transform, "Cost", "0", 19, new Color(0.75f, 0.9f, 1f), TextAnchor.MiddleCenter, FontStyle.Bold);
             Fill(v.Cost.rectTransform);
-            return v;
-        }
-
-        private static ActionButtonView MakeSkill(Transform parent, string name)
-        {
-            var bg = Img(parent, name, "ui.circle", new Color(0.1f, 0.18f, 0.4f, 0.95f));
-            var v = bg.gameObject.AddComponent<ActionButtonView>();
-            v.Button = bg.gameObject.AddComponent<Button>();
-            v.Button.targetGraphic = bg;
-            bg.gameObject.AddComponent<ClickSound>();
-            v.Group = bg.gameObject.AddComponent<CanvasGroup>();
-            v.Icon = Img(bg.transform, "Icon", "skill.blaze_burst", Color.white);
-            v.Icon.preserveAspect = true;
-            Fill(v.Icon.rectTransform, 14, 14, 14, 14);
-            bool ring = art.ContainsKey("skill.frame");
-            v.Frame = Img(bg.transform, "Ring", ring ? "skill.frame" : "ui.ring", ring ? Color.white : new Color(1f, 0.8f, 0.3f));
-            Fill(v.Frame.rectTransform, ring ? -14 : -4, ring ? -14 : -4, ring ? -14 : -4, ring ? -14 : -4);
-            v.Cost = Txt(bg.transform, "Cost", "0", 22, new Color(0.75f, 0.9f, 1f), TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(v.Cost.rectTransform, 0.5f, 0, 0, -12, 160, 30);
-            var o = v.Cost.gameObject.AddComponent<Outline>();
-            o.effectColor = new Color(0f, 0f, 0f, 0.9f);
             return v;
         }
 

@@ -40,6 +40,12 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: cb924a45217362846b755efc30916386, type: 3}
   - Key: battle.arrow
     Sprite: {fileID: 21300000, guid: 5e56fe2861e11234ebbe3b101e6fc91a, type: 3}
+  - Key: bar.shape
+    Sprite: {fileID: 21300000, guid: 5da07152f9fdb5f4186eba0ae4772577, type: 3}
+  - Key: bar.gloss
+    Sprite: {fileID: 21300000, guid: 023ea2be1c5aeb0438fa03ccf738b804, type: 3}
+  - Key: fx.burst
+    Sprite: {fileID: 21300000, guid: 30daa4af75166d846beb0fffce06deff, type: 3}
   - Key: fx.bubble
     Sprite: {fileID: 21300000, guid: 41566354236f889438fe606deee32ad5, type: 3}
   - Key: element.Neutral

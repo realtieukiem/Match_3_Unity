@@ -14,15 +14,15 @@ Status: **CONFIRMED_BY_VIDEO** read off a frame here, **CONFIRMED_BY_USER** stat
 
 | Clip @ time | Seen | Game | Status |
 |---|---|---|---|
-| A 02:12, B 01:22 | One top HUD panel: left name + HP/MP/rage bars with `cur/max`, right the same mirrored, big orange countdown digit between them, no ring | `TopHud` in `BattleScreen`; enemy bars fill right-to-left | CONFIRMED_BY_VIDEO |
-| A 02:12, 03:22 | The acting side's name strip turns gold with an arrow toward the opponent | `CombatantHud.NameStrip` gold on `SetTurn` | CONFIRMED_BY_VIDEO |
+| A 02:12, B 01:22 | One top HUD panel: left name + HP/MP/rage bars with `cur/max`, right the same mirrored, big orange countdown digit between them, no ring | `TopHud` in `BattleScreen`: slanted code-drawn bars (`bar.shape`, `bar.gloss`), enemy side mirrored; the name is NOT repeated in the top panel (user, 2026-10-06: it cluttered the HUD) | bars CONFIRMED_BY_VIDEO, no top name CONFIRMED_BY_USER |
+| A 02:12, 03:22 | The acting side's name strip turns gold with an arrow toward the opponent | not built: the top name strip was removed on the user's word (2026-10-06) | CONFIRMED_BY_VIDEO |
 | A 02:12, B 01:22 | 8x8 board in the centre; pets stand below it, player left facing right, opponent right | board at the centre, pets bottom-left / bottom-right | CONFIRMED_BY_VIDEO |
-| A 02:12, 03:22, B 04:35 | A flaming arrow at the acting side's feet/name points at the opponent | `AttackArrow` beside the acting pet's feet, nudging toward the foe | CONFIRMED_BY_VIDEO (art is FG38, not the original flame) |
+| A 02:12, 03:22, B 04:35 | A flaming arrow at the acting side's feet/name points at the opponent | the pet's name sits under the pet; `AttackArrow` sits beside the acting side's name, nudging toward the foe | CONFIRMED_BY_VIDEO (art is FG38, not the original flame) |
 | A 02:17, 02:20, 03:12, 03:22 | After a match the board disappears; the collected gems show as a centred row of icons with red counts under the HUD; icons drop out one by one as their effect plays | board fades out, `GemSummaryView` row under the HUD, `Consume(gem)` per effect in resolve order | CONFIRMED_BY_VIDEO |
 | A 02:32 | "ĐẾN LƯỢT" in large stylised letters over the board when your turn starts | `TurnPop` "YOUR TURN" (English until Vietnamese is requested) | CONFIRMED_BY_VIDEO |
 | A 02:20, 03:22 | Gains float as numbers at the pet (+83, +198) | `FloatingTextLayer` at the pet | CONFIRMED_BY_VIDEO |
-| B 01:22, 04:37 | Loadout cards sit in a row under the board, art + cost | `CardBar` under the board; a used card leaves the row | layout CONFIRMED_BY_VIDEO, single use CONFIRMED_BY_USER |
-| A 02:32, B 02:22 | Round skill/item buttons with a cost in a column at the right | `Skill0/1` round buttons at the right | CONFIRMED_BY_VIDEO |
+| B 01:22, 04:37 | Loadout cards sit in a row under the board, art + cost | `CardBar` under the board: the pet's mana skills come first as reusable cards (B 01:22 `360`/`200` stay, the `+350` cards are gone by 04:37), then the single-use cards, which leave the row when used | layout CONFIRMED_BY_VIDEO, single use and "reusable = the pet's skill" CONFIRMED_BY_USER |
+| A 02:32, B 02:22 | Round skill/item buttons with a cost in a column at the right | not built: those cost the trainer's own lightning counter (top-left), a resource the slice does not have; pet skills are the reusable cards in `CardBar` | CONFIRMED_BY_VIDEO |
 | A/B bottom corners | Player level badge bottom-left, opponent bottom-right | element badge in those corners; level not shown (user, 2026-10-05) | layout CONFIRMED_BY_VIDEO, content CONFIRMED_BY_USER |
 | B 02:22 | QTE: five arrow keys in a bar, a timing bar above with "good", damage +7032 beside | `QteView`; 2836 -> 7032 good / 7089 perfect | CONFIRMED_BY_VIDEO |
 | B 04:33 -> 04:37 | BlueWings 34957/108000, transform card icon, large form at 54000/108000 | boss phase sets HP to 50%, sprite swap | HP after CONFIRMED_BY_VIDEO, trigger UNKNOWN |

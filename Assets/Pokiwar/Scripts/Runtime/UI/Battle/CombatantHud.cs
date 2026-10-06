@@ -11,7 +11,6 @@ namespace Pokiwar.UI
         public Image Portrait;
         public Text NameLabel;
         public Image ElementIcon;
-        public Image NameStrip;
         public BarView Hp;
         public BarView Mana;
         public BarView Rage;
@@ -27,11 +26,12 @@ namespace Pokiwar.UI
         public float ArrowNudge = 16f;
         [Tooltip("Turn arrow nudges per second.")]
         public float ArrowSpeed = 1.6f;
+        [Tooltip("Gap between the pet's name and the turn arrow beside it (px).")]
+        public float ArrowGap = 58f;
 
         private Vector2 portraitHome;
         private bool homeSet;
         private Vector2 arrowHome;
-        private bool arrowHomeSet;
         private int shownShield;
         private float direction = 1f;
         private SpriteLibrary lib;
@@ -71,6 +71,8 @@ namespace Pokiwar.UI
         public void Set(CombatantSnapshot s)
         {
             NameLabel.text = s.Name;
+            float half = Mathf.Min(NameLabel.preferredWidth, NameLabel.rectTransform.rect.width) * 0.5f;
+            arrowHome = NameLabel.rectTransform.anchoredPosition + new Vector2(direction * (half + ArrowGap), 0f);
             Hp.Set(s.Hp, s.MaxHp);
             Mana.Set(s.Mana, s.MaxMana);
             Rage.Set(s.Rage, s.MaxRage);
@@ -153,13 +155,7 @@ namespace Pokiwar.UI
         public void SetTurn(bool on)
         {
             if (TurnMarker != null) TurnMarker.SetActive(on);
-            if (NameStrip != null) NameStrip.color = on ? new Color(1f, 0.82f, 0.25f, 1f) : new Color(0.02f, 0.05f, 0.16f, 0.75f);
             if (AttackArrow == null) return;
-            if (!arrowHomeSet)
-            {
-                arrowHome = AttackArrow.anchoredPosition;
-                arrowHomeSet = true;
-            }
             AttackArrow.anchoredPosition = arrowHome;
             AttackArrow.gameObject.SetActive(on);
         }
