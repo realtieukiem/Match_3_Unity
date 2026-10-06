@@ -28,7 +28,7 @@ namespace Pokiwar.UI
         private void Awake()
         {
             rows = new TemplateList<RowView>(ItemTemplate);
-            BackButton.onClick.AddListener(() => app.ShowMap());
+            BackButton.onClick.AddListener(() => app.Back());
             SaveNameButton.onClick.AddListener(() => Do(app.Avatars.Rename(app.Save, NameField.text)));
             for (int i = 0; i < Tabs.Length; i++)
             {

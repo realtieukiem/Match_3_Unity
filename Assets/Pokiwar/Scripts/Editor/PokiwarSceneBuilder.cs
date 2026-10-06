@@ -120,6 +120,7 @@ namespace Pokiwar.EditorTools
             scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
             var root = canvasGo.transform;
 
+            var home = BuildHome(root);
             var hub = BuildHub(root);
             var map = BuildMap(root);
             var prep = BuildPrep(root);
@@ -137,6 +138,7 @@ namespace Pokiwar.EditorTools
             var app = appGo.AddComponent<GameApp>();
             app.Catalog = catalog;
             app.Sprites = lib;
+            app.Home = home;
             app.Hub = hub;
             app.Map = map;
             app.Prep = prep;
@@ -152,8 +154,9 @@ namespace Pokiwar.EditorTools
             audio.Clips = clips;
             app.Audio = audio;
 
+            home.gameObject.SetActive(true);
             hub.gameObject.SetActive(false);
-            map.gameObject.SetActive(true);
+            map.gameObject.SetActive(false);
             prep.gameObject.SetActive(false);
             battle.gameObject.SetActive(false);
             result.gameObject.SetActive(false);
@@ -163,6 +166,57 @@ namespace Pokiwar.EditorTools
 
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene, ScenePath);
+        }
+
+        private static HomeScreen BuildHome(Transform root)
+        {
+            var s = Screen(root, "HomeScreen");
+            Fill(Img(s, "Bg", Key("bg.home", Key("bg.lobby", "ui.map")), Color.white).rectTransform);
+            var home = s.gameObject.AddComponent<HomeScreen>();
+            var bar = Img(s, "TopBar", null, new Color(0.03f, 0.08f, 0.2f, 0.6f));
+            At(bar.rectTransform, 0.5f, 1, 0, -50, 4000, 100);
+            home.PlayerLabel = Txt(s, "PlayerLabel", "", 34, Color.white, TextAnchor.MiddleLeft, FontStyle.Bold);
+            At(home.PlayerLabel.rectTransform, 0, 1, 440, -50, 800, 60);
+            home.PlayerLabel.gameObject.AddComponent<Outline>().effectColor = new Color(0.05f, 0.1f, 0.25f);
+            var info = NewUI("Resources", s);
+            At(info, 1, 1, -250, -50, 460, 64);
+            home.GoldLabel = Chip(info, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, -115, 210);
+            home.EnergyLabel = Chip(info, "Energy", "gem.Lightning", Color.white, 115, 210);
+
+            var soon = new List<Button>();
+            soon.Add(HomeSpot(s, "RankSpot", "RANKING", "home.rank", Gold, -820, 330, 170));
+            soon.Add(HomeSpot(s, "WheelSpot", "LUCKY WHEEL", "home.wheel", Gold, -830, 120, 170));
+            soon.Add(HomeSpot(s, "CardShopSpot", "CARD SHOP", "home.shopcard", Blue, -760, -110, 170));
+            home.AvatarShopButton = HomeSpot(s, "AvatarShopSpot", "AVATAR SHOP", "home.shopavatar", Blue, -520, -230, 170);
+            soon.Add(HomeSpot(s, "GiftSpot", "GIFT SHOP", "home.gift", Green, -270, -100, 170));
+            soon.Add(HomeSpot(s, "ArenaSpot", "ARENA", "home.arena", Red, -90, 150, 300));
+            home.HuntButton = HomeSpot(s, "HuntSpot", "BOSS HUNT", "home.hunt", Green, 260, 250, 240);
+            soon.Add(HomeSpot(s, "ChallengeSpot", "CHALLENGE", "home.challenge", Red, 520, 60, 190));
+            home.EvolveButton = HomeSpot(s, "EvolveSpot", "EVOLVE", "home.evolve", Blue, 790, 230, 210);
+            home.SoonButtons = soon.ToArray();
+
+            var nav = Img(s, "NavBar", null, new Color(0.03f, 0.08f, 0.2f, 0.72f));
+            At(nav.rectTransform, 0.5f, 0, 0, 65, 4000, 130);
+            home.InfoButton = NavButton(s, "InfoButton", "INFO", "nav.info", Blue, 0);
+            home.AvatarButton = NavButton(s, "AvatarButton", "AVATAR", "nav.avatar", Gold, 1);
+            home.CardsButton = NavButton(s, "CardsButton", "CARDS", "nav.cards", Blue, 2);
+            home.PetsButton = NavButton(s, "PetsButton", "PETS", "nav.pets", Green, 3);
+            return home;
+        }
+
+        private static Button HomeSpot(Transform parent, string name, string label, string artKey, Color c, float x, float y, float size)
+        {
+            bool painted = art.ContainsKey(artKey);
+            var img = Img(parent, name, painted ? artKey : "ui.circle", painted ? Color.white : new Color(c.r, c.g, c.b, 0.85f), true);
+            img.preserveAspect = true;
+            At(img.rectTransform, 0.5f, 0.5f, x, y, size, size);
+            var b = img.gameObject.AddComponent<Button>();
+            b.targetGraphic = img;
+            img.gameObject.AddComponent<ClickSound>();
+            var text = Txt(img.transform, "Label", label, 30, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(text.rectTransform, 0.5f, painted ? 0f : 0.5f, 0, painted ? -14 : 0, 320, 44);
+            text.gameObject.AddComponent<Outline>().effectColor = new Color(0.03f, 0.08f, 0.2f);
+            return b;
         }
 
         private static HubScreen BuildHub(Transform root)
@@ -197,7 +251,7 @@ namespace Pokiwar.EditorTools
             hub.PetElement.preserveAspect = true;
             At(hub.PetElement.rectTransform, 0.5f, 0.5f, -10, -200, 64, 64);
 
-            hub.AdventureButton = Btn(s, "AdventureButton", "LOBBY", Green, 56, out _);
+            hub.AdventureButton = Btn(s, "AdventureButton", "BACK", Green, 56, out _);
             At(Rt(hub.AdventureButton), 0.5f, 0.5f, 420, 40, 560, 160);
             hub.UpgradeButton = Btn(s, "UpgradeButton", "PETS", Blue, 42, out _);
             At(Rt(hub.UpgradeButton), 0.5f, 0.5f, 278, -140, 272, 120);
@@ -233,7 +287,7 @@ namespace Pokiwar.EditorTools
             var bar = Img(s, "TopBar", null, new Color(0.03f, 0.08f, 0.2f, 0.72f));
             At(bar.rectTransform, 0.5f, 1, 0, -50, 4000, 100);
             map.PlayerLabel = Txt(s, "PlayerLabel", "", 34, Color.white, TextAnchor.MiddleLeft, FontStyle.Bold);
-            At(map.PlayerLabel.rectTransform, 0, 1, 340, -50, 560, 60);
+            At(map.PlayerLabel.rectTransform, 0, 1, 420, -50, 560, 60);
             map.PlayerLabel.gameObject.AddComponent<Outline>().effectColor = new Color(0.05f, 0.1f, 0.25f);
             map.Header = Txt(s, "Header", "Sunny Isle", 52, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
             At(map.Header.rectTransform, 0.5f, 1, 310, -50, 700, 80);
@@ -276,6 +330,8 @@ namespace Pokiwar.EditorTools
 
             var nav = Img(s, "NavBar", null, new Color(0.03f, 0.08f, 0.2f, 0.72f));
             At(nav.rectTransform, 0.5f, 0, 0, 65, 4000, 130);
+            map.CloseButton = Btn(s, "CloseButton", "X", Red, 40, out _);
+            At(Rt(map.CloseButton), 0, 1, 70, -50, 96, 76);
             map.BackButton = NavButton(s, "InfoButton", "INFO", "nav.info", Blue, 0);
             map.AvatarButton = NavButton(s, "AvatarButton", "AVATAR", "nav.avatar", Gold, 1);
             map.CardsButton = NavButton(s, "CardsButton", "CARDS", "nav.cards", Blue, 2);

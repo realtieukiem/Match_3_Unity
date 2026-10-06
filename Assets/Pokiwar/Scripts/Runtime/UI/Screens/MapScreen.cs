@@ -23,6 +23,7 @@ namespace Pokiwar.UI
         public Color RegionOpenTint = new Color(0.16f, 0.42f, 0.78f, 0.9f);
         public Color RegionLockedTint = new Color(0.2f, 0.26f, 0.42f, 0.85f);
         public Button BackButton;
+        public Button CloseButton;
         public Button AvatarButton;
         public Button CardsButton;
         public Button PetsButton;
@@ -45,6 +46,7 @@ namespace Pokiwar.UI
             paths = new TemplateList<Image>(PathTemplate);
             if (RegionTemplate != null) regions = new TemplateList<RowView>(RegionTemplate);
             BackButton.onClick.AddListener(() => app.ShowHub());
+            if (CloseButton != null) CloseButton.onClick.AddListener(() => app.ShowHome());
             if (AvatarButton != null) AvatarButton.onClick.AddListener(() => app.ShowWardrobe());
             if (CardsButton != null) CardsButton.onClick.AddListener(() => app.ShowCardForge());
             if (PetsButton != null) PetsButton.onClick.AddListener(() => app.ShowUpgrade());

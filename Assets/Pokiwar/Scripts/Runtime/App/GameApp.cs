@@ -15,6 +15,7 @@ namespace Pokiwar.App
         public SpriteLibrary Sprites;
 
         [Header("Screens")]
+        public HomeScreen Home;
         public HubScreen Hub;
         public MapScreen Map;
         public PrepScreen Prep;
@@ -54,7 +55,7 @@ namespace Pokiwar.App
         private void Start()
         {
             ApplySettings();
-            ShowMap();
+            ShowHome();
         }
 
         private void OnDestroy()
@@ -80,12 +81,13 @@ namespace Pokiwar.App
             Save = saves.Reset();
             Rng = new SeededRng(Save.RngState);
             ApplySettings();
-            ShowMap();
+            ShowHome();
             Toast("Save reset");
         }
 
         private void HideAll()
         {
+            if (Home != null) Home.gameObject.SetActive(false);
             Hub.gameObject.SetActive(false);
             Map.gameObject.SetActive(false);
             Prep.gameObject.SetActive(false);
@@ -106,6 +108,24 @@ namespace Pokiwar.App
             Wardrobe.Show(this);
         }
 
+        private bool cameFromLobby;
+
+        public void Back()
+        {
+            if (cameFromLobby) ShowMap();
+            else ShowHome();
+        }
+
+        public void ShowHome()
+        {
+            Progression.TickEnergy(Save, DateTime.UtcNow.Ticks);
+            cameFromLobby = false;
+            HideAll();
+            Home.gameObject.SetActive(true);
+            if (Audio != null) Audio.PlayMusic("music.menu");
+            Home.Show(this);
+        }
+
         public void ShowHub()
         {
             Progression.TickEnergy(Save, DateTime.UtcNow.Ticks);
@@ -118,6 +138,7 @@ namespace Pokiwar.App
         public void ShowMap()
         {
             Progression.TickEnergy(Save, DateTime.UtcNow.Ticks);
+            cameFromLobby = true;
             HideAll();
             Map.gameObject.SetActive(true);
             if (Audio != null) Audio.PlayMusic("music.menu");

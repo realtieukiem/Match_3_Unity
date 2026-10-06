@@ -272,6 +272,35 @@ Save into `D:\Project\Pokiwar_Art_FG38\Assets\Battle\Characters\`:
 
 Final check: for each creature, form 01 idle and form 02 idle side by side at the same scale.
 
+## Batch 13 - town map, the first screen (10 images)
+
+The game opens on a town map (landscape 1920x1080): floating islands in a bright sea and sky, each building a
+button. The game places the buildings itself, so paint the background WITHOUT buildings and each building as
+its own transparent file. Same FG38 hand, no text in any image (the game writes the labels).
+
+Save into `D:\Project\Pokiwar_Art_FG38\Assets\Meta\Background\`:
+
+- `home_bg_town_v01.png` - 2048x1152, opaque. Seen from above at a slight angle: a snowy mountain island top
+  left, a volcano island top centre-left, a large grassy main island in the middle, a forest island on the
+  right, open blue sea between them, soft clouds at the edges. Leave flat empty ground where buildings will
+  stand: far left top and middle, lower left, centre, upper centre-right, right. Keep the bottom 12% and the top
+  9% calm - UI bars cover them.
+
+Save into `D:\Project\Pokiwar_Art_FG38\Assets\Meta\Home\` (512x512 each, transparent, building centred with a
+small ground patch under it, at least 6% clear margin):
+
+- `home_hunt_v01.png` - "boss hunt": a wild rocky gate with monster horns and a glowing portal.
+- `home_arena_v01.png` - "arena": a round stadium with a domed glass roof and two crossed banners.
+- `home_evolve_v01.png` - "evolve": a crystal shrine with a swirling light above an altar.
+- `home_challenge_v01.png` - "challenge": a crossed-swords crest on a stone tower.
+- `home_shopcard_v01.png` - "card shop": a small stall whose roof is a giant battle card.
+- `home_shopavatar_v01.png` - "avatar shop": a boutique with a hat-and-shirt sign.
+- `home_gift_v01.png` - "gift shop": a cottage stacked with wrapped presents.
+- `home_wheel_v01.png` - "lucky wheel": a fairground prize wheel on a stand.
+- `home_rank_v01.png` - "ranking": a golden trophy statue on a cloud pedestal.
+
+Final check: the nine buildings placed on the background, one contact sheet.
+
 ## After any batch
 
 Tell Claude Code "lấy asset Codex mới vào game" (or run `Pokiwar/Rebuild Scene + Art` in Unity). Painted

@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Def:
     Id: rw.psyling
-    PlayerExp: 90
     Gold: 220
     Drops:
     - Kind: 0

@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Def:
     Id: rw.dunewing
-    PlayerExp: 60
     Gold: 150
     Drops:
     - Kind: 0

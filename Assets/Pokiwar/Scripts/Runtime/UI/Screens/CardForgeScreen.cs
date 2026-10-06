@@ -33,7 +33,7 @@ namespace Pokiwar.UI
         {
             cardRows = new TemplateList<RowView>(CardTemplate);
             stoneRows = new TemplateList<RowView>(StoneTemplate);
-            BackButton.onClick.AddListener(() => app.ShowMap());
+            BackButton.onClick.AddListener(() => app.Back());
             LuckyToggle.onValueChanged.AddListener(_ => Refresh());
             ProtectToggle.onValueChanged.AddListener(_ => Refresh());
         }

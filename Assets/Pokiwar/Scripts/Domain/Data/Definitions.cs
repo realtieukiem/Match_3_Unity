@@ -313,7 +313,6 @@ namespace Pokiwar.Domain
     public class RewardTable
     {
         public string Id;
-        public int PlayerExp;
         public int Gold;
         public List<RewardDrop> Drops = new List<RewardDrop>();
     }
@@ -405,7 +404,8 @@ namespace Pokiwar.Domain
         public int TrainerManaPerLevel = 5;
         public int MaxEnergy = 30;
         public int EnergyRegenSeconds = 300;
-        public int[] PlayerExpToNext = { 100, 160, 240, 340, 460, 600, 780, 1000, 1300, 1700 };
+        public int ExpPerWin = 1;
+        public int ExpToNextPerLevel = 1;
         public int PetMaxLevel = 14;
         public List<string> StarterPetIds = new List<string>();
         public List<int> StarterPetLevels = new List<int>();

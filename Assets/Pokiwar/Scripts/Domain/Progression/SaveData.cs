@@ -42,7 +42,7 @@ namespace Pokiwar.Domain
     [Serializable]
     public class SaveData
     {
-        public const int CurrentVersion = 4;
+        public const int CurrentVersion = 5;
 
         public int Version = CurrentVersion;
         public int Gold;
@@ -160,6 +160,11 @@ namespace Pokiwar.Domain
                     if (d.SelectedCardIds.Count < 5) d.SelectedCardIds.Insert(0, id);
                 }
                 d.Version = 4;
+            }
+            if (d.Version == 4)
+            {
+                d.PlayerExp = 0;
+                d.Version = 5;
             }
             if (d.AvatarOwned == null) d.AvatarOwned = new List<string>();
             if (d.AvatarWorn == null) d.AvatarWorn = new List<string>();

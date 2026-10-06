@@ -176,7 +176,13 @@ namespace Pokiwar.EditorTools
             FileSaveStore.OverridePath = Path.Combine(PokiwarSmoke.CaptureDir, "smoke_save.json");
             app.ResetSave();
             yield return null;
-            Check(app.Map.gameObject.activeSelf && !app.Hub.gameObject.activeSelf, "lobby is the first screen");
+            Check(app.Home.gameObject.activeSelf && !app.Map.gameObject.activeSelf && !app.Hub.gameObject.activeSelf, "the town map is the first screen");
+            Check(app.Home.PlayerLabel.text.Contains("EXP 0/1"), "a new trainer needs 1 EXP for level 2 (" + app.Home.PlayerLabel.text + ")");
+            CheckOnScreen(app.Home.transform, "home");
+            yield return Capture("00_home");
+            app.Home.HuntButton.onClick.Invoke();
+            yield return null;
+            Check(app.Map.gameObject.activeSelf && !app.Home.gameObject.activeSelf, "the hunt building opens the lobby");
             var regionTiles = app.Map.RegionTemplate.transform.parent.GetComponentsInChildren<RowView>(false);
             Check(regionTiles.Length == app.Map.RegionSlots && regionTiles[0].Button.interactable && !regionTiles[1].Button.interactable, "lobby lists " + regionTiles.Length + " regions, only the first open");
             CheckOnScreen(app.Map.transform, "lobby");

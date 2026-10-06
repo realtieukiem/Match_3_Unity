@@ -286,9 +286,9 @@ namespace Pokiwar.Domain
             d.Gold += table.Gold;
             grant.Lines.Add("+" + table.Gold + " Gold");
 
-            grant.PlayerExp = table.PlayerExp;
-            grant.PlayerLevelsGained = AddPlayerExp(d, table.PlayerExp);
-            grant.Lines.Add("+" + table.PlayerExp + " Player EXP" + (grant.PlayerLevelsGained > 0 ? " (Level up! Lv " + d.PlayerLevel + ")" : ""));
+            grant.PlayerExp = Db.Progression.ExpPerWin;
+            grant.PlayerLevelsGained = AddPlayerExp(d, grant.PlayerExp);
+            grant.Lines.Add("+" + grant.PlayerExp + " EXP" + (grant.PlayerLevelsGained > 0 ? " (Level up! Lv " + d.PlayerLevel + ")" : ""));
 
             var rng = new SeededRng(Hash(report.BattleId));
             foreach (var drop in table.Drops)
@@ -359,9 +359,7 @@ namespace Pokiwar.Domain
 
         public int PlayerExpToNext(int level)
         {
-            var t = Db.Progression.PlayerExpToNext;
-            if (t == null || t.Length == 0) return 100 * level;
-            return t[Math.Min(level - 1, t.Length - 1)] + Math.Max(0, level - t.Length) * 400;
+            return Math.Max(1, level * Db.Progression.ExpToNextPerLevel);
         }
 
         public int AddPlayerExp(SaveData d, int exp)

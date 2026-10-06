@@ -31,7 +31,7 @@ namespace Pokiwar.UI
 
         private void Awake()
         {
-            AdventureButton.onClick.AddListener(() => app.ShowMap());
+            AdventureButton.onClick.AddListener(() => app.Back());
             UpgradeButton.onClick.AddListener(() => app.ShowUpgrade());
             if (CardsButton != null) CardsButton.onClick.AddListener(() => app.ShowCardForge());
             if (AvatarButton != null) AvatarButton.onClick.AddListener(() => app.ShowWardrobe());

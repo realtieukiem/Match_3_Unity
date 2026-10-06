@@ -407,5 +407,28 @@ namespace Pokiwar.Tests
             Assert.AreEqual(dressed.MaxHp, setup.Player.Stats.MaxHp);
             Assert.AreEqual(dressed.MaxMana, setup.Enemy.Stats.MaxMana, "the boss mirrors the mana the pet really has");
         }
+
+        [Test]
+        public void EveryWin_GivesOneExp_AndEachLevelNeedsMore()
+        {
+            var db = DefaultContent.Create();
+            var prog = new ProgressionService(db);
+            var save = prog.CreateNewSave(0);
+            var node = db.Node("node.1");
+            int[] levelAfterWin = { 2, 2, 3, 3, 3, 4 };
+            for (int i = 0; i < levelAfterWin.Length; i++)
+            {
+                save.Energy = 10;
+                var b = prog.StartBattle(save, node, (uint)(i + 1));
+                var g = prog.CommitBattle(save, new BattleReport { BattleId = b.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = true });
+                Assert.AreEqual(1, g.PlayerExp);
+                Assert.AreEqual(levelAfterWin[i], save.PlayerLevel, "after win " + (i + 1));
+            }
+            save.Energy = 10;
+            var lost = prog.StartBattle(save, node, 99);
+            int exp = save.PlayerExp;
+            prog.CommitBattle(save, new BattleReport { BattleId = lost.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = false });
+            Assert.AreEqual(exp, save.PlayerExp, "a loss gives no EXP");
+        }
     }
 }

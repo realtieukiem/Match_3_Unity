@@ -218,7 +218,7 @@ namespace Pokiwar.Domain
         {
             db.RewardTables.Add(new RewardTable
             {
-                Id = "rw.dunewing", PlayerExp = 60, Gold = 150,
+                Id = "rw.dunewing", Gold = 150,
                 Drops =
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Earth, Tier = 1, Count = 2 },
@@ -230,7 +230,7 @@ namespace Pokiwar.Domain
             });
             db.RewardTables.Add(new RewardTable
             {
-                Id = "rw.psyling", PlayerExp = 90, Gold = 220,
+                Id = "rw.psyling", Gold = 220,
                 Drops =
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Metal, Tier = 1, Count = 3 },
@@ -244,7 +244,7 @@ namespace Pokiwar.Domain
             });
             db.RewardTables.Add(new RewardTable
             {
-                Id = "rw.azurewing", PlayerExp = 200, Gold = 600,
+                Id = "rw.azurewing", Gold = 600,
                 Drops =
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Water, Tier = 2, Count = 2 },
