@@ -13,7 +13,9 @@ namespace Pokiwar.UI
         public RowView StoneTemplate;
         public Image PetImage;
         public Text PetDetails;
-        public Text WalletLabel;
+        public Text GoldLabel;
+        public Text LuckyLabel;
+        public Text ProtectLabel;
         public Text MessageLabel;
         public Toggle LuckyToggle;
         public Toggle ProtectToggle;
@@ -46,7 +48,9 @@ namespace Pokiwar.UI
             var s = app.Save;
             var pet = s.Pet(petUid) ?? (s.Pets.Count > 0 ? s.Pets[0] : null);
             petUid = pet?.Uid;
-            WalletLabel.text = "Gold " + s.Gold + "   Lucky " + s.LuckyCharms + "   Protect " + s.ProtectionCharms;
+            GoldLabel.text = s.Gold.ToString();
+            LuckyLabel.text = s.LuckyCharms.ToString();
+            ProtectLabel.text = s.ProtectionCharms.ToString();
             if (LuckyToggle.isOn && s.LuckyCharms <= 0) LuckyToggle.SetIsOnWithoutNotify(false);
             if (ProtectToggle.isOn && s.ProtectionCharms <= 0) ProtectToggle.SetIsOnWithoutNotify(false);
 

@@ -27,6 +27,7 @@ namespace Pokiwar.EditorTools
         private static readonly Color Green = new Color(0.22f, 0.62f, 0.3f);
         private static readonly Color Red = new Color(0.72f, 0.24f, 0.24f);
         private static readonly Color Gray = new Color(0.35f, 0.37f, 0.42f);
+        private static readonly Color RowCol = new Color(0.2f, 0.26f, 0.42f);
 
         [MenuItem("Pokiwar/Rebuild Scene + Art (overwrites scene layout)")]
         public static void RebuildMenu() => BuildAll(true);
@@ -124,7 +125,7 @@ namespace Pokiwar.EditorTools
             var wardrobe = BuildWardrobe(root);
             BuildVfx(root);
             var toast = BuildToast(root);
-            Portrait(toast, 0.5f, 0.5f, 0, -40, 900, 84);
+            Portrait(toast, 0.5f, 0, 0, 250, 900, 84);
             canvasGo.AddComponent<ResponsiveCanvas>();
 
             var appGo = new GameObject("PokiwarApp");
@@ -165,12 +166,15 @@ namespace Pokiwar.EditorTools
             var hub = s.gameObject.AddComponent<HubScreen>();
             var title = Txt(s, "Title", "POKIWAR", 120, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
             At(title.rectTransform, 0.5f, 0.5f, 0, 410, 1200, 150);
-            var subtitle = Txt(s, "Subtitle", "Offline Pet Battle Adventure", 36, Color.white, TextAnchor.MiddleCenter);
-            At(subtitle.rectTransform, 0.5f, 0.5f, 0, 325, 1000, 50);
-            hub.PlayerLabel = Txt(s, "PlayerLabel", "", 34, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(hub.PlayerLabel.rectTransform, 0.5f, 0.5f, 0, 260, 1400, 48);
-            hub.ResourcesLabel = Txt(s, "ResourcesLabel", "", 30, new Color(0.9f, 0.95f, 1f), TextAnchor.MiddleCenter);
-            At(hub.ResourcesLabel.rectTransform, 0.5f, 0.5f, 0, 215, 1400, 44);
+            hub.PlayerLabel = Txt(s, "PlayerLabel", "", 36, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(hub.PlayerLabel.rectTransform, 0.5f, 0.5f, 0, 300, 1400, 50);
+            hub.PlayerLabel.gameObject.AddComponent<Outline>().effectColor = new Color(0.1f, 0.1f, 0.2f);
+            var chips = NewUI("Resources", s);
+            At(chips, 0.5f, 0.5f, 0, 228, 960, 64);
+            hub.GoldLabel = Chip(chips, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, -360);
+            hub.EnergyLabel = Chip(chips, "Energy", "gem.Lightning", Color.white, -120);
+            hub.LuckyLabel = Chip(chips, "Lucky", "fx.star", Gold, 120);
+            hub.ProtectLabel = Chip(chips, "Protect", "gem.Shield", Color.white, 360);
 
             var card = Img(s, "PetCard", "ui.round", PanelCol);
             At(card.rectTransform, 0.5f, 0.5f, -360, -110, 620, 560);
@@ -180,8 +184,11 @@ namespace Pokiwar.EditorTools
             hub.PetImage = Img(card.transform, "PetImage", "emberkit", Color.white);
             hub.PetImage.preserveAspect = true;
             At(hub.PetImage.rectTransform, 0.5f, 0.5f, 130, 20, 300, 300);
-            hub.PetLabel = Txt(card.transform, "PetLabel", "", 32, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(hub.PetLabel.rectTransform, 0.5f, 0.5f, 0, -200, 580, 110);
+            hub.PetLabel = Txt(card.transform, "PetLabel", "", 34, Color.white, TextAnchor.MiddleLeft, FontStyle.Bold);
+            At(hub.PetLabel.rectTransform, 0.5f, 0.5f, 170, -200, 280, 60);
+            hub.PetElement = Img(card.transform, "PetElement", "element.Fire", Color.white);
+            hub.PetElement.preserveAspect = true;
+            At(hub.PetElement.rectTransform, 0.5f, 0.5f, -10, -200, 64, 64);
 
             hub.AdventureButton = Btn(s, "AdventureButton", "ADVENTURE", Green, 56, out _);
             At(Rt(hub.AdventureButton), 0.5f, 0.5f, 420, 40, 560, 160);
@@ -197,18 +204,14 @@ namespace Pokiwar.EditorTools
             At(Rt(hub.SfxButton), 1, 1, -360, -50, 190, 64);
             hub.ShakeButton = Btn(s, "ShakeButton", "SHAKE: ON", Gray, 24, out hub.ShakeLabel);
             At(Rt(hub.ShakeButton), 1, 1, -160, -50, 190, 64);
-            var hint = Txt(s, "Hint", "Drag or tap two neighbouring gems to swap. 10 seconds per turn.", 26, new Color(1, 1, 1, 0.8f), TextAnchor.MiddleCenter);
-            At(hint.rectTransform, 0.5f, 0, 0, 50, 1600, 40);
             Portrait(title, 0.5f, 0.5f, 0, 700, 1000, 150);
-            Portrait(subtitle, 0.5f, 0.5f, 0, 615, 1000, 50);
-            Portrait(hub.PlayerLabel, 0.5f, 0.5f, 0, 545, 1000, 48);
-            Portrait(hub.ResourcesLabel, 0.5f, 0.5f, 0, 495, 1000, 44);
+            Portrait(hub.PlayerLabel, 0.5f, 0.5f, 0, 590, 1000, 50);
+            Portrait(chips, 0.5f, 0.5f, 0, 510, 960, 64);
             Portrait(card, 0.5f, 0.5f, 0, 120, 620, 560);
             Portrait(hub.AdventureButton, 0.5f, 0.5f, 0, -320, 560, 160);
             Portrait(hub.UpgradeButton, 0.5f, 0.5f, 0, -480, 560, 120);
             Portrait(hub.AvatarButton, 0.5f, 0.5f, 0, -620, 560, 110);
             Portrait(hub.ResetButton, 0.5f, 0.5f, 0, -750, 300, 76);
-            Portrait(hint, 0.5f, 0, 0, 60, 1000, 80);
             return hub;
         }
 
@@ -221,8 +224,10 @@ namespace Pokiwar.EditorTools
             At(bar.rectTransform, 0.5f, 1, 0, -60, 4000, 120);
             map.Header = Txt(s, "Header", "Sunny Isle", 60, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
             At(map.Header.rectTransform, 0.5f, 1, 0, -60, 900, 90);
-            map.InfoLabel = Txt(s, "Info", "", 32, Color.white, TextAnchor.MiddleRight);
-            At(map.InfoLabel.rectTransform, 1, 1, -340, -60, 600, 60);
+            var info = NewUI("Resources", s);
+            At(info, 1, 1, -250, -60, 460, 64);
+            map.EnergyLabel = Chip(info, "Energy", "gem.Lightning", Color.white, -115, 210);
+            map.GoldLabel = Chip(info, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, 115, 210);
             map.BackButton = Btn(s, "BackButton", "BACK", Gray, 36, out _);
             At(Rt(map.BackButton), 0, 1, 140, -60, 220, 86);
             var area = NewUI("NodeArea", s);
@@ -230,11 +235,17 @@ namespace Pokiwar.EditorTools
             map.NodeArea = area;
             map.PathTemplate = Img(area, "PathTemplate", "ui.round", new Color(1f, 0.9f, 0.5f));
             At(map.PathTemplate.rectTransform, 0.5f, 0.5f, 0, 0, 100, 12);
-            map.NodeTemplate = MakeRow(area, "NodeTemplate", 330, 150, Blue, 110, 0, 28, 22);
+            map.NodeTemplate = MakeRow(area, "NodeTemplate", 350, 150, Blue, 104, 0, 28, 22);
+            if (Skin(map.NodeTemplate.Background, "ui.button.blue", 30))
+            {
+                map.NodeOpen = art["ui.button.blue"];
+                map.NodeLocked = art.TryGetValue("ui.button.gray", out var grayNode) ? grayNode : null;
+                map.NodeBoss = art.TryGetValue("ui.button.red", out var redNode) ? redNode : null;
+            }
             map.PathTemplate.gameObject.SetActive(false);
             map.NodeTemplate.gameObject.SetActive(false);
             PortraitStretch(area, 40, 40, 230, 120);
-            Portrait(map.InfoLabel, 0.5f, 1, 0, -150, 900, 50);
+            Portrait(info, 0.5f, 1, 0, -160, 460, 64);
             return map;
         }
 
@@ -308,12 +319,11 @@ namespace Pokiwar.EditorTools
             }
 
             prep.PetPicker = MakePicker(s, "PetPicker", "CHOOSE PET", out var petContent, out prep.PetPickerClose);
-            prep.PetTemplate = MakeRow(petContent, "PetTemplate", 760, 120, Blue, 100, 0, 30, 24);
+            prep.PetTemplate = MakeRow(petContent, "PetTemplate", 760, 120, RowCol, 100, 0, 30, 24);
             prep.PetTemplate.gameObject.SetActive(false);
             prep.CardPicker = MakePicker(s, "CardPicker", "CHOOSE CARDS", out var cardContent, out prep.CardPickerClose);
-            prep.CardTemplate = MakeRow(cardContent, "CardTemplate", 760, 110, new Color(0.24f, 0.3f, 0.45f), 90, 1, 28, 20);
+            prep.CardTemplate = MakeRow(cardContent, "CardTemplate", 760, 110, RowCol, 90, 1, 28, 20, Red);
             prep.CardTemplate.ExtraALabel.text = "REMOVE";
-            prep.CardTemplate.ExtraA.GetComponent<Image>().color = Red;
             prep.CardTemplate.gameObject.SetActive(false);
 
             Portrait(room, 0.5f, 0.5f, 0, -20, 1040, 1660);
@@ -336,9 +346,9 @@ namespace Pokiwar.EditorTools
             var panel = Img(dim.transform, "Panel", "ui.round", PanelCol, true);
             At(panel.rectTransform, 0.5f, 0.5f, 0, 0, 860, 860);
             SkinPanel(panel, 48);
-            At(Txt(panel.transform, "Title", title, 38, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -44, 700, 56);
+            At(Txt(panel.transform, "Title", title, 38, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -70, 700, 56);
             content = ScrollList(panel.transform, "List", out var view);
-            At(view, 0.5f, 1, 0, -450, 800, 760);
+            At(view, 0.5f, 1, 0, -468, 790, 710);
             close = Btn(panel.transform, "Close", "X", Gray, 40, out var closeLabel);
             At(Rt(close), 1, 1, -16, -16, 80, 80);
             if (Skin((Image)close.targetGraphic, "ui.close"))
@@ -665,51 +675,54 @@ namespace Pokiwar.EditorTools
         private static UpgradeScreen BuildUpgrade(Transform root)
         {
             var s = Screen(root, "UpgradeScreen");
-            Fill(Img(s, "Bg", null, new Color(0.08f, 0.08f, 0.14f)).rectTransform);
-            Fill(Img(s, "Glow", "ui.gradient", new Color(0.55f, 0.35f, 0.75f, 0.3f)).rectTransform);
+            Fill(Img(s, "Bg", Key("bg.hub", null), art.ContainsKey("bg.hub") ? Color.white : new Color(0.08f, 0.08f, 0.14f)).rectTransform);
+            Fill(Img(s, "Shade", null, new Color(0, 0, 0, 0.4f)).rectTransform);
             var up = s.gameObject.AddComponent<UpgradeScreen>();
             At(Txt(s, "Header", "PETS & STONES", 56, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -60, 900, 80);
             up.BackButton = Btn(s, "BackButton", "BACK", Gray, 36, out _);
             At(Rt(up.BackButton), 0, 1, 140, -60, 220, 86);
 
             var lp = Img(s, "PetPanel", "ui.round", PanelCol);
-            At(lp.rectTransform, 0.5f, 0.5f, -680, -40, 500, 860);
+            At(lp.rectTransform, 0.5f, 0.5f, -705, -50, 450, 860);
             SkinPanel(lp, 48);
-            At(Txt(lp.transform, "Label", "PETS", 34, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -40, 460, 50);
+            At(Txt(lp.transform, "Label", "PETS", 34, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -70, 380, 50);
             var petContent = ScrollList(lp.transform, "PetList", out var petView);
-            At(petView, 0.5f, 1, 0, -440, 480, 780);
-            up.PetTemplate = MakeRow(petContent, "PetTemplate", 450, 110, Blue, 90, 0, 28, 22);
+            At(petView, 0.5f, 1, 0, -464, 390, 710);
+            up.PetTemplate = MakeRow(petContent, "PetTemplate", 366, 110, RowCol, 84, 0, 26, 20);
 
             var cp = Img(s, "DetailPanel", "ui.round", PanelCol);
-            At(cp.rectTransform, 0.5f, 0.5f, -110, -40, 600, 860);
+            At(cp.rectTransform, 0.5f, 0.5f, -185, -50, 570, 860);
             SkinPanel(cp, 48);
             up.PetImage = Img(cp.transform, "PetImage", "emberkit", Color.white);
             up.PetImage.preserveAspect = true;
-            At(up.PetImage.rectTransform, 0.5f, 1, 0, -170, 280, 280);
-            up.PetDetails = Txt(cp.transform, "PetDetails", "", 24, Color.white, TextAnchor.UpperLeft);
-            At(up.PetDetails.rectTransform, 0.5f, 1, 0, -440, 560, 200);
+            At(up.PetImage.rectTransform, 0.5f, 1, 0, -190, 280, 280);
+            up.PetDetails = Txt(cp.transform, "PetDetails", "", 22, Color.white, TextAnchor.UpperLeft);
+            At(up.PetDetails.rectTransform, 0.5f, 1, 0, -445, 490, 190);
             up.LuckyToggle = MakeToggle(cp.transform, "LuckyToggle", "Use Lucky Charm (+chance)");
-            At((RectTransform)up.LuckyToggle.transform, 0.5f, 0, 0, 290, 540, 56);
+            At((RectTransform)up.LuckyToggle.transform, 0.5f, 0, 0, 300, 490, 56);
             up.ProtectToggle = MakeToggle(cp.transform, "ProtectToggle", "Use Protection (no downgrade)");
-            At((RectTransform)up.ProtectToggle.transform, 0.5f, 0, 0, 225, 540, 56);
-            up.WalletLabel = Txt(cp.transform, "Wallet", "", 26, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(up.WalletLabel.rectTransform, 0.5f, 0, 0, 160, 560, 44);
-            up.MessageLabel = Txt(cp.transform, "Message", "", 24, new Color(0.8f, 0.95f, 1f), TextAnchor.MiddleCenter);
-            At(up.MessageLabel.rectTransform, 0.5f, 0, 0, 75, 560, 110);
+            At((RectTransform)up.ProtectToggle.transform, 0.5f, 0, 0, 238, 490, 56);
+            var wallet = NewUI("Wallet", cp.transform);
+            At(wallet, 0.5f, 0, 0, 170, 500, 60);
+            up.GoldLabel = Chip(wallet, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, -152, 176);
+            up.LuckyLabel = Chip(wallet, "Lucky", "fx.star", Gold, 14, 136);
+            up.ProtectLabel = Chip(wallet, "Protect", "gem.Shield", Color.white, 160, 136);
+            up.MessageLabel = Txt(cp.transform, "Message", "", 22, new Color(0.8f, 0.95f, 1f), TextAnchor.MiddleCenter);
+            At(up.MessageLabel.rectTransform, 0.5f, 0, 0, 90, 490, 90);
 
             var rp = Img(s, "StonePanel", "ui.round", PanelCol);
-            At(rp.rectTransform, 0.5f, 0.5f, 560, -40, 720, 860);
+            At(rp.rectTransform, 0.5f, 0.5f, 520, -50, 810, 860);
             SkinPanel(rp, 48);
-            At(Txt(rp.transform, "Label", "STONES", 34, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -40, 680, 50);
+            At(Txt(rp.transform, "Label", "STONES", 34, Gold, TextAnchor.MiddleCenter, FontStyle.Bold).rectTransform, 0.5f, 1, 0, -70, 680, 50);
             var stoneContent = ScrollList(rp.transform, "StoneList", out var stoneView);
-            At(stoneView, 0.5f, 1, 0, -440, 700, 780);
-            up.StoneTemplate = MakeRow(stoneContent, "StoneTemplate", 670, 104, new Color(0.24f, 0.26f, 0.36f), 64, 3, 24, 18);
+            At(stoneView, 0.5f, 1, 0, -464, 750, 710);
+            up.StoneTemplate = MakeRow(stoneContent, "StoneTemplate", 726, 104, RowCol, 64, 3, 24, 18);
 
             up.PetTemplate.gameObject.SetActive(false);
             up.StoneTemplate.gameObject.SetActive(false);
-            Portrait(lp, 0.5f, 0.5f, -305, 449, 500, 860, 0.86f);
-            Portrait(cp, 0.5f, 0.5f, 262, 449, 600, 860, 0.86f);
-            Portrait(rp, 0.5f, 0.5f, 0, -470, 720, 860, 1.0f);
+            Portrait(lp, 0.5f, 0.5f, -300, 449, 450, 860, 0.86f);
+            Portrait(cp, 0.5f, 0.5f, 245, 449, 570, 860, 0.86f);
+            Portrait(rp, 0.5f, 0.5f, 0, -470, 810, 860, 1.0f);
             return up;
         }
 
@@ -724,12 +737,8 @@ namespace Pokiwar.EditorTools
             w.BackButton = Btn(s, "BackButton", "BACK", Gray, 36, out _);
             At(Rt(w.BackButton), 0, 1, 140, -60, 220, 86);
             var wallet = NewUI("Wallet", s);
-            At(wallet, 1, 1, -170, -60, 260, 70);
-            var coin = Img(wallet, "Coin", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold);
-            coin.preserveAspect = true;
-            At(coin.rectTransform, 0, 0.5f, 30, 0, 60, 60);
-            w.WalletLabel = Txt(wallet, "Gold", "0", 40, Gold, TextAnchor.MiddleLeft, FontStyle.Bold);
-            Fill(w.WalletLabel.rectTransform, 72, 0, 0, 0);
+            At(wallet, 1, 1, -150, -60, 230, 64);
+            w.WalletLabel = Chip(wallet, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, 0, 220);
 
             var left = Img(s, "PreviewPanel", "ui.round", PanelCol);
             At(left.rectTransform, 0.5f, 0.5f, -500, -50, 680, 860);
@@ -755,13 +764,12 @@ namespace Pokiwar.EditorTools
             for (int i = 0; i < 4; i++)
             {
                 w.Tabs[i] = Btn(right.transform, "Tab" + tabs[i], tabs[i], Gray, 30, out _);
-                At(Rt(w.Tabs[i]), 0.5f, 1, -330 + i * 220, -70, 200, 76);
+                At(Rt(w.Tabs[i]), 0.5f, 1, -324 + i * 216, -88, 200, 76);
                 w.TabBackgrounds[i] = (Image)w.Tabs[i].targetGraphic;
             }
             var content = ScrollList(right.transform, "Items", out var view);
-            At(view, 0.5f, 1, 0, -480, 900, 740);
-            w.ItemTemplate = MakeRow(content, "ItemTemplate", 860, 130, new Color(0.24f, 0.3f, 0.45f), 110, 1, 32, 24);
-            w.ItemTemplate.ExtraA.GetComponent<Image>().color = Green;
+            At(view, 0.5f, 1, 0, -484, 880, 670);
+            w.ItemTemplate = MakeRow(content, "ItemTemplate", 840, 130, RowCol, 110, 1, 32, 24, Green);
             w.ItemTemplate.gameObject.SetActive(false);
 
             Portrait(left, 0.5f, 0.5f, 0, 420, 680, 860, 0.9f);
@@ -975,7 +983,7 @@ namespace Pokiwar.EditorTools
             return v;
         }
 
-        private static RowView MakeRow(Transform parent, string name, float w, float h, Color bgColor, float icon, int extras, int titleSize, int subSize)
+        private static RowView MakeRow(Transform parent, string name, float w, float h, Color bgColor, float icon, int extras, int titleSize, int subSize, Color? extraA = null)
         {
             var bg = Img(parent, name, "ui.round", bgColor, true);
             At(bg.rectTransform, 0.5f, 0.5f, 0, 0, w, h);
@@ -1006,11 +1014,12 @@ namespace Pokiwar.EditorTools
             sr.anchorMax = new Vector2(1, 0.5f);
             sr.offsetMin = new Vector2(icon + 28, 4);
             sr.offsetMax = new Vector2(-right, 0);
-            var cols = new[] { new Color(0.3f, 0.55f, 0.9f), Green, new Color(0.65f, 0.45f, 0.2f) };
+            var cols = new[] { extraA ?? Blue, Green, Gold };
             for (int i = 0; i < extras; i++)
             {
                 var b = Btn(bg.transform, "Extra" + i, "", cols[i], 18, out var label);
                 At(Rt(b), 1, 0.5f, -(extras - i) * 112 + 48, 0, 104, h - 22);
+                SliceTo((Image)b.targetGraphic, 18);
                 if (i == 0) { row.ExtraA = b; row.ExtraALabel = label; }
                 if (i == 1) { row.ExtraB = b; row.ExtraBLabel = label; }
                 if (i == 2) { row.ExtraC = b; row.ExtraCLabel = label; }
@@ -1088,6 +1097,18 @@ namespace Pokiwar.EditorTools
         private static RectTransform Rt(Component c) => (RectTransform)c.transform;
 
         private static string Key(string preferred, string fallback) => art.ContainsKey(preferred) ? preferred : fallback;
+
+        private static Text Chip(Transform parent, string name, string iconKey, Color iconTint, float x, float w = 220f)
+        {
+            var bg = Img(parent, name, "ui.round", new Color(0.05f, 0.08f, 0.18f, 0.8f));
+            At(bg.rectTransform, 0.5f, 0.5f, x, 0, w, 60);
+            var icon = Img(bg.transform, "Icon", iconKey, iconTint);
+            icon.preserveAspect = true;
+            At(icon.rectTransform, 0, 0.5f, 36, 0, 50, 50);
+            var value = Txt(bg.transform, "Value", "0", 32, Color.white, TextAnchor.MiddleLeft, FontStyle.Bold);
+            Fill(value.rectTransform, 72, 8, 0, 0);
+            return value;
+        }
 
         private static void SkinPanel(Image img, float edgePx)
         {

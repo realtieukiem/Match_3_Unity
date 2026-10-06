@@ -8,7 +8,11 @@ namespace Pokiwar.UI
     public sealed class MapScreen : MonoBehaviour
     {
         public Text Header;
-        public Text InfoLabel;
+        public Text GoldLabel;
+        public Text EnergyLabel;
+        public Sprite NodeOpen;
+        public Sprite NodeLocked;
+        public Sprite NodeBoss;
         public RectTransform NodeArea;
         public RowView NodeTemplate;
         public Image PathTemplate;
@@ -41,7 +45,8 @@ namespace Pokiwar.UI
             paths.Clear();
             var map = a.Db.Map;
             Header.text = map.Regions.Count > 0 ? map.Regions[0].Name : "Adventure";
-            InfoLabel.text = "Energy " + a.Save.Energy + "/" + a.Db.Progression.MaxEnergy + "    Gold " + a.Save.Gold;
+            GoldLabel.text = a.Save.Gold.ToString();
+            EnergyLabel.text = a.Save.Energy + "/" + a.Db.Progression.MaxEnergy;
             var size = NodeArea.rect.size;
             foreach (var n in map.Nodes)
             {
@@ -69,7 +74,13 @@ namespace Pokiwar.UI
                     : "LOCKED";
                 row.Set(n.Name, sub, a.Sprites.Get(creature.SpriteKey), wins > 0);
                 row.Rect.anchoredPosition = new Vector2((n.X - 0.5f) * size.x, (n.Y - 0.5f) * size.y);
-                row.Background.color = !unlocked ? new Color(0.25f, 0.25f, 0.28f) : enc.IsBoss ? new Color(0.65f, 0.2f, 0.25f) : new Color(0.2f, 0.45f, 0.7f);
+                var skin = !unlocked ? NodeLocked : enc.IsBoss ? NodeBoss : NodeOpen;
+                if (skin != null)
+                {
+                    row.Background.sprite = skin;
+                    row.Background.color = Color.white;
+                }
+                else row.Background.color = !unlocked ? new Color(0.25f, 0.25f, 0.28f) : enc.IsBoss ? new Color(0.65f, 0.2f, 0.25f) : new Color(0.2f, 0.45f, 0.7f);
                 row.Icon.color = unlocked ? Color.white : new Color(0.2f, 0.2f, 0.2f);
                 row.Button.interactable = unlocked;
                 var node = n;

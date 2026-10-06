@@ -7,9 +7,13 @@ namespace Pokiwar.UI
     public sealed class HubScreen : MonoBehaviour
     {
         public Text PlayerLabel;
-        public Text ResourcesLabel;
+        public Text GoldLabel;
+        public Text EnergyLabel;
+        public Text LuckyLabel;
+        public Text ProtectLabel;
         public Text PetLabel;
         public Image PetImage;
+        public Image PetElement;
         public AvatarView Avatar;
         public Button AvatarButton;
         public Button AdventureButton;
@@ -41,8 +45,10 @@ namespace Pokiwar.UI
             var s = a.Save;
             if (Avatar != null) Avatar.Show(a.Avatars.Look(s), a.Db, a.Sprites);
             PlayerLabel.text = s.PlayerName + "  Lv " + s.PlayerLevel + "   EXP " + s.PlayerExp + "/" + a.Progression.PlayerExpToNext(s.PlayerLevel);
-            ResourcesLabel.text = "Gold " + s.Gold + "    Energy " + s.Energy + "/" + a.Db.Progression.MaxEnergy +
-                                  "    Lucky " + s.LuckyCharms + "    Protect " + s.ProtectionCharms;
+            GoldLabel.text = s.Gold.ToString();
+            EnergyLabel.text = s.Energy + "/" + a.Db.Progression.MaxEnergy;
+            LuckyLabel.text = s.LuckyCharms.ToString();
+            ProtectLabel.text = s.ProtectionCharms.ToString();
             MusicLabel.text = "MUSIC: " + (s.MusicOn ? "ON" : "OFF");
             SfxLabel.text = "SOUND: " + (s.SfxOn ? "ON" : "OFF");
             ShakeLabel.text = "SHAKE: " + (s.ShakeOn ? "ON" : "OFF");
@@ -50,10 +56,9 @@ namespace Pokiwar.UI
             if (pet != null)
             {
                 var def = a.Db.Creature(pet.PetId);
-                var st = a.Progression.PetStats(pet);
-                PetLabel.text = def.Name + "  Lv " + pet.Level + (pet.EnhanceLevel > 0 ? "  +" + pet.EnhanceLevel : "") +
-                                "\n" + def.Element + "   HP " + st.MaxHp + "   ATK " + st.Atk;
+                PetLabel.text = def.Name;
                 PetImage.sprite = a.Sprites.Get(def.SpriteKey);
+                if (PetElement != null) PetElement.sprite = a.Sprites.Get("element." + def.Element);
             }
         }
     }
