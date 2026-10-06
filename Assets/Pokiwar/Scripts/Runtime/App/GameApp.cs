@@ -23,6 +23,7 @@ namespace Pokiwar.App
         public ResultScreen Result;
         public UpgradeScreen Upgrade;
         public AvatarScreen Wardrobe;
+        public CardForgeScreen CardForge;
         public ToastView ToastView;
         public AudioDirector Audio;
 
@@ -92,6 +93,7 @@ namespace Pokiwar.App
             Result.gameObject.SetActive(false);
             Upgrade.gameObject.SetActive(false);
             if (Wardrobe != null) Wardrobe.gameObject.SetActive(false);
+            if (CardForge != null) CardForge.gameObject.SetActive(false);
         }
 
         public void ShowWardrobe()
@@ -134,6 +136,14 @@ namespace Pokiwar.App
             Upgrade.gameObject.SetActive(true);
             if (Audio != null) Audio.PlayMusic("music.menu");
             Upgrade.Show(this);
+        }
+
+        public void ShowCardForge()
+        {
+            HideAll();
+            CardForge.gameObject.SetActive(true);
+            if (Audio != null) Audio.PlayMusic("music.menu");
+            CardForge.Show(this);
         }
 
         public void StartBattle(MapNodeDef node)

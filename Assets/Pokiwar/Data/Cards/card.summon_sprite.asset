@@ -19,7 +19,6 @@ MonoBehaviour:
     IconKey: card.summon_sprite
     ManaCost: 250
     RageCost: 0
-    UsesPerBattle: 1
     CanUseBeforeMatch: 1
     CanUseAfterMatch: 0
     EndTurnAfterUse: 0

@@ -19,7 +19,6 @@ MonoBehaviour:
     IconKey: card.iron_skin
     ManaCost: 0
     RageCost: 40
-    UsesPerBattle: 2
     CanUseBeforeMatch: 1
     CanUseAfterMatch: 0
     EndTurnAfterUse: 0

@@ -26,3 +26,4 @@ MonoBehaviour:
     FirstTurn: 0
     CaptureOnFirstWin: 1
     HpVsPlayer: 2.2
+    SkillLevel: 3

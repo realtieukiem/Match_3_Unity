@@ -21,6 +21,7 @@ MonoBehaviour:
     RageCost: 0
     AtkMultiplier: 3.8
     FlatBase: 0
+    FlatPerLevel: 65
     UseQte: 1
     Qte:
       ArrowCount: 5

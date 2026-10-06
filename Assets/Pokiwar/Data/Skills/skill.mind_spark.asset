@@ -15,12 +15,13 @@ MonoBehaviour:
   Def:
     Id: skill.mind_spark
     Name: Mind Spark
-    Description: 
+    Description: Arrow combo psychic jolt.
     IconKey: skill.mind_spark
     ManaCost: 450
     RageCost: 0
     AtkMultiplier: 3
     FlatBase: 0
+    FlatPerLevel: 55
     UseQte: 1
     Qte:
       ArrowCount: 5

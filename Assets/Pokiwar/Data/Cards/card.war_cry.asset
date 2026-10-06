@@ -19,7 +19,6 @@ MonoBehaviour:
     IconKey: card.war_cry
     ManaCost: 0
     RageCost: 50
-    UsesPerBattle: 1
     CanUseBeforeMatch: 1
     CanUseAfterMatch: 0
     EndTurnAfterUse: 0

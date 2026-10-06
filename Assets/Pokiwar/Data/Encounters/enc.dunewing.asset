@@ -24,3 +24,6 @@ MonoBehaviour:
     EnergyCost: 1
     Difficulty: 1
     FirstTurn: 0
+    CaptureOnFirstWin: 1
+    HpVsPlayer: 0
+    SkillLevel: 1

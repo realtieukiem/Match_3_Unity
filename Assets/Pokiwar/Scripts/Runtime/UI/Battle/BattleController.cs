@@ -17,6 +17,13 @@ namespace Pokiwar.UI
         public CombatantHud EnemyHud;
         public ActionButtonView[] CardButtons = new ActionButtonView[5];
         public ActionButtonView[] SkillButtons = new ActionButtonView[2];
+        public CanvasGroup Intro;
+        public Image IntroPlayer;
+        public Image IntroEnemy;
+        public Text IntroVs;
+        public Text IntroFight;
+        [Tooltip("How far the two pets slide in from the sides during the VS intro (px).")]
+        public float IntroSlide = 1100f;
         public Text ComboLabel;
         [Tooltip("Font size of the combo count beside the word COMBO.")]
         public int ComboCountSize = 128;
@@ -165,7 +172,7 @@ namespace Pokiwar.UI
         {
             Running = true;
             AudioDirector.Sfx("fight");
-            yield return ShowBanner("FIGHT!", 0.8f);
+            yield return PlayIntro();
             var s = Engine.State;
             while (!s.Ended && !giveUp)
             {
@@ -647,10 +654,9 @@ namespace Pokiwar.UI
                 if (c.UsesLeft <= 0) continue;
                 var b = CardButtons[shown];
                 cardSlotOf[shown] = i;
-                string cost = c.Def.ManaCost > 0 ? c.Def.ManaCost + " MP" : "";
-                if (c.Def.RageCost > 0) cost += (cost.Length > 0 ? " " : "") + c.Def.RageCost + " RG";
-                if (cost.Length == 0) cost = "Free";
-                b.Bind(c.Def.Name, cost, "", sprites.Get(c.Def.IconKey), new Color(0.35f, 0.55f, 0.85f));
+                string cost = c.Def.ManaCost > 0 ? c.Def.ManaCost.ToString() : c.Def.RageCost > 0 ? "<color=#FFD23A>" + c.Def.RageCost + "</color>" : null;
+                b.Bind(c.Def.Name, "", "", sprites.Get(c.Def.IconKey), new Color(0.35f, 0.55f, 0.85f));
+                b.SetFace(cost, null, null);
                 b.SetUsable(myTurn && Engine.CardBlockReason(Side.Player, i) == null);
                 shown++;
             }
@@ -668,10 +674,60 @@ namespace Pokiwar.UI
                     continue;
                 }
                 var sk = me.Skills[i];
-                string cost = sk.ManaCost + " MP" + (sk.RageCost > 0 ? " " + sk.RageCost + " RG" : "");
-                b.Bind(sk.Name, cost, "SKILL", sprites.Get(sk.IconKey), new Color(0.9f, 0.6f, 0.2f));
+                b.Bind(sk.Name, "", "SKILL", sprites.Get(sk.IconKey), new Color(0.9f, 0.6f, 0.2f));
+                b.SetFace(sk.ManaCost.ToString(), me.SkillLevel(sk).ToString(), BattleEngine.SkillBase(me, sk).ToString());
                 b.SetUsable(myTurn && Engine.SkillBlockReason(Side.Player, i) == null);
             }
+        }
+
+        private IEnumerator PlayIntro()
+        {
+            if (Intro == null)
+            {
+                yield return ShowBanner("FIGHT!", 0.8f);
+                yield break;
+            }
+            var pl = IntroPlayer.rectTransform;
+            var en = IntroEnemy.rectTransform;
+            var vs = IntroVs.rectTransform;
+            var fight = IntroFight.rectTransform;
+            IntroPlayer.sprite = PlayerHud.Portrait.sprite;
+            IntroEnemy.sprite = EnemyHud.Portrait.sprite;
+            Intro.gameObject.SetActive(true);
+            Intro.alpha = 1f;
+            IntroVs.gameObject.SetActive(false);
+            IntroFight.gameObject.SetActive(false);
+            yield return Tween.Run(0.3f, t =>
+            {
+                float away = IntroSlide * (1f - Tween.EaseOut(t));
+                pl.anchoredPosition = new Vector2(-away, 0f);
+                en.anchoredPosition = new Vector2(away, 0f);
+            });
+            IntroVs.gameObject.SetActive(true);
+            yield return Tween.Run(0.16f, t => vs.localScale = Vector3.one * Mathf.Lerp(3.4f, 1f, t * t));
+            vs.localScale = Vector3.one;
+            if (VfxLayer.Instance != null)
+            {
+                var v = VfxLayer.Instance;
+                v.Ring(vs.position, new Color(1f, 0.9f, 0.5f), 900f, 0.4f);
+                v.Burst(vs.position, new Color(1f, 0.75f, 0.25f), 36, 1200f, 24f, 0.7f, 600f, v.Star);
+            }
+            yield return Tween.Run(0.5f, t => vs.localScale = Vector3.one * (1f + 0.06f * Mathf.Sin(t * Mathf.PI * 4f) * (1f - t)));
+            IntroVs.gameObject.SetActive(false);
+            IntroFight.gameObject.SetActive(true);
+            yield return Tween.Run(0.2f, t =>
+            {
+                float back = 1f + 2.70158f * Mathf.Pow(t - 1f, 3) + 1.70158f * Mathf.Pow(t - 1f, 2);
+                fight.localScale = Vector3.one * Mathf.LerpUnclamped(0.3f, 1f, back);
+            });
+            fight.localScale = Vector3.one;
+            yield return Tween.Wait(0.45f);
+            yield return Tween.Run(0.22f, t =>
+            {
+                Intro.alpha = 1f - t;
+                fight.localScale = Vector3.one * (1f + 0.5f * t);
+            });
+            Intro.gameObject.SetActive(false);
         }
 
         public void ShowCombo(int count)

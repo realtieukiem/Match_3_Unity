@@ -242,7 +242,11 @@ namespace Pokiwar.Domain
             return check;
         }
 
-        public static int SkillBase(Combatant c, SkillDef s) => (int)Math.Floor(c.EffectiveAtk * s.AtkMultiplier + s.FlatBase + 1e-4);
+        public static int SkillBase(Combatant c, SkillDef s) => SkillPower(c.EffectiveAtk, s, c.SkillLevel(s));
+
+        /// <summary>The damage number printed on a reusable card: ATK share plus a flat part that grows with the card's level.</summary>
+        public static int SkillPower(double atk, SkillDef s, int level) =>
+            (int)Math.Floor(atk * s.AtkMultiplier + s.FlatBase + s.FlatPerLevel * (Math.Max(1, level) - 1) + 1e-4);
 
         public ActionResult UseSkill(Side side, int index, QteResult qte)
         {

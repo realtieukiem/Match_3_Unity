@@ -27,3 +27,5 @@ MonoBehaviour:
       Confidence: 3
     AiThinkSeconds: 0.9
     MinimumHpDamageOnHit: 1
+    ShieldExpiresOnOwnTurnStart: 1
+    StartHpPct: 0.75

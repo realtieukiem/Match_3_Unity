@@ -30,7 +30,17 @@ MonoBehaviour:
     - card.fire_bolt
     - card.summon_sprite
     - card.iron_skin
+    StarterSkillIds:
+    - skill.blaze_burst
+    - skill.thorn_bind
     StarterItems:
+    - Kind: 5
+      ItemId: 
+      Element: 0
+      Tier: 1
+      Count: 3
+      Chance: 1
+      FirstClearOnly: 0
     - Kind: 0
       ItemId: 
       Element: 4

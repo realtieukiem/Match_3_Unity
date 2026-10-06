@@ -13,6 +13,22 @@ namespace Pokiwar.UI
         public Text Uses;
         public CanvasGroup Group;
         public Image Frame;
+        public GameObject CostBar;
+        public GameObject LevelBadge;
+        public Text Level;
+        public GameObject PowerBar;
+        public Text Power;
+
+        /// <summary>The numbers on the card: cost at the top, level badge in the corner, damage along the bottom. Null hides a part.</summary>
+        public void SetFace(string cost, string level, string power)
+        {
+            if (CostBar != null) CostBar.SetActive(!string.IsNullOrEmpty(cost));
+            if (Cost != null) Cost.text = cost ?? "";
+            if (LevelBadge != null) LevelBadge.SetActive(level != null);
+            if (Level != null) Level.text = level ?? "";
+            if (PowerBar != null) PowerBar.SetActive(power != null);
+            if (Power != null) Power.text = power ?? "";
+        }
 
         public void Bind(string title, string cost, string uses, Sprite icon, Color frame)
         {

@@ -132,6 +132,84 @@ namespace Pokiwar.Tests
         }
 
         [Test]
+        public void ReusableCards_BelongToThePlayer_AndAnyPetUsesThem()
+        {
+            var db = DefaultContent.Create();
+            var prog = new ProgressionService(db);
+            var save = prog.CreateNewSave(0);
+            Assert.AreEqual(ProgressionService.LoadoutSize, save.SelectedCardIds.Count);
+            Assert.IsNotNull(save.SkillCard("skill.blaze_burst"));
+            save.SkillCard("skill.blaze_burst").Level = 4;
+
+            foreach (var pet in save.Pets)
+            {
+                var setup = prog.BuildPlayer(save, pet, save.SelectedCardIds);
+                Assert.IsTrue(setup.Skills.Exists(s => s.Id == "skill.blaze_burst"), db.Creature(pet.PetId).Name + " carries the player's card");
+                Assert.AreEqual(4, setup.SkillLevels["skill.blaze_burst"]);
+                Assert.AreEqual(ProgressionService.LoadoutSize, setup.Skills.Count + setup.Cards.Count);
+            }
+            save.SelectedCardIds.Remove("skill.blaze_burst");
+            Assert.IsFalse(prog.BuildPlayer(save, save.Pets[0], save.SelectedCardIds).Skills.Exists(s => s.Id == "skill.blaze_burst"));
+        }
+
+        [Test]
+        public void CardLevel_RaisesItsDamage_ForBossesToo()
+        {
+            var db = DefaultContent.Create();
+            var blaze = db.Skill("skill.blaze_burst");
+            Assert.Greater(BattleEngine.SkillPower(100, blaze, 5), BattleEngine.SkillPower(100, blaze, 1));
+
+            var prog = new ProgressionService(db);
+            var save = prog.CreateNewSave(0);
+            var e = new BattleEngine(prog.StartBattle(save, db.Node("node.2"), 3));
+            var foe = e.State.Get(Side.Enemy);
+            Assert.AreEqual(db.Encounter("enc.psyling").SkillLevel, foe.SkillLevel(foe.Skills[0]));
+        }
+
+        [Test]
+        public void CardStones_UpgradeCards_AndNeverTouchPetStones()
+        {
+            var db = DefaultContent.Create();
+            var prog = new ProgressionService(db);
+            var up = new UpgradeService(db);
+            var save = prog.CreateNewSave(0);
+            save.Gold = 100000;
+            var card = save.SkillCard("skill.blaze_burst");
+            int petStones = 0;
+            foreach (var st in save.Stones) petStones += st.Count;
+            int cardStones = save.CardStoneCount(1);
+            Assert.Greater(cardStones, 0, "a new save starts with card stones");
+
+            int level = card.Level, attempts = 0;
+            var rng = new SeededRng(7);
+            while (save.CardStoneCount(1) > 0 && card.Level == level)
+            {
+                Assert.IsTrue(up.UpgradeCard(save, card, 1, false, false, rng).Attempted);
+                attempts++;
+            }
+            Assert.AreEqual(cardStones - attempts, save.CardStoneCount(1));
+            int after = 0;
+            foreach (var st in save.Stones) after += st.Count;
+            Assert.AreEqual(petStones, after, "pet stones untouched");
+            Assert.IsFalse(up.UpgradeCard(save, card, 6, false, false, rng).Attempted, "no stone of that tier");
+        }
+
+        [Test]
+        public void OldSave_GetsStarterReusableCards()
+        {
+            var db = DefaultContent.Create();
+            var old = new SaveData { Version = 3 };
+            old.SelectedCardIds.Add("card.mana_potion");
+            var d = SaveMigrator.Migrate(old, db.Progression);
+            Assert.AreEqual(SaveData.CurrentVersion, d.Version);
+            foreach (var id in db.Progression.StarterSkillIds)
+            {
+                Assert.IsNotNull(d.SkillCard(id));
+                CollectionAssert.Contains(d.SelectedCardIds, id);
+            }
+        }
+
+        [Test]
         public void Loss_GrantsNothing_AndCanBeRetried()
         {
             var db = DefaultContent.Create();

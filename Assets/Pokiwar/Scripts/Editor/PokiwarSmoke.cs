@@ -238,8 +238,16 @@ namespace Pokiwar.EditorTools
             app.Prep.CardSlots[4].onClick.Invoke();
             yield return null;
             Check(app.Prep.CardPicker.activeSelf, "a card slot opens the card picker");
+            RowView lastCardRow = null;
+            int reusableRows = 0;
             foreach (Transform t in app.Prep.CardTemplate.transform.parent)
-                if (t.gameObject.activeSelf) { t.GetComponent<RowView>().Button.onClick.Invoke(); break; }
+                if (t.gameObject.activeSelf)
+                {
+                    lastCardRow = t.GetComponent<RowView>();
+                    if (lastCardRow.Subtitle.text.Contains("reusable")) reusableRows++;
+                }
+            Check(reusableRows == app.Save.SkillCards.Count && reusableRows > 0, "the picker lists the player's reusable cards (" + reusableRows + ")");
+            lastCardRow.Button.onClick.Invoke();
             yield return null;
             Check(app.Save.SelectedCardIds.Count == 5 && app.Prep.CardSlotIcons[4].gameObject.activeSelf, "picking a card fills the slot");
             yield return Capture("03b_card_picker");
@@ -251,6 +259,15 @@ namespace Pokiwar.EditorTools
             yield return null;
             var bc = app.Battle;
             Check(app.BattleScreen.activeSelf && bc.Engine != null, "battle starts");
+            yield return WaitFor(() => bc.IntroVs.gameObject.activeInHierarchy, 3);
+            Check(bc.Intro.gameObject.activeSelf && bc.IntroPlayer.sprite == bc.PlayerHud.Portrait.sprite && bc.IntroEnemy.sprite == bc.EnemyHud.Portrait.sprite, "VS intro shows both fighters");
+            yield return new WaitForSecondsRealtime(0.25f);
+            yield return Capture("03c_intro_vs");
+            yield return WaitFor(() => bc.IntroFight.gameObject.activeInHierarchy, 3);
+            yield return new WaitForSecondsRealtime(0.3f);
+            yield return Capture("03d_intro_fight");
+            yield return WaitFor(() => !bc.Intro.gameObject.activeSelf, 3);
+            Check(!bc.Intro.gameObject.activeSelf, "intro clears before the first turn");
             Check(app.Save.Energy == energy - 1, "energy spent");
             Check(bc.PlayerCard.gameObject.activeSelf && bc.PlayerCard.NameLabel.text == "Smokey" && !bc.EnemyCard.gameObject.activeSelf, "player avatar card shows; a wild monster has none");
             string firstBattle = bc.Engine.State.BattleId;
@@ -423,6 +440,32 @@ namespace Pokiwar.EditorTools
                 foreach (var st in app.Save.Stones) stonesAfter += st.Count;
                 Check(stonesAfter == stonesBefore - 3 || stonesAfter == stonesBefore - 2, "merge consumed 3 stones (" + stonesBefore + " -> " + stonesAfter + ")");
             }
+            app.Save.AddCardStones(1, 6);
+            app.Save.Gold += 5000;
+            app.Hub.CardsButton.onClick.Invoke();
+            yield return null;
+            Check(app.CardForge.gameObject.activeSelf, "card forge opens from the hub");
+            CheckOnScreen(app.CardForge.transform, "card forge");
+            Check(app.CardForge.CardFace.LevelBadge.activeSelf && app.CardForge.CardFace.Level.text == "1" && app.CardForge.CardFace.Power.text.Length > 0, "card face shows cost, level and damage");
+            RowView forgeRow = null;
+            foreach (var r in app.CardForge.GetComponentsInChildren<RowView>(false)) if (r.ExtraB != null && r.ExtraB.gameObject.activeInHierarchy && r.ExtraB.interactable) { forgeRow = r; break; }
+            Check(forgeRow != null, "a card stone can be fed to the card");
+            if (forgeRow != null)
+            {
+                int stones = app.Save.CardStoneCount(1), petStoneTotal = 0, tries = 0;
+                foreach (var st in app.Save.Stones) petStoneTotal += st.Count;
+                while (app.Save.SkillCards[0].Level == 1 && tries < 6 && app.Save.CardStoneCount(1) > 0)
+                {
+                    foreach (var r in app.CardForge.GetComponentsInChildren<RowView>(false)) if (r.ExtraB != null && r.ExtraB.gameObject.activeInHierarchy) { r.ExtraB.onClick.Invoke(); break; }
+                    tries++;
+                    yield return null;
+                }
+                int petStoneAfter = 0;
+                foreach (var st in app.Save.Stones) petStoneAfter += st.Count;
+                Check(app.Save.CardStoneCount(1) == stones - tries && petStoneAfter == petStoneTotal, "upgrade spends card stones only (" + tries + " used)");
+                Check(app.Save.SkillCards[0].Level == 2 && app.CardForge.CardFace.Level.text == "2", "card reached level 2 and the face shows it");
+            }
+            yield return Capture("08b_card_forge");
             app.ShowHub();
             yield return null;
             yield return Capture("09_hub_after");

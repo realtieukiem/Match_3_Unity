@@ -72,6 +72,7 @@ namespace Pokiwar.EditorTools
             }
             foreach (Element e in System.Enum.GetValues(typeof(Element)))
                 lib.Sprites.Add(new KeyedSprite { Key = "stone." + e, Sprite = art["stone"] });
+            if (!art.ContainsKey("stone.card")) lib.Sprites.Add(new KeyedSprite { Key = "stone.card", Sprite = art["stone"] });
             lib.Fallback = art["ui.circle"];
             EditorUtility.SetDirty(lib);
             AssetDatabase.SaveAssets();

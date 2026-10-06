@@ -19,7 +19,6 @@ MonoBehaviour:
     IconKey: card.mana_leech
     ManaCost: 0
     RageCost: 30
-    UsesPerBattle: 1
     CanUseBeforeMatch: 1
     CanUseAfterMatch: 0
     EndTurnAfterUse: 0

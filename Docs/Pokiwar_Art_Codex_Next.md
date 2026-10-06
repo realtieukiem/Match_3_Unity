@@ -172,6 +172,25 @@ Final check: one contact sheet with the base alone, the starter outfit (spiky + 
 outfits (bob + jacket + pants + cap, ponytail + robe + skirt + wizard hat, spiky + robe + pants), all
 composited by script.
 
+## Batch 9 - battle word art and the card stone (3 images)
+
+The game currently draws these words with a system font. Paint them as lettering, in the same hand as
+`text_your_turn_v01.png` (chunky rounded cartoon capitals, warm orange-to-yellow fill, thick dark brown
+outline, thin cream rim, slight upward tilt, soft drop shadow). Transparent background, no extra objects,
+no glow that reaches the canvas edge, the word centred with at least 6% clear margin.
+
+Save into `D:\Project\Pokiwar_Art_FG38\Assets\UI\Battle\`:
+
+- `text_vs_v01.png` - 1024x640. The letters "VS", very bold, with two crossed lightning cracks behind them.
+- `text_fight_v01.png` - 1536x512. The word "FIGHT!", red-orange fill, more aggressive slant than YOUR TURN.
+
+Save into `D:\Project\Pokiwar_Art_FG38\Assets\Meta\UI\`:
+
+- `stone_card_v01.png` - 256x256. A faceted golden-yellow upgrade crystal for cards, clearly a different
+  object from the round elemental pet stones: square-cut, card-suit sparkle on its face, same line weight.
+
+Final check: one contact sheet of the three files on a mid-grey background and on the battle background.
+
 ## After any batch
 
 Tell Claude Code "lấy asset Codex mới vào game" (or run `Pokiwar/Rebuild Scene + Art` in Unity). Painted

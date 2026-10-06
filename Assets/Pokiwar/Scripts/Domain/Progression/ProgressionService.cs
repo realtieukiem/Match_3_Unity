@@ -38,6 +38,9 @@ namespace Pokiwar.Domain
     {
         public readonly ContentDatabase Db;
 
+        public const int LoadoutSize = 5;
+        public const int MaxSkillsInLoadout = 2;
+
         public ProgressionService(ContentDatabase db)
         {
             Db = db;
@@ -55,7 +58,13 @@ namespace Pokiwar.Domain
             foreach (var c in cfg.StarterCardIds) if (!d.Cards.Contains(c)) d.Cards.Add(c);
             foreach (var item in cfg.StarterItems) GrantItem(d, item, null);
             d.SelectedPetUid = d.Pets.Count > 0 ? d.Pets[0].Uid : null;
-            d.SelectedCardIds.AddRange(d.Cards.GetRange(0, Math.Min(5, d.Cards.Count)));
+            foreach (var id in cfg.StarterSkillIds)
+            {
+                if (d.SkillCard(id) != null) continue;
+                d.SkillCards.Add(new OwnedCard { Id = id });
+                if (d.SelectedCardIds.Count < MaxSkillsInLoadout) d.SelectedCardIds.Add(id);
+            }
+            d.SelectedCardIds.AddRange(d.Cards.GetRange(0, Math.Min(LoadoutSize - d.SelectedCardIds.Count, d.Cards.Count)));
             new AvatarService(Db).GrantStarter(d);
             return d;
         }
@@ -146,14 +155,20 @@ namespace Pokiwar.Domain
                 Gems = Db.GemProfile(def.GemProfileId),
                 Ai = Db.Ai("ai.autoplay")
             };
-            foreach (var id in def.SkillIds) s.Skills.Add(Db.Skill(id));
+            foreach (var id in cardIds)
+            {
+                var owned = d.SkillCard(id);
+                if (owned == null || s.Skills.Count >= MaxSkillsInLoadout || s.Skills.Exists(x => x.Id == id)) continue;
+                s.Skills.Add(Db.Skill(id));
+                s.SkillLevels[id] = owned.Level;
+            }
             foreach (var ph in def.Phases)
                 foreach (var id in ph.UnlockSkillIds)
                     s.LockedSkills.Add(Db.Skill(id));
-            int n = 0;
+            int n = s.Skills.Count;
             foreach (var id in cardIds)
             {
-                if (n >= 5) break;
+                if (n >= LoadoutSize) break;
                 var c = Db.TryCard(id);
                 if (c == null || !d.Cards.Contains(id)) continue;
                 s.Cards.Add(c);
@@ -173,11 +188,18 @@ namespace Pokiwar.Domain
                 Gems = Db.GemProfile(def.GemProfileId),
                 Ai = Db.Ai(enc.AiPolicyId)
             };
-            foreach (var id in def.SkillIds) s.Skills.Add(Db.Skill(id));
+            foreach (var id in def.SkillIds)
+            {
+                s.Skills.Add(Db.Skill(id));
+                s.SkillLevels[id] = enc.SkillLevel;
+            }
             foreach (var id in def.CardIds) s.Cards.Add(Db.Card(id));
             foreach (var ph in def.Phases)
                 foreach (var id in ph.UnlockSkillIds)
+                {
                     s.LockedSkills.Add(Db.Skill(id));
+                    s.SkillLevels[id] = enc.SkillLevel;
+                }
             return s;
         }
 
@@ -294,6 +316,17 @@ namespace Pokiwar.Domain
                 case RewardKind.ProtectionCharm:
                     d.ProtectionCharms += drop.Count;
                     lines?.Add("+" + drop.Count + " Protection Charm");
+                    break;
+                case RewardKind.CardStone:
+                    d.AddCardStones(drop.Tier, drop.Count);
+                    lines?.Add("+" + drop.Count + " Card Stone T" + drop.Tier);
+                    break;
+                case RewardKind.SkillCard:
+                    if (d.SkillCard(drop.ItemId) == null)
+                    {
+                        d.SkillCards.Add(new OwnedCard { Id = drop.ItemId });
+                        lines?.Add("New card: " + Db.Skill(drop.ItemId).Name);
+                    }
                     break;
                 case RewardKind.Pet:
                     if (!d.Pets.Exists(p => p.PetId == drop.ItemId))

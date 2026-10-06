@@ -31,6 +31,7 @@ namespace Pokiwar.Domain
         public AIPolicy Ai(string id) => AiPolicies.Find(a => a.Id == id) ?? new AIPolicy();
 
         public CardDef TryCard(string id) => Cards.Find(c => c.Id == id);
+        public SkillDef TrySkill(string id) => Skills.Find(c => c.Id == id);
         public CreatureDef TryCreature(string id) => Creatures.Find(c => c.Id == id);
         public AvatarItemDef TryAvatarItem(string id) => AvatarItems.Find(c => c.Id == id);
 

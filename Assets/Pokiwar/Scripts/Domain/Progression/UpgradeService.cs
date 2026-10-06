@@ -113,6 +113,77 @@ namespace Pokiwar.Domain
             return r;
         }
 
+        public float CardUpgradeChance(OwnedCard card, int stoneTier, bool lucky)
+        {
+            var t = Cfg.CardUpgradeChanceByLevel;
+            float c = t[MathUtil.Clamp(card.Level - 1, 0, t.Length - 1)];
+            int requiredTier = 1 + (card.Level - 1) / 2;
+            c += (stoneTier - requiredTier) * Cfg.CardStoneTierBonusPerTierAbove;
+            if (lucky) c += Cfg.LuckyCharmBonus;
+            return (float)MathUtil.Clamp(c, Cfg.EnhanceMinChance, 1);
+        }
+
+        public int CardUpgradeCost(OwnedCard card)
+        {
+            var t = Cfg.CardUpgradeGoldByLevel;
+            return t[MathUtil.Clamp(card.Level - 1, 0, t.Length - 1)];
+        }
+
+        /// <summary>Feeds one card stone into a reusable card. Card stones are their own currency, never pet stones.</summary>
+        public UpgradeResult UpgradeCard(SaveData d, OwnedCard card, int tier, bool useLucky, bool useProtection, SeededRng rng)
+        {
+            var r = new UpgradeResult();
+            if (card.Level >= Cfg.MaxCardLevel) { r.Message = "Max level"; return r; }
+            if (d.CardStoneCount(tier) < 1) { r.Message = "No card stone"; return r; }
+            int cost = CardUpgradeCost(card);
+            if (d.Gold < cost) { r.Message = "Need " + cost + " gold"; return r; }
+            if (useLucky && d.LuckyCharms <= 0) { r.Message = "No Lucky Charm"; return r; }
+            if (useProtection && d.ProtectionCharms <= 0) { r.Message = "No Protection Charm"; return r; }
+            r.Attempted = true;
+            r.Chance = CardUpgradeChance(card, tier, useLucky);
+            d.Gold -= cost;
+            d.AddCardStones(tier, -1);
+            if (useLucky) d.LuckyCharms--;
+            if (useProtection) d.ProtectionCharms--;
+            r.Success = rng.Chance(r.Chance);
+            if (r.Success)
+            {
+                card.Level++;
+                r.Message = "Card upgraded! Lv " + card.Level;
+            }
+            else if (!useProtection && Cfg.CardFailDropsLevelWithoutProtection && card.Level > 1)
+            {
+                card.Level--;
+                r.Message = "Upgrade failed. Level dropped to " + card.Level;
+            }
+            else r.Message = "Upgrade failed. The stone is lost.";
+            return r;
+        }
+
+        /// <summary>Three card stones of one tier try for one of the next tier, on the stone merge table.</summary>
+        public UpgradeResult MergeCardStones(SaveData d, int tier, bool useLucky, SeededRng rng)
+        {
+            var r = new UpgradeResult();
+            if (tier >= Cfg.MaxCardStoneTier) { r.Message = "Max tier"; return r; }
+            if (d.CardStoneCount(tier) < 3) { r.Message = "Need 3 card stones"; return r; }
+            int cost = MergeCost(tier);
+            if (d.Gold < cost) { r.Message = "Need " + cost + " gold"; return r; }
+            if (useLucky && d.LuckyCharms <= 0) { r.Message = "No Lucky Charm"; return r; }
+            r.Attempted = true;
+            d.Gold -= cost;
+            if (useLucky) d.LuckyCharms--;
+            d.AddCardStones(tier, -3);
+            r.Chance = MergeChance(tier, useLucky);
+            r.Success = rng.Chance(r.Chance);
+            if (r.Success)
+            {
+                d.AddCardStones(tier + 1, 1);
+                r.Message = "Success! Card Stone T" + (tier + 1);
+            }
+            else r.Message = "Merge failed. 3 card stones lost.";
+            return r;
+        }
+
         /// <summary>Puts a stone into the first empty socket, or replaces the lowest one. The stone is consumed.</summary>
         public UpgradeResult Socket(SaveData d, OwnedPet pet, Element element, int tier)
         {

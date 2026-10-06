@@ -25,6 +25,20 @@ MonoBehaviour:
       Count: 2
       Chance: 1
       FirstClearOnly: 0
+    - Kind: 5
+      ItemId: 
+      Element: 0
+      Tier: 2
+      Count: 2
+      Chance: 1
+      FirstClearOnly: 0
+    - Kind: 6
+      ItemId: skill.tide_lance
+      Element: 0
+      Tier: 1
+      Count: 1
+      Chance: 1
+      FirstClearOnly: 1
     - Kind: 1
       ItemId: card.war_cry
       Element: 0

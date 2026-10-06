@@ -213,6 +213,7 @@ namespace Pokiwar.Domain
         public int RageCost;
         public float AtkMultiplier;
         public int FlatBase;
+        public int FlatPerLevel;
         public bool UseQte = true;
         public QteProfile Qte = new QteProfile();
         public bool EndTurnAfterUse = true;
@@ -289,7 +290,7 @@ namespace Pokiwar.Domain
         public float QteAvgCorrect = 3.5f;
     }
 
-    public enum RewardKind { Stone, Card, LuckyCharm, ProtectionCharm, Pet }
+    public enum RewardKind { Stone, Card, LuckyCharm, ProtectionCharm, Pet, CardStone, SkillCard }
 
     [Serializable]
     public class RewardDrop
@@ -329,6 +330,7 @@ namespace Pokiwar.Domain
         public Side FirstTurn = Side.Player;
         public bool CaptureOnFirstWin = true;
         public float HpVsPlayer;
+        public int SkillLevel = 1;
     }
 
     [Serializable]
@@ -381,6 +383,13 @@ namespace Pokiwar.Domain
         public int SocketHpPerTier = 60;
         public int SocketElementBonusPerTier = 1;
 
+        public int MaxCardLevel = 12;
+        public int MaxCardStoneTier = 6;
+        public float[] CardUpgradeChanceByLevel = { 0.95f, 0.88f, 0.80f, 0.70f, 0.60f, 0.50f, 0.40f, 0.32f, 0.25f, 0.18f, 0.12f };
+        public int[] CardUpgradeGoldByLevel = { 150, 300, 500, 800, 1200, 1700, 2400, 3300, 4500, 6000, 8000 };
+        public float CardStoneTierBonusPerTierAbove = 0.06f;
+        public bool CardFailDropsLevelWithoutProtection;
+
         public Confidence Confidence = Confidence.Provisional;
     }
 
@@ -397,6 +406,7 @@ namespace Pokiwar.Domain
         public List<string> StarterPetIds = new List<string>();
         public List<int> StarterPetLevels = new List<int>();
         public List<string> StarterCardIds = new List<string>();
+        public List<string> StarterSkillIds = new List<string>();
         public List<RewardDrop> StarterItems = new List<RewardDrop>();
         public string DefaultPlayerName = "Trainer";
         public List<string> StarterAvatarIds = new List<string>();

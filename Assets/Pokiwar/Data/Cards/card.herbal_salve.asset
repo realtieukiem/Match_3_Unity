@@ -19,7 +19,6 @@ MonoBehaviour:
     IconKey: card.herbal_salve
     ManaCost: 120
     RageCost: 0
-    UsesPerBattle: 2
     CanUseBeforeMatch: 1
     CanUseAfterMatch: 0
     EndTurnAfterUse: 0

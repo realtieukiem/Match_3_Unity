@@ -18,6 +18,7 @@ namespace Pokiwar.UI
         public Button AvatarButton;
         public Button AdventureButton;
         public Button UpgradeButton;
+        public Button CardsButton;
         public Button ResetButton;
         public Button MusicButton;
         public Text MusicLabel;
@@ -32,6 +33,7 @@ namespace Pokiwar.UI
         {
             AdventureButton.onClick.AddListener(() => app.ShowMap());
             UpgradeButton.onClick.AddListener(() => app.ShowUpgrade());
+            if (CardsButton != null) CardsButton.onClick.AddListener(() => app.ShowCardForge());
             if (AvatarButton != null) AvatarButton.onClick.AddListener(() => app.ShowWardrobe());
             ResetButton.onClick.AddListener(() => app.ResetSave());
             MusicButton.onClick.AddListener(() => { app.Save.MusicOn = !app.Save.MusicOn; app.ApplySettings(); Show(app); });

@@ -22,8 +22,10 @@ namespace Pokiwar.Domain
                 StarterPetIds = new List<string> { "pet.emberkit", "pet.leafling" },
                 StarterPetLevels = new List<int> { 3, 2 },
                 StarterCardIds = new List<string> { "card.mana_potion", "card.herbal_salve", "card.fire_bolt", "card.summon_sprite", "card.iron_skin" },
+                StarterSkillIds = new List<string> { "skill.blaze_burst", "skill.thorn_bind" },
                 StarterItems = new List<RewardDrop>
                 {
+                    new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 3 },
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 4 },
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Wood, Tier = 1, Count = 2 },
                     new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1 },
@@ -134,16 +136,16 @@ namespace Pokiwar.Domain
 
         private static void AddSkills(ContentDatabase db)
         {
-            db.Skills.Add(new SkillDef { Id = "skill.blaze_burst", Name = "Blaze Burst", Description = "Arrow combo fire blast.", IconKey = "skill.blaze_burst", ManaCost = 400, AtkMultiplier = 4.0f });
-            var thorn = new SkillDef { Id = "skill.thorn_bind", Name = "Thorn Bind", Description = "Arrow combo, then -20% enemy ATK for 2 turns.", IconKey = "skill.thorn_bind", ManaCost = 350, AtkMultiplier = 3.0f };
+            db.Skills.Add(new SkillDef { Id = "skill.blaze_burst", Name = "Blaze Burst", Description = "Arrow combo fire blast.", IconKey = "skill.blaze_burst", ManaCost = 400, AtkMultiplier = 4.0f, FlatPerLevel = 70 });
+            var thorn = new SkillDef { Id = "skill.thorn_bind", Name = "Thorn Bind", Description = "Arrow combo, then -20% enemy ATK for 2 turns.", IconKey = "skill.thorn_bind", ManaCost = 350, AtkMultiplier = 3.0f, FlatPerLevel = 50 };
             thorn.PostEffects.Add(new EffectSpec(EffectKind.DebuffAtk, TargetKind.Opponent, 0.2f, 2, "Thorn Bind"));
             db.Skills.Add(thorn);
-            db.Skills.Add(new SkillDef { Id = "skill.tide_lance", Name = "Tide Lance", Description = "Arrow combo water strike.", IconKey = "skill.tide_lance", ManaCost = 380, AtkMultiplier = 3.8f });
-            db.Skills.Add(new SkillDef { Id = "skill.mind_spark", Name = "Mind Spark", IconKey = "skill.mind_spark", ManaCost = 450, AtkMultiplier = 3.0f });
+            db.Skills.Add(new SkillDef { Id = "skill.tide_lance", Name = "Tide Lance", Description = "Arrow combo water strike.", IconKey = "skill.tide_lance", ManaCost = 380, AtkMultiplier = 3.8f, FlatPerLevel = 65 });
+            db.Skills.Add(new SkillDef { Id = "skill.mind_spark", Name = "Mind Spark", Description = "Arrow combo psychic jolt.", IconKey = "skill.mind_spark", ManaCost = 450, AtkMultiplier = 3.0f, FlatPerLevel = 55 });
             var siphon = new SkillDef
             {
                 Id = "skill.tidal_siphon", Name = "Tidal Siphon", Description = "Costs 200 mana + 200 rage. Strikes, then drains 70% of the target's mana.",
-                IconKey = "skill.tidal_siphon", ManaCost = 200, RageCost = 200, AtkMultiplier = 3.2f
+                IconKey = "skill.tidal_siphon", ManaCost = 200, RageCost = 200, AtkMultiplier = 3.2f, FlatPerLevel = 60
             };
             siphon.PostEffects.Add(new EffectSpec(EffectKind.DrainManaPctOfCurrent, TargetKind.Opponent, 0.70f));
             db.Skills.Add(siphon);
@@ -214,6 +216,7 @@ namespace Pokiwar.Domain
                 Drops =
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Earth, Tier = 1, Count = 2 },
+                    new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 2 },
                     new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1, Chance = 0.3f }
                 }
             });
@@ -223,6 +226,8 @@ namespace Pokiwar.Domain
                 Drops =
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Metal, Tier = 1, Count = 3 },
+                    new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 3 },
+                    new RewardDrop { Kind = RewardKind.SkillCard, ItemId = "skill.mind_spark", FirstClearOnly = true },
                     new RewardDrop { Kind = RewardKind.Card, ItemId = "card.mana_leech", FirstClearOnly = true },
                     new RewardDrop { Kind = RewardKind.ProtectionCharm, Count = 1, Chance = 0.5f }
                 }
@@ -233,6 +238,8 @@ namespace Pokiwar.Domain
                 Drops =
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Water, Tier = 2, Count = 2 },
+                    new RewardDrop { Kind = RewardKind.CardStone, Tier = 2, Count = 2 },
+                    new RewardDrop { Kind = RewardKind.SkillCard, ItemId = "skill.tide_lance", FirstClearOnly = true },
                     new RewardDrop { Kind = RewardKind.Card, ItemId = "card.war_cry", FirstClearOnly = true },
                     new RewardDrop { Kind = RewardKind.Card, ItemId = "card.meteor", FirstClearOnly = true }
                 }
@@ -242,8 +249,8 @@ namespace Pokiwar.Domain
         private static void AddEncounters(ContentDatabase db)
         {
             db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 3, AiPolicyId = "ai.easy", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1 });
-            db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 6, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2 });
-            db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 8, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4, HpVsPlayer = 2.2f });
+            db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 6, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2, SkillLevel = 2 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 8, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4, HpVsPlayer = 2.2f, SkillLevel = 3 });
         }
 
         private static void AddMap(ContentDatabase db)

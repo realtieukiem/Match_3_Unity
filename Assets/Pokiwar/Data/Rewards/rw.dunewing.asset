@@ -25,6 +25,13 @@ MonoBehaviour:
       Count: 2
       Chance: 1
       FirstClearOnly: 0
+    - Kind: 5
+      ItemId: 
+      Element: 0
+      Tier: 1
+      Count: 2
+      Chance: 1
+      FirstClearOnly: 0
     - Kind: 2
       ItemId: 
       Element: 0

@@ -84,7 +84,7 @@ namespace Pokiwar.UI
         {
             var s = app.Save;
             if (s.Pet(s.SelectedPetUid) == null && s.Pets.Count > 0) s.SelectedPetUid = s.Pets[0].Uid;
-            s.SelectedCardIds.RemoveAll(id => !s.Cards.Contains(id));
+            s.SelectedCardIds.RemoveAll(id => !s.Cards.Contains(id) && s.SkillCard(id) == null);
 
             var selected = s.Pet(s.SelectedPetUid);
             if (selected != null)
@@ -98,9 +98,12 @@ namespace Pokiwar.UI
             {
                 bool has = i < s.SelectedCardIds.Count;
                 var card = has ? app.Db.TryCard(s.SelectedCardIds[i]) : null;
-                CardSlotIcons[i].gameObject.SetActive(card != null);
-                if (card != null) CardSlotIcons[i].sprite = app.Sprites.Get(card.IconKey);
-                CardSlotRemove[i].gameObject.SetActive(card != null);
+                var skill = has && card == null ? app.Db.TrySkill(s.SelectedCardIds[i]) : null;
+                string iconKey = card != null ? card.IconKey : skill?.IconKey;
+                CardSlotIcons[i].gameObject.SetActive(iconKey != null);
+                CardSlotIcons[i].preserveAspect = skill != null;
+                if (iconKey != null) CardSlotIcons[i].sprite = app.Sprites.Get(iconKey);
+                CardSlotRemove[i].gameObject.SetActive(iconKey != null);
             }
 
             petRows.Clear();
@@ -125,6 +128,33 @@ namespace Pokiwar.UI
             cardRows.Clear();
             if (CardPicker.activeSelf)
             {
+                double atk = selected != null ? app.Progression.PetStats(selected).Atk : 0;
+                foreach (var oc in s.SkillCards)
+                {
+                    var sk = app.Db.TrySkill(oc.Id);
+                    if (sk == null) continue;
+                    var row = cardRows.Add();
+                    bool equipped = s.SelectedCardIds.Contains(oc.Id);
+                    row.Set(sk.Name + "  Lv " + oc.Level, sk.ManaCost + " MP   DMG " + BattleEngine.SkillPower(atk, sk, oc.Level) + "   reusable\n" + sk.Description, app.Sprites.Get(sk.IconKey), equipped);
+                    var sid = oc.Id;
+                    row.Button.onClick.AddListener(() =>
+                    {
+                        if (s.SelectedCardIds.Contains(sid)) return;
+                        if (s.SelectedCardIds.FindAll(x => s.SkillCard(x) != null).Count >= ProgressionService.MaxSkillsInLoadout) app.Toast("Max " + ProgressionService.MaxSkillsInLoadout + " reusable cards");
+                        else if (s.SelectedCardIds.Count < MaxCards) s.SelectedCardIds.Insert(0, sid);
+                        else app.Toast("Max " + MaxCards + " cards");
+                        Refresh();
+                    });
+                    if (row.ExtraA != null)
+                    {
+                        row.ExtraA.gameObject.SetActive(equipped);
+                        row.ExtraA.onClick.AddListener(() =>
+                        {
+                            s.SelectedCardIds.Remove(sid);
+                            Refresh();
+                        });
+                    }
+                }
                 foreach (var id in s.Cards)
                 {
                     var card = app.Db.TryCard(id);

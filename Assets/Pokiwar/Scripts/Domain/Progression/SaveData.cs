@@ -17,6 +17,13 @@ namespace Pokiwar.Domain
     }
 
     [Serializable]
+    public class OwnedCard
+    {
+        public string Id;
+        public int Level = 1;
+    }
+
+    [Serializable]
     public class StoneStack
     {
         public Element Element;
@@ -35,7 +42,7 @@ namespace Pokiwar.Domain
     [Serializable]
     public class SaveData
     {
-        public const int CurrentVersion = 3;
+        public const int CurrentVersion = 4;
 
         public int Version = CurrentVersion;
         public int Gold;
@@ -61,8 +68,20 @@ namespace Pokiwar.Domain
         public string PlayerName;
         public List<string> AvatarOwned = new List<string>();
         public List<string> AvatarWorn = new List<string>();
+        public List<OwnedCard> SkillCards = new List<OwnedCard>();
+        public List<int> CardStones = new List<int>();
 
         public OwnedPet Pet(string uid) => Pets.Find(p => p.Uid == uid);
+
+        public OwnedCard SkillCard(string id) => SkillCards.Find(c => c.Id == id);
+
+        public int CardStoneCount(int tier) => tier >= 1 && tier <= CardStones.Count ? CardStones[tier - 1] : 0;
+
+        public void AddCardStones(int tier, int count)
+        {
+            while (CardStones.Count < tier) CardStones.Add(0);
+            CardStones[tier - 1] = Math.Max(0, CardStones[tier - 1] + count);
+        }
 
         public NodeProgress Node(string id, bool create)
         {
@@ -128,6 +147,19 @@ namespace Pokiwar.Domain
                     if (!d.AvatarWorn.Contains(id)) d.AvatarWorn.Add(id);
                 }
                 d.Version = 3;
+            }
+            if (d.SkillCards == null) d.SkillCards = new List<OwnedCard>();
+            if (d.CardStones == null) d.CardStones = new List<int>();
+            if (d.SelectedCardIds == null) d.SelectedCardIds = new List<string>();
+            if (d.Version == 3)
+            {
+                foreach (var id in cfg.StarterSkillIds)
+                {
+                    if (d.SkillCard(id) != null) continue;
+                    d.SkillCards.Add(new OwnedCard { Id = id });
+                    if (d.SelectedCardIds.Count < 5) d.SelectedCardIds.Insert(0, id);
+                }
+                d.Version = 4;
             }
             if (d.AvatarOwned == null) d.AvatarOwned = new List<string>();
             if (d.AvatarWorn == null) d.AvatarWorn = new List<string>();

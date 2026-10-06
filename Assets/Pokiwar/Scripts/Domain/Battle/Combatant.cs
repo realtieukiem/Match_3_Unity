@@ -42,6 +42,7 @@ namespace Pokiwar.Domain
         public List<CardDef> Cards = new List<CardDef>();
         public List<SkillDef> Skills = new List<SkillDef>();
         public List<SkillDef> LockedSkills = new List<SkillDef>();
+        public Dictionary<string, int> SkillLevels = new Dictionary<string, int>();
         public AIPolicy Ai;
     }
 
@@ -67,6 +68,9 @@ namespace Pokiwar.Domain
         public readonly List<CardSlot> Cards = new List<CardSlot>();
         public readonly List<SkillDef> Skills = new List<SkillDef>();
         public readonly List<SkillDef> LockedSkills = new List<SkillDef>();
+        public readonly Dictionary<string, int> SkillLevels = new Dictionary<string, int>();
+
+        public int SkillLevel(SkillDef s) => SkillLevels.TryGetValue(s.Id, out int l) ? Math.Max(1, l) : 1;
         public readonly List<Buff> Buffs = new List<Buff>();
         public readonly List<Summon> Summons = new List<Summon>();
         public readonly List<BossPhaseDef> Phases = new List<BossPhaseDef>();
@@ -113,6 +117,7 @@ namespace Pokiwar.Domain
             };
             foreach (var card in s.Cards) if (card != null) cb.Cards.Add(new CardSlot(card));
             foreach (var sk in s.Skills) if (sk != null) cb.Skills.Add(sk);
+            foreach (var kv in s.SkillLevels) cb.SkillLevels[kv.Key] = kv.Value;
             foreach (var sk in s.LockedSkills) if (sk != null) cb.LockedSkills.Add(sk);
             cb.Phases.AddRange(c.Phases);
             return cb;
