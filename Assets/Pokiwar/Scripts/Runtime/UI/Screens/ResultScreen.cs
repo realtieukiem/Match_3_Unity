@@ -10,9 +10,14 @@ namespace Pokiwar.UI
     {
         public Text Title;
         public Text Lines;
+        public Image CapturedPet;
+        [Tooltip("How far the reward lines move right to make room for the captured pet (px).")]
+        public float CapturedTextShift = 130f;
         public RectTransform Panel;
         public Button CloseButton;
 
+        private Vector2 linesHome;
+        private bool linesHomeSet;
         private GameApp app;
         private string nodeId;
 
@@ -29,6 +34,18 @@ namespace Pokiwar.UI
             Lines.text = grant != null && grant.BattleId == report.BattleId && grant.Lines.Count > 0
                 ? string.Join("\n", grant.Lines)
                 : report.Won ? "" : "Try again!";
+            if (CapturedPet != null)
+            {
+                string captured = grant != null && grant.BattleId == report.BattleId ? grant.CapturedPetId : null;
+                CapturedPet.gameObject.SetActive(captured != null);
+                if (captured != null) CapturedPet.sprite = a.Sprites.Owned(a.Db.Creature(captured).SpriteKey);
+                if (!linesHomeSet)
+                {
+                    linesHome = Lines.rectTransform.anchoredPosition;
+                    linesHomeSet = true;
+                }
+                Lines.rectTransform.anchoredPosition = linesHome + new Vector2(captured != null ? CapturedTextShift : 0f, 0f);
+            }
             if (report.Won && VfxLayer.Instance != null)
             {
                 var v = VfxLayer.Instance;

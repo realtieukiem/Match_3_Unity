@@ -93,7 +93,7 @@ lasting layout changes go into its `Portrait(...)` calls.
 | `Pets/*`, `Monsters/*` | base stats + per-level growth, element + bonus, rage profile (threshold/cost/strong x/HP-damage rage/turn-start rage), skills, cards, boss phases |
 | `Cards/*` | mana/rage cost (each copy in a loadout is one use; copies allowed), can use before/after match, end turn after use, effect chain |
 | `Skills/*` | costs, ATK multiplier, QTE profile, post-effect chain |
-| `Encounters/*` | creature, level, start HP %, AI policy, reward table, energy, first turn |
+| `Encounters/*` | creature, level, start HP %, AI policy, reward table, energy, first turn, capture on first win (the player receives the creature just fought) |
 | `Rewards/*` | EXP, pet EXP, gold, drops (stone/card/charm/pet, chance, first clear only) |
 | `AI/*` | weights per gem, randomness, mistakes, opponent-opportunity penalty, card/skill use, QTE skill |
 | `Rules/upgrade.config` | merge chance/cost per tier, lucky bonus, enhance chance/cost per level, fail accumulation, downgrade, sockets |

@@ -234,8 +234,7 @@ namespace Pokiwar.Domain
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Water, Tier = 2, Count = 2 },
                     new RewardDrop { Kind = RewardKind.Card, ItemId = "card.war_cry", FirstClearOnly = true },
-                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.meteor", FirstClearOnly = true },
-                    new RewardDrop { Kind = RewardKind.Pet, ItemId = "pet.tidepup", FirstClearOnly = true }
+                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.meteor", FirstClearOnly = true }
                 }
             });
         }

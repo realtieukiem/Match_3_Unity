@@ -326,6 +326,7 @@ namespace Pokiwar.Domain
         public int EnergyCost = 1;
         public int Difficulty = 1;
         public Side FirstTurn = Side.Player;
+        public bool CaptureOnFirstWin = true;
     }
 
     [Serializable]

@@ -57,7 +57,7 @@ namespace Pokiwar.UI
             {
                 var def = a.Db.Creature(pet.PetId);
                 PetLabel.text = def.Name;
-                PetImage.sprite = a.Sprites.Get(def.SpriteKey);
+                PetImage.sprite = a.Sprites.Owned(def.SpriteKey);
                 if (PetElement != null) PetElement.sprite = a.Sprites.Get("element." + def.Element);
             }
         }

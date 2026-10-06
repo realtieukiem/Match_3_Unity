@@ -248,6 +248,32 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 37062443a71faf34dbc4b617927db959, type: 3}
   - Key: avatar.hat.wizard.icon
     Sprite: {fileID: 21300000, guid: ab3d3ea09024cad41bb2a827cee57c57, type: 3}
+  - Key: right.dunewing
+    Sprite: {fileID: 21300000, guid: dbeddbe961edb224282f440f765d6ac5, type: 3}
+  - Key: right.dunewing.attack
+    Sprite: {fileID: 21300000, guid: 40f4b4181e526cb47856dc6be4e4e715, type: 3}
+  - Key: right.dunewing.hit
+    Sprite: {fileID: 21300000, guid: 1f24d1f6687008443a814175fc15839a, type: 3}
+  - Key: right.dunewing.defeat
+    Sprite: {fileID: 21300000, guid: b094e9b75ff720c4aaa1e8137868e6db, type: 3}
+  - Key: right.azurewing
+    Sprite: {fileID: 21300000, guid: 8c602c3ba8127f140adb36857eb49878, type: 3}
+  - Key: right.azurewing_ascended
+    Sprite: {fileID: 21300000, guid: 2659096dedec43941a3ac6459439265f, type: 3}
+  - Key: right.azurewing_ascended.attack
+    Sprite: {fileID: 21300000, guid: 923f285f24fac8149bb6a3f4f4888685, type: 3}
+  - Key: right.azurewing_ascended.hit
+    Sprite: {fileID: 21300000, guid: 94be93f88b788db47a5c46f4dc125983, type: 3}
+  - Key: right.azurewing_ascended.defeat
+    Sprite: {fileID: 21300000, guid: 88a2c3b58006953489dfe3eef35b2b69, type: 3}
+  - Key: right.psyling
+    Sprite: {fileID: 21300000, guid: eab787bb01983214c8ce05c4f6c93b12, type: 3}
+  - Key: right.psyling.attack
+    Sprite: {fileID: 21300000, guid: e8b6d7f2631308d4fb0604738d6c4ea3, type: 3}
+  - Key: right.psyling.hit
+    Sprite: {fileID: 21300000, guid: 6340536ab7eda3a48a4d43b9e54b5b64, type: 3}
+  - Key: right.psyling.defeat
+    Sprite: {fileID: 21300000, guid: d73eb9bee1ea75f4fb7ff534fd382647, type: 3}
   - Key: stone.Neutral
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   - Key: stone.Metal

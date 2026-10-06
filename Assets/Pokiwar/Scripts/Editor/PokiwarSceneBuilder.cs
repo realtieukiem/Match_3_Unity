@@ -661,6 +661,10 @@ namespace Pokiwar.EditorTools
             titleOutline.effectColor = new Color(0.3f, 0.05f, 0.4f, 1f);
             rs.Lines = Txt(panel.transform, "Lines", "", 34, new Color(0.55f, 0.2f, 0.75f), TextAnchor.MiddleCenter, FontStyle.Bold);
             At(rs.Lines.rectTransform, 0.5f, 0.5f, 0, -24, 760, 340);
+            rs.CapturedPet = Img(panel.transform, "CapturedPet", "dunewing", Color.white);
+            rs.CapturedPet.preserveAspect = true;
+            rs.CapturedPet.raycastTarget = false;
+            At(rs.CapturedPet.rectTransform, 0.5f, 0.5f, -295, -24, 230, 230);
             rs.CloseButton = Btn(panel.transform, "CloseButton", "X", Gray, 40, out var closeLabel);
             At(Rt(rs.CloseButton), 1, 1, -56, -56, 84, 84);
             if (Skin((Image)rs.CloseButton.targetGraphic, "ui.close"))

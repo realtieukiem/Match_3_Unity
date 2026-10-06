@@ -147,6 +147,14 @@ namespace Pokiwar.EditorTools
                 if (!File.Exists(dest) && File.Exists(src)) File.Copy(src, dest);
                 if (File.Exists(dest)) made.Add(new Item { Src = dest, Max = it.Max, Slice = it.Slice, Edge = it.Edge, Keys = it.Keys });
             }
+            foreach (var it in made.ToArray())
+            {
+                var keys = System.Array.FindAll(it.Keys, IsCapturable);
+                if (keys.Length == 0) continue;
+                string dest = it.Src.Substring(0, it.Src.Length - 4) + "_right.png";
+                if (!File.Exists(dest)) WriteMirrored(it.Src, dest);
+                made.Add(new Item { Src = dest, Max = it.Max, Keys = System.Array.ConvertAll(keys, k => "right." + k) });
+            }
             foreach (var g in Gems.All)
             {
                 if (made.Exists(m => System.Array.IndexOf(m.Keys, "gem." + g) >= 0)) continue;
@@ -161,6 +169,38 @@ namespace Pokiwar.EditorTools
                 if (sp == null) continue;
                 foreach (var k in it.Keys) art[k] = sp;
             }
+        }
+
+        private static List<string> capturable;
+
+        private static bool IsCapturable(string key)
+        {
+            if (capturable == null)
+            {
+                capturable = new List<string>();
+                foreach (var c in DefaultContent.Create().Creatures)
+                {
+                    if (c.Id.StartsWith("pet.")) continue;
+                    capturable.Add(c.SpriteKey);
+                    foreach (var p in c.Phases) capturable.Add(p.SpriteKey);
+                }
+            }
+            return capturable.Exists(c => key == c || key.StartsWith(c + "."));
+        }
+
+        private static void WriteMirrored(string src, string dest)
+        {
+            var tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+            tex.LoadImage(File.ReadAllBytes(src));
+            int w = tex.width, h = tex.height;
+            var px = tex.GetPixels32();
+            var flipped = new Color32[px.Length];
+            for (int y = 0; y < h; y++)
+                for (int x = 0; x < w; x++)
+                    flipped[y * w + x] = px[y * w + (w - 1 - x)];
+            tex.SetPixels32(flipped);
+            File.WriteAllBytes(dest, tex.EncodeToPNG());
+            Object.DestroyImmediate(tex);
         }
 
         private static void Configure(string path, int max, bool slice, int edge = 0)

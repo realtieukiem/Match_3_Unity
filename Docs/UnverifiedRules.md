@@ -15,4 +15,4 @@ formula table with labels is in `Pokiwar.md` ("Formulas in use"). What would set
 | Strong multiplier | x1.70 | `Pets/*`, `Monsters/*` rage profile | more rage strikes with HP before/after |
 | Boss phase trigger | HP <= 32% or a lethal hit | `Monsters/*` phases | several transforms at different HP |
 | Stone merge / enhance chances | 90..12% per tier | `Rules/upgrade.config` | upgrade success and failure on video |
-| Pet drop chance | first clear only (Tidepup from the boss) | `Rewards/*` | several boss clears |
+| Pet capture | first win gives the creature just fought, at the encounter's level, every encounter (`CaptureOnFirstWin`) | `Encounters/*` | whether every monster or only some give themselves; the level it arrives at |

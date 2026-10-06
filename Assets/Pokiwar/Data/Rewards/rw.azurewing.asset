@@ -39,10 +39,3 @@ MonoBehaviour:
       Count: 1
       Chance: 1
       FirstClearOnly: 1
-    - Kind: 4
-      ItemId: pet.tidepup
-      Element: 0
-      Tier: 1
-      Count: 1
-      Chance: 1
-      FirstClearOnly: 1

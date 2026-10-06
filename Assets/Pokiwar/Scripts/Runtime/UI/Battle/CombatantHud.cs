@@ -51,7 +51,7 @@ namespace Pokiwar.UI
             Portrait.rectTransform.anchoredPosition = portraitHome;
             Portrait.color = Color.white;
             lib = sprites;
-            key = c.SpriteKey;
+            key = sprites.Facing(c.SpriteKey, facesRight);
             busy = false;
             dead = false;
             bobPhase = facesRight ? 0f : 1.3f;
@@ -197,7 +197,7 @@ namespace Pokiwar.UI
             busy = true;
             var baseScale = Vector3.one;
             yield return Tween.Run(0.3f, t => rt.localScale = new Vector3(baseScale.x * (1f - t), baseScale.y * (1f + 0.3f * t), 1f));
-            key = newKey;
+            key = lib != null ? lib.Facing(newKey, direction > 0f) : newKey;
             Portrait.sprite = Pose(null);
             yield return Tween.Run(0.35f, t => rt.localScale = new Vector3(baseScale.x * t, baseScale.y * (1.3f - 0.3f * t), 1f));
             rt.localScale = baseScale;

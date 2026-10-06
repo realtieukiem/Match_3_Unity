@@ -327,6 +327,12 @@ namespace Pokiwar.EditorTools
             Log("first battle " + (won ? "won" : "lost") + " in " + bc.Engine.State.TurnNumber + " turns");
             Check(app.Save.CommittedBattleIds.Contains(firstBattle), "result committed for this battle id");
             if (won) Check(app.Progression.IsNodeUnlocked(app.Save, app.Db.Node("node.2")), "win unlocked node 2");
+            if (won)
+            {
+                Check(app.Save.Pets.Exists(p => p.PetId == "mon.dunewing" && p.Level == 3), "first win captured the Dunewing just fought");
+                Check(app.Result.CapturedPet.gameObject.activeSelf && app.Result.CapturedPet.sprite == app.Sprites.Get("right.dunewing"), "reward popup shows the captured pet");
+            }
+            else Check(!app.Result.CapturedPet.gameObject.activeSelf, "no captured pet on a defeat");
 
             var reloaded = new SaveService(new FileSaveStore(), new JsonSaveSerializer(), app.Progression).LoadOrCreate();
             Check(reloaded.Gold == app.Save.Gold && reloaded.CommittedBattleIds.Count == app.Save.CommittedBattleIds.Count, "save on disk matches memory");
@@ -371,6 +377,28 @@ namespace Pokiwar.EditorTools
             int commits = app.Save.CommittedBattleIds.Count;
             yield return new WaitForSecondsRealtime(0.5f);
             Check(app.Save.CommittedBattleIds.Count == commits, "no second commit after result");
+            if (app.Result.Title.text == "VICTORY")
+                Check(app.Save.Pets.Exists(p => p.PetId == "boss.azurewing" && p.Level == 8), "first boss win captured the boss itself");
+            yield return Capture("07a_boss_reward");
+
+            var captured = app.Save.Pets.Find(p => p.PetId == "boss.azurewing") ?? app.Progression.AddPet(app.Save, "boss.azurewing");
+            string keepPet = app.Save.SelectedPetUid;
+            app.Save.SelectedPetUid = captured.Uid;
+            app.ShowPrep(app.Db.Node("node.1"));
+            yield return null;
+            Check(app.Sprites.Has("right.azurewing") && app.Prep.PetImage.sprite == app.Sprites.Get("right.azurewing"), "captured boss stands in the room facing the opponent");
+            yield return Capture("07b_captured_room");
+            app.Prep.FightButton.onClick.Invoke();
+            yield return null;
+            Check(app.BattleScreen.activeSelf && bc.PlayerHud.Portrait.sprite == app.Sprites.Get("right.azurewing"), "captured boss fights on the player side facing the opponent");
+            Check(bc.Engine.State.Get(Side.Player).Phases.Count == 1 && bc.Engine.State.Get(Side.Player).LockedSkills.Count == 1, "captured boss keeps its ascended form");
+            yield return new WaitForSecondsRealtime(0.3f);
+            yield return Capture("07c_captured_battle");
+            bc.AnimationSpeed = 8f;
+            bc.AutoPlay = true;
+            yield return WaitFor(() => app.Result.gameObject.activeSelf, 300);
+            Check(app.Result.gameObject.activeSelf, "battle with the captured boss finished");
+            app.Save.SelectedPetUid = keepPet;
 
             app.ShowUpgrade();
             yield return null;

@@ -44,6 +44,61 @@ namespace Pokiwar.Tests
         }
 
         [Test]
+        public void FirstWin_CapturesTheCreatureFought_Once()
+        {
+            var db = DefaultContent.Create();
+            var prog = new ProgressionService(db);
+            var save = prog.CreateNewSave(0);
+            int pets = save.Pets.Count;
+            var node = db.Node("node.1");
+
+            var a = prog.StartBattle(save, node, 1);
+            var first = prog.CommitBattle(save, new BattleReport { BattleId = a.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = true });
+            var b = prog.StartBattle(save, node, 2);
+            var second = prog.CommitBattle(save, new BattleReport { BattleId = b.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = true });
+
+            Assert.AreEqual("mon.dunewing", first.CapturedPetId);
+            Assert.IsNull(second.CapturedPetId, "only the first win captures");
+            Assert.AreEqual(pets + 1, save.Pets.Count);
+            var owned = save.Pets.Find(p => p.PetId == "mon.dunewing");
+            Assert.AreEqual(db.Encounter("enc.dunewing").Level, owned.Level);
+            CollectionAssert.Contains(first.Lines, "New pet: Dunewing");
+        }
+
+        [Test]
+        public void Loss_ThenWin_StillCaptures_AndTheBossGivesItself()
+        {
+            var db = DefaultContent.Create();
+            var prog = new ProgressionService(db);
+            var save = prog.CreateNewSave(0);
+            var node = db.Node("node.3");
+
+            var a = prog.StartBattle(save, node, 1);
+            var lost = prog.CommitBattle(save, new BattleReport { BattleId = a.BattleId, EncounterId = "enc.azurewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = false });
+            var b = prog.StartBattle(save, node, 2);
+            var won = prog.CommitBattle(save, new BattleReport { BattleId = b.BattleId, EncounterId = "enc.azurewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = true });
+
+            Assert.IsNull(lost.CapturedPetId);
+            Assert.AreEqual("boss.azurewing", won.CapturedPetId);
+            Assert.IsFalse(save.Pets.Exists(p => p.PetId == "pet.tidepup"));
+            var mine = prog.BuildPlayer(save, save.Pets.Find(p => p.PetId == "boss.azurewing"), save.SelectedCardIds);
+            Assert.AreEqual(1, mine.LockedSkills.Count, "the owned boss can still ascend");
+        }
+
+        [Test]
+        public void Encounter_WithCaptureOff_GivesNoPet()
+        {
+            var db = DefaultContent.Create();
+            db.Encounter("enc.dunewing").CaptureOnFirstWin = false;
+            var prog = new ProgressionService(db);
+            var save = prog.CreateNewSave(0);
+            var a = prog.StartBattle(save, db.Node("node.1"), 1);
+            var g = prog.CommitBattle(save, new BattleReport { BattleId = a.BattleId, EncounterId = "enc.dunewing", NodeId = "node.1", PetUid = save.SelectedPetUid, Won = true });
+            Assert.IsNull(g.CapturedPetId);
+            Assert.IsFalse(save.Pets.Exists(p => p.PetId == "mon.dunewing"));
+        }
+
+        [Test]
         public void Loss_GrantsNothing_AndCanBeRetried()
         {
             var db = DefaultContent.Create();

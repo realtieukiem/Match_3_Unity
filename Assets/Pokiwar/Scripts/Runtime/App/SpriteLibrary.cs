@@ -28,6 +28,11 @@ namespace Pokiwar.App
 
         public bool Has(string key) => key != null && Map.TryGetValue(key, out var s) && s != null;
 
+        /// <summary>The key of the art that faces the given way: "right." + key when the library has one, else key.</summary>
+        public string Facing(string key, bool right) => right && Has("right." + key) ? "right." + key : key;
+
+        public Sprite Owned(string key) => Get(Facing(key, true));
+
         private Dictionary<string, Sprite> Map
         {
             get

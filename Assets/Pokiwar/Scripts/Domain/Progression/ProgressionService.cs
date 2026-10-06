@@ -23,6 +23,7 @@ namespace Pokiwar.Domain
         public int PlayerLevelsGained;
         public int PetLevelsGained;
         public bool UnlockedNext;
+        public string CapturedPetId;
         public readonly List<string> Lines = new List<string>();
     }
 
@@ -146,6 +147,9 @@ namespace Pokiwar.Domain
                 Ai = Db.Ai("ai.autoplay")
             };
             foreach (var id in def.SkillIds) s.Skills.Add(Db.Skill(id));
+            foreach (var ph in def.Phases)
+                foreach (var id in ph.UnlockSkillIds)
+                    s.LockedSkills.Add(Db.Skill(id));
             int n = 0;
             foreach (var id in cardIds)
             {
@@ -241,6 +245,12 @@ namespace Pokiwar.Domain
                 if (drop.FirstClearOnly && !firstClear) continue;
                 if (drop.Chance < 1f && !rng.Chance(drop.Chance)) continue;
                 GrantItem(d, drop, grant.Lines);
+            }
+            if (firstClear && enc.CaptureOnFirstWin && !d.Pets.Exists(p => p.PetId == enc.CreatureId))
+            {
+                AddPet(d, enc.CreatureId).Level = enc.Level;
+                grant.CapturedPetId = enc.CreatureId;
+                grant.Lines.Add("New pet: " + Db.Creature(enc.CreatureId).Name);
             }
             if (grant.UnlockedNext) grant.Lines.Add("New area unlocked!");
             return grant;
