@@ -68,14 +68,18 @@ requirement) and `CHIẾN TÍCH +10` (rank points for the win). Not built.
 | M 00:20, A 02:12 | Pet level badge bottom-left in battle (LV14, LV7, LV1) - the same number as the upgrade screen's Cấp | level not shown in battle (user, 2026-10-05) | CONFIRMED_BY_VIDEO |
 | B 04:36 -> 04:40 | BlueWings 34857/108000 changes form and stands at 54311/108000: HP refilled to half of max, max unchanged | boss phase sets HP to 50% of max, attack x1.15 | HP CONFIRMED_BY_VIDEO, attack CONFIRMED_BY_USER (no number in the clip) |
 
-## First screen and trainer EXP (read 2026-10-06)
+## First screen, EXP and rank points (read 2026-10-06)
 
 | Clip @ time | Seen | Game | Status |
 |---|---|---|---|
 | A 01:15, user screenshot | The game opens on a town map: islands with buildings (xếp hạng, vòng quay may mắn, shop card, shop avatar, shop quà tặng, đấu trường chuyên nghiệp / tự do, chinh phục pokémon, đại chiến thách đấu, Tiến Hóa, a ship), top strip (Đổi quà, x2 EXP timer, events), bottom nav and energy | `HomeScreen` is the launch screen: nine buildings; BOSS HUNT opens the lobby, EVOLVE the pet screen, AVATAR SHOP the wardrobe, the other six say "Coming soon"; same bottom nav. Flat discs until Codex Batch 13 | layout CONFIRMED_BY_VIDEO + CONFIRMED_BY_USER |
-| A 02:00 -> 11:00 | Trainer badge 1 with 0/1 under it; after the first win the badge is 2 | +1 EXP per win, level N needs N | first step CONFIRMED_BY_VIDEO, the rest CONFIRMED_BY_USER |
-| B 01:15 -> 10:55 | Counters under two trainers' badges go 1/3 -> 2/3 and 4/3 -> 5/3 over one boss win; M 00:02 shows 33/3 at level 39 | +1 per win | +1 CONFIRMED_BY_VIDEO, meaning of the second number UNKNOWN |
-| A 04:17, B 10:55 | Popups "+20 EXP" and "+167 / +162 / +162 EXP" after a win | not built | CONFIRMED_BY_VIDEO |
+| A 04:14 | Room after beating Flygon (hunt 2) with the trainer at level 1: "phuongkid1991 +20 EXP" | win EXP = 19 + 3 x hunt level - 5 x trainer level | CONFIRMED_BY_VIDEO |
+| A 05:22 | Room after LOSING to Abra: "+1 EXP"; trainer still level 1 (21 EXP so far) | loss EXP = 1; level 1 needs 40 | CONFIRMED_BY_VIDEO |
+| A 11:06 | After the next win the trainer badge is 2 | level N needs 40 x N | bound only, INFERRED |
+| B 10:55 | Room after BlueWings (hunt 108): ailan1999 (trainer 35) +167 EXP, the two trainers at 36 +162 EXP each - five less per trainer level | same formula gives 168 and 163 | CONFIRMED_BY_VIDEO, formula INFERRED |
+| A 04:14, 05:22, 11:06; B 01:15 -> 10:55; M 00:02 | Counter under the pet in the room: 0/1 before the first win, 1/1 after it, 2/1 after the second; a different pet that lost shows 0/1; 1/3 -> 2/3 and 4/3 -> 5/3 over one boss win; 33/3 | not built: it counts that pet's wins | +1 per win CONFIRMED_BY_VIDEO, second number UNKNOWN |
+| A 04:10, 07:48, 11:02; B 10:51 | Rank points ("chiến tích") in the reward popup: Flygon 20, Abra 40, BlueWings 200; the top bar's red badge adds them up (0 -> 20 -> 80; 313800 -> 314000) | not built (no ranking yet) | CONFIRMED_BY_VIDEO |
+| A 13:00, M 02:56, B 10:51 | Reward popups list stones by element and tier with counts ("2 đá CƯỜNG HÓA cấp 2", "3 đá MỘC...", a row of stone icons with numbers) | text lines | CONFIRMED_BY_VIDEO |
 
 ## Trainer level and clothes (read 2026-10-06)
 

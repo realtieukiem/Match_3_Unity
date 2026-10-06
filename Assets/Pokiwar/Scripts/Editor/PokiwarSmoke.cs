@@ -177,7 +177,7 @@ namespace Pokiwar.EditorTools
             app.ResetSave();
             yield return null;
             Check(app.Home.gameObject.activeSelf && !app.Map.gameObject.activeSelf && !app.Hub.gameObject.activeSelf, "the town map is the first screen");
-            Check(app.Home.PlayerLabel.text.Contains("EXP 0/1"), "a new trainer needs 1 EXP for level 2 (" + app.Home.PlayerLabel.text + ")");
+            Check(app.Home.PlayerLabel.text.Contains("EXP 0/40"), "a new trainer needs 40 EXP for level 2 (" + app.Home.PlayerLabel.text + ")");
             CheckOnScreen(app.Home.transform, "home");
             yield return Capture("00_home");
             app.Home.HuntButton.onClick.Invoke();

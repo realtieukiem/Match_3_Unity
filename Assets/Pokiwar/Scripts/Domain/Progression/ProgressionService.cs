@@ -272,7 +272,9 @@ namespace Pokiwar.Domain
             if (!report.Won)
             {
                 if (np != null) np.Losses++;
-                grant.Lines.Add("Defeat - no reward. Try again!");
+                grant.PlayerExp = Db.Progression.ExpLoss;
+                grant.PlayerLevelsGained = AddPlayerExp(d, grant.PlayerExp);
+                grant.Lines.Add("Defeat. +" + grant.PlayerExp + " EXP. Try again!");
                 return grant;
             }
             var enc = Db.Encounter(report.EncounterId);
@@ -286,7 +288,7 @@ namespace Pokiwar.Domain
             d.Gold += table.Gold;
             grant.Lines.Add("+" + table.Gold + " Gold");
 
-            grant.PlayerExp = Db.Progression.ExpPerWin;
+            grant.PlayerExp = ExpForWin(enc.Level, d.PlayerLevel);
             grant.PlayerLevelsGained = AddPlayerExp(d, grant.PlayerExp);
             grant.Lines.Add("+" + grant.PlayerExp + " EXP" + (grant.PlayerLevelsGained > 0 ? " (Level up! Lv " + d.PlayerLevel + ")" : ""));
 
@@ -355,6 +357,13 @@ namespace Pokiwar.Domain
                     }
                     break;
             }
+        }
+
+        /// <summary>A win pays more the higher the boss's hunt level and less the higher the trainer already is.</summary>
+        public int ExpForWin(int huntLevel, int trainerLevel)
+        {
+            var c = Db.Progression;
+            return Math.Max(1, c.ExpWinBase + c.ExpWinPerHuntLevel * huntLevel - c.ExpWinLostPerTrainerLevel * trainerLevel);
         }
 
         public int PlayerExpToNext(int level)

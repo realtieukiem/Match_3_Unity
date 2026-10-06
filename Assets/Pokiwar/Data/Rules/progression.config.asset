@@ -19,8 +19,11 @@ MonoBehaviour:
     TrainerManaPerLevel: 5
     MaxEnergy: 30
     EnergyRegenSeconds: 300
-    ExpPerWin: 1
-    ExpToNextPerLevel: 1
+    ExpWinBase: 19
+    ExpWinPerHuntLevel: 3
+    ExpWinLostPerTrainerLevel: 5
+    ExpLoss: 1
+    ExpToNextPerLevel: 40
     PetMaxLevel: 14
     StarterPetIds:
     - pet.emberkit

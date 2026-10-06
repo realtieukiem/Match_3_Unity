@@ -404,8 +404,11 @@ namespace Pokiwar.Domain
         public int TrainerManaPerLevel = 5;
         public int MaxEnergy = 30;
         public int EnergyRegenSeconds = 300;
-        public int ExpPerWin = 1;
-        public int ExpToNextPerLevel = 1;
+        public int ExpWinBase = 19;
+        public int ExpWinPerHuntLevel = 3;
+        public int ExpWinLostPerTrainerLevel = 5;
+        public int ExpLoss = 1;
+        public int ExpToNextPerLevel = 40;
         public int PetMaxLevel = 14;
         public List<string> StarterPetIds = new List<string>();
         public List<int> StarterPetLevels = new List<int>();

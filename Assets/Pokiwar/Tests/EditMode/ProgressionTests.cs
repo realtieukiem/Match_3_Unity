@@ -409,26 +409,30 @@ namespace Pokiwar.Tests
         }
 
         [Test]
-        public void EveryWin_GivesOneExp_AndEachLevelNeedsMore()
+        public void Exp_FollowsTheClips_WinByHuntLevel_LossOne()
         {
             var db = DefaultContent.Create();
             var prog = new ProgressionService(db);
+            Assert.AreEqual(20, prog.ExpForWin(2, 1), "clip A: Flygon, hunt level 2, trainer 1");
+            Assert.AreEqual(167, prog.ExpForWin(108, 35), 1, "clip B: BlueWings, trainer 35");
+            Assert.AreEqual(162, prog.ExpForWin(108, 36), 1, "clip B: BlueWings, trainer 36");
+            Assert.AreEqual(1, prog.ExpForWin(1, 50), "never below 1");
+
             var save = prog.CreateNewSave(0);
             var node = db.Node("node.1");
-            int[] levelAfterWin = { 2, 2, 3, 3, 3, 4 };
-            for (int i = 0; i < levelAfterWin.Length; i++)
-            {
-                save.Energy = 10;
-                var b = prog.StartBattle(save, node, (uint)(i + 1));
-                var g = prog.CommitBattle(save, new BattleReport { BattleId = b.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = true });
-                Assert.AreEqual(1, g.PlayerExp);
-                Assert.AreEqual(levelAfterWin[i], save.PlayerLevel, "after win " + (i + 1));
-            }
+            int win = prog.ExpForWin(db.Encounter("enc.dunewing").Level, 1);
             save.Energy = 10;
-            var lost = prog.StartBattle(save, node, 99);
-            int exp = save.PlayerExp;
-            prog.CommitBattle(save, new BattleReport { BattleId = lost.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = false });
-            Assert.AreEqual(exp, save.PlayerExp, "a loss gives no EXP");
+            var a = prog.StartBattle(save, node, 1);
+            var first = prog.CommitBattle(save, new BattleReport { BattleId = a.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = true });
+            Assert.AreEqual(win, first.PlayerExp);
+            var b = prog.StartBattle(save, node, 2);
+            var lost = prog.CommitBattle(save, new BattleReport { BattleId = b.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = false });
+            Assert.AreEqual(1, lost.PlayerExp, "a loss still gives 1 EXP");
+            Assert.AreEqual(1, save.PlayerLevel, "one win and one loss do not reach level 2, as in clip A");
+            var c = prog.StartBattle(save, node, 3);
+            prog.CommitBattle(save, new BattleReport { BattleId = c.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = true });
+            Assert.AreEqual(2, save.PlayerLevel, "the second win does");
+            Assert.Less(prog.ExpForWin(db.Encounter("enc.dunewing").Level, 2), win, "the same boss pays less at a higher trainer level");
         }
     }
 }

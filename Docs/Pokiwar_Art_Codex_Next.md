@@ -4,6 +4,17 @@ Paste ONE batch per NEW Codex thread. Each batch stays under 25 generated images
 carries more inline images exceeds the 64 MiB request limit (`Encoded request body exceeds 67108864 bytes`)
 and cannot be used again.
 
+## What is still unpainted (checked 2026-10-06 against `D:\Project\Pokiwar_Art_FG38\Assets`)
+
+| Batch | What | Images | The game today |
+|---|---|---|---|
+| 4 | three single-use cards and five reusable cards | 8 | blank card faces with only cost, level and damage |
+| 11 | forge pedestal and slots, five pet stones, world map | 12 | plain lists, tinted stone icon; not wired in code yet |
+| 12 | second forms of the five creatures | 20 | an evolved pet keeps its first-form art |
+| 13 | town map background and nine buildings | 10 | coloured discs with labels on the sky |
+
+Order that helps the game most: 13, 4, 12, 11. Batches 9 and 10 are painted and in the game.
+
 ## Shared preamble (put at the top of every batch)
 
 ```
@@ -50,16 +61,24 @@ Psyling (Metal element, small psychic cave creature), facing LEFT, same frame an
 `enemy_beetle_idle_01.png`. Save to `...\Assets\Battle\Characters\`: `enemy_psyling_idle_01.png`,
 `enemy_psyling_attack_01.png`, `enemy_psyling_hit_01.png`, `enemy_psyling_defeat_01.png`.
 
-## Batch 4 - three cards and five skill icons (8 images)
+## Batch 4 - eight card illustrations (8 images) - STILL UNPAINTED
 
-Cards: 768x1152 illustration only, no frame or text, like `card_fire_rage_v01.png`. Save to `...\Assets\Cards\`:
-`card_summon_sprite_v01.png` (summons a small sprite ally), `card_mana_leech_v01.png` (steals enemy mana),
-`card_meteor_v01.png` (meteor strike).
+All eight are card art now: the five skills became reusable cards the player owns, so they sit in the same card
+row as the single-use cards and need the same kind of picture. 768x1152 illustration only, no frame, no text,
+no numbers (the game draws cost, level and damage on top), subject in the middle 70% of the canvas, like
+`card_fire_rage_v01.png`.
 
-Skill icons: 512x512, square icon with the bible's frame language, no text. Save to `...\Assets\Battle\Skills\`:
-`skill_blaze_burst_v01.png` (fire blast), `skill_thorn_bind_v01.png` (thorn vines binding),
-`skill_tide_lance_v01.png` (water spear), `skill_mind_spark_v01.png` (psychic spark),
-`skill_tidal_siphon_v01.png` (water vortex draining mana).
+Single-use cards, save to `...\Assets\Cards\`:
+`card_summon_sprite_v01.png` (a small glowing sprite ally appearing in a ring of light),
+`card_mana_leech_v01.png` (a dark tendril pulling blue mana out of a crystal),
+`card_meteor_v01.png` (a flaming meteor about to hit the ground).
+
+Reusable cards, save to `...\Assets\Battle\Skills\` (create the folder; keep these file names):
+`skill_blaze_burst_v01.png` (an explosive fire blast, orange and red),
+`skill_thorn_bind_v01.png` (thorn vines wrapping a target, green),
+`skill_tide_lance_v01.png` (a spear of water thrust forward, blue),
+`skill_mind_spark_v01.png` (a violet psychic spark with rings),
+`skill_tidal_siphon_v01.png` (a water vortex draining light into its centre, deep blue).
 
 ## Batch 5 - six element badges (6 images)
 
