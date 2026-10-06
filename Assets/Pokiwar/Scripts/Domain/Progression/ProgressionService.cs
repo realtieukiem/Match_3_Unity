@@ -19,9 +19,7 @@ namespace Pokiwar.Domain
         public bool Won;
         public int Gold;
         public int PlayerExp;
-        public int PetExp;
         public int PlayerLevelsGained;
-        public int PetLevelsGained;
         public bool UnlockedNext;
         public string CapturedPetId;
         public readonly List<string> Lines = new List<string>();
@@ -98,7 +96,7 @@ namespace Pokiwar.Domain
             if (d.Energy >= cfg.MaxEnergy) d.EnergyStampUtcTicks = nowUtcTicks;
         }
 
-        public bool IsEvolved(OwnedPet pet) => pet.EnhanceLevel >= Db.Progression.EvolveAtEnhanceLevel;
+        public bool IsEvolved(OwnedPet pet) => pet.Level >= Db.Progression.EvolveAtLevel;
 
         /// <summary>An evolved pet wears its second form: the creature's phase sprite when it has one, else "<key>_evolved".</summary>
         public string PetSpriteKey(OwnedPet pet)
@@ -274,14 +272,6 @@ namespace Pokiwar.Domain
             grant.PlayerLevelsGained = AddPlayerExp(d, table.PlayerExp);
             grant.Lines.Add("+" + table.PlayerExp + " Player EXP" + (grant.PlayerLevelsGained > 0 ? " (Level up! Lv " + d.PlayerLevel + ")" : ""));
 
-            var pet = d.Pet(report.PetUid);
-            if (pet != null)
-            {
-                grant.PetExp = table.PetExp;
-                grant.PetLevelsGained = AddPetExp(pet, table.PetExp);
-                grant.Lines.Add("+" + table.PetExp + " Pet EXP" + (grant.PetLevelsGained > 0 ? " (" + Db.Creature(pet.PetId).Name + " Lv " + pet.Level + ")" : ""));
-            }
-
             var rng = new SeededRng(Hash(report.BattleId));
             foreach (var drop in table.Drops)
             {
@@ -291,7 +281,7 @@ namespace Pokiwar.Domain
             }
             if (firstClear && enc.CaptureOnFirstWin && !d.Pets.Exists(p => p.PetId == enc.CreatureId))
             {
-                AddPet(d, enc.CreatureId).Level = enc.Level;
+                AddPet(d, enc.CreatureId);
                 grant.CapturedPetId = enc.CreatureId;
                 grant.Lines.Add("New pet: " + Db.Creature(enc.CreatureId).Name);
             }
@@ -356,8 +346,6 @@ namespace Pokiwar.Domain
             return t[Math.Min(level - 1, t.Length - 1)] + Math.Max(0, level - t.Length) * 400;
         }
 
-        public int PetExpToNext(int level) => Db.Progression.PetExpBase + Db.Progression.PetExpPerLevel * (level - 1);
-
         public int AddPlayerExp(SaveData d, int exp)
         {
             int gained = 0;
@@ -366,19 +354,6 @@ namespace Pokiwar.Domain
             {
                 d.PlayerExp -= PlayerExpToNext(d.PlayerLevel);
                 d.PlayerLevel++;
-                gained++;
-            }
-            return gained;
-        }
-
-        public int AddPetExp(OwnedPet pet, int exp)
-        {
-            int gained = 0;
-            pet.Exp += exp;
-            while (pet.Level < Db.Progression.PetMaxLevel && pet.Exp >= PetExpToNext(pet.Level))
-            {
-                pet.Exp -= PetExpToNext(pet.Level);
-                pet.Level++;
                 gained++;
             }
             return gained;

@@ -360,7 +360,7 @@ namespace Pokiwar.EditorTools
             if (won) Check(app.Progression.IsNodeUnlocked(app.Save, app.Db.Node("node.2")), "win unlocked node 2");
             if (won)
             {
-                Check(app.Save.Pets.Exists(p => p.PetId == "mon.dunewing" && p.Level == 3), "first win captured the Dunewing just fought");
+                Check(app.Save.Pets.Exists(p => p.PetId == "mon.dunewing" && p.Level == 1), "first win captured the Dunewing just fought, at level 1");
                 Check(app.Result.CapturedPet.gameObject.activeSelf && app.Result.CapturedPet.sprite == app.Sprites.Get("right.dunewing"), "reward popup shows the captured pet");
             }
             else Check(!app.Result.CapturedPet.gameObject.activeSelf, "no captured pet on a defeat");
@@ -409,7 +409,7 @@ namespace Pokiwar.EditorTools
             yield return new WaitForSecondsRealtime(0.5f);
             Check(app.Save.CommittedBattleIds.Count == commits, "no second commit after result");
             if (app.Result.Title.text == "VICTORY")
-                Check(app.Save.Pets.Exists(p => p.PetId == "boss.azurewing" && p.Level == 8), "first boss win captured the boss itself");
+                Check(app.Save.Pets.Exists(p => p.PetId == "boss.azurewing" && p.Level == 1), "first boss win captured the boss itself at level 1");
             yield return Capture("07a_boss_reward");
 
             var captured = app.Save.Pets.Find(p => p.PetId == "boss.azurewing") ?? app.Progression.AddPet(app.Save, "boss.azurewing");

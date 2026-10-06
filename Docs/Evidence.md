@@ -58,6 +58,16 @@ What that settles:
 Lobby tags also show `THẮNG x/y` (wins / wins needed: 0/1, 1/1, 0/3, 4/3), `YÊU CẦU` (a rank-point
 requirement) and `CHIẾN TÍCH +10` (rank points for the win). Not built.
 
+## Pet upgrade and the boss's second form (read 2026-10-06)
+
+| Clip @ time | Seen | Game | Status |
+|---|---|---|---|
+| C 02:05 | "Luyện poke": Sclerosis (hệ hỏa) Cấp14, "Pet đã đạt cấp cao nhất", HP 10080, ATK 772, mana 1680; three ĐÁ slots; the stone grid holds only fire stones (168, 252, 478, 330, 17, 277, 142); "Tích lũy khi thất bại: 0%"; Bùa May Mắn and Bùa An at 10000 each | one pet level raised by stones of the pet's element, max 14, fail bonus, lucky and protection charms | CONFIRMED_BY_VIDEO |
+| C 02:30, 03:45, 06:00 | Other pets at Cấp14: 9660 / 768 / 1680, 13963 / 798 / 1680, Shenlong (kim) 11130 / 789 / 1680 - mana is 1680 for every pet at Cấp14 | per-creature stat tables | CONFIRMED_BY_VIDEO |
+| C 06:00 | Skill tooltip: "Hao tốn 200 mana, 200 nộ. Tấn công gây 140% sát thương đồng thời biến số sát thương thành giáp trong 1 lượt" | not built as such | CONFIRMED_BY_VIDEO |
+| M 00:20, A 02:12 | Pet level badge bottom-left in battle (LV14, LV7, LV1) - the same number as the upgrade screen's Cấp | level not shown in battle (user, 2026-10-05) | CONFIRMED_BY_VIDEO |
+| B 04:36 -> 04:40 | BlueWings 34857/108000 changes form and stands at 54311/108000: HP refilled to half of max, max unchanged | boss phase sets HP to 50% of max, attack x1.15 | HP CONFIRMED_BY_VIDEO, attack CONFIRMED_BY_USER (no number in the clip) |
+
 ## Battle layout and rhythm
 
 | Clip @ time | Seen | Game | Status |

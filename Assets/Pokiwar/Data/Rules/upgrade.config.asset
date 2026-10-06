@@ -24,7 +24,6 @@ MonoBehaviour:
     - 0.12
     MergeGoldByTier: 64000000fa00000058020000dc050000ac0d0000401f0000983a0000
     LuckyCharmBonus: 0.15
-    MaxEnhanceLevel: 10
     EnhanceChanceByLevel:
     - 0.95
     - 0.85

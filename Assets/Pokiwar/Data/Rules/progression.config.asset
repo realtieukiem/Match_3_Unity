@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Def:
     StartGold: 500
+    EvolveAtLevel: 5
     MaxEnergy: 30
     EnergyRegenSeconds: 300
     PlayerExpToNext: 64000000a0000000f000000054010000cc010000580200000c030000e803000014050000a4060000
-    PetExpBase: 60
-    PetExpPerLevel: 30
-    PetMaxLevel: 50
+    PetMaxLevel: 14
     StarterPetIds:
     - pet.emberkit
     - pet.leafling

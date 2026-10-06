@@ -114,7 +114,7 @@ namespace Pokiwar.UI
                     var def = app.Db.Creature(pet.PetId);
                     var st = app.Progression.PetStats(pet);
                     var row = petRows.Add();
-                    row.Set(def.Name + "  Lv " + pet.Level + (pet.EnhanceLevel > 0 ? " +" + pet.EnhanceLevel : ""),
+                    row.Set(def.Name + "  Lv " + pet.Level,
                         def.Element + "  HP " + st.MaxHp + "  ATK " + st.Atk, app.PetSprite(pet), pet.Uid == s.SelectedPetUid);
                     var uid = pet.Uid;
                     row.Button.onClick.AddListener(() =>

@@ -61,7 +61,7 @@ namespace Pokiwar.Tests
             Assert.IsNull(second.CapturedPetId, "only the first win captures");
             Assert.AreEqual(pets + 1, save.Pets.Count);
             var owned = save.Pets.Find(p => p.PetId == "mon.dunewing");
-            Assert.AreEqual(db.Encounter("enc.dunewing").Level, owned.Level);
+            Assert.AreEqual(1, owned.Level, "a captured creature arrives at level 1");
             CollectionAssert.Contains(first.Lines, "New pet: Dunewing");
         }
 
@@ -124,7 +124,6 @@ namespace Pokiwar.Tests
                 var save = prog.CreateNewSave(0);
                 var pet = save.Pet(save.SelectedPetUid);
                 pet.Level = level;
-                pet.EnhanceLevel = level / 6;
                 foreach (var node in db.Map.Nodes)
                 {
                     var enc = db.Encounter(node.EncounterId);
@@ -314,12 +313,15 @@ namespace Pokiwar.Tests
             var up = new UpgradeService(db);
             var save = new SaveData { Gold = 100000, ProtectionCharms = 1 };
             save.AddStones(Element.Fire, 1, 2);
-            var pet = new OwnedPet { Uid = "p1", PetId = "pet.emberkit", EnhanceLevel = 3 };
+            var pet = new OwnedPet { Uid = "p1", PetId = "pet.emberkit", Level = 4 };
 
             up.Enhance(save, pet, Element.Fire, 1, false, true, new SeededRng(1));
-            Assert.AreEqual(3, pet.EnhanceLevel);
+            Assert.AreEqual(4, pet.Level);
             up.Enhance(save, pet, Element.Fire, 1, false, false, new SeededRng(1));
-            Assert.AreEqual(2, pet.EnhanceLevel);
+            Assert.AreEqual(3, pet.Level);
+            save.AddStones(Element.Water, 1, 1);
+            Assert.IsFalse(up.Enhance(save, pet, Element.Water, 1, false, false, new SeededRng(1)).Attempted, "only a stone of the pet's own element upgrades it");
+            Assert.AreEqual(1, save.StoneCount(Element.Water, 1));
         }
 
         [Test]
@@ -353,15 +355,16 @@ namespace Pokiwar.Tests
             var save = prog.CreateNewSave(0);
             var pet = save.Pet(save.SelectedPetUid);
             string baseKey = db.Creature(pet.PetId).SpriteKey;
-            pet.EnhanceLevel = db.Progression.EvolveAtEnhanceLevel - 1;
+            pet.Level = db.Progression.EvolveAtLevel - 1;
             Assert.AreEqual(baseKey, prog.PetSpriteKey(pet));
-            pet.EnhanceLevel = db.Progression.EvolveAtEnhanceLevel;
+            pet.Level = db.Progression.EvolveAtLevel;
             Assert.AreEqual(baseKey + SpriteKeys.EvolvedSuffix, prog.PetSpriteKey(pet));
 
             var boss = db.Creature("boss.azurewing");
             var owned = prog.AddPet(save, boss.Id);
+            Assert.AreEqual(1, owned.Level);
             Assert.AreEqual(boss.SpriteKey, prog.PetSpriteKey(owned));
-            owned.EnhanceLevel = db.Progression.EvolveAtEnhanceLevel;
+            owned.Level = db.Progression.EvolveAtLevel;
             Assert.AreEqual(boss.Phases[0].SpriteKey, prog.PetSpriteKey(owned));
 
             save.SelectedPetUid = owned.Uid;

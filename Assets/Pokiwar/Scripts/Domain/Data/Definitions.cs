@@ -314,7 +314,6 @@ namespace Pokiwar.Domain
     {
         public string Id;
         public int PlayerExp;
-        public int PetExp;
         public int Gold;
         public List<RewardDrop> Drops = new List<RewardDrop>();
     }
@@ -374,7 +373,6 @@ namespace Pokiwar.Domain
         public int[] MergeGoldByTier = { 100, 250, 600, 1500, 3500, 8000, 15000 };
         public float LuckyCharmBonus = 0.15f;
 
-        public int MaxEnhanceLevel = 10;
         public float[] EnhanceChanceByLevel = { 0.95f, 0.85f, 0.75f, 0.62f, 0.50f, 0.40f, 0.30f, 0.22f, 0.15f, 0.10f };
         public int[] EnhanceGoldByLevel = { 200, 400, 700, 1100, 1600, 2300, 3200, 4500, 6000, 8000 };
         public float EnhanceTierBonusPerTierAbove = 0.05f;
@@ -402,13 +400,11 @@ namespace Pokiwar.Domain
     public class ProgressionConfig
     {
         public int StartGold = 500;
-        public int EvolveAtEnhanceLevel = 5;
+        public int EvolveAtLevel = 5;
         public int MaxEnergy = 30;
         public int EnergyRegenSeconds = 300;
         public int[] PlayerExpToNext = { 100, 160, 240, 340, 460, 600, 780, 1000, 1300, 1700 };
-        public int PetExpBase = 60;
-        public int PetExpPerLevel = 30;
-        public int PetMaxLevel = 50;
+        public int PetMaxLevel = 14;
         public List<string> StarterPetIds = new List<string>();
         public List<int> StarterPetLevels = new List<int>();
         public List<string> StarterCardIds = new List<string>();

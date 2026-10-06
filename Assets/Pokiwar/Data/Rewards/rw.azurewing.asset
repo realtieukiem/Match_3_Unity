@@ -15,7 +15,6 @@ MonoBehaviour:
   Def:
     Id: rw.azurewing
     PlayerExp: 200
-    PetExp: 300
     Gold: 600
     Drops:
     - Kind: 0

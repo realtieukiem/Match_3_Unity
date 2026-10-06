@@ -59,7 +59,7 @@ namespace Pokiwar.UI
             {
                 var def = app.Db.Creature(p.PetId);
                 var row = petRows.Add();
-                row.Set(def.Name + " Lv " + p.Level, "Enhance +" + p.EnhanceLevel, app.PetSprite(p), p.Uid == petUid);
+                row.Set(def.Name + " Lv " + p.Level, def.Element + " stones", app.PetSprite(p), p.Uid == petUid);
                 var uid = p.Uid;
                 row.Button.onClick.AddListener(() =>
                 {
@@ -77,10 +77,10 @@ namespace Pokiwar.UI
                 var sockets = new List<string>();
                 for (int i = 0; i < pet.SocketTiers.Count; i++)
                     sockets.Add(pet.SocketTiers[i] > 0 ? pet.SocketElements[i] + " T" + pet.SocketTiers[i] : "empty");
-                PetDetails.text = def.Name + "  Lv " + pet.Level + "  EXP " + pet.Exp + "/" + app.Progression.PetExpToNext(pet.Level) +
+                PetDetails.text = def.Name + "  Lv " + pet.Level + "/" + app.Db.Progression.PetMaxLevel +
                                   "\nElement " + app.ElementLabel(def.Element, def.ElementBonus + app.Progression.PetElementBonus(pet)) +
                                   "\nHP " + st.MaxHp + "  ATK " + st.Atk + "  DEF " + st.Def + "  MP " + st.MaxMana + "  RAGE " + st.MaxRage +
-                                  "\nEnhance +" + pet.EnhanceLevel + "  (cost " + app.Upgrades.EnhanceCost(pet) + " gold, bonus chance +" + Mathf.RoundToInt(pet.EnhanceBonusChance * 100) + "%)" +
+                                  "\nUpgrade with " + def.Element + " stones  (cost " + app.Upgrades.EnhanceCost(pet) + " gold, bonus chance +" + Mathf.RoundToInt(pet.EnhanceBonusChance * 100) + "%)" +
                                   "\nSockets: " + string.Join(", ", sockets);
             }
 
@@ -100,8 +100,8 @@ namespace Pokiwar.UI
                 if (pet != null)
                 {
                     float ec = app.Upgrades.EnhanceChance(pet, tier, lucky);
-                    row.ExtraBLabel.text = "Enhance\n" + Mathf.RoundToInt(ec * 100) + "%";
-                    row.ExtraB.interactable = st.Count >= 1;
+                    row.ExtraBLabel.text = "Upgrade\n" + Mathf.RoundToInt(ec * 100) + "%";
+                    row.ExtraB.interactable = st.Count >= 1 && element == app.Db.Creature(pet.PetId).Element;
                     row.ExtraB.onClick.AddListener(() => Do(app.Upgrades.Enhance(app.Save, pet, element, tier, LuckyToggle.isOn, ProtectToggle.isOn, app.Rng)));
                     row.ExtraCLabel.text = "Socket";
                     row.ExtraC.interactable = st.Count >= 1;

@@ -212,20 +212,24 @@ namespace Pokiwar.Domain
         {
             db.RewardTables.Add(new RewardTable
             {
-                Id = "rw.dunewing", PlayerExp = 60, PetExp = 90, Gold = 150,
+                Id = "rw.dunewing", PlayerExp = 60, Gold = 150,
                 Drops =
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Earth, Tier = 1, Count = 2 },
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 1, Chance = 0.6f },
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Wood, Tier = 1, Count = 1, Chance = 0.6f },
                     new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 2 },
                     new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1, Chance = 0.3f }
                 }
             });
             db.RewardTables.Add(new RewardTable
             {
-                Id = "rw.psyling", PlayerExp = 90, PetExp = 130, Gold = 220,
+                Id = "rw.psyling", PlayerExp = 90, Gold = 220,
                 Drops =
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Metal, Tier = 1, Count = 3 },
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 1, Chance = 0.6f },
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Wood, Tier = 1, Count = 1, Chance = 0.6f },
                     new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 3 },
                     new RewardDrop { Kind = RewardKind.SkillCard, ItemId = "skill.mind_spark", FirstClearOnly = true },
                     new RewardDrop { Kind = RewardKind.Card, ItemId = "card.mana_leech", FirstClearOnly = true },
@@ -234,7 +238,7 @@ namespace Pokiwar.Domain
             });
             db.RewardTables.Add(new RewardTable
             {
-                Id = "rw.azurewing", PlayerExp = 200, PetExp = 300, Gold = 600,
+                Id = "rw.azurewing", PlayerExp = 200, Gold = 600,
                 Drops =
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Water, Tier = 2, Count = 2 },

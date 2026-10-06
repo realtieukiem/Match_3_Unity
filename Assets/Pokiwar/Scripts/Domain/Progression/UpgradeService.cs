@@ -63,8 +63,8 @@ namespace Pokiwar.Domain
         public float EnhanceChance(OwnedPet pet, int stoneTier, bool lucky)
         {
             var t = Cfg.EnhanceChanceByLevel;
-            float c = t[MathUtil.Clamp(pet.EnhanceLevel, 0, t.Length - 1)];
-            int requiredTier = 1 + pet.EnhanceLevel / 2;
+            float c = t[MathUtil.Clamp(pet.Level - 1, 0, t.Length - 1)];
+            int requiredTier = 1 + (pet.Level - 1) / 2;
             c += (stoneTier - requiredTier) * Cfg.EnhanceTierBonusPerTierAbove;
             c += pet.EnhanceBonusChance;
             if (lucky) c += Cfg.LuckyCharmBonus;
@@ -74,14 +74,16 @@ namespace Pokiwar.Domain
         public int EnhanceCost(OwnedPet pet)
         {
             var t = Cfg.EnhanceGoldByLevel;
-            return t[MathUtil.Clamp(pet.EnhanceLevel, 0, t.Length - 1)];
+            return t[MathUtil.Clamp(pet.Level - 1, 0, t.Length - 1)];
         }
 
-        /// <summary>Feeds one stone into a pet. Failure adds accumulated bonus chance; without protection it can drop a level.</summary>
+        /// <summary>Feeds one stone of the pet's own element into it to raise its level. Failure adds bonus chance; without protection it can drop a level.</summary>
         public UpgradeResult Enhance(SaveData d, OwnedPet pet, Element element, int tier, bool useLucky, bool useProtection, SeededRng rng)
         {
             var r = new UpgradeResult();
-            if (pet.EnhanceLevel >= Cfg.MaxEnhanceLevel) { r.Message = "Max enhance"; return r; }
+            if (pet.Level >= db.Progression.PetMaxLevel) { r.Message = "Max level"; return r; }
+            var own = db.Creature(pet.PetId).Element;
+            if (element != own) { r.Message = "Needs a " + own + " stone"; return r; }
             if (d.StoneCount(element, tier) < 1) { r.Message = "No stone"; return r; }
             int cost = EnhanceCost(pet);
             if (d.Gold < cost) { r.Message = "Need " + cost + " gold"; return r; }
@@ -96,19 +98,19 @@ namespace Pokiwar.Domain
             r.Success = rng.Chance(r.Chance);
             if (r.Success)
             {
-                pet.EnhanceLevel++;
+                pet.Level++;
                 pet.EnhanceBonusChance = 0;
-                r.Message = "Enhance success! +" + pet.EnhanceLevel;
+                r.Message = "Upgrade success! Lv " + pet.Level;
             }
             else
             {
                 pet.EnhanceBonusChance += Cfg.EnhanceFailAccumulate;
-                if (!useProtection && Cfg.FailDropsLevelWithoutProtection && pet.EnhanceLevel > 0)
+                if (!useProtection && Cfg.FailDropsLevelWithoutProtection && pet.Level > 1)
                 {
-                    pet.EnhanceLevel--;
-                    r.Message = "Enhance failed. Level dropped to +" + pet.EnhanceLevel;
+                    pet.Level--;
+                    r.Message = "Upgrade failed. Level dropped to Lv " + pet.Level;
                 }
-                else r.Message = "Enhance failed. Bonus chance +" + (int)Math.Round(Cfg.EnhanceFailAccumulate * 100) + "%";
+                else r.Message = "Upgrade failed. Bonus chance +" + (int)Math.Round(Cfg.EnhanceFailAccumulate * 100) + "%";
             }
             return r;
         }
