@@ -377,7 +377,7 @@ namespace Pokiwar.EditorTools
             Check(bc.Shake.AtRest, "battle screen shake at rest");
 
             app.Save.Node("node.1", true).Wins = Math.Max(1, app.Save.Wins("node.1"));
-            app.Save.Node("node.2", true).Wins = 1;
+            app.Save.Node("node.2", true).Wins = app.Db.Node("node.2").WinsRequired;
             var pet = app.Save.Pet(app.Save.SelectedPetUid);
             pet.Level = 30;
             app.Save.Energy = 30;

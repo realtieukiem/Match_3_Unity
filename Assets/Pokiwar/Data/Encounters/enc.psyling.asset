@@ -25,5 +25,5 @@ MonoBehaviour:
     Difficulty: 2
     FirstTurn: 0
     CaptureOnFirstWin: 1
-    HpVsPlayer: 1.6
+    ManaVsPlayer: 1
     SkillLevel: 2

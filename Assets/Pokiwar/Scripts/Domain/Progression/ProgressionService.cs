@@ -214,10 +214,10 @@ namespace Pokiwar.Domain
             var enemy = BuildEnemy(enc);
             player.StartHpPct = Db.Rules.StartHpPct;
             enemy.StartHpPct = enc.StartHpPct * Db.Rules.StartHpPct;
-            if (enc.HpVsPlayer > 0f)
+            if (enc.ManaVsPlayer > 0f)
             {
                 var st = enemy.Creature.StatsAt(enc.Level);
-                st.MaxHp = Math.Max(st.MaxHp, (int)Math.Ceiling(player.Stats.MaxHp * enc.HpVsPlayer));
+                st.MaxMana = (int)Math.Ceiling(player.Stats.MaxMana * enc.ManaVsPlayer);
                 enemy.Stats = st;
             }
             return new BattleSetup

@@ -329,7 +329,7 @@ namespace Pokiwar.Domain
         public int Difficulty = 1;
         public Side FirstTurn = Side.Player;
         public bool CaptureOnFirstWin = true;
-        public float HpVsPlayer;
+        public float ManaVsPlayer;
         public int SkillLevel = 1;
     }
 

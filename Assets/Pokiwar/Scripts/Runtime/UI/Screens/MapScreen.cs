@@ -103,7 +103,7 @@ namespace Pokiwar.UI
                 bool unlocked = a.Progression.IsNodeUnlocked(a.Save, n);
                 int wins = a.Save.Wins(n.Id);
                 string sub = unlocked
-                    ? enc.Name + " Lv " + enc.Level + "\nEnergy " + enc.EnergyCost + (wins > 0 ? "   Wins " + wins : "")
+                    ? enc.Name + "  Hunt Lv " + enc.Level + "\nWins " + wins + "/" + Mathf.Max(1, n.WinsRequired) + "   Energy " + enc.EnergyCost
                     : "LOCKED";
                 row.Set((i + 1) + ". " + n.Name, sub, a.Sprites.Get(creature.SpriteKey), wins > 0);
                 row.Rect.anchoredPosition = NodePosition(n, i, map.Nodes.Count, size);

@@ -30,7 +30,7 @@ MonoBehaviour:
       RegionId: region.sunny
       EncounterId: enc.psyling
       RequiresNodeId: node.1
-      WinsRequired: 1
+      WinsRequired: 2
       X: 0.48
       Y: 0.62
     - Id: node.3
@@ -38,6 +38,6 @@ MonoBehaviour:
       RegionId: region.sunny
       EncounterId: enc.azurewing
       RequiresNodeId: node.2
-      WinsRequired: 1
+      WinsRequired: 3
       X: 0.8
       Y: 0.4

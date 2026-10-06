@@ -181,13 +181,13 @@ namespace Pokiwar.Domain
             db.Creatures.Add(new CreatureDef
             {
                 Id = "mon.psyling", Name = "Psyling", SpriteKey = "psyling", Element = Element.Metal, ElementBonus = 1,
-                BaseStats = new StatBlock(1500, 90, 18, 1000, 100), PerLevel = new StatBlock(140, 8, 2, 60, 0),
+                BaseStats = new StatBlock(3300, 155, 22, 1000, 100), PerLevel = new StatBlock(140, 8, 2, 60, 0),
                 GemProfileId = "gem.monster", SkillIds = { "skill.mind_spark" }, CardIds = { "card.mana_leech" }
             });
             var boss = new CreatureDef
             {
                 Id = "boss.azurewing", Name = "Azurewing", SpriteKey = "azurewing", Element = Element.Water, ElementBonus = 2,
-                BaseStats = new StatBlock(2800, 90, 22, 1600, 200), PerLevel = new StatBlock(180, 5, 2, 60, 0),
+                BaseStats = new StatBlock(4850, 90, 22, 1600, 200), PerLevel = new StatBlock(180, 5, 2, 60, 0),
                 GemProfileId = "gem.boss", CardIds = { "card.iron_skin", "card.war_cry" },
                 Rage = new RageProfile { AttackThreshold = 100, AttackCost = 100, StrongMultiplier = 1.7f }
             };
@@ -248,17 +248,17 @@ namespace Pokiwar.Domain
 
         private static void AddEncounters(ContentDatabase db)
         {
-            db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 3, AiPolicyId = "ai.easy", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1, HpVsPlayer = 1.2f });
-            db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 6, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2, SkillLevel = 2, HpVsPlayer = 1.6f });
-            db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 8, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4, HpVsPlayer = 2.2f, SkillLevel = 3 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 3, AiPolicyId = "ai.easy", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1, ManaVsPlayer = 1f });
+            db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 6, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2, SkillLevel = 2, ManaVsPlayer = 1f });
+            db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 8, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4, ManaVsPlayer = 1.6f, SkillLevel = 3 });
         }
 
         private static void AddMap(ContentDatabase db)
         {
             db.Map.Regions.Add(new RegionDef { Id = "region.sunny", Name = "Sunny Isle" });
             db.Map.Nodes.Add(new MapNodeDef { Id = "node.1", Name = "Dune Beach", RegionId = "region.sunny", EncounterId = "enc.dunewing", X = 0.18f, Y = 0.30f, WinsRequired = 1 });
-            db.Map.Nodes.Add(new MapNodeDef { Id = "node.2", Name = "Echo Cave", RegionId = "region.sunny", EncounterId = "enc.psyling", RequiresNodeId = "node.1", X = 0.48f, Y = 0.62f, WinsRequired = 1 });
-            db.Map.Nodes.Add(new MapNodeDef { Id = "node.3", Name = "Azure Peak", RegionId = "region.sunny", EncounterId = "enc.azurewing", RequiresNodeId = "node.2", X = 0.80f, Y = 0.40f, WinsRequired = 1 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.2", Name = "Echo Cave", RegionId = "region.sunny", EncounterId = "enc.psyling", RequiresNodeId = "node.1", X = 0.48f, Y = 0.62f, WinsRequired = 2 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.3", Name = "Azure Peak", RegionId = "region.sunny", EncounterId = "enc.azurewing", RequiresNodeId = "node.2", X = 0.80f, Y = 0.40f, WinsRequired = 3 });
         }
     }
 }

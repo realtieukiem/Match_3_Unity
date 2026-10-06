@@ -67,7 +67,7 @@ namespace Pokiwar.UI
             var enc = a.Db.Encounter(n.EncounterId);
             var c = a.Db.Creature(enc.CreatureId);
             EnemyImage.sprite = a.Sprites.Get(c.SpriteKey);
-            EnemyTitle.text = enc.Name + "  Lv " + enc.Level;
+            EnemyTitle.text = enc.Name + "  (Hunt Lv " + enc.Level + ")";
             PetPicker.SetActive(false);
             CardPicker.SetActive(false);
             if (Avatar != null) Avatar.Show(a.Avatars.Look(a.Save), a.Db, a.Sprites);

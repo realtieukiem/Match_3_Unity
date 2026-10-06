@@ -114,7 +114,7 @@ namespace Pokiwar.Tests
         }
 
         [Test]
-        public void Boss_AlwaysHasMoreHpThanThePlayer()
+        public void Boss_KeepsItsOwnHp_AndMirrorsThePlayersMana()
         {
             var db = DefaultContent.Create();
             var prog = new ProgressionService(db);
@@ -129,11 +129,16 @@ namespace Pokiwar.Tests
                     var enc = db.Encounter(node.EncounterId);
                     save.Energy = enc.EnergyCost;
                     var setup = prog.StartBattle(save, node, 5);
-                    int mine = setup.Player.Stats.MaxHp;
-                    Assert.GreaterOrEqual(setup.Enemy.Stats.MaxHp, (int)System.Math.Ceiling(mine * enc.HpVsPlayer), node.Id + " pet Lv " + level);
-                    Assert.Greater(setup.Enemy.Stats.MaxHp, mine, node.Id + " pet Lv " + level);
+                    Assert.AreEqual(db.Creature(enc.CreatureId).StatsAt(enc.Level).MaxHp, setup.Enemy.Stats.MaxHp, node.Id + " HP does not follow a pet at Lv " + level);
+                    Assert.AreEqual((int)System.Math.Ceiling(setup.Player.Stats.MaxMana * enc.ManaVsPlayer), setup.Enemy.Stats.MaxMana, node.Id + " mana follows a pet at Lv " + level);
                 }
             }
+            var par = prog.CreateNewSave(0);
+            var boss = db.Encounter("enc.azurewing");
+            par.Pet(par.SelectedPetUid).Level = boss.Level;
+            par.Energy = boss.EnergyCost;
+            var atPar = prog.StartBattle(par, db.Node("node.3"), 5);
+            Assert.GreaterOrEqual(atPar.Enemy.Stats.MaxHp, atPar.Player.Stats.MaxHp * 2, "the region boss has at least twice the HP of a pet of its own level");
         }
 
         [Test]

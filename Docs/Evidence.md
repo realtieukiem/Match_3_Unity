@@ -50,9 +50,10 @@ What that settles:
   value of the boss (hunt level 2 and 3 -> 2200, 84 -> 28400, 108 -> 108000 = 1000 per level). Three points, no
   single formula fits. CONFIRMED_BY_VIDEO for "not scaled in clip A", formula UNKNOWN.
 - Boss max MANA does follow the player: equal at hunt level 2-3 (three different pets, three matching values),
-  x1.6 at level 84 (2410 -> 3856, exact), x2.0 at level 108. CONFIRMED_BY_VIDEO, not built.
-- The game scales boss HP from the pet anyway (`EncounterDef.HpVsPlayer`) because the user asked for it
-  (CONFIRMED_BY_USER); see `Docs/UnverifiedRules.md`.
+  x1.6 at level 84 (2410 -> 3856, exact), x2.0 at level 108. CONFIRMED_BY_VIDEO.
+- The game follows this (user, 2026-10-06: follow the video, we pick the numbers): a boss's HP is its own, its
+  max mana is the pet's times `EncounterDef.ManaVsPlayer`, and the lobby tag shows `Hunt Lv` and `Wins x/y`.
+  Numbers and win rates: `Docs/UnverifiedRules.md`.
 
 Lobby tags also show `THẮNG x/y` (wins / wins needed: 0/1, 1/1, 0/3, 4/3), `YÊU CẦU` (a rank-point
 requirement) and `CHIẾN TÍCH +10` (rank points for the win). Not built.
