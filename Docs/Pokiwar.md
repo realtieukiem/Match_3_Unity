@@ -3,6 +3,17 @@
 Turn-based pet battle on one shared 8x8 match-3 board. One player pet vs one AI monster/boss, local save.
 Unity 6 (6000.0.79f1 LTS), uGUI, mouse + touch, 16:9 landscape (1920x1080 reference, `Expand` scaler).
 
+## What the game is (owner's brief, 2026-10-06)
+
+The player is an explorer who goes out to collect. Bosses are hard on purpose: a boss is lost several times
+before it is won, and winning it means owning it. Between attempts the player replays fights to gather what
+upgrades the three things that grow - pets (stones of the pet's element), cards (card stones) and the trainer
+(EXP, clothes). Judge every balance and reward decision by that loop: a fight tuned easy, or a repeatable fight
+that feeds none of the three, is off-model.
+
+Planned, not built: online PvP, and co-op boss hunts where a player calls others in - at most three players, the
+boss stronger with the party (x3 for three). Battle rules stay free of single-player assumptions for that reason.
+
 ## Play it
 
 1. Open the project in Unity 6000.0.79f1.
