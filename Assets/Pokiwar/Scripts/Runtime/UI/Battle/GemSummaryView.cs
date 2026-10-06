@@ -33,10 +33,9 @@ namespace Pokiwar.UI
             {
                 int eff = tally.EffectiveOf(t);
                 if (eff <= 0) continue;
-                int phys = tally.PhysicalOf(t);
                 SlotIcons[slot].gameObject.SetActive(true);
                 SlotIcons[slot].sprite = Sprites.Gem(t);
-                SlotLabels[slot].text = eff + (phys != eff ? " (" + phys + ")" : "");
+                SlotLabels[slot].text = eff.ToString();
                 slotGem[slot] = t;
                 slot++;
             }
