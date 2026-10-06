@@ -17,5 +17,8 @@ MonoBehaviour:
     Name: Mage Robe
     Slot: 1
     Price: 600
+    BonusHp: 150
+    BonusMana: 0
+    BonusAtk: 0
     SpriteKey: avatar.top.robe
     Confidence: 3

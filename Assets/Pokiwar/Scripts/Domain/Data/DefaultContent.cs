@@ -41,7 +41,13 @@ namespace Pokiwar.Domain
         private static void AddAvatarItems(ContentDatabase db)
         {
             void A(string id, string name, AvatarSlot slot, int price) =>
-                db.AvatarItems.Add(new AvatarItemDef { Id = id, Name = name, Slot = slot, Price = price, SpriteKey = id });
+                db.AvatarItems.Add(new AvatarItemDef
+                {
+                    Id = id, Name = name, Slot = slot, Price = price, SpriteKey = id,
+                    BonusHp = slot == AvatarSlot.Top || slot == AvatarSlot.Bottom ? price / 4 : 0,
+                    BonusMana = slot == AvatarSlot.Hair ? price / 5 : 0,
+                    BonusAtk = slot == AvatarSlot.Hat ? price / 50 : 0
+                });
             A("avatar.hair.spiky", "Spiky Hair", AvatarSlot.Hair, 0);
             A("avatar.hair.bob", "Bob Cut", AvatarSlot.Hair, 300);
             A("avatar.hair.ponytail", "Ponytail", AvatarSlot.Hair, 300);

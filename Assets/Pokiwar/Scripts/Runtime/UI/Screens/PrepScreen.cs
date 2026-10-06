@@ -112,7 +112,7 @@ namespace Pokiwar.UI
                 foreach (var pet in s.Pets)
                 {
                     var def = app.Db.Creature(pet.PetId);
-                    var st = app.Progression.PetStats(pet);
+                    var st = app.Progression.BattleStats(s, pet);
                     var row = petRows.Add();
                     row.Set(def.Name + "  Lv " + pet.Level,
                         def.Element + "  HP " + st.MaxHp + "  ATK " + st.Atk, app.PetSprite(pet), pet.Uid == s.SelectedPetUid);
@@ -128,7 +128,7 @@ namespace Pokiwar.UI
             cardRows.Clear();
             if (CardPicker.activeSelf)
             {
-                double atk = selected != null ? app.Progression.PetStats(selected).Atk : 0;
+                double atk = selected != null ? app.Progression.BattleStats(s, selected).Atk : 0;
                 foreach (var oc in s.SkillCards)
                 {
                     var sk = app.Db.TrySkill(oc.Id);

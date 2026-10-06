@@ -85,7 +85,7 @@ namespace Pokiwar.UI
                 var row = rows.Add();
                 bool owned = av.Owns(s, item.Id);
                 bool worn = av.IsWorn(s, item.Id);
-                row.Set(item.Name, owned ? "" : item.Price + " Gold", AvatarView.Icon(item, app.Sprites), worn || item.Id == tryOn);
+                row.Set(item.Name, owned ? item.BonusText : (item.Price + " Gold  " + item.BonusText).Trim(), AvatarView.Icon(item, app.Sprites), worn || item.Id == tryOn);
                 row.ExtraALabel.text = !owned ? "BUY" : worn ? "TAKE OFF" : "WEAR";
                 row.ExtraA.interactable = owned || s.Gold >= item.Price;
                 var id = item.Id;

@@ -17,5 +17,8 @@ MonoBehaviour:
     Name: Shorts
     Slot: 0
     Price: 0
+    BonusHp: 0
+    BonusMana: 0
+    BonusAtk: 0
     SpriteKey: avatar.bottom.shorts
     Confidence: 3

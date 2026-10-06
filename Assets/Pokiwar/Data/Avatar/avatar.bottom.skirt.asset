@@ -17,5 +17,8 @@ MonoBehaviour:
     Name: Pleated Skirt
     Slot: 0
     Price: 300
+    BonusHp: 75
+    BonusMana: 0
+    BonusAtk: 0
     SpriteKey: avatar.bottom.skirt
     Confidence: 3

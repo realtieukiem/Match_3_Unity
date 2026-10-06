@@ -68,6 +68,16 @@ requirement) and `CHIẾN TÍCH +10` (rank points for the win). Not built.
 | M 00:20, A 02:12 | Pet level badge bottom-left in battle (LV14, LV7, LV1) - the same number as the upgrade screen's Cấp | level not shown in battle (user, 2026-10-05) | CONFIRMED_BY_VIDEO |
 | B 04:36 -> 04:40 | BlueWings 34857/108000 changes form and stands at 54311/108000: HP refilled to half of max, max unchanged | boss phase sets HP to 50% of max, attack x1.15 | HP CONFIRMED_BY_VIDEO, attack CONFIRMED_BY_USER (no number in the clip) |
 
+## Trainer level and clothes (read 2026-10-06)
+
+| Clip @ time | Seen | Game | Status |
+|---|---|---|---|
+| A 02:12, 05:40 vs A 10:00 | Same LV7 pet: 2405/3207 HP and 770 mana with trainer badge 1; 2409/3212 and 775 with trainer badge 2. The boss's mana follows (770 -> 775) | +5 HP and +5 mana per trainer level in `ProgressionService.BattleStats` | CONFIRMED_BY_VIDEO (one step) |
+| A 04:41 vs A 11:21 | Two different LV1 pets: 510 HP / 300 mana at trainer 1, 505 / 305 at trainer 2 - the mana fits the same +5 | - | consistent |
+| C 02:05 vs M 00:20, B 01:22 | Pet mana at Cấp 14 is 1680 for every pet; in battle LV14 pets show 2410 (trainer 39) and 2326 / 2346 / 2350 (trainers 35-36). Trainer level explains 170-190; 480-540 is left over | bought avatar pieces add HP, mana or ATK | gear adding stats INFERRED, amounts UNKNOWN |
+| A 01:35 | CƯỜNG HÓA: enhance an avatar piece or a badge (HUY HIỆU) with three materials, 50% success, Bùa Thăng Hoa 20000 | not built | CONFIRMED_BY_VIDEO |
+| A 09:08 | "Đổi avatar" tabs: AVATAR BỘ, AVATAR RỜI, NỀN, THÚ CƯNG, HIỆU ỨNG, CÁNH, VŨ KHÍ | wardrobe has hair, top, bottom, hat | CONFIRMED_BY_VIDEO |
+
 ## Battle layout and rhythm
 
 | Clip @ time | Seen | Game | Status |

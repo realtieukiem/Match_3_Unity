@@ -17,5 +17,8 @@ MonoBehaviour:
     Name: Explorer Jacket
     Slot: 1
     Price: 400
+    BonusHp: 100
+    BonusMana: 0
+    BonusAtk: 0
     SpriteKey: avatar.top.jacket
     Confidence: 3

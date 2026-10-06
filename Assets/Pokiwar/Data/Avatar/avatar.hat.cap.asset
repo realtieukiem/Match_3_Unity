@@ -17,5 +17,8 @@ MonoBehaviour:
     Name: Trainer Cap
     Slot: 3
     Price: 250
+    BonusHp: 0
+    BonusMana: 0
+    BonusAtk: 5
     SpriteKey: avatar.hat.cap
     Confidence: 3

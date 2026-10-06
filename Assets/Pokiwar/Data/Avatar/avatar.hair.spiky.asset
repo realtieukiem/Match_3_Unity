@@ -17,5 +17,8 @@ MonoBehaviour:
     Name: Spiky Hair
     Slot: 2
     Price: 0
+    BonusHp: 0
+    BonusMana: 0
+    BonusAtk: 0
     SpriteKey: avatar.hair.spiky
     Confidence: 3

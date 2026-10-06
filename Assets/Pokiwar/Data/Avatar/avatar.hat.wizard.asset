@@ -17,5 +17,8 @@ MonoBehaviour:
     Name: Wizard Hat
     Slot: 3
     Price: 500
+    BonusHp: 0
+    BonusMana: 0
+    BonusAtk: 10
     SpriteKey: avatar.hat.wizard
     Confidence: 3

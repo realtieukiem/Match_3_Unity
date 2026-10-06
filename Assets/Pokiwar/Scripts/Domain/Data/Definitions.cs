@@ -401,6 +401,8 @@ namespace Pokiwar.Domain
     {
         public int StartGold = 500;
         public int EvolveAtLevel = 5;
+        public int TrainerHpPerLevel = 5;
+        public int TrainerManaPerLevel = 5;
         public int MaxEnergy = 30;
         public int EnergyRegenSeconds = 300;
         public int[] PlayerExpToNext = { 100, 160, 240, 340, 460, 600, 780, 1000, 1300, 1700 };

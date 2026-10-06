@@ -19,7 +19,13 @@ namespace Pokiwar.Domain
         public string Name;
         public AvatarSlot Slot;
         public int Price;
+        public int BonusHp;
+        public int BonusMana;
+        public int BonusAtk;
         public string SpriteKey;
+
+        public string BonusText =>
+            BonusHp > 0 ? "+" + BonusHp + " HP" : BonusMana > 0 ? "+" + BonusMana + " MP" : BonusAtk > 0 ? "+" + BonusAtk + " ATK" : "";
         public Confidence Confidence = Confidence.Provisional;
     }
 

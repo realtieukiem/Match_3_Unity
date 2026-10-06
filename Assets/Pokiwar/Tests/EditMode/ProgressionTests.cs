@@ -374,5 +374,38 @@ namespace Pokiwar.Tests
             Assert.AreEqual(boss.Phases[0].SpriteKey, Combatant.Create(Side.Player, setup.Player).SpriteKey);
             Assert.AreEqual(1, Combatant.Create(Side.Enemy, setup.Enemy).Phases.Count, "the boss keeps its second phase");
         }
+
+        [Test]
+        public void TrainerLevelAndClothes_AddToThePetInBattle()
+        {
+            var db = DefaultContent.Create();
+            var prog = new ProgressionService(db);
+            var save = prog.CreateNewSave(0);
+            var pet = save.Pet(save.SelectedPetUid);
+            var own = prog.PetStats(pet);
+            var naked = prog.BattleStats(save, pet);
+            Assert.AreEqual(own.MaxHp, naked.MaxHp, "starter clothes and trainer level 1 add nothing");
+
+            save.PlayerLevel = 2;
+            var lv2 = prog.BattleStats(save, pet);
+            Assert.AreEqual(own.MaxHp + 5, lv2.MaxHp);
+            Assert.AreEqual(own.MaxMana + 5, lv2.MaxMana);
+            Assert.AreEqual(own.Atk, lv2.Atk);
+
+            var jacket = db.TryAvatarItem("avatar.top.jacket");
+            var cap = db.TryAvatarItem("avatar.hat.cap");
+            Assert.Greater(jacket.BonusHp, 0);
+            Assert.Greater(cap.BonusAtk, 0);
+            save.AvatarWorn.Add(jacket.Id);
+            save.AvatarWorn.Add(cap.Id);
+            var dressed = prog.BattleStats(save, pet);
+            Assert.AreEqual(lv2.MaxHp + jacket.BonusHp, dressed.MaxHp);
+            Assert.AreEqual(lv2.Atk + cap.BonusAtk, dressed.Atk);
+
+            save.Energy = 10;
+            var setup = prog.StartBattle(save, db.Node("node.1"), 3);
+            Assert.AreEqual(dressed.MaxHp, setup.Player.Stats.MaxHp);
+            Assert.AreEqual(dressed.MaxMana, setup.Enemy.Stats.MaxMana, "the boss mirrors the mana the pet really has");
+        }
     }
 }

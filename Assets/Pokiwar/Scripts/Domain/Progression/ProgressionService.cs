@@ -143,6 +143,24 @@ namespace Pokiwar.Domain
             return st;
         }
 
+        /// <summary>What the pet fights with: its own stats, plus the trainer's level and whatever the trainer wears.</summary>
+        public StatBlock BattleStats(SaveData d, OwnedPet pet)
+        {
+            var st = PetStats(pet);
+            int levels = Math.Max(0, d.PlayerLevel - 1);
+            st.MaxHp += levels * Db.Progression.TrainerHpPerLevel;
+            st.MaxMana += levels * Db.Progression.TrainerManaPerLevel;
+            foreach (var id in d.AvatarWorn)
+            {
+                var item = Db.TryAvatarItem(id);
+                if (item == null) continue;
+                st.MaxHp += item.BonusHp;
+                st.MaxMana += item.BonusMana;
+                st.Atk += item.BonusAtk;
+            }
+            return st;
+        }
+
         public int PetElementBonus(OwnedPet pet)
         {
             var def = Db.Creature(pet.PetId);
@@ -162,7 +180,7 @@ namespace Pokiwar.Domain
                 SpriteKey = PetSpriteKey(pet),
                 NoPhases = true,
                 Level = pet.Level,
-                Stats = PetStats(pet),
+                Stats = BattleStats(d, pet),
                 ElementBonus = PetElementBonus(pet),
                 Gems = Db.GemProfile(def.GemProfileId),
                 Ai = Db.Ai("ai.autoplay")

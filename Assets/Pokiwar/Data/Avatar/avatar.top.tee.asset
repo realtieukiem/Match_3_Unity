@@ -17,5 +17,8 @@ MonoBehaviour:
     Name: Canyon Tee
     Slot: 1
     Price: 0
+    BonusHp: 0
+    BonusMana: 0
+    BonusAtk: 0
     SpriteKey: avatar.top.tee
     Confidence: 3

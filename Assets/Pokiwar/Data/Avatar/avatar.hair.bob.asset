@@ -17,5 +17,8 @@ MonoBehaviour:
     Name: Bob Cut
     Slot: 2
     Price: 300
+    BonusHp: 0
+    BonusMana: 60
+    BonusAtk: 0
     SpriteKey: avatar.hair.bob
     Confidence: 3
