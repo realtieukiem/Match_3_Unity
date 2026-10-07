@@ -26,6 +26,7 @@ $forms = @(
     @{ Scale = $SecondFormScale; Src = 'boss_ongnamhai_form02'; Out = 'char_ongnamhai_evolved' }
 )
 $poses = 'idle', 'attack', 'hit', 'defeat'
+$extraIdle = 2, 3
 
 function Get-Subject([string]$path) {
     $bmp = New-Object System.Drawing.Bitmap $path
@@ -50,7 +51,10 @@ function Get-Subject([string]$path) {
 
 foreach ($f in $forms) {
     $subjects = @{}
-    foreach ($p in $poses) { $subjects[$p] = Get-Subject (Join-Path $Source ($f.Src + '_' + $p + '_01.png')) }
+    $files = @{}
+    foreach ($p in $poses) { $files[$p] = $f.Src + '_' + $p + '_01.png' }
+    foreach ($n in $extraIdle) { $extra = $f.Src + '_idle_0' + $n + '.png'; if (Test-Path (Join-Path $Source $extra)) { $files['idle' + $n] = $extra } }
+    foreach ($p in $files.Keys) { $subjects[$p] = Get-Subject (Join-Path $Source $files[$p]) }
     $idle = $subjects['idle']
 
     $width = $CanvasWidth; $height = $CanvasHeight; $gap = $GroundGap
@@ -67,12 +71,12 @@ foreach ($f in $forms) {
     $ground = $height - $gap
     $used = @()
 
-    foreach ($p in $poses) {
+    foreach ($p in $files.Keys) {
         $sub = $subjects[$p]
         $half = [Math]::Max($centre - $sub.MinX, $sub.MaxX - $centre)
         $poseScale = [Math]::Min($scale, [Math]::Min((($width - 8) / (2.0 * $half)), (($ground - 4) / ($idle.MaxY - $sub.MinY))))
         $used += ('{0} x{1:N2}' -f $p, $poseScale)
-        $src = New-Object System.Drawing.Bitmap (Join-Path $Source ($f.Src + '_' + $p + '_01.png'))
+        $src = New-Object System.Drawing.Bitmap (Join-Path $Source $files[$p])
         $out = New-Object System.Drawing.Bitmap $width, $height, ([System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
         $g = [System.Drawing.Graphics]::FromImage($out)
         $g.InterpolationMode = 'HighQualityBicubic'

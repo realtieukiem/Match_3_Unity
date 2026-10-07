@@ -30,21 +30,76 @@ Every piece of art the game needs has exactly one status. Codex paints ONLY rows
 | 2 | East Sea second forms: Ngoclam, Doimora, Voirong, Ongnamhai | 16 | `HAVE` | painted 2026-10-07, in the game |
 | 3 | East Sea region art: world island, region emblem, battle background | 3 | `HAVE` | painted 2026-10-07, in the game |
 | 4 | Battle effects: rage fire vortex, flame wisp, siphon mote, hit burst, sparkle | 5 | `HAVE` | painted 2026-10-07, in the game |
-| 5 | Card faces `face_*.png` (9 single-use cards + the one skill face) | 10 | `WAIT` | code-drawn by `Tools/DrawCardFaces.ps1`, in the game now; the user has not judged them yet |
+| 5 | Card faces `face_*.png` (9 single-use cards + the one skill face) | 11 | `CODE-DRAWN` | `Tools/DrawCardFaces.ps1` (ten cards and the skill face). Kept code-drawn: flat pictogram and a big number is the brief, and a new card gets its face the same day |
 | 6 | Buff icons `buff_{heart,lightning,fire,shield}.png` | 4 | `CODE-DRAWN` | `Tools/DrawCardFaces.ps1`; heal and mana effects approved by the user 2026-10-07 |
 | 7 | UI primitives (`ui.circle`, `ui.ring`, `ui.round`, `ui.frame`, `ui.gradient`, bar shapes) | - | `CODE-DRAWN` | plain shapes, tinted in game |
 | 8 | Everything in Batches 1-13 (gems, starter pets, Dunewing, Psyling, Azurewing, cards art, elements, HUD, buttons, room, avatar, lobby, forge, stones, world map, town) | 179 files | `HAVE` | table "Already painted" below |
 | 11 | Second forms of Dunewing and Psyling (`enemy_beetle_form02_*`, `enemy_psyling_form02_*`) | 8 | `HAVE` | painted small (68% of the frame); the game enlarges them with `Tools/ReframeSecondForms.ps1`. Do NOT repaint unless the user asks |
 | 12 | Arrow mini game kit (`Battle/QTE`: four arrows, slot frame, timing marker, timer frame) | 7 | `HAVE` | in the game since 2026-10-07 |
+| 13 | Idle animation frames 2 and 3 for the eleven creatures in play (Emberkit, six East Sea first forms, four East Sea second forms) | 22 | `PAINT NEW` | Batch 17 below |
+| 14 | East Sea battle background, version 2: the same reef with two flat rock outcrops where the two creatures stand | 1 | `PAINT NEW` | Batch 17 below, item 12 |
 | 9 | Second forms of Emberkit, Leafling, Tidepup; a card for Tidal Siphon | - | `NEVER` | decided 2026-10-06 |
 | 10 | Third and later forms of any creature | - | `WAIT` | the rule for when a pet takes a third form is not decided |
 
-NOTHING is ordered right now: no row says `PAINT NEW`. Do not paint anything until a new batch is written here.
+One batch is ordered: Batch 17 (22 idle animation frames and one battle background, one Codex thread). Nothing else.
 
 Framing rule for every future creature batch (learned from Batches 12, 14 and 15): the game shows a creature at
 the size it fills its canvas, so paint the idle at about 80% of the canvas height, keep every pose (the hit pose
 included) under 90%, and keep one ground line across the four poses. Creatures painted smaller are enlarged by
 `Tools/ReframeSecondForms.ps1` on the game side, which costs sharpness.
+### Batch 17 - idle animation frames and the battle background with standing rocks (23 images)
+
+```
+<shared preamble>
+Items 1-11: paint TWO more idle frames for each of eleven creatures, so the game can play a short breathing loop
+(frame 1 -> 2 -> 3 -> 2 -> 1). Frame 1 already exists - it is the creature's idle picture. For EACH creature:
+- open its existing idle picture first and use it as the image to edit, not as loose inspiration;
+- keep the SAME canvas size, the same position, the same scale, the same ground line and the same colours -
+  if the two new frames are laid over frame 1, the feet and the body outline must line up;
+- change only small living parts, a little in frame 2 and a little more in frame 3. The body itself may rise
+  or sink by 1-2% (breathing). No new props, no new pose, no effects that are not in frame 1.
+Transparent background. Save to Battle/Characters/ under exactly these names (_idle_02 and _idle_03):
+
+ 1. pet_player_idle_02.png, pet_player_idle_03.png          (edit pet_player_idle_01.png, 1402x1122)
+    Emberkit: tail tip sways, ears twitch, the crystal on the forehead glints, chest breathes.
+ 2. enemy_samgong_idle_02.png, _03.png                      (edit enemy_samgong_idle_01.png)
+    Samgong: the spike tail tilts like a drumstick, legs shuffle slightly, eyes glow brighter then dimmer.
+ 3. enemy_bebeboom_idle_02.png, _03.png                     (edit enemy_bebeboom_idle_01.png)
+    Bebeboom: the fuse sparks flicker and shorten, the club arms bob like a boxer's guard, stalk eyes swivel.
+ 4. enemy_ngoclam_idle_02.png, _03.png                      (edit enemy_ngoclam_idle_01.png)
+    Ngoclam: the shell opens a crack wider then closes, the mantle ripples, the eyes blink (shut in frame 3).
+ 5. enemy_doimora_idle_02.png, _03.png                      (edit enemy_doimora_idle_01.png)
+    Doimora: the head nods slowly, flippers paddle a little, the sea-almond leaves sway.
+ 6. enemy_voirong_idle_02.png, _03.png                      (edit enemy_voirong_idle_01.png)
+    Voirong: the waterspout swirls (splashes move round), the head weaves side to side, tongue in then out.
+ 7. boss_ongnamhai_form01_idle_02.png, _03.png              (edit boss_ongnamhai_form01_idle_01.png)
+    Ongnamhai: the tail fluke lifts and drops, the lantern buoys and bells swing, a small puff at the blowhole.
+ 8. enemy_ngoclam_form02_idle_02.png, _03.png               (edit enemy_ngoclam_form02_idle_01.png)
+    Ngoclam Radiant: the pearl pulses brighter, the small pearls move along their orbit, sparkles change place.
+ 9. enemy_doimora_form02_idle_02.png, _03.png               (edit enemy_doimora_form02_idle_01.png)
+    Doimora Beacon: the lighthouse beam turns, blossoms and leaves sway, a petal falls, the head nods.
+10. enemy_voirong_form02_idle_02.png, _03.png               (edit enemy_voirong_form02_idle_01.png)
+    Voirong Tempest: lightning jumps to a new place in the spout, the cloud ring turns, whiskers wave.
+11. boss_ongnamhai_form02_idle_02.png, _03.png              (edit boss_ongnamhai_form02_idle_01.png)
+    Ongnamhai the Tide Lord: the wave under him rolls, the ring of water flows round, bells swing, mantle flutters.
+
+Check before saving each pair: flip between frame 1 and the new frame at 100% - the creature must not jump,
+shrink or change proportions. If it does, redo that frame rather than keeping it.
+
+12. Battle/Background/battle_bg_eastsea_v02.png - 2048x1152, opaque. A NEW VERSION of battle_bg_eastsea_v01.png
+    (open it first; keep its sea, sky, far cays, coral and colours) with ONE change: the two creatures need a
+    place to stand. Add two flat-topped rock outcrops rising out of the shallow water, one on each side:
+    - left rock: flat top centred at x = 350, y = 885; right rock: flat top centred at x = 1700, y = 885
+      (pixels in the 2048x1152 image, y counted from the top);
+    - each top is a level, clearly readable standing surface about 560 px wide and 110 px deep, seen from the
+      same slightly raised camera as the rest of the picture, lit from above, a little wet at the edge;
+    - the rock face below each top runs down to the bottom edge of the image (weathered reef stone, barnacles,
+      a few small corals), so a name label can sit on it;
+    - nothing tall on the rocks: no plants, posts or props that would stand in front of or behind a creature.
+    The whole middle of the image between x = 640 and x = 1410 stays calm open water (the game board covers it),
+    and the top 190 px stay simple sky (the health bars cover it).
+    Do not overwrite v01.
+```
 ## Already painted - do NOT repaint
 
 | Batch | What | Folder | Files |

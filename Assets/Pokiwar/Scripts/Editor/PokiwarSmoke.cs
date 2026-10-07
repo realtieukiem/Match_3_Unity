@@ -349,6 +349,22 @@ namespace Pokiwar.EditorTools
             yield return Capture("04a0_dash");
             yield return new WaitForSecondsRealtime(0.7f);
             Check(Mathf.Abs(bc.PlayerHud.Portrait.rectTransform.position.x - homeX) < 1f, "and walks back to its place");
+            var idleLib = ScriptableObject.CreateInstance<SpriteLibrary>();
+            idleLib.Sprites.Add(new KeyedSprite { Key = "emberkit", Sprite = app.Sprites.Get("emberkit") });
+            idleLib.Sprites.Add(new KeyedSprite { Key = "emberkit.idle2", Sprite = app.Sprites.Get("emberkit.hit") });
+            idleLib.Sprites.Add(new KeyedSprite { Key = "emberkit.idle3", Sprite = app.Sprites.Get("emberkit.attack") });
+            bc.PlayerHud.Setup(bc.Engine.State.Get(Side.Player), idleLib, true);
+            var idleSeen = new System.Collections.Generic.HashSet<Sprite>();
+            for (float waited = 0f; waited < 1.2f; waited += Time.unscaledDeltaTime)
+            {
+                idleSeen.Add(bc.PlayerHud.Portrait.sprite);
+                yield return null;
+            }
+            Check(bc.PlayerHud.IdleFrameCount == 3 && idleSeen.Count == 3, "a creature with painted idle frames plays them in a loop (" + idleSeen.Count + " of " + bc.PlayerHud.IdleFrameCount + " shown)");
+            bc.PlayerHud.Setup(bc.Engine.State.Get(Side.Player), app.Sprites, true);
+            bc.PlayerHud.SetTurn(true);
+            UnityEngine.Object.Destroy(idleLib);
+            Check(bc.PlayerHud.IdleFrameCount == 1, "a creature with one idle picture keeps breathing only");
             var firstForm = bc.EnemyHud.Portrait.sprite;
             var secondForm = app.Sprites.Get("ngoclam" + SpriteKeys.EvolvedSuffix);
             Check(Mathf.Approximately(secondForm.rect.width / secondForm.rect.height, firstForm.rect.width / firstForm.rect.height), "a second form is framed on the same canvas as its first form");

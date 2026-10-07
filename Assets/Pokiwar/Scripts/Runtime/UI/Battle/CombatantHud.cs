@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Pokiwar.App;
 using Pokiwar.Domain;
 using UnityEngine;
@@ -38,6 +39,8 @@ namespace Pokiwar.UI
         public float ReturnSeconds = 0.28f;
         [Tooltip("Where the pet's feet are, as a share of the portrait's height from its bottom edge.")]
         public float FeetHeight = 0.05f;
+        [Tooltip("Painted idle frames shown per second; a creature with only one idle picture just breathes.")]
+        public float IdleFps = 5f;
 
         private Vector2 portraitHome;
         private bool homeSet;
@@ -50,6 +53,8 @@ namespace Pokiwar.UI
         private bool dead;
         private float bobPhase;
         private Coroutine returning;
+        private readonly List<Sprite> idleFrames = new List<Sprite>();
+        private float idleClock;
 
         public void Setup(Combatant c, SpriteLibrary sprites, bool facesRight)
         {
@@ -67,6 +72,7 @@ namespace Pokiwar.UI
             busy = false;
             dead = false;
             bobPhase = facesRight ? 0f : 1.3f;
+            CollectIdle();
             Portrait.sprite = Pose(null);
             Portrait.rectTransform.localScale = Vector3.one;
             if (ElementIcon != null)
@@ -144,6 +150,23 @@ namespace Pokiwar.UI
             if (busy || dead || Portrait == null) return;
             float s = Mathf.Sin((Time.unscaledTime / 1.2f + bobPhase) * Mathf.PI * 2f);
             Portrait.rectTransform.localScale = new Vector3(1f + 0.006f * s, 1f + 0.016f * s, 1f);
+            if (idleFrames.Count < 2) return;
+            idleClock += Time.unscaledDeltaTime;
+            int span = idleFrames.Count * 2 - 2;
+            int step = (int)(idleClock * IdleFps) % span;
+            var frame = idleFrames[step < idleFrames.Count ? step : span - step];
+            if (Portrait.sprite != frame) Portrait.sprite = frame;
+        }
+
+        public int IdleFrameCount => idleFrames.Count;
+
+        private void CollectIdle()
+        {
+            idleFrames.Clear();
+            idleClock = 0f;
+            if (lib == null) return;
+            idleFrames.Add(lib.Get(key));
+            for (int n = 2; lib.Has(key + ".idle" + n); n++) idleFrames.Add(lib.Get(key + ".idle" + n));
         }
 
         public RectTransform BarRect(ResourceKind k)
@@ -238,6 +261,7 @@ namespace Pokiwar.UI
             var baseScale = Vector3.one;
             yield return Tween.Run(0.3f, t => rt.localScale = new Vector3(baseScale.x * (1f - t), baseScale.y * (1f + 0.3f * t), 1f));
             key = lib != null ? lib.Facing(newKey, direction > 0f) : newKey;
+            CollectIdle();
             Portrait.sprite = Pose(null);
             yield return Tween.Run(0.35f, t => rt.localScale = new Vector3(baseScale.x * t, baseScale.y * (1.3f - 0.3f * t), 1f));
             rt.localScale = baseScale;
