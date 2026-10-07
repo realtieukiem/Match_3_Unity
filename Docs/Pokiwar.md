@@ -26,7 +26,8 @@ boss stronger with the party (x3 for three). Battle rules stay free of single-pl
 4. Win -> reward -> next node unlocks. Lose -> RETRY. Boss: Azure Peak (transforms once).
 5. Hub -> PETS & STONES: merge 3 stones, enhance a pet, socket stones. RESET SAVE starts over.
 6. Hub top right: MUSIC / SOUND / SHAKE toggles, saved with the game.
-7. Town map -> CARD SHOP: buy a card stone, a lucky charm or a protection charm with gold. The trophy chip in
+7. Town map -> CARD SHOP: buy single-use cards (a stock: one copy is spent each time the card is played in a
+   battle; 40-120 gold), a card stone, a lucky charm or a protection charm with gold. The trophy chip in
    the town's top bar is the trainer's rank points (20 / 40 / 200 per win, by boss); the sword chip beside the
    pet's name in the room counts that pet's wins.
 
