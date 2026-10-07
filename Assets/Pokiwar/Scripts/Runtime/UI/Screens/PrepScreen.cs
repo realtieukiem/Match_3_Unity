@@ -88,6 +88,8 @@ namespace Pokiwar.UI
             var s = app.Save;
             if (s.Pet(s.SelectedPetUid) == null && s.Pets.Count > 0) s.SelectedPetUid = s.Pets[0].Uid;
             s.SelectedCardIds.RemoveAll(id => !s.Cards.Contains(id) && s.SkillCard(id) == null);
+            int skills = 0;
+            s.SelectedCardIds.RemoveAll(id => s.SkillCard(id) != null && ++skills > ProgressionService.MaxSkillsInLoadout);
 
             var selected = s.Pet(s.SelectedPetUid);
             if (selected != null)
@@ -145,7 +147,8 @@ namespace Pokiwar.UI
                     row.Button.onClick.AddListener(() =>
                     {
                         if (s.SelectedCardIds.Contains(sid)) return;
-                        if (s.SelectedCardIds.FindAll(x => s.SkillCard(x) != null).Count >= ProgressionService.MaxSkillsInLoadout) app.Toast("Max " + ProgressionService.MaxSkillsInLoadout + " reusable cards");
+                        int held = s.SelectedCardIds.FindIndex(x => s.SkillCard(x) != null);
+                        if (held >= 0) s.SelectedCardIds[held] = sid;
                         else if (s.SelectedCardIds.Count < MaxCards) s.SelectedCardIds.Insert(0, sid);
                         else app.Toast("Max " + MaxCards + " cards");
                         Refresh();

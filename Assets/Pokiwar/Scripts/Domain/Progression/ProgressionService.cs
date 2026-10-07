@@ -38,7 +38,7 @@ namespace Pokiwar.Domain
         public readonly ContentDatabase Db;
 
         public const int LoadoutSize = 5;
-        public const int MaxSkillsInLoadout = 2;
+        public const int MaxSkillsInLoadout = 1;
 
         public ProgressionService(ContentDatabase db)
         {

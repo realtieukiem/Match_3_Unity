@@ -158,6 +158,9 @@ namespace Pokiwar.Tests
                 Assert.AreEqual(4, setup.SkillLevels["skill.blaze_burst"]);
                 Assert.AreEqual(ProgressionService.LoadoutSize, setup.Skills.Count + setup.Cards.Count);
             }
+            Assert.AreEqual(1, save.SelectedCardIds.FindAll(id => save.SkillCard(id) != null).Count, "a new loadout holds one skill card");
+            var both = new System.Collections.Generic.List<string> { "skill.blaze_burst", "skill.thorn_bind" };
+            Assert.AreEqual(1, prog.BuildPlayer(save, save.Pets[0], both).Skills.Count, "a second skill card never reaches the battle");
             save.SelectedCardIds.Remove("skill.blaze_burst");
             Assert.IsFalse(prog.BuildPlayer(save, save.Pets[0], save.SelectedCardIds).Skills.Exists(s => s.Id == "skill.blaze_burst"));
         }

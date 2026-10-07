@@ -276,6 +276,7 @@ namespace Pokiwar.EditorTools
             yield return null;
             Check(app.Prep.gameObject.activeSelf, "preparation opens");
             Check(app.Save.SelectedCardIds.Count == 5, "5 cards preselected");
+            Check(app.Save.SelectedCardIds.FindAll(x => app.Save.SkillCard(x) != null).Count == 1, "exactly one skill card is preselected");
             CheckOnScreen(app.Prep.transform, "prep");
             yield return Capture("03_prep");
             app.Prep.CardSlotRemove[4].onClick.Invoke();
@@ -335,7 +336,7 @@ namespace Pokiwar.EditorTools
                 if (cb.Value.text.Length > 0 && cb.Icon.sprite != null && cb.Icon.sprite.name.StartsWith("face_")) valued++;
             }
             Check(shownCards > 0 && valued == shownCards, "every single-use card wears its own face and shows the number it gives (" + valued + "/" + shownCards + ")");
-            Check(bc.SkillButtons[0].Icon.sprite == app.Sprites.Get(CardFaces.SkillFace) && bc.SkillButtons[1].Icon.sprite == bc.SkillButtons[0].Icon.sprite && bc.SkillButtons[0].LevelBadge.activeSelf, "skill cards share one face and show their level");
+            Check(bc.SkillButtons[0].Icon.sprite == app.Sprites.Get(CardFaces.SkillFace) && !bc.SkillButtons[1].gameObject.activeSelf && bc.SkillButtons[0].LevelBadge.activeSelf, "the one skill card wears the skill face and shows its level");
             float homeX = bc.PlayerHud.Portrait.rectTransform.position.x;
             bc.PlayerHud.StartCoroutine(bc.PlayerHud.Lunge(bc.EnemyHud.BodyCenter));
             yield return new WaitForSecondsRealtime(0.34f);
