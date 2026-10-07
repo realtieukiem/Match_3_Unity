@@ -414,6 +414,67 @@ namespace Pokiwar.Tests
         }
 
         [Test]
+        public void Win_PaysRankPoints_AndCountsForThePetThatFought()
+        {
+            var db = DefaultContent.Create();
+            var prog = new ProgressionService(db);
+            var save = prog.CreateNewSave(0);
+            var node = db.Node("node.1");
+            var starter = save.Pet(save.SelectedPetUid);
+
+            var lost = prog.StartBattle(save, node, 1);
+            prog.CommitBattle(save, new BattleReport { BattleId = lost.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = starter.Uid, Won = false });
+            Assert.AreEqual(0, save.RankPoints, "a loss pays no rank points");
+            Assert.AreEqual(0, starter.Wins);
+
+            var won = prog.StartBattle(save, node, 2);
+            var grant = prog.CommitBattle(save, new BattleReport { BattleId = won.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = starter.Uid, Won = true });
+            Assert.AreEqual(20, grant.RankPoints);
+            Assert.AreEqual(20, save.RankPoints);
+            Assert.AreEqual(1, starter.Wins);
+            Assert.AreEqual(0, save.Pets.Find(p => p.PetId == "mon.dunewing").Wins, "the captured creature did not fight");
+            CollectionAssert.Contains(grant.Lines, "+20 Rank");
+            Assert.AreEqual(40, db.Encounter("enc.psyling").RankPoints);
+            Assert.AreEqual(200, db.Encounter("enc.azurewing").RankPoints);
+
+            var json = JsonUtility.ToJson(save);
+            var loaded = JsonUtility.FromJson<SaveData>(json);
+            Assert.AreEqual(20, loaded.RankPoints);
+            Assert.AreEqual(1, loaded.Pet(starter.Uid).Wins);
+        }
+
+        [Test]
+        public void Shop_SellsForGold_AndRefusesWithoutIt()
+        {
+            var db = DefaultContent.Create();
+            var prog = new ProgressionService(db);
+            var shop = new ShopService(prog);
+            var save = prog.CreateNewSave(0);
+            Assert.AreEqual(3, shop.Items.Count);
+
+            var charm = shop.Item("shop.lucky_charm");
+            int gold = save.Gold, charms = save.LuckyCharms;
+            Assert.IsTrue(shop.CanBuy(save, charm));
+            var ok = shop.Buy(save, charm.Id);
+            Assert.IsTrue(ok.Ok);
+            Assert.AreEqual(gold - charm.Price, save.Gold);
+            Assert.AreEqual(charms + 1, save.LuckyCharms);
+            Assert.AreEqual(charms + 1, shop.Owned(save, charm));
+
+            int stones = save.CardStoneCount(1);
+            Assert.IsTrue(shop.Buy(save, "shop.card_stone").Ok);
+            Assert.AreEqual(stones + 1, save.CardStoneCount(1));
+
+            save.Gold = shop.Item("shop.protection_charm").Price - 1;
+            int protect = save.ProtectionCharms, before = save.Gold;
+            var refused = shop.Buy(save, "shop.protection_charm");
+            Assert.IsFalse(refused.Ok);
+            Assert.AreEqual(before, save.Gold);
+            Assert.AreEqual(protect, save.ProtectionCharms);
+            Assert.IsFalse(shop.Buy(save, "shop.nothing").Ok);
+        }
+
+        [Test]
         public void Exp_FollowsTheClips_WinByHuntLevel_LossOne()
         {
             var db = DefaultContent.Create();

@@ -31,7 +31,13 @@ namespace Pokiwar.Domain
                     new RewardDrop { Kind = RewardKind.ProtectionCharm, Count = 1 }
                 },
                 DefaultPlayerName = "Trainer",
-                StarterAvatarIds = new List<string> { "avatar.hair.spiky", "avatar.top.tee", "avatar.bottom.shorts" }
+                StarterAvatarIds = new List<string> { "avatar.hair.spiky", "avatar.top.tee", "avatar.bottom.shorts" },
+                Shop = new List<ShopItemDef>
+                {
+                    new ShopItemDef { Id = "shop.card_stone", Name = "Card Stone T1", Description = "Feeds a reusable card in the card forge.", IconKey = "stone.card", Price = 150, Grant = new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 1 } },
+                    new ShopItemDef { Id = "shop.lucky_charm", Name = "Lucky Charm", Description = "+15% chance on one merge or upgrade.", IconKey = "fx.star", Price = 300, Grant = new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1 } },
+                    new ShopItemDef { Id = "shop.protection_charm", Name = "Protection Charm", Description = "A failed upgrade does not drop the level.", IconKey = "gem.Shield", Price = 500, Grant = new RewardDrop { Kind = RewardKind.ProtectionCharm, Count = 1 } }
+                }
             };
             AddAvatarItems(db);
             return db;
@@ -267,9 +273,9 @@ namespace Pokiwar.Domain
 
         private static void AddEncounters(ContentDatabase db)
         {
-            db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 3, AiPolicyId = "ai.normal", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1, ManaVsPlayer = 1f });
-            db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 6, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2, SkillLevel = 2, ManaVsPlayer = 1f });
-            db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 8, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4, ManaVsPlayer = 1.6f, SkillLevel = 3 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 3, AiPolicyId = "ai.normal", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1, ManaVsPlayer = 1f, RankPoints = 20 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 6, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2, SkillLevel = 2, ManaVsPlayer = 1f, RankPoints = 40 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 8, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4, ManaVsPlayer = 1.6f, SkillLevel = 3, RankPoints = 200 });
         }
 
         private static void AddMap(ContentDatabase db)

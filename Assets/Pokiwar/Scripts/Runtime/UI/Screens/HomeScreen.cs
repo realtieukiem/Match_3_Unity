@@ -10,9 +10,11 @@ namespace Pokiwar.UI
         public Text PlayerLabel;
         public Text GoldLabel;
         public Text EnergyLabel;
+        public Text RankLabel;
         public Button HuntButton;
         public Button EvolveButton;
         public Button AvatarShopButton;
+        public Button CardShopButton;
         public Button InfoButton;
         public Button AvatarButton;
         public Button CardsButton;
@@ -28,6 +30,7 @@ namespace Pokiwar.UI
             HuntButton.onClick.AddListener(() => app.ShowWorld());
             EvolveButton.onClick.AddListener(() => app.ShowUpgrade());
             AvatarShopButton.onClick.AddListener(() => app.ShowWardrobe());
+            CardShopButton.onClick.AddListener(() => app.ShowShop());
             InfoButton.onClick.AddListener(() => app.ShowHub());
             AvatarButton.onClick.AddListener(() => app.ShowWardrobe());
             CardsButton.onClick.AddListener(() => app.ShowCardForge());
@@ -42,6 +45,7 @@ namespace Pokiwar.UI
             PlayerLabel.text = s.PlayerName + "  Lv " + s.PlayerLevel + "   EXP " + s.PlayerExp + "/" + a.Progression.PlayerExpToNext(s.PlayerLevel);
             GoldLabel.text = s.Gold.ToString();
             EnergyLabel.text = s.Energy + "/" + a.Db.Progression.MaxEnergy;
+            RankLabel.text = s.RankPoints.ToString();
         }
     }
 }

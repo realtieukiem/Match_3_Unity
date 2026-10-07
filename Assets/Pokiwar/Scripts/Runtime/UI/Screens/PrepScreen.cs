@@ -14,6 +14,8 @@ namespace Pokiwar.UI
         public Text EnemyTitle;
         public Image PetImage;
         public Text PetName;
+        [Tooltip("How many battles the chosen pet has won.")]
+        public Text PetWins;
         public AvatarView Avatar;
         public Button ChoosePetButton;
         public GameObject PetPicker;
@@ -92,6 +94,7 @@ namespace Pokiwar.UI
                 var def = app.Db.Creature(selected.PetId);
                 PetImage.sprite = app.PetSprite(selected);
                 PetName.text = def.Name;
+                PetWins.text = selected.Wins.ToString();
             }
 
             for (int i = 0; i < MaxCards; i++)

@@ -334,6 +334,7 @@ namespace Pokiwar.Domain
         public bool CaptureOnFirstWin = true;
         public float ManaVsPlayer;
         public int SkillLevel = 1;
+        public int RankPoints;
     }
 
     [Serializable]
@@ -417,5 +418,17 @@ namespace Pokiwar.Domain
         public List<RewardDrop> StarterItems = new List<RewardDrop>();
         public string DefaultPlayerName = "Trainer";
         public List<string> StarterAvatarIds = new List<string>();
+        public List<ShopItemDef> Shop = new List<ShopItemDef>();
+    }
+
+    [Serializable]
+    public class ShopItemDef
+    {
+        public string Id;
+        public string Name;
+        public string Description;
+        public string IconKey;
+        public int Price;
+        public RewardDrop Grant = new RewardDrop();
     }
 }

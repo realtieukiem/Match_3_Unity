@@ -14,6 +14,7 @@ namespace Pokiwar.Domain
         public float EnhanceBonusChance;
         public List<int> SocketTiers = new List<int>();
         public List<Element> SocketElements = new List<Element>();
+        public int Wins;
     }
 
     [Serializable]
@@ -70,6 +71,7 @@ namespace Pokiwar.Domain
         public List<string> AvatarWorn = new List<string>();
         public List<OwnedCard> SkillCards = new List<OwnedCard>();
         public List<int> CardStones = new List<int>();
+        public int RankPoints;
 
         public OwnedPet Pet(string uid) => Pets.Find(p => p.Uid == uid);
 

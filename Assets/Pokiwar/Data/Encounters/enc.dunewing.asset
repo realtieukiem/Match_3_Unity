@@ -27,3 +27,4 @@ MonoBehaviour:
     CaptureOnFirstWin: 1
     ManaVsPlayer: 1
     SkillLevel: 1
+    RankPoints: 20

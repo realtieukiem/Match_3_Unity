@@ -20,6 +20,7 @@ namespace Pokiwar.Domain
         public int Gold;
         public int PlayerExp;
         public int PlayerLevelsGained;
+        public int RankPoints;
         public bool UnlockedNext;
         public string CapturedPetId;
         public readonly List<string> Lines = new List<string>();
@@ -291,6 +292,15 @@ namespace Pokiwar.Domain
             grant.PlayerExp = ExpForWin(enc.Level, d.PlayerLevel);
             grant.PlayerLevelsGained = AddPlayerExp(d, grant.PlayerExp);
             grant.Lines.Add("+" + grant.PlayerExp + " EXP" + (grant.PlayerLevelsGained > 0 ? " (Level up! Lv " + d.PlayerLevel + ")" : ""));
+
+            if (enc.RankPoints > 0)
+            {
+                grant.RankPoints = enc.RankPoints;
+                d.RankPoints += enc.RankPoints;
+                grant.Lines.Add("+" + enc.RankPoints + " Rank");
+            }
+            var fighter = d.Pet(report.PetUid);
+            if (fighter != null) fighter.Wins++;
 
             var rng = new SeededRng(Hash(report.BattleId));
             foreach (var drop in table.Drops)

@@ -26,6 +26,7 @@ namespace Pokiwar.App
         public UpgradeScreen Upgrade;
         public AvatarScreen Wardrobe;
         public CardForgeScreen CardForge;
+        public ShopScreen ShopScreen;
         public ToastView ToastView;
         public AudioDirector Audio;
 
@@ -33,6 +34,7 @@ namespace Pokiwar.App
         public ProgressionService Progression { get; private set; }
         public UpgradeService Upgrades { get; private set; }
         public AvatarService Avatars { get; private set; }
+        public ShopService Shop { get; private set; }
         public SaveData Save { get; private set; }
         public SeededRng Rng { get; private set; }
         public RewardGrant LastGrant { get; private set; }
@@ -48,6 +50,7 @@ namespace Pokiwar.App
             Progression = new ProgressionService(Db);
             Upgrades = new UpgradeService(Db);
             Avatars = new AvatarService(Db);
+            Shop = new ShopService(Progression);
             saves = new SaveService(new FileSaveStore(), new JsonSaveSerializer(), Progression);
             Save = saves.LoadOrCreate();
             Rng = new SeededRng(Save.RngState);
@@ -98,6 +101,7 @@ namespace Pokiwar.App
             Upgrade.gameObject.SetActive(false);
             if (Wardrobe != null) Wardrobe.gameObject.SetActive(false);
             if (CardForge != null) CardForge.gameObject.SetActive(false);
+            if (ShopScreen != null) ShopScreen.gameObject.SetActive(false);
         }
 
         public Sprite PetSprite(OwnedPet pet) => Sprites.Owned(Progression.PetSpriteKey(pet));
@@ -183,6 +187,14 @@ namespace Pokiwar.App
             CardForge.gameObject.SetActive(true);
             if (Audio != null) Audio.PlayMusic("music.menu");
             CardForge.Show(this);
+        }
+
+        public void ShowShop()
+        {
+            HideAll();
+            ShopScreen.gameObject.SetActive(true);
+            if (Audio != null) Audio.PlayMusic("music.menu");
+            ShopScreen.Show(this);
         }
 
         public void StartBattle(MapNodeDef node)

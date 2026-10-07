@@ -26,6 +26,9 @@ boss stronger with the party (x3 for three). Battle rules stay free of single-pl
 4. Win -> reward -> next node unlocks. Lose -> RETRY. Boss: Azure Peak (transforms once).
 5. Hub -> PETS & STONES: merge 3 stones, enhance a pet, socket stones. RESET SAVE starts over.
 6. Hub top right: MUSIC / SOUND / SHAKE toggles, saved with the game.
+7. Town map -> CARD SHOP: buy a card stone, a lucky charm or a protection charm with gold. The trophy chip in
+   the town's top bar is the trainer's rank points (20 / 40 / 200 per win, by boss); the sword chip beside the
+   pet's name in the room counts that pet's wins.
 
 Save file: `Application.persistentDataPath/pokiwar_save.json` (versioned, migrated on load).
 
@@ -104,11 +107,11 @@ lasting layout changes go into its `Portrait(...)` calls.
 | `Pets/*`, `Monsters/*` | base stats + per-level growth, element + bonus, rage profile (threshold/cost/strong x/HP-damage rage/turn-start rage), skills, cards, boss phases |
 | `Cards/*` | mana/rage cost (each copy in a loadout is one use; copies allowed), can use before/after match, end turn after use, effect chain |
 | `Skills/*` | costs, ATK multiplier, QTE profile, post-effect chain |
-| `Encounters/*` | creature, level, start HP %, AI policy, reward table, energy, first turn, capture on first win (the player receives the creature just fought) |
+| `Encounters/*` | creature, level, start HP %, AI policy, reward table, energy, first turn, capture on first win (the player receives the creature just fought), rank points per win |
 | `Rewards/*` | EXP, pet EXP, gold, drops (stone/card/charm/pet, chance, first clear only) |
 | `AI/*` | weights per gem, randomness, mistakes, opponent-opportunity penalty, card/skill use, QTE skill |
 | `Rules/upgrade.config` | merge chance/cost per tier, lucky bonus, enhance chance/cost per level, fail accumulation, downgrade, sockets |
-| `Rules/progression.config` | starter pets/cards/items, energy, EXP curves, default player name, starter avatar outfit |
+| `Rules/progression.config` | starter pets/cards/items, energy, EXP curves, default player name, starter avatar outfit, card shop items (name, icon key, price in gold, what one purchase grants) |
 | `Avatar/*` | wearable avatar pieces: slot (Bottom / Top / Hair / Hat), price in gold, sprite key |
 | `Rules/map.main` | regions and nodes (position, encounter, unlock requirement, wins required) |
 

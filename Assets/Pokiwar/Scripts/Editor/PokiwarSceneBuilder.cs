@@ -130,6 +130,7 @@ namespace Pokiwar.EditorTools
             var upgrade = BuildUpgrade(root);
             var wardrobe = BuildWardrobe(root);
             var forge = BuildCardForge(root);
+            var shop = BuildShop(root);
             BuildVfx(root);
             var toast = BuildToast(root);
             Portrait(toast, 0.5f, 0, 0, 250, 900, 84);
@@ -150,6 +151,7 @@ namespace Pokiwar.EditorTools
             app.Upgrade = upgrade;
             app.Wardrobe = wardrobe;
             app.CardForge = forge;
+            app.ShopScreen = shop;
             app.ToastView = toast;
             var audio = new GameObject("Audio").AddComponent<AudioDirector>();
             audio.transform.SetParent(appGo.transform, false);
@@ -166,6 +168,7 @@ namespace Pokiwar.EditorTools
             upgrade.gameObject.SetActive(false);
             wardrobe.gameObject.SetActive(false);
             forge.gameObject.SetActive(false);
+            shop.gameObject.SetActive(false);
 
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene, ScenePath);
@@ -188,14 +191,15 @@ namespace Pokiwar.EditorTools
             At(home.PlayerLabel.rectTransform, 0, 1, 440, -50, 800, 60);
             home.PlayerLabel.gameObject.AddComponent<Outline>().effectColor = new Color(0.05f, 0.1f, 0.25f);
             var info = NewUI("Resources", s);
-            At(info, 1, 1, -250, -50, 460, 64);
-            home.GoldLabel = Chip(info, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, -115, 210);
-            home.EnergyLabel = Chip(info, "Energy", "gem.Lightning", Color.white, 115, 210);
+            At(info, 1, 1, -365, -50, 690, 64);
+            home.RankLabel = Chip(info, "Rank", Key("home.rank", "fx.star"), art.ContainsKey("home.rank") ? Color.white : Gold, -230, 210);
+            home.GoldLabel = Chip(info, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, 0, 210);
+            home.EnergyLabel = Chip(info, "Energy", "gem.Lightning", Color.white, 230, 210);
 
             var soon = new List<Button>();
             soon.Add(HomeSpot(town, "RankSpot", "RANKING", "home.rank", Gold, -785, 362, 130));
             soon.Add(HomeSpot(town, "WheelSpot", "LUCKY WHEEL", "home.wheel", Gold, -730, 178, 140));
-            soon.Add(HomeSpot(town, "CardShopSpot", "CARD SHOP", "home.shopcard", Blue, -790, -25, 160));
+            home.CardShopButton = HomeSpot(town, "CardShopSpot", "CARD SHOP", "home.shopcard", Blue, -790, -25, 160);
             home.AvatarShopButton = HomeSpot(town, "AvatarShopSpot", "AVATAR SHOP", "home.shopavatar", Blue, -480, -130, 200);
             soon.Add(HomeSpot(town, "GiftSpot", "GIFT SHOP", "home.gift", Green, -260, 305, 170));
             soon.Add(HomeSpot(town, "ArenaSpot", "ARENA", "home.arena", Red, -200, -15, 260));
@@ -487,6 +491,9 @@ namespace Pokiwar.EditorTools
             prep.PetName = Txt(s, "PetName", "Emberkit", 36, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
             At(prep.PetName.rectTransform, 0.5f, 0.5f, -560, -140, 500, 50);
             prep.PetName.gameObject.AddComponent<Outline>().effectColor = new Color(0.05f, 0.15f, 0.4f);
+            var wins = NewUI("PetWins", s);
+            At(wins, 0.5f, 0.5f, -300, -140, 150, 60);
+            prep.PetWins = Chip(wins, "Wins", "gem.Sword", Color.white, 0, 150);
             prep.ChoosePetButton = Btn(s, "ChoosePetButton", "CHOOSE PET", Blue, 32, out _);
             At(Rt(prep.ChoosePetButton), 0.5f, 0.5f, -630, -225, 280, 84);
 
@@ -1140,6 +1147,30 @@ namespace Pokiwar.EditorTools
             Portrait(right, 0.5f, 0.5f, 0, -470, 960, 860, 1.05f);
             Portrait(wallet, 1, 1, -150, -60, 260, 70);
             return w;
+        }
+
+        private static ShopScreen BuildShop(Transform root)
+        {
+            var s = Screen(root, "ShopScreen");
+            Fill(Img(s, "Bg", Key("bg.hub", null), art.ContainsKey("bg.hub") ? Color.white : new Color(0.07f, 0.09f, 0.15f)).rectTransform);
+            Fill(Img(s, "Shade", null, new Color(0, 0, 0, 0.35f)).rectTransform);
+            var shop = s.gameObject.AddComponent<ShopScreen>();
+            var header = Txt(s, "Header", "CARD SHOP", 56, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(header.rectTransform, 0.5f, 1, 0, -60, 900, 80);
+            shop.BackButton = Btn(s, "BackButton", "BACK", Gray, 36, out _);
+            At(Rt(shop.BackButton), 0, 1, 140, -60, 220, 86);
+            var wallet = NewUI("Wallet", s);
+            At(wallet, 1, 1, -150, -60, 230, 64);
+            shop.WalletLabel = Chip(wallet, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, 0, 220);
+
+            var panel = Img(s, "ItemPanel", "ui.round", PanelCol);
+            At(panel.rectTransform, 0.5f, 0.5f, 0, -50, 1100, 860);
+            SkinPanel(panel, 48);
+            var content = ScrollList(panel.transform, "Items", out var view);
+            At(view, 0.5f, 1, 0, -430, 1020, 760);
+            shop.ItemTemplate = MakeRow(content, "ItemTemplate", 980, 150, RowCol, 120, 1, 34, 24, Green);
+            shop.ItemTemplate.gameObject.SetActive(false);
+            return shop;
         }
 
         private static AvatarView MakeAvatar(Transform parent, string name)

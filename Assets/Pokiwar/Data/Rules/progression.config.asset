@@ -71,3 +71,43 @@ MonoBehaviour:
     - avatar.hair.spiky
     - avatar.top.tee
     - avatar.bottom.shorts
+    Shop:
+    - Id: shop.card_stone
+      Name: Card Stone T1
+      Description: Feeds a reusable card in the card forge.
+      IconKey: stone.card
+      Price: 150
+      Grant:
+        Kind: 5
+        ItemId: 
+        Element: 0
+        Tier: 1
+        Count: 1
+        Chance: 1
+        FirstClearOnly: 0
+    - Id: shop.lucky_charm
+      Name: Lucky Charm
+      Description: +15% chance on one merge or upgrade.
+      IconKey: fx.star
+      Price: 300
+      Grant:
+        Kind: 2
+        ItemId: 
+        Element: 0
+        Tier: 1
+        Count: 1
+        Chance: 1
+        FirstClearOnly: 0
+    - Id: shop.protection_charm
+      Name: Protection Charm
+      Description: A failed upgrade does not drop the level.
+      IconKey: gem.Shield
+      Price: 500
+      Grant:
+        Kind: 3
+        ItemId: 
+        Element: 0
+        Tier: 1
+        Count: 1
+        Chance: 1
+        FirstClearOnly: 0
