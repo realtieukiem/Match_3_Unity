@@ -142,7 +142,7 @@ namespace Pokiwar.UI
                     if (sk == null) continue;
                     var row = cardRows.Add();
                     bool equipped = s.SelectedCardIds.Contains(oc.Id);
-                    row.Set(sk.Name + "  Lv " + oc.Level, sk.ManaCost + " MP   DMG " + BattleEngine.SkillPower(atk, sk, oc.Level) + "   reusable\n" + sk.Description, app.Sprites.Get(sk.IconKey), equipped);
+                    row.Set(sk.Name + "  Lv " + oc.Level, sk.ManaCost + " MP   DMG " + BattleEngine.SkillPower(atk, sk, oc.Level) + "   reusable\n" + sk.Description, CardFaces.Sprite(app.Sprites, sk), equipped);
                     var sid = oc.Id;
                     row.Button.onClick.AddListener(() =>
                     {

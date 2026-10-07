@@ -286,13 +286,16 @@ namespace Pokiwar.EditorTools
             yield return null;
             Check(app.Prep.CardPicker.activeSelf, "a card slot opens the card picker");
             RowView lastCardRow = null;
-            int reusableRows = 0;
+            int reusableRows = 0, facedRows = 0, shownRows = 0;
             foreach (Transform t in app.Prep.CardTemplate.transform.parent)
                 if (t.gameObject.activeSelf)
                 {
                     lastCardRow = t.GetComponent<RowView>();
+                    shownRows++;
+                    if (lastCardRow.Icon.sprite != null && lastCardRow.Icon.sprite.name.StartsWith("face_")) facedRows++;
                     if (lastCardRow.Subtitle.text.Contains("reusable")) reusableRows++;
                 }
+            Check(shownRows > 0 && facedRows == shownRows, "every row of the card picker shows the card's own face (" + facedRows + "/" + shownRows + ")");
             Check(reusableRows == app.Save.SkillCards.Count && reusableRows > 0, "the picker lists the player's reusable cards (" + reusableRows + ")");
             lastCardRow.Button.onClick.Invoke();
             yield return null;

@@ -70,7 +70,7 @@ namespace Pokiwar.UI
                 var def = app.Db.TrySkill(oc.Id);
                 if (def == null) continue;
                 var row = cardRows.Add();
-                row.Set(def.Name, "Lv " + oc.Level + "   " + def.ManaCost + " MP   DMG " + BattleEngine.SkillPower(atk, def, oc.Level), app.Sprites.Get(def.IconKey), oc.Id == cardId);
+                row.Set(def.Name, "Lv " + oc.Level + "   " + def.ManaCost + " MP   DMG " + BattleEngine.SkillPower(atk, def, oc.Level), CardFaces.Sprite(app.Sprites, def), oc.Id == cardId);
                 var id = oc.Id;
                 row.Button.onClick.AddListener(() =>
                 {
