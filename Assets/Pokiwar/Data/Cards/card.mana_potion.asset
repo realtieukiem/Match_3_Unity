@@ -15,7 +15,7 @@ MonoBehaviour:
   Def:
     Id: card.mana_potion
     Name: Mana Potion
-    Description: +100 mana. You can still match this turn.
+    Description: +150 mana. You can still match this turn.
     IconKey: card.mana_potion
     ManaCost: 0
     RageCost: 0
@@ -25,6 +25,6 @@ MonoBehaviour:
     Effects:
     - Kind: 4
       Target: 0
-      Value: 100
+      Value: 150
       Turns: 0
       Label: 

@@ -15,9 +15,9 @@ MonoBehaviour:
   Def:
     Id: card.herbal_salve
     Name: Herbal Salve
-    Description: Heal 15% max HP.
+    Description: Heal 12% max HP.
     IconKey: card.herbal_salve
-    ManaCost: 120
+    ManaCost: 100
     RageCost: 0
     CanUseBeforeMatch: 1
     CanUseAfterMatch: 0
@@ -25,6 +25,6 @@ MonoBehaviour:
     Effects:
     - Kind: 3
       Target: 0
-      Value: 0.15
+      Value: 0.12
       Turns: 0
       Label: 

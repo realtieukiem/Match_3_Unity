@@ -162,6 +162,10 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: ee0e6e0d71c90824bbd2276bb820f2ca, type: 3}
   - Key: card.slot
     Sprite: {fileID: 21300000, guid: b1f71e96010878e499e4375bf8ff828d, type: 3}
+  - Key: qte.slot
+    Sprite: {fileID: 21300000, guid: 724fcb73185220744a6a15313ea5921e, type: 3}
+  - Key: qte.marker
+    Sprite: {fileID: 21300000, guid: 790486b0e7831c345a5b1da9379c2540, type: 3}
   - Key: fx.slash
     Sprite: {fileID: 21300000, guid: a8dd9f23dc7714e4ba03f11a498d142f, type: 3}
   - Key: fx.heal

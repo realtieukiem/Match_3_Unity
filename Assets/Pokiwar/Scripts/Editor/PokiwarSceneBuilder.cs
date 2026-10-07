@@ -826,33 +826,49 @@ namespace Pokiwar.EditorTools
             qv.Root = dim.gameObject;
             var panel = Img(dim.transform, "Panel", "ui.round", new Color(0.12f, 0.14f, 0.24f, 0.97f), true);
             At(panel.rectTransform, 0.5f, 0.5f, 0, 0, 1200, 660);
+            SkinPanel(panel, 48);
             var p = panel.transform;
-            qv.Title = Txt(p, "Title", "Skill", 46, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(qv.Title.rectTransform, 0.5f, 0.5f, 0, 270, 1100, 60);
-            qv.DamageLabel = Txt(p, "Damage", "DMG 0", 60, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(qv.DamageLabel.rectTransform, 0.5f, 0.5f, 0, 195, 800, 76);
+            var ribbon = Img(p, "Ribbon", "ui.round", new Color(0.2f, 0.24f, 0.4f));
+            At(ribbon.rectTransform, 0.5f, 1, 0, -6, 760, 84);
+            if (Skin(ribbon, "ui.ribbon", 40)) At(ribbon.rectTransform, 0.5f, 1, 0, 8, 820, 124);
+            qv.Title = Txt(ribbon.transform, "Title", "Skill", 42, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            Fill(qv.Title.rectTransform, 90, 90, 14, 22);
+            qv.DamageLabel = Txt(p, "Damage", "DMG 0", 64, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(qv.DamageLabel.rectTransform, 0.5f, 0.5f, 0, 188, 800, 80);
             for (int i = 0; i < 5; i++)
             {
-                qv.Arrows[i] = Img(p, "Arrow" + i, "ui.arrow", Color.white);
-                At(qv.Arrows[i].rectTransform, 0.5f, 0.5f, -320 + i * 160, 75, 110, 110);
+                var slot = Img(p, "Slot" + i, "ui.round", new Color(0.08f, 0.09f, 0.16f));
+                At(slot.rectTransform, 0.5f, 0.5f, -320 + i * 160, 70, 140, 140);
+                Skin(slot, "qte.slot");
+                qv.Arrows[i] = Img(slot.transform, "Arrow", "ui.arrow", Color.white);
+                qv.Arrows[i].preserveAspect = true;
+                At(qv.Arrows[i].rectTransform, 0.5f, 0.5f, 0, 0, 92, 92);
             }
             var tbg = Img(p, "TimerBg", "ui.round", new Color(1, 1, 1, 0.15f));
-            At(tbg.rectTransform, 0.5f, 0.5f, 0, -10, 820, 18);
+            At(tbg.rectTransform, 0.5f, 0.5f, 0, -30, 820, 26);
+            bool tracked = Skin(tbg, "hud.track", 13);
             qv.TimerFill = Img(tbg.transform, "Fill", null, Gold);
             qv.TimerFill.type = Image.Type.Filled;
             qv.TimerFill.fillMethod = Image.FillMethod.Horizontal;
-            Fill(qv.TimerFill.rectTransform);
+            if (tracked) Fill(qv.TimerFill.rectTransform, 7, 7, 7, 7);
+            else Fill(qv.TimerFill.rectTransform);
             var barArea = Img(p, "BarArea", "ui.round", new Color(0.25f, 0.25f, 0.32f));
-            At(barArea.rectTransform, 0.5f, 0.5f, 0, -80, 820, 46);
+            At(barArea.rectTransform, 0.5f, 0.5f, 0, -92, 820, 58);
+            float zone = Skin(barArea, "hud.track", 26) ? 34 : 58;
             qv.BarArea = barArea.rectTransform;
-            var good = Img(barArea.transform, "GoodZone", null, new Color(0.3f, 0.85f, 0.4f, 0.85f));
-            At(good.rectTransform, 0.5f, 0.5f, 0, 0, 130, 46);
+            var good = Img(barArea.transform, "GoodZone", null, new Color(0.3f, 0.85f, 0.4f, 0.9f));
+            At(good.rectTransform, 0.5f, 0.5f, 0, 0, 130, zone);
             qv.GoodZone = good.rectTransform;
             var perfect = Img(barArea.transform, "PerfectZone", null, Gold);
-            At(perfect.rectTransform, 0.5f, 0.5f, 0, 0, 40, 46);
+            At(perfect.rectTransform, 0.5f, 0.5f, 0, 0, 40, zone);
             qv.PerfectZone = perfect.rectTransform;
             var marker = Img(barArea.transform, "Marker", null, Color.white);
-            At(marker.rectTransform, 0.5f, 0.5f, 0, 0, 10, 70);
+            At(marker.rectTransform, 0.5f, 0.5f, 0, 0, 10, 78);
+            if (Skin(marker, "qte.marker"))
+            {
+                marker.preserveAspect = true;
+                At(marker.rectTransform, 0.5f, 0.5f, 0, 0, 26, 104);
+            }
             qv.Marker = marker.rectTransform;
             qv.Feedback = Txt(p, "Feedback", "", 56, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
             At(qv.Feedback.rectTransform, 0.5f, 0.5f, 0, -170, 560, 70);

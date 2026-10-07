@@ -15,9 +15,9 @@ MonoBehaviour:
   Def:
     Id: card.meteor
     Name: Meteor
-    Description: Deal 300% ATK damage. Ends your turn.
+    Description: Deal 350% ATK damage. Ends your turn.
     IconKey: card.meteor
-    ManaCost: 450
+    ManaCost: 300
     RageCost: 0
     CanUseBeforeMatch: 1
     CanUseAfterMatch: 0
@@ -25,6 +25,6 @@ MonoBehaviour:
     Effects:
     - Kind: 1
       Target: 1
-      Value: 3
+      Value: 3.5
       Turns: 0
       Label: 

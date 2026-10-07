@@ -15,16 +15,16 @@ MonoBehaviour:
   Def:
     Id: card.war_cry
     Name: War Cry
-    Description: +25% ATK for 2 turns.
+    Description: +30% ATK for 3 turns.
     IconKey: card.war_cry
     ManaCost: 0
-    RageCost: 50
+    RageCost: 30
     CanUseBeforeMatch: 1
     CanUseAfterMatch: 0
     EndTurnAfterUse: 0
     Effects:
     - Kind: 9
       Target: 0
-      Value: 0.25
-      Turns: 2
+      Value: 0.3
+      Turns: 3
       Label: War Cry

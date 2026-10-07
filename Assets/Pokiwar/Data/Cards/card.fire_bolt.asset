@@ -15,9 +15,9 @@ MonoBehaviour:
   Def:
     Id: card.fire_bolt
     Name: Fire Bolt
-    Description: Deal 150% ATK damage.
+    Description: Deal 130% ATK damage.
     IconKey: card.fire_bolt
-    ManaCost: 200
+    ManaCost: 50
     RageCost: 0
     CanUseBeforeMatch: 1
     CanUseAfterMatch: 0
@@ -25,6 +25,6 @@ MonoBehaviour:
     Effects:
     - Kind: 1
       Target: 1
-      Value: 1.5
+      Value: 1.3
       Turns: 0
       Label: 

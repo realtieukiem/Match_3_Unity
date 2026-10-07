@@ -15,16 +15,16 @@ MonoBehaviour:
   Def:
     Id: card.mana_leech
     Name: Mana Leech
-    Description: Drain 30% of the enemy's current mana.
+    Description: Drain 40% of the enemy's current mana.
     IconKey: card.mana_leech
     ManaCost: 0
-    RageCost: 30
+    RageCost: 20
     CanUseBeforeMatch: 1
     CanUseAfterMatch: 0
     EndTurnAfterUse: 0
     Effects:
     - Kind: 7
       Target: 1
-      Value: 0.3
+      Value: 0.4
       Turns: 0
       Label: 

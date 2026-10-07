@@ -34,6 +34,8 @@ Every piece of art the game needs has exactly one status. Codex paints ONLY rows
 | 6 | Buff icons `buff_{heart,lightning,fire,shield}.png` | 4 | `CODE-DRAWN` | `Tools/DrawCardFaces.ps1`; heal and mana effects approved by the user 2026-10-07 |
 | 7 | UI primitives (`ui.circle`, `ui.ring`, `ui.round`, `ui.frame`, `ui.gradient`, bar shapes) | - | `CODE-DRAWN` | plain shapes, tinted in game |
 | 8 | Everything in Batches 1-13 (gems, starter pets, Dunewing, Psyling, Azurewing, cards art, elements, HUD, buttons, room, avatar, lobby, forge, stones, world map, town) | 179 files | `HAVE` | table "Already painted" below |
+| 11 | Second forms of Dunewing and Psyling (`enemy_beetle_form02_*`, `enemy_psyling_form02_*`) | 8 | `HAVE` | painted small (68% of the frame); the game enlarges them with `Tools/ReframeSecondForms.ps1`. Do NOT repaint unless the user asks |
+| 12 | Arrow mini game kit (`Battle/QTE`: four arrows, slot frame, timing marker, timer frame) | 7 | `HAVE` | in the game since 2026-10-07 |
 | 9 | Second forms of Emberkit, Leafling, Tidepup; a card for Tidal Siphon | - | `NEVER` | decided 2026-10-06 |
 | 10 | Third and later forms of any creature | - | `WAIT` | the rule for when a pet takes a third form is not decided |
 
@@ -82,7 +84,7 @@ Save to Battle/Characters/ under exactly these names:
 <shared preamble>
 Second forms of four East Sea creatures painted in Batch 14 - open the Batch 14 idle of each first and keep its
 colours and proportions; the second form is the same creature after it powers up, about 10% bigger and brighter.
-Four poses each (idle, attack, hit, defeat), 1024x1024, transparent, FACING LEFT. Save to Battle/Characters/:
+Four poses each (idle, attack, hit, defeat), 1024x1024, transparent, FACING LEFT. FRAMING: the second form must stand at least as tall in the frame as its first form and on the same ground line - no pose (the hit pose included) may be taller than 85% of the canvas, and the idle fills about 80% of its height. Batch 12 was painted at 68% and came out smaller than the first forms in the game. Save to Battle/Characters/:
 
 1. enemy_ngoclam_form02_{idle,attack,hit,defeat}_01.png
    NGOCLAM RADIANT - the clam stands wide open: a great glowing pearl floats between the valves, light rays and

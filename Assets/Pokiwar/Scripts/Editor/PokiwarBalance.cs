@@ -47,11 +47,62 @@ namespace Pokiwar.EditorTools
             if (Application.isBatchMode) EditorApplication.Exit(0);
         }
 
-        private static (bool won, int turns) Simulate(ContentDatabase db, MapNodeDef node, int petLevel, uint seed)
+        /// <summary>Win rate with the skill card alone, then with the skill card plus each single-use card on its own.</summary>
+        public static void CardReport()
+        {
+            var catalog = AssetDatabase.LoadAssetAtPath<ContentCatalog>(PokiwarContentSeeder.CatalogPath);
+            var db = catalog != null ? catalog.Build() : DefaultContent.Create();
+            var sb = new StringBuilder("[CARDS]\n");
+            const int runs = 300;
+            foreach (var probe in new[] { ("node.1", 1), ("node.2", 7), ("node.3", 11) })
+            {
+                var node = db.Node(probe.Item1);
+                int baseline = Wins(db, node, probe.Item2, "", runs);
+                sb.AppendLine(node.Id + " pet Lv " + probe.Item2 + " skill only: win " + (baseline * 100 / runs) + "%");
+                foreach (var card in db.Cards)
+                {
+                    int w = Wins(db, node, probe.Item2, card.Id, runs);
+                    sb.AppendLine("  + " + card.Id + ": win " + (w * 100 / runs) + "%  (" + ((w - baseline) * 100 / runs).ToString("+0;-0;0") + ")" + (card.EndTurnAfterUse ? "  the AI never plays a turn-ending card" : ""));
+                }
+            }
+            Debug.Log(sb.ToString());
+        }
+
+        public static void BatchReseedAndCardReport()
+        {
+            PokiwarContentSeeder.Seed(true);
+            Report();
+            BatchCardReport();
+        }
+
+        public static void BatchCardReport()
+        {
+            CardReport();
+            if (Application.isBatchMode) EditorApplication.Exit(0);
+        }
+
+        private static int Wins(ContentDatabase db, MapNodeDef node, int petLevel, string onlyCard, int runs)
+        {
+            int wins = 0;
+            for (int i = 0; i < runs; i++)
+                if (Simulate(db, node, petLevel, (uint)(1000 + i * 7919), onlyCard).won) wins++;
+            return wins;
+        }
+
+        private static (bool won, int turns) Simulate(ContentDatabase db, MapNodeDef node, int petLevel, uint seed, string onlyCard = null)
         {
             var prog = new ProgressionService(db);
             var save = prog.CreateNewSave(0);
             save.Pets[0].Level = petLevel;
+            if (onlyCard != null)
+            {
+                save.SelectedCardIds.RemoveAll(id => save.SkillCard(id) == null);
+                if (onlyCard.Length > 0)
+                {
+                    if (!save.Cards.Contains(onlyCard)) save.Cards.Add(onlyCard);
+                    save.SelectedCardIds.Add(onlyCard);
+                }
+            }
             var e = new BattleEngine(prog.StartBattle(save, node, seed));
             var rng = new SeededRng(seed ^ 0x5151u);
             int guard = 0;

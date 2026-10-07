@@ -53,6 +53,8 @@ namespace Pokiwar.EditorTools
             I("Battle/HUD/ui_button_confirm_normal.png", "button_green", 1024, true, "ui.button.green"),
             I("Battle/HUD/ui_card_slot_empty.png", "card_slot", 1024, true, "card.slot"),
             I("Battle/QTE/qte_arrow_up.png", "arrow_up", 256, false, "ui.arrow"),
+            I("Battle/QTE/ui_qte_slot_frame.png", "qte_slot", 256, false, "qte.slot"),
+            I("Battle/QTE/ui_qte_timing_marker.png", "qte_marker", 256, false, "qte.marker"),
             I("Battle/VFX/vfx_slash_v01.png", "fx_slash", 512, false, "fx.slash"),
             I("Battle/VFX/vfx_heal_v01.png", "fx_heal", 512, false, "fx.heal"),
             I("Battle/VFX/vfx_mana_v01.png", "fx_mana", 512, false, "fx.mana"),

@@ -15,16 +15,16 @@ MonoBehaviour:
   Def:
     Id: card.iron_skin
     Name: Iron Skin
-    Description: Gain a shield of 12% max HP.
+    Description: Gain a shield of 15% max HP.
     IconKey: card.iron_skin
     ManaCost: 0
-    RageCost: 40
+    RageCost: 30
     CanUseBeforeMatch: 1
     CanUseAfterMatch: 0
     EndTurnAfterUse: 0
     Effects:
     - Kind: 6
       Target: 0
-      Value: 0.12
+      Value: 0.15
       Turns: 0
       Label: 
