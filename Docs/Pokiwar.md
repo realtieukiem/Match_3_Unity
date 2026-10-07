@@ -139,6 +139,9 @@ and in the AVATAR wardrobe (tabs PANTS / TOP / HAIR / HAT, tap a row to try on, 
 - Gaining HP, mana, rage or shield plays `VfxLayer.Buff` on the pet: a glow swells, a ring opens at its feet and
   icons of that resource float up one after another. The icon is the board gem until a painted `buff.<Gem>` sprite
   exists; count, width, rise and icon size are on `BattleController` (Tuning).
+- Rage gain is `VfxLayer.Swirl`: flames circle on a flat ellipse at the pet's feet (`CombatantHud.FeetHeight`),
+  widening and climbing. A steal is `VfxLayer.Siphon`: icons of the stolen resource are torn off the victim's body
+  and pulled into the thief, which closes rings around itself - red flames for rage, blue bolts for mana.
 - Card faces follow the original's cards (owner's screenshots, 2026-10-07): flat colour, one pictogram, a big
   number. A single-use card wears `face.<card id>`, shows what one use gives as a big yellow number
   (`CardFaces.Value`, read from the card's first effect, so tuning the card changes the number) and its cost with

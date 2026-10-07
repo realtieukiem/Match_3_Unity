@@ -425,8 +425,9 @@ namespace Pokiwar.UI
                     AudioDirector.Sfx("steal");
                     if (vfx != null && ev.Applied > 0)
                     {
-                        var from = new List<Vector3> { targetHud.BarRect(ev.Resource).position };
-                        float wait = vfx.Orbs(from, actorHud.BarRect(ev.Resource).position, new Color(0.85f, 0.85f, 0.95f), 6);
+                        bool rage = ev.Resource == ResourceKind.Rage;
+                        string stolen = rage ? "buff.Fire" : "buff.Lightning";
+                        float wait = vfx.Siphon(targetHud.BodyCenter, actorHud.BodyCenter, rage ? new Color(1f, 0.25f, 0.2f) : new Color(0.3f, 0.6f, 1f), sprites != null && sprites.Has(stolen) ? sprites.Get(stolen) : null);
                         yield return Tween.Wait(wait);
                         actorHud.PopBar(ev.Resource);
                     }
@@ -565,7 +566,7 @@ namespace Pokiwar.UI
                     break;
                 case ResourceKind.Rage:
                     AudioDirector.Sfx("rage");
-                    Buff(hud, GemType.Fire, new Color(1f, 0.55f, 0.2f));
+                    if (VfxLayer.Instance != null) VfxLayer.Instance.Swirl(hud.Feet, sprites != null && sprites.Has("buff.Fire") ? sprites.Get("buff.Fire") : null, new Color(1f, 0.5f, 0.15f));
                     break;
                 case ResourceKind.Shield:
                     AudioDirector.Sfx("shield");

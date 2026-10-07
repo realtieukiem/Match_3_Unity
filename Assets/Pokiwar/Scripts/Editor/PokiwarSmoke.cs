@@ -352,6 +352,18 @@ namespace Pokiwar.EditorTools
             Check(vfx.ActiveCount > liveBeforeBuff, "buff effect floats gem icons over the pet (" + vfx.ActiveCount + " live)");
             yield return Capture("04a_buff");
             yield return new WaitForSecondsRealtime(1.4f);
+            int liveBeforeSwirl = vfx.ActiveCount;
+            vfx.Swirl(bc.PlayerHud.Feet, app.Sprites.Get("buff.Fire"), new Color(1f, 0.5f, 0.15f));
+            yield return new WaitForSecondsRealtime(0.55f);
+            Check(vfx.ActiveCount >= liveBeforeSwirl + 10, "rage gain spins a fire vortex at the pet's feet (" + vfx.ActiveCount + " live)");
+            yield return Capture("04a2_rage_swirl");
+            yield return new WaitForSecondsRealtime(1.3f);
+            int liveBeforeSiphon = vfx.ActiveCount;
+            vfx.Siphon(bc.EnemyHud.BodyCenter, bc.PlayerHud.BodyCenter, new Color(1f, 0.25f, 0.2f), app.Sprites.Get("buff.Fire"));
+            yield return new WaitForSecondsRealtime(0.32f);
+            Check(vfx.ActiveCount >= liveBeforeSiphon + 10, "a steal pulls motes from the victim into the thief (" + vfx.ActiveCount + " live)");
+            yield return Capture("04a3_siphon");
+            yield return new WaitForSecondsRealtime(1.4f);
 
             var moves = BoardEngine.FindMoves(bc.Engine.State.Board, 3);
             Check(moves.Count > 0, "board has moves");

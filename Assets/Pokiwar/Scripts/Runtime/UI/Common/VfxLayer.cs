@@ -21,7 +21,7 @@ namespace Pokiwar.UI
         public int ActiveCount { get; private set; }
         public int SpawnedTotal { get; private set; }
 
-        private enum Kind { Burst, RingFx, Orb, Decal, Rise }
+        private enum Kind { Burst, RingFx, Orb, Decal, Rise, Orbit }
 
         private sealed class P
         {
@@ -29,7 +29,7 @@ namespace Pokiwar.UI
             public RectTransform Rt;
             public Kind Kind;
             public Vector2 Pos, Vel, From, Ctrl, To;
-            public float Life, MaxLife, Delay, Size0, Size1, Spin, Rot, Gravity, Drag;
+            public float Life, MaxLife, Delay, Size0, Size1, Spin, Rot, Gravity, Drag, Angle;
             public Color Color;
             public Action Arrived;
             public bool Alive;
@@ -79,6 +79,7 @@ namespace Pokiwar.UI
             p.Rot = 0;
             p.Gravity = 0;
             p.Drag = 0;
+            p.Angle = 0;
             p.Arrived = null;
             p.Alive = true;
             p.Rt.anchoredPosition = pos;
@@ -143,6 +144,49 @@ namespace Pokiwar.UI
                 p.Vel = new Vector2(UnityEngine.Random.Range(-18f, 18f), rise / p.MaxLife * UnityEngine.Random.Range(0.8f, 1.1f));
                 p.Delay = i * 0.07f;
             }
+        }
+
+        /// <summary>Fire vortex at the feet: flames circle on a flat ellipse, widening and climbing as they go.</summary>
+        public void Swirl(Vector3 feetWorld, Sprite flame, Color color, int flames = 20, float radiusX = 170f, float radiusY = 44f, float rise = 110f, float size = 84f, float turnsPerSecond = 1.3f)
+        {
+            var c = ToLocal(feetWorld);
+            Spawn(Kind.RingFx, Dot, new Color(color.r, color.g, color.b, 0.55f), c, 0.7f, radiusX * 0.8f, radiusX * 2.4f);
+            Spawn(Kind.RingFx, RingSprite, color, c, 0.6f, radiusX * 0.4f, radiusX * 2.2f);
+            for (int i = 0; i < flames; i++)
+            {
+                var p = Spawn(Kind.Orbit, flame, flame != null ? Color.white : color, c, UnityEngine.Random.Range(0.85f, 1.1f), size * UnityEngine.Random.Range(0.65f, 1f), 0f);
+                if (p == null) return;
+                p.From = c;
+                p.Ctrl = new Vector2(radiusX, radiusY);
+                p.Angle = i * 137.5f;
+                p.Spin = 360f * turnsPerSecond;
+                p.Vel = new Vector2(0f, rise / p.MaxLife * UnityEngine.Random.Range(0.5f, 1f));
+                p.Delay = i * 0.03f;
+            }
+        }
+
+        /// <summary>Suction: motes are torn off one body and pulled into the other, which closes rings around itself. Returns the time until the first lands.</summary>
+        public float Siphon(Vector3 fromWorld, Vector3 toWorld, Color color, Sprite icon = null, int motes = 30, float spread = 130f, float travel = 0.55f)
+        {
+            var from = ToLocal(fromWorld);
+            var to = ToLocal(toWorld);
+            Spawn(Kind.RingFx, RingSprite, color, from, 0.4f, 90f, 340f);
+            for (int i = 0; i < motes; i++)
+            {
+                var start = from + UnityEngine.Random.insideUnitCircle * spread;
+                var p = Spawn(Kind.Orb, icon, icon != null ? Color.white : Color.Lerp(color, Color.white, UnityEngine.Random.Range(0f, 0.3f)), start, travel, UnityEngine.Random.Range(40f, 66f), 22f);
+                if (p == null) break;
+                p.From = start;
+                p.To = to + UnityEngine.Random.insideUnitCircle * 24f;
+                p.Ctrl = (start + p.To) * 0.5f + Vector2.Perpendicular(p.To - start).normalized * UnityEngine.Random.Range(-170f, 170f);
+                p.Delay = i * 0.022f;
+            }
+            for (int r = 0; r < 3; r++)
+            {
+                var ring = Spawn(Kind.RingFx, RingSprite, new Color(color.r, color.g, color.b, 0.6f), to, 0.4f, 300f, 60f);
+                if (ring != null) ring.Delay = travel * 0.5f + r * 0.16f;
+            }
+            return travel;
         }
 
         /// <summary>Homing orbs on a curved path; onFirstArrive fires once when the first lands. Returns the time until then.</summary>
@@ -237,6 +281,13 @@ namespace Pokiwar.UI
                         p.Pos += p.Vel * dt;
                         float grow = Mathf.Clamp01(k / 0.2f);
                         Draw(p, p.Size0 * (0.4f + 0.6f * grow * (2f - grow)), k < 0.15f ? k / 0.15f : 1f - Mathf.Max(0f, k - 0.55f) / 0.45f);
+                        break;
+                    case Kind.Orbit:
+                        p.Angle += p.Spin * dt;
+                        float rad = p.Angle * Mathf.Deg2Rad;
+                        float widen = 0.5f + 0.5f * k;
+                        p.Pos = p.From + new Vector2(Mathf.Cos(rad) * p.Ctrl.x * widen, Mathf.Sin(rad) * p.Ctrl.y * widen + p.Vel.y * p.Life);
+                        Draw(p, p.Size0 * (0.8f - 0.2f * Mathf.Sin(rad)) * Mathf.Min(1f, 0.4f + k * 3f), k < 0.12f ? k / 0.12f : 1f - Mathf.Max(0f, k - 0.6f) / 0.4f);
                         break;
                     case Kind.Orb:
                         float e = k * k;

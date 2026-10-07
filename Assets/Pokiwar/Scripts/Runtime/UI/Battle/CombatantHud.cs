@@ -36,6 +36,8 @@ namespace Pokiwar.UI
         public float HitHoldSeconds = 0.14f;
         [Tooltip("Seconds the walk back takes.")]
         public float ReturnSeconds = 0.28f;
+        [Tooltip("Where the pet's feet are, as a share of the portrait's height from its bottom edge.")]
+        public float FeetHeight = 0.05f;
 
         private Vector2 portraitHome;
         private bool homeSet;
@@ -115,6 +117,15 @@ namespace Pokiwar.UI
         public void SetSprite(Sprite s) => Portrait.sprite = s;
 
         public Vector3 BodyCenter => Portrait.rectTransform.TransformPoint(Portrait.rectTransform.rect.center);
+
+        public Vector3 Feet
+        {
+            get
+            {
+                var r = Portrait.rectTransform.rect;
+                return Portrait.rectTransform.TransformPoint(new Vector2(r.center.x, r.yMin + r.height * FeetHeight));
+            }
+        }
 
         /// <summary>Sprite for "key.pose" when authored, else the idle sprite.</summary>
         public Sprite Pose(string pose)
