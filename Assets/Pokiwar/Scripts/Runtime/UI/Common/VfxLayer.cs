@@ -35,6 +35,7 @@ namespace Pokiwar.UI
             public Color Color;
             public Action Arrived;
             public bool Alive;
+            public bool Aim;
         }
 
         private readonly List<P> live = new List<P>();
@@ -84,6 +85,8 @@ namespace Pokiwar.UI
             p.Angle = 0;
             p.Arrived = null;
             p.Body = null;
+            p.Aim = false;
+            p.Img.preserveAspect = true;
             p.Alive = true;
             p.Rt.anchoredPosition = pos;
             p.Rt.sizeDelta = new Vector2(size0, size0);
@@ -150,12 +153,14 @@ namespace Pokiwar.UI
         }
 
         /// <summary>Fire vortex at the feet: flames circle on a flat ellipse, widening and climbing as they go. With a body, the ground glow and the far half of the circle draw behind it.</summary>
-        public void Swirl(Vector3 feetWorld, Sprite flame, Color color, RectTransform body = null, int flames = 20, float radiusX = 170f, float radiusY = 44f, float rise = 110f, float size = 84f, float turnsPerSecond = 1.3f)
+        public void Swirl(Vector3 feetWorld, Sprite flame, Color color, RectTransform body = null, Sprite ring = null, int flames = 20, float radiusX = 170f, float radiusY = 44f, float rise = 110f, float size = 84f, float turnsPerSecond = 1.3f)
         {
             var c = ToLocal(feetWorld);
             var glow = Spawn(Kind.RingFx, Dot, new Color(color.r, color.g, color.b, 0.55f), c, 0.7f, radiusX * 0.8f, radiusX * 2.4f);
             if (glow != null) glow.Body = body;
-            var ground = Spawn(Kind.RingFx, RingSprite, color, c, 0.6f, radiusX * 0.4f, radiusX * 2.2f);
+            var ground = ring != null
+                ? Spawn(Kind.Decal, ring, Color.white, c + new Vector2(0f, radiusY * 0.6f), 1.1f, radiusX * 1.6f, radiusX * 2.9f)
+                : Spawn(Kind.RingFx, RingSprite, color, c, 0.6f, radiusX * 0.4f, radiusX * 2.2f);
             if (ground != null) ground.Body = body;
             for (int i = 0; i < flames; i++)
             {
@@ -172,7 +177,7 @@ namespace Pokiwar.UI
         }
 
         /// <summary>Suction: motes are torn off one body and pulled into the other, which closes rings around itself. Returns the time until the first lands.</summary>
-        public float Siphon(Vector3 fromWorld, Vector3 toWorld, Color color, Sprite icon = null, int motes = 30, float spread = 130f, float travel = 0.55f)
+        public float Siphon(Vector3 fromWorld, Vector3 toWorld, Color color, Sprite icon = null, bool comet = false, int motes = 30, float spread = 130f, float travel = 0.55f)
         {
             var from = ToLocal(fromWorld);
             var to = ToLocal(toWorld);
@@ -180,8 +185,9 @@ namespace Pokiwar.UI
             for (int i = 0; i < motes; i++)
             {
                 var start = from + UnityEngine.Random.insideUnitCircle * spread;
-                var p = Spawn(Kind.Orb, icon, icon != null ? Color.white : Color.Lerp(color, Color.white, UnityEngine.Random.Range(0f, 0.3f)), start, travel, UnityEngine.Random.Range(40f, 66f), 22f);
+                var p = Spawn(Kind.Orb, icon, icon != null && !comet ? Color.white : Color.Lerp(color, Color.white, UnityEngine.Random.Range(0f, 0.3f)), start, travel, UnityEngine.Random.Range(40f, 66f) * (comet ? 1.5f : 1f), comet ? 44f : 22f);
                 if (p == null) break;
+                p.Aim = comet;
                 p.From = start;
                 p.To = to + UnityEngine.Random.insideUnitCircle * 24f;
                 p.Ctrl = (start + p.To) * 0.5f + Vector2.Perpendicular(p.To - start).normalized * UnityEngine.Random.Range(-170f, 170f);
@@ -305,7 +311,9 @@ namespace Pokiwar.UI
                     case Kind.Orb:
                         float e = k * k;
                         float u = 1f - e;
-                        p.Pos = u * u * p.From + 2f * u * e * p.Ctrl + e * e * p.To;
+                        var next = u * u * p.From + 2f * u * e * p.Ctrl + e * e * p.To;
+                        if (p.Aim && (next - p.Pos).sqrMagnitude > 0.01f) p.Rot = Mathf.Atan2(next.y - p.Pos.y, next.x - p.Pos.x) * Mathf.Rad2Deg;
+                        p.Pos = next;
                         Draw(p, Mathf.Lerp(p.Size0, p.Size1, k), k < 0.15f ? k / 0.15f : 1f);
                         break;
                 }

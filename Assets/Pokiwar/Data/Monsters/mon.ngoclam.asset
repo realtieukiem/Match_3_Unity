@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a735861764ce29a41b1074c6f213ed31, type: 3}
+  m_Name: mon.ngoclam
+  m_EditorClassIdentifier: 
+  Def:
+    Id: mon.ngoclam
+    Name: Ngoclam
+    SpriteKey: ngoclam
+    Element: 1
+    ElementBonus: 1
+    BaseStats:
+      MaxHp: 4200
+      Atk: 150
+      Def: 34
+      MaxMana: 1000
+      MaxRage: 100
+    PerLevel:
+      MaxHp: 160
+      Atk: 7
+      Def: 3
+      MaxMana: 60
+      MaxRage: 0
+    GemProfileId: gem.monster
+    Rage:
+      AttackThreshold: 100
+      AttackCost: 100
+      StrongMultiplier: 1.7
+      RageFromHpDamageScale: 100
+      RageOnOwnTurnStart: 3
+      StrongMultiplierConfidence: 2
+      HpDamageRageConfidence: 2
+      TurnStartRageConfidence: 3
+    SkillIds:
+    - skill.mind_spark
+    CardIds:
+    - card.iron_skin
+    Phases:
+    - Id: phase.ngoclam.second
+      FormName: Ngoclam Radiant
+      SpriteKey: ngoclam_evolved
+      Trigger: 0
+      TriggerValue: 0.3
+      OneShot: 1
+      TriggerOnLethal: 0
+      SetHpPctOfMax: 0.45
+      AtkMultiplier: 1.15
+      UnlockSkillIds: []
+      ContinueTurn: 1
+      TriggerConfidence: 3
+      SetHpConfidence: 0

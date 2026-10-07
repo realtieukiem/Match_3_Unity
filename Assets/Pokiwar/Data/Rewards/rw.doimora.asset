@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb48f7a61650de48af919f648682410, type: 3}
+  m_Name: rw.doimora
+  m_EditorClassIdentifier: 
+  Def:
+    Id: rw.doimora
+    Gold: 300
+    Drops:
+    - Kind: 0
+      ItemId: 
+      Element: 2
+      Tier: 1
+      Count: 3
+      Chance: 1
+      FirstClearOnly: 0
+    - Kind: 0
+      ItemId: 
+      Element: 4
+      Tier: 1
+      Count: 2
+      Chance: 0.6
+      FirstClearOnly: 0
+    - Kind: 5
+      ItemId: 
+      Element: 0
+      Tier: 1
+      Count: 3
+      Chance: 1
+      FirstClearOnly: 0
+    - Kind: 2
+      ItemId: 
+      Element: 0
+      Tier: 1
+      Count: 1
+      Chance: 0.4
+      FirstClearOnly: 0

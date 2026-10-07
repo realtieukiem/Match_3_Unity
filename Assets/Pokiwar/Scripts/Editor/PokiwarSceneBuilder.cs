@@ -227,7 +227,7 @@ namespace Pokiwar.EditorTools
             locked.Add(WorldIsland(s, "LockedIslandB", "", "world.locked", Gray, 620, 270, 420, 315));
             locked.Add(WorldIsland(s, "LockedIslandC", "", "world.locked", Gray, 640, -270, 360, 270));
             world.LockedIslands = locked.ToArray();
-            world.IslandButton = WorldIsland(s, "SunnyIsle", "SUNNY ISLE", "world.sunny", Green, -40, -60, 690, 460);
+            world.IslandButton = WorldIsland(s, "EastSea", "EAST SEA", Key("world.eastsea", "world.sunny"), Green, -40, -60, 690, 460);
             var ship = Img(s, "Ship", Key("world.ship", "ui.circle"), art.ContainsKey("world.ship") ? Color.white : Gold);
             ship.preserveAspect = true;
             At(ship.rectTransform, 0.5f, 0.5f, -520, -270, 170, 170);
@@ -352,7 +352,7 @@ namespace Pokiwar.EditorTools
             map.PlayerLabel = Txt(s, "PlayerLabel", "", 34, Color.white, TextAnchor.MiddleLeft, FontStyle.Bold);
             At(map.PlayerLabel.rectTransform, 0, 1, 420, -50, 560, 60);
             map.PlayerLabel.gameObject.AddComponent<Outline>().effectColor = new Color(0.05f, 0.1f, 0.25f);
-            map.Header = Txt(s, "Header", "Sunny Isle", 52, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
+            map.Header = Txt(s, "Header", "East Sea", 52, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
             At(map.Header.rectTransform, 0.5f, 1, 310, -50, 700, 80);
             map.Header.gameObject.AddComponent<Outline>().effectColor = new Color(0.25f, 0.12f, 0.02f);
             var info = NewUI("Resources", s);
@@ -381,7 +381,7 @@ namespace Pokiwar.EditorTools
             sky.rectTransform.offsetMax = new Vector2(-40, -125);
             var planet = Img(sky.transform, "Planet", Key("lobby.planet", "ui.circle"), art.ContainsKey("lobby.planet") ? Color.white : new Color(0.55f, 0.8f, 1f, 0.35f));
             planet.preserveAspect = true;
-            At(planet.rectTransform, 0.5f, 0.5f, 0, 0, 520, 520);
+            At(planet.rectTransform, 0.5f, 0.5f, 0, 50, 520, 520);
             var area = NewUI("NodeArea", sky.transform);
             Fill(area);
             map.NodeArea = area;
@@ -1259,7 +1259,7 @@ namespace Pokiwar.EditorTools
             v.Template.gameObject.SetActive(false);
             v.Dot = art["fx.dot"];
             v.RingSprite = art["ui.ring"];
-            v.Star = art["fx.star"];
+            v.Star = art[Key("fx.sparkle", "fx.star")];
             return v;
         }
 

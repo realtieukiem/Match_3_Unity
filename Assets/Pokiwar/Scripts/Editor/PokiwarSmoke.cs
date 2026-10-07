@@ -267,8 +267,8 @@ namespace Pokiwar.EditorTools
             yield return null;
             Check(app.Map.gameObject.activeSelf, "lobby opens from the info screen");
             var nodes = app.Map.NodeArea.GetComponentsInChildren<RowView>(false);
-            Check(nodes.Length == 3, "map shows 3 nodes (" + nodes.Length + ")");
-            Check(nodes.Length == 3 && nodes[0].Button.interactable && !nodes[1].Button.interactable, "only first node unlocked");
+            Check(nodes.Length == 6, "map shows the 6 East Sea nodes (" + nodes.Length + ")");
+            Check(nodes.Length == 6 && nodes[0].Button.interactable && !nodes[1].Button.interactable, "only first node unlocked");
             CheckOnScreen(app.Map.transform, "map");
             yield return Capture("02_map");
 
@@ -350,7 +350,7 @@ namespace Pokiwar.EditorTools
             yield return new WaitForSecondsRealtime(0.7f);
             Check(Mathf.Abs(bc.PlayerHud.Portrait.rectTransform.position.x - homeX) < 1f, "and walks back to its place");
             var firstForm = bc.EnemyHud.Portrait.sprite;
-            var secondForm = app.Sprites.Get("dunewing" + SpriteKeys.EvolvedSuffix);
+            var secondForm = app.Sprites.Get("ngoclam" + SpriteKeys.EvolvedSuffix);
             Check(Mathf.Approximately(secondForm.rect.width / secondForm.rect.height, firstForm.rect.width / firstForm.rect.height), "a second form is framed on the same canvas as its first form");
             bc.EnemyHud.SetSprite(secondForm);
             yield return null;
@@ -373,14 +373,14 @@ namespace Pokiwar.EditorTools
             yield return Capture("04a_buff");
             yield return new WaitForSecondsRealtime(1.4f);
             int liveBeforeSwirl = vfx.ActiveCount;
-            vfx.Swirl(bc.PlayerHud.Feet, app.Sprites.Get("buff.Fire"), new Color(1f, 0.5f, 0.15f), bc.PlayerHud.Portrait.rectTransform);
+            vfx.Swirl(bc.PlayerHud.Feet, app.Sprites.Get("fx.wisp"), new Color(1f, 0.5f, 0.15f), bc.PlayerHud.Portrait.rectTransform, app.Sprites.Get("fx.vortex"));
             yield return new WaitForSecondsRealtime(0.55f);
             Check(vfx.ActiveCount >= liveBeforeSwirl + 10, "rage gain spins a fire vortex at the pet's feet (" + vfx.ActiveCount + " live)");
             Check(vfx.BehindCount >= 4 && vfx.BehindCount < vfx.ActiveCount, "the far half of the vortex is drawn behind the pet (" + vfx.BehindCount + " behind)");
             yield return Capture("04a2_rage_swirl");
             yield return new WaitForSecondsRealtime(1.3f);
             int liveBeforeSiphon = vfx.ActiveCount;
-            vfx.Siphon(bc.EnemyHud.BodyCenter, bc.PlayerHud.BodyCenter, new Color(1f, 0.25f, 0.2f), app.Sprites.Get("buff.Fire"));
+            vfx.Siphon(bc.EnemyHud.BodyCenter, bc.PlayerHud.BodyCenter, new Color(1f, 0.25f, 0.2f), app.Sprites.Get("fx.mote"), true);
             yield return new WaitForSecondsRealtime(0.32f);
             Check(vfx.ActiveCount >= liveBeforeSiphon + 10, "a steal pulls motes from the victim into the thief (" + vfx.ActiveCount + " live)");
             yield return Capture("04a3_siphon");
@@ -454,8 +454,8 @@ namespace Pokiwar.EditorTools
             if (won) Check(app.Progression.IsNodeUnlocked(app.Save, app.Db.Node("node.2")), "win unlocked node 2");
             if (won)
             {
-                Check(app.Save.Pets.Exists(p => p.PetId == "mon.dunewing" && p.Level == 1), "first win captured the Dunewing just fought, at level 1");
-                Check(app.Result.CapturedPet.gameObject.activeSelf && app.Result.CapturedPet.sprite == app.Sprites.Get("right.dunewing"), "reward popup shows the captured pet");
+                Check(app.Save.Pets.Exists(p => p.PetId == "mon.samgong" && p.Level == 1), "first win captured the Samgong just fought, at level 1");
+                Check(app.Result.CapturedPet.gameObject.activeSelf && app.Result.CapturedPet.sprite == app.Sprites.Get("right.samgong"), "reward popup shows the captured pet");
             }
             else Check(!app.Result.CapturedPet.gameObject.activeSelf, "no captured pet on a defeat");
 
@@ -472,15 +472,15 @@ namespace Pokiwar.EditorTools
             Check(bc.Shake.AtRest, "battle screen shake at rest");
 
             app.Save.Node("node.1", true).Wins = Math.Max(1, app.Save.Wins("node.1"));
-            app.Save.Node("node.2", true).Wins = app.Db.Node("node.2").WinsRequired;
+            foreach (var open in new[] { "node.2", "node.3", "node.4", "node.5" }) app.Save.Node(open, true).Wins = app.Db.Node(open).WinsRequired;
             var pet = app.Save.Pet(app.Save.SelectedPetUid);
             pet.Level = 30;
             app.Save.Energy = 30;
             app.ShowMap();
             yield return null;
             nodes = app.Map.NodeArea.GetComponentsInChildren<RowView>(false);
-            Check(nodes.Length == 3 && nodes[2].Button.interactable, "boss node unlocked");
-            nodes[2].Button.onClick.Invoke();
+            Check(nodes.Length == 6 && nodes[5].Button.interactable, "boss node unlocked");
+            nodes[5].Button.onClick.Invoke();
             yield return null;
             app.Prep.FightButton.onClick.Invoke();
             yield return null;
@@ -498,25 +498,25 @@ namespace Pokiwar.EditorTools
             yield return WaitFor(() => app.Result.gameObject.activeSelf, 300);
             Check(app.Result.gameObject.activeSelf, "boss battle finished");
             var bossSprite = bc.EnemyHud.Portrait.sprite;
-            Check(bossSprite == app.Sprites.Get("azurewing_ascended") || bossSprite == app.Sprites.Get("azurewing_ascended.defeat") || bossSprite == app.Sprites.Get("azurewing_ascended.hit") || bossSprite == app.Sprites.Get("azurewing_ascended.attack"), "boss portrait switched to the ascended form (" + (bossSprite != null ? bossSprite.name : "null") + ")");
+            Check(bossSprite != null && bossSprite.name.StartsWith("char_ongnamhai_evolved"), "boss portrait switched to its second form (" + (bossSprite != null ? bossSprite.name : "null") + ")");
             Log("boss battle " + app.Result.Title.text + " turns " + bc.Engine.State.TurnNumber);
             int commits = app.Save.CommittedBattleIds.Count;
             yield return new WaitForSecondsRealtime(0.5f);
             Check(app.Save.CommittedBattleIds.Count == commits, "no second commit after result");
             if (app.Result.Title.text == "VICTORY")
-                Check(app.Save.Pets.Exists(p => p.PetId == "boss.azurewing" && p.Level == 1), "first boss win captured the boss itself at level 1");
+                Check(app.Save.Pets.Exists(p => p.PetId == "boss.ongnamhai" && p.Level == 1), "first boss win captured the boss itself at level 1");
             yield return Capture("07a_boss_reward");
 
-            var captured = app.Save.Pets.Find(p => p.PetId == "boss.azurewing") ?? app.Progression.AddPet(app.Save, "boss.azurewing");
+            var captured = app.Save.Pets.Find(p => p.PetId == "boss.ongnamhai") ?? app.Progression.AddPet(app.Save, "boss.ongnamhai");
             string keepPet = app.Save.SelectedPetUid;
             app.Save.SelectedPetUid = captured.Uid;
             app.ShowPrep(app.Db.Node("node.1"));
             yield return null;
-            Check(app.Sprites.Has("right.azurewing") && app.Prep.PetImage.sprite == app.Sprites.Get("right.azurewing"), "captured boss stands in the room facing the opponent");
+            Check(app.Sprites.Has("right.ongnamhai") && app.Prep.PetImage.sprite == app.Sprites.Get("right.ongnamhai"), "captured boss stands in the room facing the opponent");
             yield return Capture("07b_captured_room");
             app.Prep.FightButton.onClick.Invoke();
             yield return null;
-            Check(app.BattleScreen.activeSelf && bc.PlayerHud.Portrait.sprite == app.Sprites.Get("right.azurewing"), "captured boss fights on the player side facing the opponent");
+            Check(app.BattleScreen.activeSelf && bc.PlayerHud.Portrait.sprite == app.Sprites.Get("right.ongnamhai"), "captured boss fights on the player side facing the opponent");
             Check(bc.Engine.State.Get(Side.Player).Phases.Count == 0 && bc.Engine.State.Get(Side.Player).LockedSkills.Count == 0, "a captured boss has no second phase on the player side");
             yield return new WaitForSecondsRealtime(0.3f);
             yield return Capture("07c_captured_battle");

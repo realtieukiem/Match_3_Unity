@@ -426,8 +426,9 @@ namespace Pokiwar.UI
                     if (vfx != null && ev.Applied > 0)
                     {
                         bool rage = ev.Resource == ResourceKind.Rage;
-                        string stolen = rage ? "buff.Fire" : "buff.Lightning";
-                        float wait = vfx.Siphon(targetHud.BodyCenter, actorHud.BodyCenter, rage ? new Color(1f, 0.25f, 0.2f) : new Color(0.3f, 0.6f, 1f), sprites != null && sprites.Has(stolen) ? sprites.Get(stolen) : null);
+                        bool mote = sprites != null && sprites.Has("fx.mote");
+                        string stolen = mote ? "fx.mote" : rage ? "buff.Fire" : "buff.Lightning";
+                        float wait = vfx.Siphon(targetHud.BodyCenter, actorHud.BodyCenter, rage ? new Color(1f, 0.25f, 0.2f) : new Color(0.3f, 0.6f, 1f), sprites != null && sprites.Has(stolen) ? sprites.Get(stolen) : null, mote);
                         yield return Tween.Wait(wait);
                         actorHud.PopBar(ev.Resource);
                     }
@@ -455,6 +456,7 @@ namespace Pokiwar.UI
                     var at = targetHud.FloatAnchor.position;
                     bool big = ev.Strong || ev.SourceId != null && ev.SourceId.StartsWith("skill:");
                     AudioDirector.Sfx(big ? "hit.strong" : "hit");
+                    Decal("fx.hit", targetHud.BodyCenter, big ? 520f : 380f, 0.32f);
                     Decal("fx.slash", targetHud.BodyCenter, big ? 560f : 420f, 0.42f, ev.Actor == Side.Player ? 0f : 180f);
                     if (ev.ShieldAbsorbed > 0)
                     {
@@ -566,7 +568,7 @@ namespace Pokiwar.UI
                     break;
                 case ResourceKind.Rage:
                     AudioDirector.Sfx("rage");
-                    if (VfxLayer.Instance != null) VfxLayer.Instance.Swirl(hud.Feet, sprites != null && sprites.Has("buff.Fire") ? sprites.Get("buff.Fire") : null, new Color(1f, 0.5f, 0.15f), hud.Portrait.rectTransform);
+                    if (VfxLayer.Instance != null) VfxLayer.Instance.Swirl(hud.Feet, Art("fx.wisp") ?? Art("buff.Fire"), new Color(1f, 0.5f, 0.15f), hud.Portrait.rectTransform, Art("fx.vortex"));
                     break;
                 case ResourceKind.Shield:
                     AudioDirector.Sfx("shield");
@@ -582,6 +584,8 @@ namespace Pokiwar.UI
             Sprite icon = sprites == null ? null : sprites.Has("buff." + gem) ? sprites.Get("buff." + gem) : sprites.Gem(gem);
             vfx.Buff(hud.BodyCenter, icon, color, BuffIcons, BuffWidth, BuffRise, BuffIconSize);
         }
+
+        private Sprite Art(string key) => sprites != null && sprites.Has(key) ? sprites.Get(key) : null;
 
         private void Decal(string key, Vector3 at, float size, float life, float rot = 0f)
         {

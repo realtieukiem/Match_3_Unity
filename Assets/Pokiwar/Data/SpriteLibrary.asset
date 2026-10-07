@@ -127,7 +127,7 @@ MonoBehaviour:
   - Key: avatar.hat.wizard
     Sprite: {fileID: 21300000, guid: 6bf4b596dccbebc49a8cfff912306329, type: 3}
   - Key: bg.battle
-    Sprite: {fileID: 21300000, guid: b8de233205c4d554fada8cd355ea4db0, type: 3}
+    Sprite: {fileID: 21300000, guid: 2d4b5a6d2795413448c386cf1782148d, type: 3}
   - Key: bg.hub
     Sprite: {fileID: 21300000, guid: 275daf989293a5d458b5659052e2f496, type: 3}
   - Key: bg.map
@@ -294,6 +294,100 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 45137cdca8fa0cf448aa1fab7415f788, type: 3}
   - Key: psyling_evolved.defeat
     Sprite: {fileID: 21300000, guid: 98385bebbac9e0b4083a41022870b8ac, type: 3}
+  - Key: samgong
+    Sprite: {fileID: 21300000, guid: 1616110f9bf26954aa4e4f40e10462a3, type: 3}
+  - Key: samgong.attack
+    Sprite: {fileID: 21300000, guid: ce0c6a69c128cd84eb40e5d32983db2b, type: 3}
+  - Key: samgong.hit
+    Sprite: {fileID: 21300000, guid: c2acb68b09cdb954688932c76ebfa679, type: 3}
+  - Key: samgong.defeat
+    Sprite: {fileID: 21300000, guid: d645f2390e32ddc4a998f76899c58292, type: 3}
+  - Key: bebeboom
+    Sprite: {fileID: 21300000, guid: b190af2241958124f88352514ec0f8b9, type: 3}
+  - Key: bebeboom.attack
+    Sprite: {fileID: 21300000, guid: b19ab22f412092342ab8bcf2eabcc829, type: 3}
+  - Key: bebeboom.hit
+    Sprite: {fileID: 21300000, guid: 9e7749e26fa90ee4490ccb8b9921435f, type: 3}
+  - Key: bebeboom.defeat
+    Sprite: {fileID: 21300000, guid: 1d6b72c7a7f31a047a5505a7435708de, type: 3}
+  - Key: ngoclam
+    Sprite: {fileID: 21300000, guid: 597eb49b8ca3bab449ba52f836165bb6, type: 3}
+  - Key: ngoclam.attack
+    Sprite: {fileID: 21300000, guid: 31f875a7654b70249ab680271a8d2f37, type: 3}
+  - Key: ngoclam.hit
+    Sprite: {fileID: 21300000, guid: 4328d8a8077089e42b66bbaad5df7977, type: 3}
+  - Key: ngoclam.defeat
+    Sprite: {fileID: 21300000, guid: 6e6553359c07a1f4295d7de6a045dd01, type: 3}
+  - Key: doimora
+    Sprite: {fileID: 21300000, guid: e3e3dd268a99115449dee8ca9ce500cb, type: 3}
+  - Key: doimora.attack
+    Sprite: {fileID: 21300000, guid: b8637d6be87eb954ea6c66cb7f913c56, type: 3}
+  - Key: doimora.hit
+    Sprite: {fileID: 21300000, guid: 2e52afc4195308f4aac0a3fe18a8c706, type: 3}
+  - Key: doimora.defeat
+    Sprite: {fileID: 21300000, guid: ba63228b407d03b40998665908740191, type: 3}
+  - Key: voirong
+    Sprite: {fileID: 21300000, guid: ac90497e99f12594d8afe496e3c036c8, type: 3}
+  - Key: voirong.attack
+    Sprite: {fileID: 21300000, guid: de186a6f894e54043a453025d7749be7, type: 3}
+  - Key: voirong.hit
+    Sprite: {fileID: 21300000, guid: 01747e9d726004a41bb13b1274867d11, type: 3}
+  - Key: voirong.defeat
+    Sprite: {fileID: 21300000, guid: b391c8fee1d5732419cd861f959a8db0, type: 3}
+  - Key: ongnamhai
+    Sprite: {fileID: 21300000, guid: df3f4054d71883f47aae76c50681bb13, type: 3}
+  - Key: ongnamhai.attack
+    Sprite: {fileID: 21300000, guid: a04a71a5898eb1f4097d44467c2ce54a, type: 3}
+  - Key: ongnamhai.hit
+    Sprite: {fileID: 21300000, guid: 0e53d741413588042834fa8b4266541e, type: 3}
+  - Key: ongnamhai.defeat
+    Sprite: {fileID: 21300000, guid: 50867ba8a943b2247bb2c134c69abaa8, type: 3}
+  - Key: ngoclam_evolved
+    Sprite: {fileID: 21300000, guid: 5dedf70dfe1025f4cb9918d53d92fc51, type: 3}
+  - Key: ngoclam_evolved.attack
+    Sprite: {fileID: 21300000, guid: 4a491958851366144a589a1a37703314, type: 3}
+  - Key: ngoclam_evolved.hit
+    Sprite: {fileID: 21300000, guid: 9457e97a17a92794f908e96db84df0d7, type: 3}
+  - Key: ngoclam_evolved.defeat
+    Sprite: {fileID: 21300000, guid: fe208e17dd66557419e243258f12b730, type: 3}
+  - Key: doimora_evolved
+    Sprite: {fileID: 21300000, guid: 7de343cf98513a24baf32e22e8881450, type: 3}
+  - Key: doimora_evolved.attack
+    Sprite: {fileID: 21300000, guid: 07759ec4381b4d343ad567f9e2715ff0, type: 3}
+  - Key: doimora_evolved.hit
+    Sprite: {fileID: 21300000, guid: 53418347b2b50884e995149f1dc2aa2b, type: 3}
+  - Key: doimora_evolved.defeat
+    Sprite: {fileID: 21300000, guid: 29214cbb9ca4c6e46ac818a3989dfe3d, type: 3}
+  - Key: voirong_evolved
+    Sprite: {fileID: 21300000, guid: 2fbe360877641364c909818a680b4f80, type: 3}
+  - Key: voirong_evolved.attack
+    Sprite: {fileID: 21300000, guid: 0f53336acb3d0114092bdfb31fd78e17, type: 3}
+  - Key: voirong_evolved.hit
+    Sprite: {fileID: 21300000, guid: dbb41a28a88a5354e9785bde31f3878e, type: 3}
+  - Key: voirong_evolved.defeat
+    Sprite: {fileID: 21300000, guid: 4c29a90cb797ff74dbcf20bb398337b6, type: 3}
+  - Key: ongnamhai_evolved
+    Sprite: {fileID: 21300000, guid: 64877a5940ffd0d4aa955867d951c40d, type: 3}
+  - Key: ongnamhai_evolved.attack
+    Sprite: {fileID: 21300000, guid: 35988b9450672b34e8398590f9b78478, type: 3}
+  - Key: ongnamhai_evolved.hit
+    Sprite: {fileID: 21300000, guid: 899146f8f62fede43bce994a69364e2d, type: 3}
+  - Key: ongnamhai_evolved.defeat
+    Sprite: {fileID: 21300000, guid: 3781db07238be9348a3a66db407a83ee, type: 3}
+  - Key: fx.vortex
+    Sprite: {fileID: 21300000, guid: 0bbd0ed880d0a624a9c26e66005463ab, type: 3}
+  - Key: fx.wisp
+    Sprite: {fileID: 21300000, guid: 7f84f2f7e3a5964459abc43a22ba23ee, type: 3}
+  - Key: fx.mote
+    Sprite: {fileID: 21300000, guid: db1d8a7c1cb64fb47bc8be3982eebc51, type: 3}
+  - Key: fx.hit
+    Sprite: {fileID: 21300000, guid: b3910dd72a3997d46aacedc00fbb653a, type: 3}
+  - Key: fx.sparkle
+    Sprite: {fileID: 21300000, guid: 065b2dba989a9cd4091f8fc771cdd317, type: 3}
+  - Key: world.eastsea
+    Sprite: {fileID: 21300000, guid: f6873c51326689743b0b07eb353a22de, type: 3}
+  - Key: region.east_sea
+    Sprite: {fileID: 21300000, guid: fe1f49e099915064791d1285be58b521, type: 3}
   - Key: ui.button.blue
     Sprite: {fileID: 21300000, guid: 02b161bd9aca9b34f90e7ce6b6169e22, type: 3}
   - Key: ui.button.red
@@ -408,6 +502,86 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: ef2c1ead2efc2f34c8f38a21fbc10d9e, type: 3}
   - Key: right.psyling_evolved.defeat
     Sprite: {fileID: 21300000, guid: ad9afa9e3218b2d48838ff0c92686f96, type: 3}
+  - Key: right.samgong
+    Sprite: {fileID: 21300000, guid: 4f4eb87d71facc540863eda18cbf4252, type: 3}
+  - Key: right.samgong.attack
+    Sprite: {fileID: 21300000, guid: 7768d2e97007e984d84a5ec42229ed43, type: 3}
+  - Key: right.samgong.hit
+    Sprite: {fileID: 21300000, guid: 45f842b15cb4ad940ba63e7f13b0dff2, type: 3}
+  - Key: right.samgong.defeat
+    Sprite: {fileID: 21300000, guid: 34f65c59d51322844ba82fbc9748526e, type: 3}
+  - Key: right.bebeboom
+    Sprite: {fileID: 21300000, guid: 3dc5bd634d368034d8633cc297271d1f, type: 3}
+  - Key: right.bebeboom.attack
+    Sprite: {fileID: 21300000, guid: 514e94aa8ec06b54eb150f4ff4f1ad9d, type: 3}
+  - Key: right.bebeboom.hit
+    Sprite: {fileID: 21300000, guid: 667a828006a3d184fbd44fb5ef4e4cda, type: 3}
+  - Key: right.bebeboom.defeat
+    Sprite: {fileID: 21300000, guid: fabf0ab334adf094294cff21118cd32f, type: 3}
+  - Key: right.ngoclam
+    Sprite: {fileID: 21300000, guid: 5681dda08a1961a4e9af161e324a687f, type: 3}
+  - Key: right.ngoclam.attack
+    Sprite: {fileID: 21300000, guid: c144dcec1ec443444b66ce8f143e5257, type: 3}
+  - Key: right.ngoclam.hit
+    Sprite: {fileID: 21300000, guid: aaa1113193c38ab409630d06d3f5ddcd, type: 3}
+  - Key: right.ngoclam.defeat
+    Sprite: {fileID: 21300000, guid: 06aa80da420a1714da4e072ea49b27ad, type: 3}
+  - Key: right.doimora
+    Sprite: {fileID: 21300000, guid: 2f31162539806314ea46d21d147ed453, type: 3}
+  - Key: right.doimora.attack
+    Sprite: {fileID: 21300000, guid: 337c33a106af13040814bc53509b2ab7, type: 3}
+  - Key: right.doimora.hit
+    Sprite: {fileID: 21300000, guid: aeea78f59b1e73f44addfec5943f8ff5, type: 3}
+  - Key: right.doimora.defeat
+    Sprite: {fileID: 21300000, guid: b54fc0de534a63e46a60e1b6353042d7, type: 3}
+  - Key: right.voirong
+    Sprite: {fileID: 21300000, guid: 9528a413c355df74f93579ce24bc9e01, type: 3}
+  - Key: right.voirong.attack
+    Sprite: {fileID: 21300000, guid: 5b3c4a5d00ff5b94189a3257482f3f87, type: 3}
+  - Key: right.voirong.hit
+    Sprite: {fileID: 21300000, guid: 43e6ca11de25eee40b73773c725d4b91, type: 3}
+  - Key: right.voirong.defeat
+    Sprite: {fileID: 21300000, guid: 583ec8d80b013164f8e127e5af553a01, type: 3}
+  - Key: right.ongnamhai
+    Sprite: {fileID: 21300000, guid: df7d7196ae8ce0542b31656e0230aafa, type: 3}
+  - Key: right.ongnamhai.attack
+    Sprite: {fileID: 21300000, guid: 0bf4d022564f5634f8386e0c1abdb05f, type: 3}
+  - Key: right.ongnamhai.hit
+    Sprite: {fileID: 21300000, guid: bb41ce718706e564fb1ef0d468f36895, type: 3}
+  - Key: right.ongnamhai.defeat
+    Sprite: {fileID: 21300000, guid: 64cee914807e58d4c92e5806d7b2e711, type: 3}
+  - Key: right.ngoclam_evolved
+    Sprite: {fileID: 21300000, guid: c0adc2a525f1d424e8445d5a4bde19bf, type: 3}
+  - Key: right.ngoclam_evolved.attack
+    Sprite: {fileID: 21300000, guid: 17bdb1335d5c2a7498ac78e613d30d45, type: 3}
+  - Key: right.ngoclam_evolved.hit
+    Sprite: {fileID: 21300000, guid: a2e717246c8a29f4a8b23a7284724f41, type: 3}
+  - Key: right.ngoclam_evolved.defeat
+    Sprite: {fileID: 21300000, guid: 170daa3344bf8f14fbd06f06a9ae1eeb, type: 3}
+  - Key: right.doimora_evolved
+    Sprite: {fileID: 21300000, guid: 88ccb59ccef5df74493adc9ad9f81153, type: 3}
+  - Key: right.doimora_evolved.attack
+    Sprite: {fileID: 21300000, guid: 48130694381a4b848b06c944af934e69, type: 3}
+  - Key: right.doimora_evolved.hit
+    Sprite: {fileID: 21300000, guid: d8317eae9f2c63c43a125d5c24568742, type: 3}
+  - Key: right.doimora_evolved.defeat
+    Sprite: {fileID: 21300000, guid: a962b8544fb9aa241b303e2acdb153eb, type: 3}
+  - Key: right.voirong_evolved
+    Sprite: {fileID: 21300000, guid: addc5215d3ef34841a43b8a5d5eaaef4, type: 3}
+  - Key: right.voirong_evolved.attack
+    Sprite: {fileID: 21300000, guid: 3691da3af2fc81345ad5cfed90e37f4c, type: 3}
+  - Key: right.voirong_evolved.hit
+    Sprite: {fileID: 21300000, guid: 0b56b5b14ee34f3488a2699175e0b7c8, type: 3}
+  - Key: right.voirong_evolved.defeat
+    Sprite: {fileID: 21300000, guid: 2c129b10d64864f418b978cb217281a6, type: 3}
+  - Key: right.ongnamhai_evolved
+    Sprite: {fileID: 21300000, guid: 13939829f0247204e98a6f02b5e512c7, type: 3}
+  - Key: right.ongnamhai_evolved.attack
+    Sprite: {fileID: 21300000, guid: 63bbb980a034ce344bed53127d0cb9c9, type: 3}
+  - Key: right.ongnamhai_evolved.hit
+    Sprite: {fileID: 21300000, guid: f4d6537f2e1dcaa46907e900f38ffbf6, type: 3}
+  - Key: right.ongnamhai_evolved.defeat
+    Sprite: {fileID: 21300000, guid: ed8895c1d3429f944ad8e7afe7d22260, type: 3}
   - Key: stone.Neutral
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   Fallback: {fileID: 21300000, guid: 47a677a696f0f5f419663a7ebdd0c7e3, type: 3}

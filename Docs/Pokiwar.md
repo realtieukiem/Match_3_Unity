@@ -196,8 +196,9 @@ Labels: **VIDEO** seen in the clips, **USER_CONFIRMED** stated in the brief, **I
 | Sockets | 3 sockets, +6 ATK / +60 HP per tier, +1 element bonus per tier of the pet's element | PROVISIONAL |
 | Energy | 30 max, +1 per 5 min, node cost 1-3 | PROVISIONAL |
 
-Balance (AI vs AI, 40 seeds, pet Lv 1/3/5/8/12): node 1 (Dunewing, hunt Lv 2, `ai.easy`) 95 / 97 / 100 / 100 / 100%;
-node 2 (Psyling, hunt Lv 7) 0 / 7 / 27 / 67 / 90%; boss (Azurewing, hunt Lv 10) 0 / 0 / 0 / 25 / 60%. Cards are measured one by one with `PokiwarBalance.BatchCardReport` (skill only against skill + that card, 300 seeds); every single-use card must come out at zero or better.
+Balance (AI vs AI, 40 seeds, pet Lv 1/3/5/8/12): the six East Sea nodes run from 92 / 100 / 100 / 100 / 100%
+(Samgong, hunt Lv 2, `ai.easy`) to 0 / 0 / 0 / 7 / 35% (boss Ongnamhai, hunt Lv 12); the full table is in
+`Docs/EastSea.md`. Cards are measured one by one with `PokiwarBalance.BatchCardReport` (skill only against skill + that card, 300 seeds); every single-use card must come out at zero or better.
 
 ## Art (FG38 set)
 

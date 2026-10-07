@@ -4,11 +4,9 @@ Owner's brief (2026-10-07): the first region is the East Sea. Its creatures come
 there, each fused with something else so the picture and the name are new. The first one or two creatures may
 have no second phase; every later one has.
 
-Status: roster and art order are fixed here; the art is ordered in `Docs/Pokiwar_Art_Codex_Next.md` (Batches 14
-and 15). The map still runs the old three creatures until that art is painted - switching the first region to
-six unpainted placeholders would make the game look worse than it does now. Dunewing, Psyling and Azurewing stay
-in the content and keep their art for a later, inland region.
-
+Status (2026-10-07): the region is IN THE GAME. All art of Batches 14-16 is painted and wired; the map runs the
+six creatures below as `node.1` .. `node.6`. Dunewing, Psyling and Azurewing stay in the content and keep their
+art for a later, inland region, but no map node points at them.
 ## Roster, in hunt order
 
 | # | Name | Real animal of the East Sea | Fused with | Element | Second phase | Role |
@@ -32,20 +30,20 @@ Owner (2026-10-07): creatures will get more than two phases later. The battle en
 (the second form keeps the existing `_evolved` suffix). What is not decided: at which pet level a COLLECTED
 creature takes its third form.
 
-## Planned content numbers (to be tuned with `PokiwarBalance` when the region is switched on)
+## Content numbers (tuned 2026-10-07 with `PokiwarBalance.BatchReseedAndReport`)
 
-| Node | Encounter | Hunt level | Wins to open the next | Rank points | Stones dropped |
-|---|---|---|---|---|---|
-| Drum Shoal | Samgong | 3 | 1 | 20 | Earth, Fire (starter) |
-| Firecracker Reef | Bebeboom | 5 | 2 | 30 | Fire |
-| Pearl Garden | Ngoclam | 7 | 2 | 40 | Metal |
-| Almond Cay | Doimora | 9 | 2 | 60 | Wood |
-| Spout Strait | Voirong | 11 | 3 | 100 | Water |
-| Whale Lord's Deep | Ongnamhai | 13 | - | 200 | Water T2 |
+| Node | Encounter | Hunt level | Wins to open the next | Rank points | First-clear reward | Win rate at pet Lv 1 / 3 / 5 / 8 / 12 |
+|---|---|---|---|---|---|---|
+| Drum Shoal | Samgong | 2 | 1 | 20 | the Samgong itself | 92 / 100 / 100 / 100 / 100 |
+| Firecracker Reef | Bebeboom | 4 | 2 | 30 | War Cry card | 22 / 45 / 75 / 80 / 95 |
+| Pearl Garden | Ngoclam | 6 | 2 | 40 | Mind Spark skill card | 2 / 12 / 50 / 80 / 97 |
+| Almond Cay | Doimora | 8 | 2 | 60 | - | 2 / 2 / 12 / 40 / 80 |
+| Spout Strait | Voirong | 10 | 3 | 100 | Mana Leech card | 0 / 0 / 2 / 15 / 47 |
+| Whale Lord's Deep | Ongnamhai | 12 | 3 | 200 | Tide Lance skill card, Meteor card | 0 / 0 / 0 / 7 / 35 |
 
-Target curve, AI against AI: a node is about even when the pet's level equals the hunt level, and close to
-hopeless three levels below it - the region is meant to be lost into and ground through.
-
+AI against AI, 40 seeds a cell, the player carrying one skill card and four single-use cards. Owner's rule
+(2026-10-07): the first creature is easy to win, every later one is hard to get. Samgong stays at hunt level 2
+because the trainer EXP test follows clip A (two wins reach trainer level 2).
 ## Sources for the real animals and the whale lore
 
 - Hawksbill and green turtles and the dugong recorded on East Sea reefs: https://www.sixthtone.com/news/1017516

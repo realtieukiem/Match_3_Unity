@@ -20,6 +20,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 33488b3c9bed852449a1aa2d61bc1bef, type: 2}
   - {fileID: 11400000, guid: 39244cbfa4351f64a995bab9ff61e2aa, type: 2}
   - {fileID: 11400000, guid: c377a9b117320ed489ac7df0b293ac07, type: 2}
+  - {fileID: 11400000, guid: 4ec75f2ef8f71d04080b99c29d4f3345, type: 2}
+  - {fileID: 11400000, guid: c301e32147c42554692231b3f146a138, type: 2}
+  - {fileID: 11400000, guid: 694373c3d4d788b40bbfca28fc44af3c, type: 2}
+  - {fileID: 11400000, guid: 9d08d0452790fc745910f48edbe9f854, type: 2}
+  - {fileID: 11400000, guid: bfed262b478424c478e0afb6b94a6705, type: 2}
+  - {fileID: 11400000, guid: 793f0da4bc79d4a4c8b64fe1a6b23563, type: 2}
   Cards:
   - {fileID: 11400000, guid: 117a7344c6aad7f4ab98ae1d9c8662c5, type: 2}
   - {fileID: 11400000, guid: 9423931d5c61cd2429dbd67f2df8bbb5, type: 2}
@@ -49,10 +55,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d15d3b31d391f024c91c845502e3db8c, type: 2}
   - {fileID: 11400000, guid: ea290e7651a3c9f499de0df3fd48863e, type: 2}
   - {fileID: 11400000, guid: b5a5d4c808ae2b44f9679786eced137a, type: 2}
+  - {fileID: 11400000, guid: a619b6b1f640872478e1d241561a892d, type: 2}
+  - {fileID: 11400000, guid: e7e807204f45bdd4dbd0ae241038b49d, type: 2}
+  - {fileID: 11400000, guid: 392aaa9f0cd4cc44d80b62cf58112efe, type: 2}
+  - {fileID: 11400000, guid: 3d93c6e61c97c674a8c16c75c4c7ab49, type: 2}
+  - {fileID: 11400000, guid: 4e87f2328f84d2d45a31fa9fb14d09e2, type: 2}
+  - {fileID: 11400000, guid: 87e490dd7eb952643a80598634624529, type: 2}
   Rewards:
   - {fileID: 11400000, guid: 8ec92a157ca399846a5f61d0e7ee4123, type: 2}
   - {fileID: 11400000, guid: 69b2b5339ba94784183814be61541240, type: 2}
   - {fileID: 11400000, guid: 889c12276b0f66b4da44877f36096a7d, type: 2}
+  - {fileID: 11400000, guid: a649d1b6fd0d4a448947ec4131feeadb, type: 2}
+  - {fileID: 11400000, guid: 347ed35b23488ea498b57bb910ff9e47, type: 2}
+  - {fileID: 11400000, guid: 3f1a96cbfbb543a4782b369ee7cb482a, type: 2}
+  - {fileID: 11400000, guid: 8fea8c0edd2aef04e9a623e5653208fe, type: 2}
+  - {fileID: 11400000, guid: af2e8f0bfa5f17d49bb20d600cfe491e, type: 2}
+  - {fileID: 11400000, guid: ad557fdad1607fb479819cec15a03209, type: 2}
   AvatarItems:
   - {fileID: 11400000, guid: c573277bd23ee8547b38f637ab89e200, type: 2}
   - {fileID: 11400000, guid: cf50f48d7e48f324ab12bc6233042d5a, type: 2}

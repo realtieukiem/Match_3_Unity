@@ -31,7 +31,9 @@ namespace Pokiwar.UI
         [Tooltip("Opponents sit on a ring, as in the original lobby. Off = use each node's own X/Y.")]
         public bool RingLayout = true;
         [Tooltip("Ring radius as a share of the node area's width and height.")]
-        public Vector2 RingRadius = new Vector2(0.34f, 0.32f);
+        public Vector2 RingRadius = new Vector2(0.34f, 0.28f);
+        [Tooltip("How far the ring sits above the centre of the node area, as a share of its height; leaves room for the label under the lowest node.")]
+        public float RingLift = 0.07f;
         [Tooltip("How many region tiles the grid shows; regions the game does not have yet show as locked.")]
         public int RegionSlots = 12;
 
@@ -65,7 +67,7 @@ namespace Pokiwar.UI
         {
             if (!RingLayout || count < 2) return new Vector2((n.X - 0.5f) * size.x, (n.Y - 0.5f) * size.y);
             float angle = (90f - index * 360f / count) * Mathf.Deg2Rad;
-            return new Vector2(Mathf.Cos(angle) * RingRadius.x * size.x, Mathf.Sin(angle) * RingRadius.y * size.y);
+            return new Vector2(Mathf.Cos(angle) * RingRadius.x * size.x, (Mathf.Sin(angle) * RingRadius.y + RingLift) * size.y);
         }
 
         public void Show(GameApp a)

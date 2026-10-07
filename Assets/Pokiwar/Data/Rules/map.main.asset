@@ -14,30 +14,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Def:
     Regions:
-    - Id: region.sunny
-      Name: Sunny Isle
+    - Id: region.east_sea
+      Name: East Sea
     Nodes:
     - Id: node.1
-      Name: Dune Beach
-      RegionId: region.sunny
-      EncounterId: enc.dunewing
+      Name: Drum Shoal
+      RegionId: region.east_sea
+      EncounterId: enc.samgong
       RequiresNodeId: 
       WinsRequired: 1
-      X: 0.18
-      Y: 0.3
+      X: 0.1
+      Y: 0.34
     - Id: node.2
-      Name: Echo Cave
-      RegionId: region.sunny
-      EncounterId: enc.psyling
+      Name: Firecracker Reef
+      RegionId: region.east_sea
+      EncounterId: enc.bebeboom
       RequiresNodeId: node.1
       WinsRequired: 2
-      X: 0.48
-      Y: 0.62
+      X: 0.26
+      Y: 0.64
     - Id: node.3
-      Name: Azure Peak
-      RegionId: region.sunny
-      EncounterId: enc.azurewing
+      Name: Pearl Garden
+      RegionId: region.east_sea
+      EncounterId: enc.ngoclam
       RequiresNodeId: node.2
+      WinsRequired: 2
+      X: 0.42
+      Y: 0.34
+    - Id: node.4
+      Name: Almond Cay
+      RegionId: region.east_sea
+      EncounterId: enc.doimora
+      RequiresNodeId: node.3
+      WinsRequired: 2
+      X: 0.58
+      Y: 0.64
+    - Id: node.5
+      Name: Spout Strait
+      RegionId: region.east_sea
+      EncounterId: enc.voirong
+      RequiresNodeId: node.4
       WinsRequired: 3
-      X: 0.8
-      Y: 0.4
+      X: 0.74
+      Y: 0.34
+    - Id: node.6
+      Name: Whale Lord's Deep
+      RegionId: region.east_sea
+      EncounterId: enc.ongnamhai
+      RequiresNodeId: node.5
+      WinsRequired: 3
+      X: 0.9
+      Y: 0.6

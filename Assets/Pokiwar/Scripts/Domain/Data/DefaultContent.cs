@@ -221,6 +221,66 @@ namespace Pokiwar.Domain
                 UnlockSkillIds = { "skill.tidal_siphon" }, ContinueTurn = true
             });
             db.Creatures.Add(boss);
+            AddEastSea(db);
+        }
+
+        private static void AddEastSea(ContentDatabase db)
+        {
+            db.Creatures.Add(new CreatureDef
+            {
+                Id = "mon.samgong", Name = "Samgong", SpriteKey = "samgong", Element = Element.Earth, ElementBonus = 1,
+                BaseStats = new StatBlock(1620, 97, 18, 750, 100), PerLevel = new StatBlock(130, 8, 2, 50, 0),
+                GemProfileId = "gem.monster", CardIds = { "card.iron_skin" }
+            });
+            db.Creatures.Add(new CreatureDef
+            {
+                Id = "mon.bebeboom", Name = "Bebeboom", SpriteKey = "bebeboom", Element = Element.Fire, ElementBonus = 1,
+                BaseStats = new StatBlock(2800, 200, 14, 900, 100), PerLevel = new StatBlock(110, 11, 1, 50, 0),
+                GemProfileId = "gem.monster", CardIds = { "card.war_cry" },
+                Rage = new RageProfile { AttackThreshold = 100, AttackCost = 100, StrongMultiplier = 1.9f }
+            });
+            db.Creatures.Add(SecondForm(new CreatureDef
+            {
+                Id = "mon.ngoclam", Name = "Ngoclam", SpriteKey = "ngoclam", Element = Element.Metal, ElementBonus = 1,
+                BaseStats = new StatBlock(4200, 150, 34, 1000, 100), PerLevel = new StatBlock(160, 7, 3, 60, 0),
+                GemProfileId = "gem.monster", SkillIds = { "skill.mind_spark" }, CardIds = { "card.iron_skin" }
+            }, "Ngoclam Radiant", 0.45f, 1.15f));
+            db.Creatures.Add(SecondForm(new CreatureDef
+            {
+                Id = "mon.doimora", Name = "Doimora", SpriteKey = "doimora", Element = Element.Wood, ElementBonus = 1,
+                BaseStats = new StatBlock(3300, 118, 26, 1100, 100), PerLevel = new StatBlock(120, 6, 2, 60, 0),
+                GemProfileId = "gem.monster", SkillIds = { "skill.thorn_bind" }, CardIds = { "card.herbal_salve" }
+            }, "Doimora Beacon", 0.50f, 1.10f));
+            db.Creatures.Add(SecondForm(new CreatureDef
+            {
+                Id = "mon.voirong", Name = "Voirong", SpriteKey = "voirong", Element = Element.Water, ElementBonus = 1,
+                BaseStats = new StatBlock(3000, 95, 22, 1000, 100), PerLevel = new StatBlock(120, 5, 2, 50, 0),
+                GemProfileId = "gem.monster", SkillIds = { "skill.tide_lance" }, CardIds = { "card.mana_leech" }
+            }, "Voirong Tempest", 0.45f, 1.20f));
+            var lord = new CreatureDef
+            {
+                Id = "boss.ongnamhai", Name = "Ongnamhai", SpriteKey = "ongnamhai", Element = Element.Water, ElementBonus = 2,
+                BaseStats = new StatBlock(4700, 100, 24, 1600, 200), PerLevel = new StatBlock(190, 6, 2, 60, 0),
+                GemProfileId = "gem.boss", CardIds = { "card.iron_skin", "card.war_cry" },
+                Rage = new RageProfile { AttackThreshold = 100, AttackCost = 100, StrongMultiplier = 1.7f }
+            };
+            lord.Phases.Add(new BossPhaseDef
+            {
+                Id = "phase.ongnamhai.second", FormName = "Ongnamhai the Tide Lord", SpriteKey = "ongnamhai" + SpriteKeys.EvolvedSuffix,
+                TriggerValue = 0.32f, OneShot = true, TriggerOnLethal = true, SetHpPctOfMax = 0.5f, AtkMultiplier = 1.15f,
+                UnlockSkillIds = { "skill.tidal_siphon" }, ContinueTurn = true
+            });
+            db.Creatures.Add(lord);
+        }
+
+        private static CreatureDef SecondForm(CreatureDef c, string formName, float hpPct, float atk)
+        {
+            c.Phases.Add(new BossPhaseDef
+            {
+                Id = "phase." + c.SpriteKey + ".second", FormName = formName, SpriteKey = c.SpriteKey + SpriteKeys.EvolvedSuffix,
+                TriggerValue = 0.30f, OneShot = true, TriggerOnLethal = false, SetHpPctOfMax = hpPct, AtkMultiplier = atk
+            });
+            return c;
         }
 
         private static void AddAi(ContentDatabase db)
@@ -269,6 +329,73 @@ namespace Pokiwar.Domain
                     new RewardDrop { Kind = RewardKind.Card, ItemId = "card.meteor", FirstClearOnly = true }
                 }
             });
+            db.RewardTables.Add(new RewardTable
+            {
+                Id = "rw.samgong", Gold = 150,
+                Drops =
+                {
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Earth, Tier = 1, Count = 2 },
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 1, Chance = 0.6f },
+                    new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 2 },
+                    new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1, Chance = 0.3f }
+                }
+            });
+            db.RewardTables.Add(new RewardTable
+            {
+                Id = "rw.bebeboom", Gold = 190,
+                Drops =
+                {
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 3 },
+                    new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 2 },
+                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.war_cry", FirstClearOnly = true }
+                }
+            });
+            db.RewardTables.Add(new RewardTable
+            {
+                Id = "rw.ngoclam", Gold = 240,
+                Drops =
+                {
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Metal, Tier = 1, Count = 3 },
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 1, Chance = 0.6f },
+                    new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 3 },
+                    new RewardDrop { Kind = RewardKind.SkillCard, ItemId = "skill.mind_spark", FirstClearOnly = true },
+                    new RewardDrop { Kind = RewardKind.ProtectionCharm, Count = 1, Chance = 0.4f }
+                }
+            });
+            db.RewardTables.Add(new RewardTable
+            {
+                Id = "rw.doimora", Gold = 300,
+                Drops =
+                {
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Wood, Tier = 1, Count = 3 },
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 2, Chance = 0.6f },
+                    new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 3 },
+                    new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1, Chance = 0.4f }
+                }
+            });
+            db.RewardTables.Add(new RewardTable
+            {
+                Id = "rw.voirong", Gold = 380,
+                Drops =
+                {
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Water, Tier = 1, Count = 4 },
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 2, Chance = 0.6f },
+                    new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 4 },
+                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.mana_leech", FirstClearOnly = true },
+                    new RewardDrop { Kind = RewardKind.ProtectionCharm, Count = 1, Chance = 0.5f }
+                }
+            });
+            db.RewardTables.Add(new RewardTable
+            {
+                Id = "rw.ongnamhai", Gold = 600,
+                Drops =
+                {
+                    new RewardDrop { Kind = RewardKind.Stone, Element = Element.Water, Tier = 2, Count = 2 },
+                    new RewardDrop { Kind = RewardKind.CardStone, Tier = 2, Count = 2 },
+                    new RewardDrop { Kind = RewardKind.SkillCard, ItemId = "skill.tide_lance", FirstClearOnly = true },
+                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.meteor", FirstClearOnly = true }
+                }
+            });
         }
 
         private static void AddEncounters(ContentDatabase db)
@@ -276,14 +403,23 @@ namespace Pokiwar.Domain
             db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 2, AiPolicyId = "ai.easy", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1, ManaVsPlayer = 1f, RankPoints = 20 });
             db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 7, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2, SkillLevel = 2, ManaVsPlayer = 1f, RankPoints = 40 });
             db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 10, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4, ManaVsPlayer = 1.6f, SkillLevel = 3, RankPoints = 200 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.samgong", Name = "Samgong", CreatureId = "mon.samgong", Level = 2, AiPolicyId = "ai.easy", RewardTableId = "rw.samgong", EnergyCost = 1, Difficulty = 1, ManaVsPlayer = 1f, RankPoints = 20 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.bebeboom", Name = "Bebeboom", CreatureId = "mon.bebeboom", Level = 4, AiPolicyId = "ai.normal", RewardTableId = "rw.bebeboom", EnergyCost = 1, Difficulty = 2, ManaVsPlayer = 1f, RankPoints = 30 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.ngoclam", Name = "Ngoclam", CreatureId = "mon.ngoclam", Level = 6, AiPolicyId = "ai.normal", RewardTableId = "rw.ngoclam", EnergyCost = 2, Difficulty = 2, SkillLevel = 2, ManaVsPlayer = 1f, RankPoints = 40 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.doimora", Name = "Doimora", CreatureId = "mon.doimora", Level = 8, AiPolicyId = "ai.normal", RewardTableId = "rw.doimora", EnergyCost = 2, Difficulty = 3, SkillLevel = 2, ManaVsPlayer = 1f, RankPoints = 60 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.voirong", Name = "Voirong", CreatureId = "mon.voirong", Level = 10, AiPolicyId = "ai.normal", RewardTableId = "rw.voirong", EnergyCost = 2, Difficulty = 3, SkillLevel = 1, ManaVsPlayer = 1f, RankPoints = 100 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.ongnamhai", Name = "Ongnamhai (Boss)", CreatureId = "boss.ongnamhai", Level = 12, AiPolicyId = "ai.boss", RewardTableId = "rw.ongnamhai", IsBoss = true, EnergyCost = 3, Difficulty = 4, ManaVsPlayer = 1.6f, SkillLevel = 3, RankPoints = 200 });
         }
 
         private static void AddMap(ContentDatabase db)
         {
-            db.Map.Regions.Add(new RegionDef { Id = "region.sunny", Name = "Sunny Isle" });
-            db.Map.Nodes.Add(new MapNodeDef { Id = "node.1", Name = "Dune Beach", RegionId = "region.sunny", EncounterId = "enc.dunewing", X = 0.18f, Y = 0.30f, WinsRequired = 1 });
-            db.Map.Nodes.Add(new MapNodeDef { Id = "node.2", Name = "Echo Cave", RegionId = "region.sunny", EncounterId = "enc.psyling", RequiresNodeId = "node.1", X = 0.48f, Y = 0.62f, WinsRequired = 2 });
-            db.Map.Nodes.Add(new MapNodeDef { Id = "node.3", Name = "Azure Peak", RegionId = "region.sunny", EncounterId = "enc.azurewing", RequiresNodeId = "node.2", X = 0.80f, Y = 0.40f, WinsRequired = 3 });
+            db.Map.Regions.Add(new RegionDef { Id = "region.east_sea", Name = "East Sea" });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.1", Name = "Drum Shoal", RegionId = "region.east_sea", EncounterId = "enc.samgong", X = 0.10f, Y = 0.34f, WinsRequired = 1 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.2", Name = "Firecracker Reef", RegionId = "region.east_sea", EncounterId = "enc.bebeboom", RequiresNodeId = "node.1", X = 0.26f, Y = 0.64f, WinsRequired = 2 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.3", Name = "Pearl Garden", RegionId = "region.east_sea", EncounterId = "enc.ngoclam", RequiresNodeId = "node.2", X = 0.42f, Y = 0.34f, WinsRequired = 2 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.4", Name = "Almond Cay", RegionId = "region.east_sea", EncounterId = "enc.doimora", RequiresNodeId = "node.3", X = 0.58f, Y = 0.64f, WinsRequired = 2 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.5", Name = "Spout Strait", RegionId = "region.east_sea", EncounterId = "enc.voirong", RequiresNodeId = "node.4", X = 0.74f, Y = 0.34f, WinsRequired = 3 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.6", Name = "Whale Lord's Deep", RegionId = "region.east_sea", EncounterId = "enc.ongnamhai", RequiresNodeId = "node.5", X = 0.90f, Y = 0.60f, WinsRequired = 3 });
         }
     }
 }

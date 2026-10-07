@@ -12,7 +12,7 @@ moves to the "Already painted" table below - never leave a finished prompt in pl
 again. Before painting anything, check the file name under `D:\Project\Pokiwar_Art_FG38\Assets`: a file that
 exists is finished, do not repaint or overwrite it unless the user asks for a new version by name.
 
-## Status board - read this first (checked 2026-10-07 10:30 against `D:\Project\Pokiwar_Art_FG38\Assets`, 179 PNG)
+## Status board - read this first (checked 2026-10-07 12:34 against `D:\Project\Pokiwar_Art_FG38\Assets`, 227 PNG)
 
 Every piece of art the game needs has exactly one status. Codex paints ONLY rows marked `PAINT NEW`.
 
@@ -26,10 +26,10 @@ Every piece of art the game needs has exactly one status. Codex paints ONLY rows
 
 | # | What | Images | Status | Where |
 |---|---|---|---|---|
-| 1 | East Sea creatures, first forms: Samgong, Bebeboom, Ngoclam, Doimora, Voirong, boss Ongnamhai | 24 | `PAINT NEW` | Batch 14 below |
-| 2 | East Sea second forms: Ngoclam, Doimora, Voirong, Ongnamhai | 16 | `PAINT NEW` | Batch 15 below |
-| 3 | East Sea region art: world island, region emblem, battle background | 3 | `PAINT NEW` | Batch 15 below |
-| 4 | Battle effects: rage fire vortex, flame wisp, siphon mote, hit burst, sparkle | 5 | `PAINT NEW` | Batch 16 below |
+| 1 | East Sea creatures, first forms: Samgong, Bebeboom, Ngoclam, Doimora, Voirong, boss Ongnamhai | 24 | `HAVE` | painted 2026-10-07, in the game |
+| 2 | East Sea second forms: Ngoclam, Doimora, Voirong, Ongnamhai | 16 | `HAVE` | painted 2026-10-07, in the game |
+| 3 | East Sea region art: world island, region emblem, battle background | 3 | `HAVE` | painted 2026-10-07, in the game |
+| 4 | Battle effects: rage fire vortex, flame wisp, siphon mote, hit burst, sparkle | 5 | `HAVE` | painted 2026-10-07, in the game |
 | 5 | Card faces `face_*.png` (9 single-use cards + the one skill face) | 10 | `WAIT` | code-drawn by `Tools/DrawCardFaces.ps1`, in the game now; the user has not judged them yet |
 | 6 | Buff icons `buff_{heart,lightning,fire,shield}.png` | 4 | `CODE-DRAWN` | `Tools/DrawCardFaces.ps1`; heal and mana effects approved by the user 2026-10-07 |
 | 7 | UI primitives (`ui.circle`, `ui.ring`, `ui.round`, `ui.frame`, `ui.gradient`, bar shapes) | - | `CODE-DRAWN` | plain shapes, tinted in game |
@@ -39,92 +39,12 @@ Every piece of art the game needs has exactly one status. Codex paints ONLY rows
 | 9 | Second forms of Emberkit, Leafling, Tidepup; a card for Tidal Siphon | - | `NEVER` | decided 2026-10-06 |
 | 10 | Third and later forms of any creature | - | `WAIT` | the rule for when a pet takes a third form is not decided |
 
-Three batches, one Codex thread each: Batch 14 (24 images), Batch 15 (19 images), Batch 16 (5 images). The roster
-behind 14 and 15 is in `Docs/EastSea.md`.
-### Batch 14 - East Sea creatures, first forms (24 images)
+NOTHING is ordered right now: no row says `PAINT NEW`. Do not paint anything until a new batch is written here.
 
-```
-<shared preamble>
-Paint six sea creatures of the East Sea region. Each one is a real animal of that sea fused with one object from
-Vietnamese coastal life, so the silhouette reads as ONE creature, not an animal carrying a prop.
-Every creature: four poses (idle, attack, hit, defeat), 1024x1024, transparent background, the creature FACES
-LEFT, same scale and ground line across its four poses, same style as enemy_beetle_idle_01.png.
-Save to Battle/Characters/ under exactly these names:
-
-1. enemy_samgong_{idle,attack,hit,defeat}_01.png
-   SAMGONG - a horseshoe crab whose domed shell IS a Dong Son bronze drum: star in the centre of the shell,
-   concentric bands, verdigris green in the grooves, warm bronze on the ridges. Long spike tail held up like a
-   drumstick, small glowing eyes under the rim. Sturdy, low, earthy. Attack: slams its tail on its own shell,
-   a shock ring bursts out. Element Earth.
-2. enemy_bebeboom_{idle,attack,hit,defeat}_01.png
-   BEBEBOOM - a peacock mantis shrimp boxer: rainbow shell (teal, orange, magenta), two club arms shaped like
-   bundles of red firecrackers with short lit fuses, big round stalk eyes, cocky stance on its tail. Attack:
-   a punch so fast the club leaves a white flash and sparks. Element Fire.
-3. enemy_ngoclam_{idle,attack,hit,defeat}_01.png
-   NGOCLAM - a giant clam with thick wavy lips, mantle in electric blue and violet with gold spots, shell plated
-   like mother-of-pearl armour. It is almost shut: only two shy eyes and a faint glow show in the gap. Attack:
-   snaps shut, a blade of water shoots out. Element Metal.
-4. enemy_doimora_{idle,attack,hit,defeat}_01.png
-   DOIMORA - a hawksbill turtle with a sharp hooked beak and amber tortoiseshell plates; on its back grows a
-   tiny islet: sand, grass and one young sea-almond tree with square green fruit. Calm, old eyes. Attack: swings
-   its body, the square fruit fly like sling stones. Element Wood.
-5. enemy_voirong_{idle,attack,hit,defeat}_01.png
-   VOIRONG - a banded sea krait (blue-grey and black rings, paddle tail) coiled upward inside a small waterspout,
-   head above the spray, yellow snout, forked tongue. Attack: the spout bends forward like a whip. Element Water.
-6. boss_ongnamhai_form01_{idle,attack,hit,defeat}_01.png
-   ONGNAMHAI - the whale lord of the fishermen: a broad Bryde's whale with three ridges on its head, wearing a
-   red and gold ceremonial sash across the brow, bronze bells on its flippers, barnacles like old medals, two
-   round lantern-buoys trailing from its tail. Dignified, heavy, kind eyes but huge. Fills the frame more than
-   the others. Attack: blows a tall spout that falls as a wave. Element Water.
-```
-
-### Batch 15 - East Sea second forms and region art (19 images)
-
-```
-<shared preamble>
-Second forms of four East Sea creatures painted in Batch 14 - open the Batch 14 idle of each first and keep its
-colours and proportions; the second form is the same creature after it powers up, about 10% bigger and brighter.
-Four poses each (idle, attack, hit, defeat), 1024x1024, transparent, FACING LEFT. FRAMING: the second form must stand at least as tall in the frame as its first form and on the same ground line - no pose (the hit pose included) may be taller than 85% of the canvas, and the idle fills about 80% of its height. Batch 12 was painted at 68% and came out smaller than the first forms in the game. Save to Battle/Characters/:
-
-1. enemy_ngoclam_form02_{idle,attack,hit,defeat}_01.png
-   NGOCLAM RADIANT - the clam stands wide open: a great glowing pearl floats between the valves, light rays and
-   small orbiting pearls, the mantle flares like a crown.
-2. enemy_doimora_form02_{idle,attack,hit,defeat}_01.png
-   DOIMORA BEACON - the sea-almond tree is fully grown and in white-pink bloom, a small stone lighthouse stands
-   beside it with a warm beam, roots wrap the shell edges.
-3. enemy_voirong_form02_{idle,attack,hit,defeat}_01.png
-   VOIRONG TEMPEST - the waterspout is twice as tall and dark, lightning crawls inside it, the snake has grown a
-   dragon crest and whiskers, storm cloud ring around its head.
-4. boss_ongnamhai_form02_{idle,attack,hit,defeat}_01.png
-   ONGNAMHAI THE TIDE LORD - the whale rises on a wave shaped like a temple roof, sash turned to a gold mantle,
-   bells ringing with visible sound rings, a school of small glowing fish forms a halo.
-
-Region art, no creature:
-5. Meta/World/world_island_eastsea_v01.png - 1024, transparent: a cluster of coral reef and sand cays seen from
-   above at the same angle as world_island_sunny_v01.png: turquoise lagoon, one lighthouse, a fishing boat.
-6. Meta/Lobby/region_east_sea_v01.png - 256, transparent: emblem tile, a wave curling around a coral branch.
-7. Battle/Background/battle_bg_eastsea_v01.png - 2048x1152, opaque: a shallow reef flat at low tide, coral
-   heads and tide pools at the sides, open sea and far cays at the horizon; the middle and the two bottom
-   corners stay calm and empty (the board and the pets stand there), same camera as battle_bg_canyon_v01.png.
-```
-
-### Batch 16 - battle effects (5 images)
-
-```
-<shared preamble>
-Paint five battle effect sprites. No creature, no text. Transparent background. Save to Battle/FX/ (new folder):
-
-1. fx_rage_vortex_v01.png - 1024x512: a ring of fire lying flat on the ground, seen from the same 3/4 camera as
-   the creatures stand in: an ellipse about four times wider than tall, hollow in the middle (a creature stands
-   inside it), flames licking upward along the rim and leaning one way as if the ring spins. Orange core, red
-   edge, cream highlight, dark outline as in the set.
-2. fx_flame_wisp_v01.png - 256x256: one single tongue of flame, teardrop shape, pointing up, same colours.
-3. fx_siphon_mote_v01.png - 256x256: one comet-shaped wisp of energy, round head at the right and a tapering
-   tail to the left. Paint it in WHITE and light grey only, with the dark outline - the game tints it red for
-   stolen rage and blue for stolen mana.
-4. fx_hit_burst_v01.png - 512x512: an impact burst, a jagged star of 8-10 points, cream centre to orange tips.
-5. fx_sparkle_v01.png - 256x256: one four-point sparkle, WHITE and light grey only (tinted in game).
-```
+Framing rule for every future creature batch (learned from Batches 12, 14 and 15): the game shows a creature at
+the size it fills its canvas, so paint the idle at about 80% of the canvas height, keep every pose (the hit pose
+included) under 90%, and keep one ground line across the four poses. Creatures painted smaller are enlarged by
+`Tools/ReframeSecondForms.ps1` on the game side, which costs sharpness.
 ## Already painted - do NOT repaint
 
 | Batch | What | Folder | Files |
@@ -142,6 +62,9 @@ Paint five battle effect sprites. No creature, no text. Transparent background. 
 | 11 | forge, pet stones, world map | `Meta/Forge`, `Meta/Stones`, `Meta/World` | `forge_pedestal`, `forge_slot`, `forge_tab`, `stone_{metal,wood,water,fire,earth}`, `world_bg_sea`, `world_island_sunny`, `world_island_locked`, `world_ship` (`_v01.png`) |
 | 12 | second forms | `Battle/Characters` | `enemy_beetle_form02_*`, `enemy_psyling_form02_*` x8 |
 | 13 | town map | `Meta/Background`, `Meta/Home` | `home_bg_town_v01.png`, `home_{hunt,arena,evolve,challenge,shopcard,shopavatar,gift,wheel,rank}_v01.png` |
+| 14 | East Sea creatures, first forms | `Battle/Characters` | `enemy_{samgong,bebeboom,ngoclam,doimora,voirong}_{idle,attack,hit,defeat}_01.png`, `boss_ongnamhai_form01_*` x24 |
+| 15 | East Sea second forms and region art | `Battle/Characters`, `Meta/World`, `Meta/Lobby`, `Battle/Background` | `enemy_{ngoclam,doimora,voirong}_form02_*`, `boss_ongnamhai_form02_*` x16, `world_island_eastsea_v01.png`, `region_east_sea_v01.png`, `battle_bg_eastsea_v01.png` |
+| 16 | battle effects | `Battle/FX` | `fx_{rage_vortex,flame_wisp,siphon_mote,hit_burst,sparkle}_v01.png` |
 
 Do NOT paint either (decided 2026-10-06, they would never be shown): second forms for Emberkit, Leafling or
 Tidepup - the free starter never changes form and the other two are not obtainable; a card for Tidal Siphon -

@@ -134,10 +134,10 @@ namespace Pokiwar.Tests
                 }
             }
             var par = prog.CreateNewSave(0);
-            var boss = db.Encounter("enc.azurewing");
+            var boss = db.Encounter("enc.ongnamhai");
             par.Pet(par.SelectedPetUid).Level = boss.Level;
             par.Energy = boss.EnergyCost;
-            var atPar = prog.StartBattle(par, db.Node("node.3"), 5);
+            var atPar = prog.StartBattle(par, db.Node("node.6"), 5);
             Assert.GreaterOrEqual(atPar.Enemy.Stats.MaxHp, atPar.Player.Stats.MaxHp * 2, "the region boss has at least twice the HP of a pet of its own level");
         }
 
@@ -174,9 +174,9 @@ namespace Pokiwar.Tests
 
             var prog = new ProgressionService(db);
             var save = prog.CreateNewSave(0);
-            var e = new BattleEngine(prog.StartBattle(save, db.Node("node.2"), 3));
+            var e = new BattleEngine(prog.StartBattle(save, db.Node("node.3"), 3));
             var foe = e.State.Get(Side.Enemy);
-            Assert.AreEqual(db.Encounter("enc.psyling").SkillLevel, foe.SkillLevel(foe.Skills[0]));
+            Assert.AreEqual(db.Encounter("enc.ngoclam").SkillLevel, foe.SkillLevel(foe.Skills[0]));
         }
 
         [Test]
