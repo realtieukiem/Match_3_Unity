@@ -186,7 +186,7 @@ namespace Pokiwar.Domain
             var dunewing = new CreatureDef
             {
                 Id = "mon.dunewing", Name = "Dunewing", SpriteKey = "dunewing", Element = Element.Earth, ElementBonus = 1,
-                BaseStats = new StatBlock(2450, 140, 20, 800, 100), PerLevel = new StatBlock(130, 8, 2, 50, 0),
+                BaseStats = new StatBlock(1620, 97, 18, 750, 100), PerLevel = new StatBlock(130, 8, 2, 50, 0),
                 GemProfileId = "gem.monster", CardIds = { "card.herbal_salve" }
             };
             dunewing.Phases.Add(new BossPhaseDef
@@ -273,9 +273,9 @@ namespace Pokiwar.Domain
 
         private static void AddEncounters(ContentDatabase db)
         {
-            db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 3, AiPolicyId = "ai.normal", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1, ManaVsPlayer = 1f, RankPoints = 20 });
-            db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 6, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2, SkillLevel = 2, ManaVsPlayer = 1f, RankPoints = 40 });
-            db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 8, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4, ManaVsPlayer = 1.6f, SkillLevel = 3, RankPoints = 200 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.dunewing", Name = "Dunewing", CreatureId = "mon.dunewing", Level = 2, AiPolicyId = "ai.easy", RewardTableId = "rw.dunewing", EnergyCost = 1, Difficulty = 1, ManaVsPlayer = 1f, RankPoints = 20 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.psyling", Name = "Psyling", CreatureId = "mon.psyling", Level = 7, AiPolicyId = "ai.normal", RewardTableId = "rw.psyling", EnergyCost = 2, Difficulty = 2, SkillLevel = 2, ManaVsPlayer = 1f, RankPoints = 40 });
+            db.Encounters.Add(new EncounterDef { Id = "enc.azurewing", Name = "Azurewing (Boss)", CreatureId = "boss.azurewing", Level = 10, AiPolicyId = "ai.boss", RewardTableId = "rw.azurewing", IsBoss = true, EnergyCost = 3, Difficulty = 4, ManaVsPlayer = 1.6f, SkillLevel = 3, RankPoints = 200 });
         }
 
         private static void AddMap(ContentDatabase db)

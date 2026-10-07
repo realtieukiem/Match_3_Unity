@@ -16,9 +16,9 @@ MonoBehaviour:
     Id: enc.dunewing
     Name: Dunewing
     CreatureId: mon.dunewing
-    Level: 3
+    Level: 2
     StartHpPct: 1
-    AiPolicyId: ai.normal
+    AiPolicyId: ai.easy
     RewardTableId: rw.dunewing
     IsBoss: 0
     EnergyCost: 1

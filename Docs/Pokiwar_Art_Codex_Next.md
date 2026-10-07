@@ -6,17 +6,39 @@ and cannot be used again.
 
 ## Rule for this file
 
-This file lists ONLY what is still to paint. When a batch is painted its prompt is deleted from here and the
-batch moves to the "Already painted" table below - never leave a finished prompt in place, Codex would paint it
+Prompts exist here ONLY for what is still to paint; the status board names everything else so nothing is painted
+twice. When a batch is painted its prompt is deleted from here, its board row turns to `HAVE` and the batch
+moves to the "Already painted" table below - never leave a finished prompt in place, Codex would paint it
 again. Before painting anything, check the file name under `D:\Project\Pokiwar_Art_FG38\Assets`: a file that
 exists is finished, do not repaint or overwrite it unless the user asks for a new version by name.
 
-## Still to paint (checked 2026-10-07 against `D:\Project\Pokiwar_Art_FG38\Assets`)
+## Status board - read this first (checked 2026-10-07 10:30 against `D:\Project\Pokiwar_Art_FG38\Assets`, 179 PNG)
 
-Two batches, one Codex thread each: Batch 14 (East Sea creatures, first forms, 24 images) and Batch 15 (East Sea
-second forms and region art, 19 images). The roster behind them is in `Docs/EastSea.md`. Card faces and buff
-icons are NOT ordered: they are flat pictograms drawn by `Tools/DrawCardFaces.ps1` (2026-10-07).
+Every piece of art the game needs has exactly one status. Codex paints ONLY rows marked `PAINT NEW`.
 
+| Status | Meaning for Codex |
+|---|---|
+| `PAINT NEW` | The file does not exist anywhere. Paint it, save under the exact name. |
+| `HAVE` | Already painted and in the game. Do NOT paint, do NOT overwrite. |
+| `CODE-DRAWN` | Drawn by a script inside the game repo, not by Codex. Do NOT paint. |
+| `WAIT` | Undecided by the user. Do NOT paint until this row changes to `PAINT NEW`. |
+| `NEVER` | Decided: will never be shown. Do NOT paint. |
+
+| # | What | Images | Status | Where |
+|---|---|---|---|---|
+| 1 | East Sea creatures, first forms: Samgong, Bebeboom, Ngoclam, Doimora, Voirong, boss Ongnamhai | 24 | `PAINT NEW` | Batch 14 below |
+| 2 | East Sea second forms: Ngoclam, Doimora, Voirong, Ongnamhai | 16 | `PAINT NEW` | Batch 15 below |
+| 3 | East Sea region art: world island, region emblem, battle background | 3 | `PAINT NEW` | Batch 15 below |
+| 4 | Battle effects: rage fire vortex, flame wisp, siphon mote, hit burst, sparkle | 5 | `PAINT NEW` | Batch 16 below |
+| 5 | Card faces `face_*.png` (9 single-use cards + the one skill face) | 10 | `WAIT` | code-drawn by `Tools/DrawCardFaces.ps1`, in the game now; the user has not judged them yet |
+| 6 | Buff icons `buff_{heart,lightning,fire,shield}.png` | 4 | `CODE-DRAWN` | `Tools/DrawCardFaces.ps1`; heal and mana effects approved by the user 2026-10-07 |
+| 7 | UI primitives (`ui.circle`, `ui.ring`, `ui.round`, `ui.frame`, `ui.gradient`, bar shapes) | - | `CODE-DRAWN` | plain shapes, tinted in game |
+| 8 | Everything in Batches 1-13 (gems, starter pets, Dunewing, Psyling, Azurewing, cards art, elements, HUD, buttons, room, avatar, lobby, forge, stones, world map, town) | 179 files | `HAVE` | table "Already painted" below |
+| 9 | Second forms of Emberkit, Leafling, Tidepup; a card for Tidal Siphon | - | `NEVER` | decided 2026-10-06 |
+| 10 | Third and later forms of any creature | - | `WAIT` | the rule for when a pet takes a third form is not decided |
+
+Three batches, one Codex thread each: Batch 14 (24 images), Batch 15 (19 images), Batch 16 (5 images). The roster
+behind 14 and 15 is in `Docs/EastSea.md`.
 ### Batch 14 - East Sea creatures, first forms (24 images)
 
 ```
@@ -84,6 +106,23 @@ Region art, no creature:
    corners stay calm and empty (the board and the pets stand there), same camera as battle_bg_canyon_v01.png.
 ```
 
+### Batch 16 - battle effects (5 images)
+
+```
+<shared preamble>
+Paint five battle effect sprites. No creature, no text. Transparent background. Save to Battle/FX/ (new folder):
+
+1. fx_rage_vortex_v01.png - 1024x512: a ring of fire lying flat on the ground, seen from the same 3/4 camera as
+   the creatures stand in: an ellipse about four times wider than tall, hollow in the middle (a creature stands
+   inside it), flames licking upward along the rim and leaning one way as if the ring spins. Orange core, red
+   edge, cream highlight, dark outline as in the set.
+2. fx_flame_wisp_v01.png - 256x256: one single tongue of flame, teardrop shape, pointing up, same colours.
+3. fx_siphon_mote_v01.png - 256x256: one comet-shaped wisp of energy, round head at the right and a tapering
+   tail to the left. Paint it in WHITE and light grey only, with the dark outline - the game tints it red for
+   stolen rage and blue for stolen mana.
+4. fx_hit_burst_v01.png - 512x512: an impact burst, a jagged star of 8-10 points, cream centre to orange tips.
+5. fx_sparkle_v01.png - 256x256: one four-point sparkle, WHITE and light grey only (tinted in game).
+```
 ## Already painted - do NOT repaint
 
 | Batch | What | Folder | Files |

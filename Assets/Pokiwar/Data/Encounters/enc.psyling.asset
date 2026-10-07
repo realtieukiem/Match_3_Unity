@@ -16,7 +16,7 @@ MonoBehaviour:
     Id: enc.psyling
     Name: Psyling
     CreatureId: mon.psyling
-    Level: 6
+    Level: 7
     StartHpPct: 1
     AiPolicyId: ai.normal
     RewardTableId: rw.psyling

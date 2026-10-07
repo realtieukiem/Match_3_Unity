@@ -196,7 +196,8 @@ Labels: **VIDEO** seen in the clips, **USER_CONFIRMED** stated in the brief, **I
 | Sockets | 3 sockets, +6 ATK / +60 HP per tier, +1 element bonus per tier of the pet's element | PROVISIONAL |
 | Energy | 30 max, +1 per 5 min, node cost 1-3 | PROVISIONAL |
 
-Balance (AI vs AI, 40 seeds, pet Lv 3/5/8/12): nodes 1-2 always won in ~15 turns; boss 12% / 67% / 87% / 100%.
+Balance (AI vs AI, 40 seeds, pet Lv 1/3/5/8/12): node 1 (Dunewing, hunt Lv 2, `ai.easy`) 90 / 100 / 100 / 100 / 100%;
+node 2 (Psyling, hunt Lv 7) 0 / 12 / 32 / 57 / 87%; boss (Azurewing, hunt Lv 10) 0 / 0 / 2 / 17 / 77%.
 
 ## Art (FG38 set)
 

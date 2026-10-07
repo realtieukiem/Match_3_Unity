@@ -16,7 +16,7 @@ MonoBehaviour:
     Id: enc.azurewing
     Name: Azurewing (Boss)
     CreatureId: boss.azurewing
-    Level: 8
+    Level: 10
     StartHpPct: 1
     AiPolicyId: ai.boss
     RewardTableId: rw.azurewing
