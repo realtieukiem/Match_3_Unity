@@ -821,67 +821,96 @@ namespace Pokiwar.EditorTools
             var holder = NewUI("Qte", parent);
             Fill(holder);
             var qv = holder.gameObject.AddComponent<QteView>();
-            var dim = Img(holder, "Root", null, new Color(0, 0, 0, 0.65f), true);
+            var dim = Img(holder, "Root", null, new Color(0, 0, 0, 0.6f), true);
             Fill(dim.rectTransform);
             qv.Root = dim.gameObject;
-            var panel = Img(dim.transform, "Panel", "ui.round", new Color(0.12f, 0.14f, 0.24f, 0.97f), true);
-            At(panel.rectTransform, 0.5f, 0.5f, 0, 0, 1200, 660);
-            SkinPanel(panel, 48);
-            var p = panel.transform;
+            var panel = NewUI("Panel", dim.transform);
+            At(panel, 0.5f, 0.5f, 0, 10, 1440, 680);
+            Transform p = panel;
             var ribbon = Img(p, "Ribbon", "ui.round", new Color(0.2f, 0.24f, 0.4f));
-            At(ribbon.rectTransform, 0.5f, 1, 0, -6, 760, 84);
-            if (Skin(ribbon, "ui.ribbon", 40)) At(ribbon.rectTransform, 0.5f, 1, 0, 8, 820, 124);
+            At(ribbon.rectTransform, 0.5f, 0.5f, 0, 270, 760, 84);
+            if (Skin(ribbon, "ui.ribbon", 40)) At(ribbon.rectTransform, 0.5f, 0.5f, 0, 270, 820, 124);
             qv.Title = Txt(ribbon.transform, "Title", "Skill", 42, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
             Fill(qv.Title.rectTransform, 90, 90, 14, 22);
-            qv.DamageLabel = Txt(p, "Damage", "DMG 0", 64, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(qv.DamageLabel.rectTransform, 0.5f, 0.5f, 0, 188, 800, 80);
+
+            var track = Img(p, "Slider", "ui.round", new Color(0.25f, 0.25f, 0.32f));
+            At(track.rectTransform, 0.5f, 0.5f, -190, 150, 760, 58);
+            bool slider = Skin(track, "qte.track");
+            if (slider) At(track.rectTransform, 0.5f, 0.5f, -190, 150, 880, 82);
+            var barArea = NewUI("BarArea", track.transform);
+            At(barArea, 0.5f, 0.5f, 0, 0, slider ? 740 : 760, slider ? 40 : 58);
+            qv.BarArea = barArea;
+            var good = Img(barArea, "GoodZone", null, new Color(0.3f, 0.85f, 0.4f, 0.9f));
+            At(good.rectTransform, 0.5f, 0.5f, 0, 0, 130, Skin(good, "qte.good") ? 84 : 58);
+            qv.GoodZone = good.rectTransform;
+            var perfect = Img(barArea, "PerfectZone", null, Gold);
+            At(perfect.rectTransform, 0.5f, 0.5f, 0, 0, 40, Skin(perfect, "qte.perfect") ? 100 : 58);
+            qv.PerfectZone = perfect.rectTransform;
+            var marker = Img(barArea, "Marker", null, Color.white);
+            At(marker.rectTransform, 0.5f, 0.5f, 0, 0, 10, 78);
+            if (Skin(marker, Key("qte.knob", "qte.marker")))
+            {
+                marker.preserveAspect = true;
+                At(marker.rectTransform, 0.5f, 0.5f, 0, 0, 72, 72);
+            }
+            qv.Marker = marker.rectTransform;
+
+            var bar = Img(p, "Bar", "ui.round", new Color(0.05f, 0.2f, 0.26f, 0.95f));
+            At(bar.rectTransform, 0.5f, 0.5f, -190, 0, 900, 170);
+            if (Skin(bar, "qte.bar")) At(bar.rectTransform, 0.5f, 0.5f, -190, 0, 1000, 225);
+            bool tokens = art.ContainsKey("qte.token");
             for (int i = 0; i < 5; i++)
             {
-                var slot = Img(p, "Slot" + i, "ui.round", new Color(0.08f, 0.09f, 0.16f));
-                At(slot.rectTransform, 0.5f, 0.5f, -320 + i * 160, 70, 140, 140);
-                Skin(slot, "qte.slot");
-                qv.Arrows[i] = Img(slot.transform, "Arrow", "ui.arrow", Color.white);
+                var slot = Img(bar.transform, "Token" + i, "ui.round", new Color(0.08f, 0.09f, 0.16f));
+                At(slot.rectTransform, 0.5f, 0.5f, -330 + i * 165, 0, tokens ? 156 : 130, tokens ? 156 : 130);
+                if (!Skin(slot, "qte.token")) Skin(slot, "qte.slot");
+                qv.Tokens[i] = slot;
+                qv.Arrows[i] = Img(slot.transform, "Arrow", Key("qte.arrow", "ui.arrow"), Color.white);
                 qv.Arrows[i].preserveAspect = true;
-                At(qv.Arrows[i].rectTransform, 0.5f, 0.5f, 0, 0, 92, 92);
+                At(qv.Arrows[i].rectTransform, 0.5f, 0.5f, 0, 2, 84, 84);
             }
+            if (tokens)
+            {
+                qv.TokenIdle = art["qte.token"];
+                qv.TokenOk = art[Key("qte.token.ok", "qte.token")];
+                qv.TokenBad = art[Key("qte.token.bad", "qte.token")];
+            }
+
+            var flame = Img(p, "Flame", null, new Color(1f, 0.45f, 0.1f, 0f));
+            At(flame.rectTransform, 0.5f, 0.5f, 478, 0, 430, 161);
+            Skin(flame, "qte.flame");
+            qv.DamageLabel = Txt(flame.transform, "Damage", "0", 76, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(qv.DamageLabel.rectTransform, 0.5f, 0.5f, -30, 0, 300, 110);
+            var edge = qv.DamageLabel.gameObject.AddComponent<Outline>();
+            edge.effectColor = new Color(0.25f, 0.05f, 0f, 1f);
+            edge.effectDistance = new Vector2(3, -3);
+
             var tbg = Img(p, "TimerBg", "ui.round", new Color(1, 1, 1, 0.15f));
-            At(tbg.rectTransform, 0.5f, 0.5f, 0, -30, 820, 26);
-            bool tracked = Skin(tbg, "hud.track", 13);
+            At(tbg.rectTransform, 0.5f, 0.5f, -190, -128, 520, 24);
+            bool tracked = Skin(tbg, "hud.track", 12);
             qv.TimerFill = Img(tbg.transform, "Fill", null, Gold);
             qv.TimerFill.type = Image.Type.Filled;
             qv.TimerFill.fillMethod = Image.FillMethod.Horizontal;
-            if (tracked) Fill(qv.TimerFill.rectTransform, 7, 7, 7, 7);
+            if (tracked) Fill(qv.TimerFill.rectTransform, 6, 6, 6, 6);
             else Fill(qv.TimerFill.rectTransform);
-            var barArea = Img(p, "BarArea", "ui.round", new Color(0.25f, 0.25f, 0.32f));
-            At(barArea.rectTransform, 0.5f, 0.5f, 0, -92, 820, 58);
-            float zone = Skin(barArea, "hud.track", 26) ? 34 : 58;
-            qv.BarArea = barArea.rectTransform;
-            var good = Img(barArea.transform, "GoodZone", null, new Color(0.3f, 0.85f, 0.4f, 0.9f));
-            At(good.rectTransform, 0.5f, 0.5f, 0, 0, 130, zone);
-            qv.GoodZone = good.rectTransform;
-            var perfect = Img(barArea.transform, "PerfectZone", null, Gold);
-            At(perfect.rectTransform, 0.5f, 0.5f, 0, 0, 40, zone);
-            qv.PerfectZone = perfect.rectTransform;
-            var marker = Img(barArea.transform, "Marker", null, Color.white);
-            At(marker.rectTransform, 0.5f, 0.5f, 0, 0, 10, 78);
-            if (Skin(marker, "qte.marker"))
+
+            qv.Feedback = Txt(p, "Feedback", "", 60, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(qv.Feedback.rectTransform, 0.5f, 0.5f, 0, -205, 520, 76);
+            qv.Hint = Txt(p, "Hint", "", 24, new Color(1, 1, 1, 0.85f), TextAnchor.MiddleCenter);
+            At(qv.Hint.rectTransform, 0.5f, 0.5f, 0, -318, 1100, 40);
+            qv.Up = ArrowButton(p, "Up", -500, -200, 0);
+            qv.Down = ArrowButton(p, "Down", -500, -310, 180);
+            qv.Left = ArrowButton(p, "Left", -605, -255, 90);
+            qv.Right = ArrowButton(p, "Right", -395, -255, -90);
+            qv.Strike = Btn(p, "Strike", "STRIKE", Red, 40, out var strikeLabel);
+            At(Rt(qv.Strike), 0.5f, 0.5f, 500, -255, 240, 120);
+            if (Skin((Image)qv.Strike.targetGraphic, "qte.button.strike"))
             {
-                marker.preserveAspect = true;
-                At(marker.rectTransform, 0.5f, 0.5f, 0, 0, 26, 104);
+                At(Rt(qv.Strike), 0.5f, 0.5f, 500, -255, 280, 140);
+                strikeLabel.text = "";
             }
-            qv.Marker = marker.rectTransform;
-            qv.Feedback = Txt(p, "Feedback", "", 56, Gold, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(qv.Feedback.rectTransform, 0.5f, 0.5f, 0, -170, 560, 70);
-            qv.Hint = Txt(p, "Hint", "", 24, new Color(1, 1, 1, 0.8f), TextAnchor.MiddleCenter);
-            At(qv.Hint.rectTransform, 0.5f, 0.5f, 0, -280, 1100, 40);
-            qv.Up = ArrowButton(p, "Up", -440, -140, 0);
-            qv.Down = ArrowButton(p, "Down", -440, -250, 180);
-            qv.Left = ArrowButton(p, "Left", -545, -195, 90);
-            qv.Right = ArrowButton(p, "Right", -335, -195, -90);
-            qv.Strike = Btn(p, "Strike", "STRIKE", Red, 40, out _);
-            At(Rt(qv.Strike), 0.5f, 0.5f, 440, -195, 240, 120);
             dim.gameObject.SetActive(false);
-            Portrait(panel, 0.5f, 0.5f, 0, 0, 1200, 660, 0.86f);
+            Portrait(panel, 0.5f, 0.5f, 0, 10, 1440, 680, 0.74f);
             return qv;
         }
 
@@ -889,8 +918,11 @@ namespace Pokiwar.EditorTools
         {
             var b = Btn(p, name, "", Blue, 10, out _);
             At(Rt(b), 0.5f, 0.5f, x, y, 96, 96);
-            var a = Img(b.transform, "Arrow", "ui.arrow", Color.white);
-            At(a.rectTransform, 0.5f, 0.5f, 0, 0, 64, 64);
+            bool round = Skin((Image)b.targetGraphic, "qte.button.dir");
+            if (round) At(Rt(b), 0.5f, 0.5f, x, y, 108, 108);
+            var a = Img(b.transform, "Arrow", round ? Key("qte.arrow", "ui.arrow") : "ui.arrow", Color.white);
+            a.preserveAspect = true;
+            At(a.rectTransform, 0.5f, 0.5f, 0, 0, round ? 58 : 64, round ? 58 : 64);
             a.rectTransform.localEulerAngles = new Vector3(0, 0, rot);
             return b;
         }

@@ -16,6 +16,10 @@ namespace Pokiwar.UI
         public Text Feedback;
         public Text Hint;
         public Image[] Arrows = new Image[5];
+        public Image[] Tokens = new Image[5];
+        public Sprite TokenIdle;
+        public Sprite TokenOk;
+        public Sprite TokenBad;
         public Image TimerFill;
         public RectTransform BarArea;
         public RectTransform Marker;
@@ -51,6 +55,21 @@ namespace Pokiwar.UI
             }
         }
 
+        private bool Painted => TokenOk != null && TokenBad != null;
+
+        private GameObject Slot(int i) => Painted && Tokens[i] != null ? Tokens[i].gameObject : Arrows[i].gameObject;
+
+        private void Mark(int i, bool ok, float alpha)
+        {
+            if (Painted && Tokens[i] != null)
+            {
+                Tokens[i].sprite = ok ? TokenOk : TokenBad;
+                Tokens[i].color = new Color(1f, 1f, 1f, alpha);
+                return;
+            }
+            Arrows[i].color = ok ? new Color(0.35f, 1f, 0.4f, alpha) : new Color(1f, 0.3f, 0.3f, alpha);
+        }
+
         private void ReadKeys()
         {
             if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) pendingDir = QteDir.Up;
@@ -72,14 +91,19 @@ namespace Pokiwar.UI
             int n = Mathf.Min(qte.ArrowCount, Arrows.Length);
             for (int i = 0; i < Arrows.Length; i++)
             {
-                Arrows[i].gameObject.SetActive(i < n);
+                Slot(i).SetActive(i < n);
                 if (i < n)
                 {
                     Arrows[i].rectTransform.localEulerAngles = new Vector3(0, 0, Angle(check.Sequence[i]));
-                    Arrows[i].color = new Color(1f, 1f, 1f, 0.9f);
+                    Arrows[i].color = new Color(1f, 1f, 1f, Painted ? 1f : 0.9f);
+                    if (Painted && Tokens[i] != null)
+                    {
+                        Tokens[i].sprite = TokenIdle;
+                        Tokens[i].color = Color.white;
+                    }
                 }
             }
-            DamageLabel.text = "DMG " + check.PreviewBase;
+            DamageLabel.text = "" + check.PreviewBase;
             float barHalf = BarArea.rect.width * 0.5f;
             GoodZone.sizeDelta = new Vector2(qte.GoodHalfWidth * barHalf * 2f, GoodZone.sizeDelta.y);
             PerfectZone.sizeDelta = new Vector2(qte.PerfectHalfWidth * barHalf * 2f, PerfectZone.sizeDelta.y);
@@ -120,16 +144,16 @@ namespace Pokiwar.UI
                 if (input.HasValue)
                 {
                     bool ok = input.Value == check.Sequence[idx];
-                    Arrows[idx].color = ok ? new Color(0.35f, 1f, 0.4f) : new Color(1f, 0.3f, 0.3f);
+                    Mark(idx, ok, 1f);
                     if (ok) correct++;
                     AudioDirector.Sfx(ok ? "qte.ok" : "qte.bad", ok ? Mathf.Pow(2f, correct * 2f / 12f) : 1f, 1f, false);
                     if (ok && VfxLayer.Instance != null) VfxLayer.Instance.Burst(Arrows[idx].rectTransform.position, new Color(0.4f, 1f, 0.5f), 10, 420f, 16f, 0.4f, 600f, VfxLayer.Instance.Star);
-                    DamageLabel.text = "DMG " + QteMath.Stepped(check.PreviewBase, qte, correct);
+                    DamageLabel.text = "" + QteMath.Stepped(check.PreviewBase, qte, correct);
                     idx++;
                 }
                 if (!scripted.HasValue) yield return null;
             }
-            for (int i = idx; i < n; i++) Arrows[i].color = new Color(1f, 0.3f, 0.3f, 0.6f);
+            for (int i = idx; i < n; i++) Mark(i, false, 0.6f);
 
             SetButtons(false, !scripted.HasValue);
             Hint.text = scripted.HasValue ? "" : "Tap STRIKE (or Space) when the marker is in the gold zone";
@@ -167,7 +191,7 @@ namespace Pokiwar.UI
             var result = new QteResult(correct, timing);
             Feedback.text = timing == QteTiming.Perfect ? "PERFECT!" : timing == QteTiming.Good ? "GOOD" : "MISS";
             Feedback.color = timing == QteTiming.Perfect ? new Color(1f, 0.85f, 0.2f) : timing == QteTiming.Good ? new Color(0.4f, 1f, 0.5f) : new Color(1f, 0.4f, 0.4f);
-            DamageLabel.text = "DMG " + QteMath.Apply(check.PreviewBase, qte, result);
+            DamageLabel.text = "" + QteMath.Apply(check.PreviewBase, qte, result);
             AudioDirector.Sfx(timing == QteTiming.Perfect ? "qte.perfect" : timing == QteTiming.Good ? "qte.good" : "qte.miss", 1f, 1f, false);
             if (timing != QteTiming.Miss && VfxLayer.Instance != null)
             {

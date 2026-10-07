@@ -312,7 +312,7 @@ namespace Pokiwar.EditorTools
             var bc = app.Battle;
             Check(app.BattleScreen.activeSelf && bc.Engine != null, "battle starts");
             yield return WaitFor(() => bc.IntroVs.gameObject.activeInHierarchy, 3);
-            Check(bc.Intro.gameObject.activeSelf && bc.IntroPlayer.sprite == bc.PlayerHud.Portrait.sprite && bc.IntroEnemy.sprite == bc.EnemyHud.Portrait.sprite, "VS intro shows both fighters");
+            Check(bc.Intro.gameObject.activeSelf && bc.IntroPlayer.sprite != null && bc.IntroEnemy.sprite != null && bc.PlayerHud.Portrait.sprite.name.StartsWith(bc.IntroPlayer.sprite.name) && bc.EnemyHud.Portrait.sprite.name.StartsWith(bc.IntroEnemy.sprite.name), "VS intro shows both fighters");
             yield return new WaitForSecondsRealtime(0.25f);
             yield return Capture("03c_intro_vs");
             yield return WaitFor(() => bc.IntroFight.gameObject.activeInHierarchy, 3);
@@ -366,7 +366,12 @@ namespace Pokiwar.EditorTools
             bc.PlayerHud.Setup(bc.Engine.State.Get(Side.Player), app.Sprites, true);
             bc.PlayerHud.SetTurn(true);
             UnityEngine.Object.Destroy(idleLib);
-            Check(bc.PlayerHud.IdleFrameCount == 1, "a creature with one idle picture keeps breathing only");
+            Check(bc.PlayerHud.IdleFrameCount == 3 && bc.EnemyHud.IdleFrameCount == 3, "both creatures carry their three painted idle frames (" + bc.PlayerHud.IdleFrameCount + ", " + bc.EnemyHud.IdleFrameCount + ")");
+            int idleMissing = 0;
+            foreach (var idleKey in new[] { "emberkit", "samgong", "bebeboom", "ngoclam", "doimora", "voirong", "ongnamhai", "ngoclam_evolved", "doimora_evolved", "voirong_evolved", "ongnamhai_evolved" })
+                foreach (var idleFrame in new[] { ".idle2", ".idle3" })
+                    if (!app.Sprites.Has(idleKey + idleFrame) || (idleKey != "emberkit" && !app.Sprites.Has("right." + idleKey + idleFrame))) idleMissing++;
+            Check(idleMissing == 0, "every East Sea creature and Emberkit has idle frames 2 and 3 (" + idleMissing + " missing)");
             var firstForm = bc.EnemyHud.Portrait.sprite;
             var secondForm = app.Sprites.Get("ngoclam" + SpriteKeys.EvolvedSuffix);
             Check(Mathf.Approximately(secondForm.rect.width / secondForm.rect.height, firstForm.rect.width / firstForm.rect.height), "a second form is framed on the same canvas as its first form");
@@ -376,10 +381,12 @@ namespace Pokiwar.EditorTools
             bc.EnemyHud.SetSprite(firstForm);
             bc.Qte.Root.SetActive(true);
             bc.Qte.Title.text = "Emberkit - Blaze Burst";
-            bc.Qte.DamageLabel.text = "DMG 500";
+            bc.Qte.DamageLabel.text = "500";
+            bc.Qte.Tokens[0].sprite = bc.Qte.TokenOk;
+            bc.Qte.Tokens[1].sprite = bc.Qte.TokenBad;
             yield return null;
-            var qteSlot = bc.Qte.Arrows[0].transform.parent.GetComponent<Image>();
-            Check(qteSlot != null && qteSlot.sprite != null && qteSlot.sprite.name == "qte_slot" && bc.Qte.Marker.GetComponent<Image>().sprite != null, "the arrow mini game wears its painted slots and marker");
+            var qteSlot = bc.Qte.Tokens[2];
+            Check(qteSlot != null && qteSlot.sprite != null && qteSlot.sprite.name == "qte_token" && bc.Qte.TokenOk != null && bc.Qte.TokenBad != null && bc.Qte.Marker.GetComponent<Image>().sprite.name == "qte_knob", "the arrow mini game wears its painted bar, tokens and slider knob");
             CheckOnScreen(bc.Qte.Root.transform, "arrow mini game");
             yield return Capture("04a1_qte");
             bc.Qte.Root.SetActive(false);

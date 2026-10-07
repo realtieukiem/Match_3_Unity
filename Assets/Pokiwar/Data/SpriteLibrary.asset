@@ -166,6 +166,26 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 724fcb73185220744a6a15313ea5921e, type: 3}
   - Key: qte.marker
     Sprite: {fileID: 21300000, guid: 790486b0e7831c345a5b1da9379c2540, type: 3}
+  - Key: qte.bar
+    Sprite: {fileID: 21300000, guid: 96856c287e06b4b409f7796d5ff84bf8, type: 3}
+  - Key: qte.token
+    Sprite: {fileID: 21300000, guid: 8d1050eff71e96c40962c5d4cfc80691, type: 3}
+  - Key: qte.token.ok
+    Sprite: {fileID: 21300000, guid: 132b7d5b84c258449a9896dd58f2db3f, type: 3}
+  - Key: qte.token.bad
+    Sprite: {fileID: 21300000, guid: c730d67b88f3c304dbe79be390bf5c82, type: 3}
+  - Key: qte.arrow
+    Sprite: {fileID: 21300000, guid: 19d2bdbcf034c55409dbadf020fdf78b, type: 3}
+  - Key: qte.track
+    Sprite: {fileID: 21300000, guid: 783c46a79eb4607478f21cfdcd7a0b94, type: 3}
+  - Key: qte.good
+    Sprite: {fileID: 21300000, guid: ffab87c97a836464aa8d3d89132501d4, type: 3}
+  - Key: qte.perfect
+    Sprite: {fileID: 21300000, guid: d0248cac12c5c0148b8791c9fda06400, type: 3}
+  - Key: qte.knob
+    Sprite: {fileID: 21300000, guid: 29e114bb440cf6c47a6bce8703592fe0, type: 3}
+  - Key: qte.flame
+    Sprite: {fileID: 21300000, guid: 8785452fc0345ad45b17ac700078a361, type: 3}
   - Key: fx.slash
     Sprite: {fileID: 21300000, guid: a8dd9f23dc7714e4ba03f11a498d142f, type: 3}
   - Key: fx.heal
@@ -374,6 +394,50 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 899146f8f62fede43bce994a69364e2d, type: 3}
   - Key: ongnamhai_evolved.defeat
     Sprite: {fileID: 21300000, guid: 3781db07238be9348a3a66db407a83ee, type: 3}
+  - Key: emberkit.idle2
+    Sprite: {fileID: 21300000, guid: b205b2502fc42b34695368c9087db145, type: 3}
+  - Key: emberkit.idle3
+    Sprite: {fileID: 21300000, guid: 3478ccb5b386b9d44a2c14e70f435133, type: 3}
+  - Key: samgong.idle2
+    Sprite: {fileID: 21300000, guid: 043e158cf06e8f741b496385c1ad0efe, type: 3}
+  - Key: samgong.idle3
+    Sprite: {fileID: 21300000, guid: 628f93078ea4bd645addc112a3c51832, type: 3}
+  - Key: bebeboom.idle2
+    Sprite: {fileID: 21300000, guid: c9d72ef8d7c5ec340981250a8424607f, type: 3}
+  - Key: bebeboom.idle3
+    Sprite: {fileID: 21300000, guid: 6b76349f3cbeb444b9da87dd13e9eadb, type: 3}
+  - Key: ngoclam.idle2
+    Sprite: {fileID: 21300000, guid: b99554c8675748641b05e9e9607cb82d, type: 3}
+  - Key: ngoclam.idle3
+    Sprite: {fileID: 21300000, guid: 8cd1c8cfb75a9ff4b9e713b50dfcd82c, type: 3}
+  - Key: doimora.idle2
+    Sprite: {fileID: 21300000, guid: 4cf969870b4ef0147ae72f8014f3d97c, type: 3}
+  - Key: doimora.idle3
+    Sprite: {fileID: 21300000, guid: c11bde020ff183c42987bcd1b3b08b04, type: 3}
+  - Key: voirong.idle2
+    Sprite: {fileID: 21300000, guid: fd3a5b6a28b1e8244a5bc0f5fc4cbf1e, type: 3}
+  - Key: voirong.idle3
+    Sprite: {fileID: 21300000, guid: b61d2812deae21d4e9efb2f50b8df502, type: 3}
+  - Key: ongnamhai.idle2
+    Sprite: {fileID: 21300000, guid: 2eed07d90c6eed74aaadacdb064dff03, type: 3}
+  - Key: ongnamhai.idle3
+    Sprite: {fileID: 21300000, guid: e712934bc76e337458a7e4862bd83235, type: 3}
+  - Key: ngoclam_evolved.idle2
+    Sprite: {fileID: 21300000, guid: 11f42b24b50b828409107bb8475ae5e0, type: 3}
+  - Key: ngoclam_evolved.idle3
+    Sprite: {fileID: 21300000, guid: e19177e555390a143b7b390c197fa248, type: 3}
+  - Key: doimora_evolved.idle2
+    Sprite: {fileID: 21300000, guid: b3e30c0eca0d1ea4396a31ecf1dfc2e7, type: 3}
+  - Key: doimora_evolved.idle3
+    Sprite: {fileID: 21300000, guid: 5b5f2f8309c345d48bd6171c1ad041fe, type: 3}
+  - Key: voirong_evolved.idle2
+    Sprite: {fileID: 21300000, guid: c46f0d623c0c891488befc69f521f6bf, type: 3}
+  - Key: voirong_evolved.idle3
+    Sprite: {fileID: 21300000, guid: 45e4fa45edab2b344830763eeeaa6799, type: 3}
+  - Key: ongnamhai_evolved.idle2
+    Sprite: {fileID: 21300000, guid: 6d23d3d1d80739b489fefb9a39654e46, type: 3}
+  - Key: ongnamhai_evolved.idle3
+    Sprite: {fileID: 21300000, guid: 67fbcd011a61e974985270c0bb481ecc, type: 3}
   - Key: fx.vortex
     Sprite: {fileID: 21300000, guid: 0bbd0ed880d0a624a9c26e66005463ab, type: 3}
   - Key: fx.wisp
@@ -415,23 +479,23 @@ MonoBehaviour:
   - Key: face.card.mana_potion
     Sprite: {fileID: 21300000, guid: d6a2f25092177994faed50f84d781bdb, type: 3}
   - Key: face.card.herbal_salve
-    Sprite: {fileID: 21300000, guid: b8e0a975675ebf04086ea042d6905041, type: 3}
+    Sprite: {fileID: 21300000, guid: 9d92fc88dae23384a8d9de655a0b20f3, type: 3}
   - Key: face.card.iron_skin
-    Sprite: {fileID: 21300000, guid: 1f85e7f1da86afd49bffc336c5475da7, type: 3}
+    Sprite: {fileID: 21300000, guid: 6126ec4bf4aa3eb4aad13451fe208cde, type: 3}
   - Key: face.card.fire_bolt
     Sprite: {fileID: 21300000, guid: 2aa9b3d6a8219d64b98b1abc93585672, type: 3}
   - Key: face.card.meteor
-    Sprite: {fileID: 21300000, guid: 355e6992c3e785a438efcdbdff3a2e29, type: 3}
+    Sprite: {fileID: 21300000, guid: cfdaea2def63c9744a8fd5110275a62a, type: 3}
   - Key: face.card.summon_sprite
-    Sprite: {fileID: 21300000, guid: 82c8052dd85fc7941a4cfa4dfbf8cd19, type: 3}
+    Sprite: {fileID: 21300000, guid: 7dbd1f875012d444fbba227bca254d2c, type: 3}
   - Key: face.card.war_cry
-    Sprite: {fileID: 21300000, guid: cb1cf0a2dbb4a1c40b544171e3484cba, type: 3}
+    Sprite: {fileID: 21300000, guid: 1d880aad1ca7b384cab27ecd4cac2af0, type: 3}
   - Key: face.card.mana_leech
-    Sprite: {fileID: 21300000, guid: 18a0a592056049f4a8ed55cd6f620c8d, type: 3}
+    Sprite: {fileID: 21300000, guid: 1631b4add548cd2428686436438f1f77, type: 3}
   - Key: face.card.rage_ember
-    Sprite: {fileID: 21300000, guid: baab0963749009945885ec982af5b956, type: 3}
+    Sprite: {fileID: 21300000, guid: 9cc03bb51db62394a9d8aceb5c75f7dd, type: 3}
   - Key: face.skill
-    Sprite: {fileID: 21300000, guid: ef360900b3ce14241a0fd761ce1a414c, type: 3}
+    Sprite: {fileID: 21300000, guid: d3e95e4028f73254a9d02ee77284ae3a, type: 3}
   - Key: buff.Heart
     Sprite: {fileID: 21300000, guid: a867bf9d5ceb1d3409bef50dfed17dcd, type: 3}
   - Key: buff.Lightning
@@ -584,6 +648,46 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: f4d6537f2e1dcaa46907e900f38ffbf6, type: 3}
   - Key: right.ongnamhai_evolved.defeat
     Sprite: {fileID: 21300000, guid: ed8895c1d3429f944ad8e7afe7d22260, type: 3}
+  - Key: right.samgong.idle2
+    Sprite: {fileID: 21300000, guid: 7d25288446554f54486870017652971e, type: 3}
+  - Key: right.samgong.idle3
+    Sprite: {fileID: 21300000, guid: faa60be55cde1514fadf80a43203a573, type: 3}
+  - Key: right.bebeboom.idle2
+    Sprite: {fileID: 21300000, guid: 29c6de761b2eb42488a855ebecf6bb6a, type: 3}
+  - Key: right.bebeboom.idle3
+    Sprite: {fileID: 21300000, guid: 37f130c08e175154c9231be4b158776c, type: 3}
+  - Key: right.ngoclam.idle2
+    Sprite: {fileID: 21300000, guid: 8e98d4d65a8df5d4193cf8e27ed87d52, type: 3}
+  - Key: right.ngoclam.idle3
+    Sprite: {fileID: 21300000, guid: d89bd194e01d8d24994f5ea88b36843b, type: 3}
+  - Key: right.doimora.idle2
+    Sprite: {fileID: 21300000, guid: 1b5baaf0bad664b4c8cd6167b36d24ab, type: 3}
+  - Key: right.doimora.idle3
+    Sprite: {fileID: 21300000, guid: ee1234a6ecc1e014692893b522743678, type: 3}
+  - Key: right.voirong.idle2
+    Sprite: {fileID: 21300000, guid: 6cbae29766774914aa0f9476e17fbbad, type: 3}
+  - Key: right.voirong.idle3
+    Sprite: {fileID: 21300000, guid: 35a2236a4a62062428dec452a313a081, type: 3}
+  - Key: right.ongnamhai.idle2
+    Sprite: {fileID: 21300000, guid: 24b64940f189453488c16179b11610ba, type: 3}
+  - Key: right.ongnamhai.idle3
+    Sprite: {fileID: 21300000, guid: 43be304606d9f434ab6735cfdf7abcf7, type: 3}
+  - Key: right.ngoclam_evolved.idle2
+    Sprite: {fileID: 21300000, guid: 2d008de86bc136b419c5a83bca61bb44, type: 3}
+  - Key: right.ngoclam_evolved.idle3
+    Sprite: {fileID: 21300000, guid: e7c26e7059a8af047b0ceca71124c47b, type: 3}
+  - Key: right.doimora_evolved.idle2
+    Sprite: {fileID: 21300000, guid: f736f3cc0fb4b3340be8bdfcc7ad8ea2, type: 3}
+  - Key: right.doimora_evolved.idle3
+    Sprite: {fileID: 21300000, guid: 467c1e51d28f2fc4096da34fe54b999a, type: 3}
+  - Key: right.voirong_evolved.idle2
+    Sprite: {fileID: 21300000, guid: 52fda2154c1922445804dc98f9caeb6b, type: 3}
+  - Key: right.voirong_evolved.idle3
+    Sprite: {fileID: 21300000, guid: 67f10f5252310754a899b4a0d182c5a2, type: 3}
+  - Key: right.ongnamhai_evolved.idle2
+    Sprite: {fileID: 21300000, guid: 218955965aab72149907868dbd2123c1, type: 3}
+  - Key: right.ongnamhai_evolved.idle3
+    Sprite: {fileID: 21300000, guid: 74a51f28cb76df94cb8ee0f8aa1ee964, type: 3}
   - Key: stone.Neutral
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   Fallback: {fileID: 21300000, guid: 47a677a696f0f5f419663a7ebdd0c7e3, type: 3}
