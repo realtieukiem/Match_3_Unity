@@ -72,6 +72,7 @@ $Looks = @{
     shield = @((C 190 146 255), (C 92 48 192), (C 255 255 255 75))
     attack = @((C 96 104 140), (C 38 40 64), (C 255 204 44 215))
     leech  = @((C 124 218 226), (C 26 116 136), (C 255 255 255 75))
+    rage   = @((C 255 110 70), (C 198 30 30), (C 255 222 64 225))
     skill  = @((C 255 196 54), (C 238 100 22), (C 255 240 130 150))
 }
 function Face([string]$name, [string]$look, [scriptblock]$draw) {
@@ -97,6 +98,11 @@ $made += Face 'herbal_salve' 'hp' { param($g) Glyph $g $gx $gy 1.0 {
     Shape $g (Heart) (C 255 255 255)
     $b = New-Object System.Drawing.SolidBrush (C 40 170 70)
     $g.FillRectangle($b, -13, -42, 26, 84); $g.FillRectangle($b, -42, -13, 84, 26); $b.Dispose()
+} }
+
+$made += Face 'rage_ember' 'rage' { param($g) Glyph $g $gx $gy 1.0 {
+    Shape $g (Flame) (C 255 255 255)
+    Glyph $g 0 22 0.56 { Shape $g (Flame) (C 255 140 40) 0 }
 } }
 
 $made += Face 'iron_skin' 'shield' { param($g) Glyph $g $gx $gy 1.0 {

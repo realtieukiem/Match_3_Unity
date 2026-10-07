@@ -129,16 +129,18 @@ namespace Pokiwar.Domain
                 new EffectSpec(EffectKind.AddMana, TargetKind.Self, 150)));
             db.Cards.Add(Card("card.herbal_salve", "Herbal Salve", "Heal 12% max HP.", 100, 0,
                 new EffectSpec(EffectKind.HealPctMax, TargetKind.Self, 0.12f)));
-            db.Cards.Add(Card("card.fire_bolt", "Fire Bolt", "Deal 130% ATK damage.", 50, 0,
-                new EffectSpec(EffectKind.AtkDamage, TargetKind.Opponent, 1.3f)));
-            db.Cards.Add(Card("card.summon_sprite", "Summon Sprite", "Sprite hits for 50% ATK on your next 3 turns.", 80, 0,
-                new EffectSpec(EffectKind.Summon, TargetKind.Self, 0.50f, 3, "Sprite")));
+            db.Cards.Add(Card("card.fire_bolt", "Fire Bolt", "Deal 150% ATK damage.", 50, 0,
+                new EffectSpec(EffectKind.AtkDamage, TargetKind.Opponent, 1.5f)));
+            db.Cards.Add(Card("card.summon_sprite", "Summon Sprite", "Sprite hits for 60% ATK on your next 3 turns.", 60, 0,
+                new EffectSpec(EffectKind.Summon, TargetKind.Self, 0.60f, 3, "Sprite")));
             db.Cards.Add(Card("card.iron_skin", "Iron Skin", "Gain a shield of 15% max HP.", 0, 30,
                 new EffectSpec(EffectKind.AddShieldPctMax, TargetKind.Self, 0.15f)));
             db.Cards.Add(Card("card.mana_leech", "Mana Leech", "Drain 40% of the enemy's current mana.", 0, 20,
                 new EffectSpec(EffectKind.DrainManaPctOfCurrent, TargetKind.Opponent, 0.40f)));
             db.Cards.Add(Card("card.war_cry", "War Cry", "+30% ATK for 3 turns.", 0, 30,
                 new EffectSpec(EffectKind.BuffAtk, TargetKind.Self, 0.30f, 3, "War Cry")));
+            db.Cards.Add(Card("card.rage_ember", "Rage Ember", "+25 rage. You can still match this turn.", 0, 0,
+                new EffectSpec(EffectKind.AddRage, TargetKind.Self, 25)));
             var finisher = Card("card.meteor", "Meteor", "Deal 350% ATK damage. Ends your turn.", 300, 0,
                 new EffectSpec(EffectKind.AtkDamage, TargetKind.Opponent, 3.5f));
             finisher.EndTurnAfterUse = true;
@@ -370,6 +372,7 @@ namespace Pokiwar.Domain
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Wood, Tier = 1, Count = 3 },
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 2, Chance = 0.6f },
                     new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 3 },
+                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.rage_ember", FirstClearOnly = true },
                     new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1, Chance = 0.4f }
                 }
             });
@@ -414,12 +417,12 @@ namespace Pokiwar.Domain
         private static void AddMap(ContentDatabase db)
         {
             db.Map.Regions.Add(new RegionDef { Id = "region.east_sea", Name = "East Sea" });
-            db.Map.Nodes.Add(new MapNodeDef { Id = "node.1", Name = "Drum Shoal", RegionId = "region.east_sea", EncounterId = "enc.samgong", X = 0.10f, Y = 0.34f, WinsRequired = 1 });
-            db.Map.Nodes.Add(new MapNodeDef { Id = "node.2", Name = "Firecracker Reef", RegionId = "region.east_sea", EncounterId = "enc.bebeboom", RequiresNodeId = "node.1", X = 0.26f, Y = 0.64f, WinsRequired = 2 });
-            db.Map.Nodes.Add(new MapNodeDef { Id = "node.3", Name = "Pearl Garden", RegionId = "region.east_sea", EncounterId = "enc.ngoclam", RequiresNodeId = "node.2", X = 0.42f, Y = 0.34f, WinsRequired = 2 });
-            db.Map.Nodes.Add(new MapNodeDef { Id = "node.4", Name = "Almond Cay", RegionId = "region.east_sea", EncounterId = "enc.doimora", RequiresNodeId = "node.3", X = 0.58f, Y = 0.64f, WinsRequired = 2 });
-            db.Map.Nodes.Add(new MapNodeDef { Id = "node.5", Name = "Spout Strait", RegionId = "region.east_sea", EncounterId = "enc.voirong", RequiresNodeId = "node.4", X = 0.74f, Y = 0.34f, WinsRequired = 3 });
-            db.Map.Nodes.Add(new MapNodeDef { Id = "node.6", Name = "Whale Lord's Deep", RegionId = "region.east_sea", EncounterId = "enc.ongnamhai", RequiresNodeId = "node.5", X = 0.90f, Y = 0.60f, WinsRequired = 3 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.1", Name = "Drum Shoal", RegionId = "region.east_sea", EncounterId = "enc.samgong", X = 0.14f, Y = 0.72f, WinsRequired = 1 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.2", Name = "Firecracker Reef", RegionId = "region.east_sea", EncounterId = "enc.bebeboom", RequiresNodeId = "node.1", X = 0.284f, Y = 0.30f, WinsRequired = 2 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.3", Name = "Pearl Garden", RegionId = "region.east_sea", EncounterId = "enc.ngoclam", RequiresNodeId = "node.2", X = 0.428f, Y = 0.72f, WinsRequired = 2 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.4", Name = "Almond Cay", RegionId = "region.east_sea", EncounterId = "enc.doimora", RequiresNodeId = "node.3", X = 0.572f, Y = 0.30f, WinsRequired = 2 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.5", Name = "Spout Strait", RegionId = "region.east_sea", EncounterId = "enc.voirong", RequiresNodeId = "node.4", X = 0.716f, Y = 0.72f, WinsRequired = 3 });
+            db.Map.Nodes.Add(new MapNodeDef { Id = "node.6", Name = "Whale Lord's Deep", RegionId = "region.east_sea", EncounterId = "enc.ongnamhai", RequiresNodeId = "node.5", X = 0.86f, Y = 0.30f, WinsRequired = 3 });
         }
     }
 }

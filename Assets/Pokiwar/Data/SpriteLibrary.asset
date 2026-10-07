@@ -428,6 +428,8 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: cb1cf0a2dbb4a1c40b544171e3484cba, type: 3}
   - Key: face.card.mana_leech
     Sprite: {fileID: 21300000, guid: 18a0a592056049f4a8ed55cd6f620c8d, type: 3}
+  - Key: face.card.rage_ember
+    Sprite: {fileID: 21300000, guid: baab0963749009945885ec982af5b956, type: 3}
   - Key: face.skill
     Sprite: {fileID: 21300000, guid: ef360900b3ce14241a0fd761ce1a414c, type: 3}
   - Key: buff.Heart

@@ -139,6 +139,9 @@ namespace Pokiwar.Domain
                     case EffectKind.AddMana:
                         if (e.Target == TargetKind.Self && self.Mana.Room >= e.Value * 0.8f) return true;
                         break;
+                    case EffectKind.AddRage:
+                        if (e.Target == TargetKind.Self && self.Rage.Room >= e.Value * 0.8f) return true;
+                        break;
                     case EffectKind.AddShieldPctMax:
                         if (self.Shield.Ratio < 0.3f && self.Hp.Ratio < 0.8f) return true;
                         break;

@@ -28,8 +28,8 @@ namespace Pokiwar.UI
         public Button CardsButton;
         public Button PetsButton;
 
-        [Tooltip("Opponents sit on a ring, as in the original lobby. Off = use each node's own X/Y.")]
-        public bool RingLayout = true;
+        [Tooltip("On = opponents sit on a ring, which only fits up to about four. Off = each node sits at its own X/Y from the content.")]
+        public bool RingLayout;
         [Tooltip("Ring radius as a share of the node area's width and height.")]
         public Vector2 RingRadius = new Vector2(0.34f, 0.28f);
         [Tooltip("How far the ring sits above the centre of the node area, as a share of its height; leaves room for the label under the lowest node.")]

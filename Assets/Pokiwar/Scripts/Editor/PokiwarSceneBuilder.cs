@@ -381,7 +381,7 @@ namespace Pokiwar.EditorTools
             sky.rectTransform.offsetMax = new Vector2(-40, -125);
             var planet = Img(sky.transform, "Planet", Key("lobby.planet", "ui.circle"), art.ContainsKey("lobby.planet") ? Color.white : new Color(0.55f, 0.8f, 1f, 0.35f));
             planet.preserveAspect = true;
-            At(planet.rectTransform, 0.5f, 0.5f, 0, 50, 520, 520);
+            At(planet.rectTransform, 1, 1, -150, -120, 260, 260);
             var area = NewUI("NodeArea", sky.transform);
             Fill(area);
             map.NodeArea = area;

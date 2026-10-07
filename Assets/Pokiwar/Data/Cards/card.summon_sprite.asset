@@ -15,9 +15,9 @@ MonoBehaviour:
   Def:
     Id: card.summon_sprite
     Name: Summon Sprite
-    Description: Sprite hits for 50% ATK on your next 3 turns.
+    Description: Sprite hits for 60% ATK on your next 3 turns.
     IconKey: card.summon_sprite
-    ManaCost: 80
+    ManaCost: 60
     RageCost: 0
     CanUseBeforeMatch: 1
     CanUseAfterMatch: 0
@@ -25,6 +25,6 @@ MonoBehaviour:
     Effects:
     - Kind: 11
       Target: 0
-      Value: 0.5
+      Value: 0.6
       Turns: 3
       Label: Sprite

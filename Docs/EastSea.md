@@ -34,12 +34,12 @@ creature takes its third form.
 
 | Node | Encounter | Hunt level | Wins to open the next | Rank points | First-clear reward | Win rate at pet Lv 1 / 3 / 5 / 8 / 12 |
 |---|---|---|---|---|---|---|
-| Drum Shoal | Samgong | 2 | 1 | 20 | the Samgong itself | 92 / 100 / 100 / 100 / 100 |
-| Firecracker Reef | Bebeboom | 4 | 2 | 30 | War Cry card | 22 / 45 / 75 / 80 / 95 |
-| Pearl Garden | Ngoclam | 6 | 2 | 40 | Mind Spark skill card | 2 / 12 / 50 / 80 / 97 |
-| Almond Cay | Doimora | 8 | 2 | 60 | - | 2 / 2 / 12 / 40 / 80 |
-| Spout Strait | Voirong | 10 | 3 | 100 | Mana Leech card | 0 / 0 / 2 / 15 / 47 |
-| Whale Lord's Deep | Ongnamhai | 12 | 3 | 200 | Tide Lance skill card, Meteor card | 0 / 0 / 0 / 7 / 35 |
+| Drum Shoal | Samgong | 2 | 1 | 20 | the Samgong itself | 97 / 100 / 100 / 100 / 100 |
+| Firecracker Reef | Bebeboom | 4 | 2 | 30 | War Cry card | 22 / 55 / 75 / 82 / 95 |
+| Pearl Garden | Ngoclam | 6 | 2 | 40 | Mind Spark skill card | 0 / 12 / 45 / 87 / 97 |
+| Almond Cay | Doimora | 8 | 2 | 60 | Rage Ember card | 0 / 5 / 12 / 47 / 82 |
+| Spout Strait | Voirong | 10 | 3 | 100 | Mana Leech card | 0 / 0 / 2 / 17 / 50 |
+| Whale Lord's Deep | Ongnamhai | 12 | 3 | 200 | Tide Lance skill card, Meteor card | 0 / 0 / 0 / 10 / 40 |
 
 AI against AI, 40 seeds a cell, the player carrying one skill card and four single-use cards. Owner's rule
 (2026-10-07): the first creature is easy to win, every later one is hard to get. Samgong stays at hunt level 2

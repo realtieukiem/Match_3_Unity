@@ -23,45 +23,45 @@ MonoBehaviour:
       EncounterId: enc.samgong
       RequiresNodeId: 
       WinsRequired: 1
-      X: 0.1
-      Y: 0.34
+      X: 0.14
+      Y: 0.72
     - Id: node.2
       Name: Firecracker Reef
       RegionId: region.east_sea
       EncounterId: enc.bebeboom
       RequiresNodeId: node.1
       WinsRequired: 2
-      X: 0.26
-      Y: 0.64
+      X: 0.284
+      Y: 0.3
     - Id: node.3
       Name: Pearl Garden
       RegionId: region.east_sea
       EncounterId: enc.ngoclam
       RequiresNodeId: node.2
       WinsRequired: 2
-      X: 0.42
-      Y: 0.34
+      X: 0.428
+      Y: 0.72
     - Id: node.4
       Name: Almond Cay
       RegionId: region.east_sea
       EncounterId: enc.doimora
       RequiresNodeId: node.3
       WinsRequired: 2
-      X: 0.58
-      Y: 0.64
+      X: 0.572
+      Y: 0.3
     - Id: node.5
       Name: Spout Strait
       RegionId: region.east_sea
       EncounterId: enc.voirong
       RequiresNodeId: node.4
       WinsRequired: 3
-      X: 0.74
-      Y: 0.34
+      X: 0.716
+      Y: 0.72
     - Id: node.6
       Name: Whale Lord's Deep
       RegionId: region.east_sea
       EncounterId: enc.ongnamhai
       RequiresNodeId: node.5
       WinsRequired: 3
-      X: 0.9
-      Y: 0.6
+      X: 0.86
+      Y: 0.3

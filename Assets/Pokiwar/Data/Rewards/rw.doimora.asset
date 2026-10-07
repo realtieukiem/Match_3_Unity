@@ -37,6 +37,13 @@ MonoBehaviour:
       Count: 3
       Chance: 1
       FirstClearOnly: 0
+    - Kind: 1
+      ItemId: card.rage_ember
+      Element: 0
+      Tier: 1
+      Count: 1
+      Chance: 1
+      FirstClearOnly: 1
     - Kind: 2
       ItemId: 
       Element: 0
