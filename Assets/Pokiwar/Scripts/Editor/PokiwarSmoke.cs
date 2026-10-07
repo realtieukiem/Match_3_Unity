@@ -193,7 +193,8 @@ namespace Pokiwar.EditorTools
             yield return null;
             Check(app.ShopScreen.gameObject.activeSelf && !app.Home.gameObject.activeSelf, "the card shop building opens the shop");
             var shopRows = app.ShopScreen.ItemTemplate.transform.parent.GetComponentsInChildren<RowView>(false);
-            Check(shopRows.Length == 3 && shopRows.Length == app.Shop.Items.Count, "shop lists 3 items (" + shopRows.Length + ")");
+            Check(shopRows.Length == app.Db.Cards.Count + 3 && shopRows.Length == app.Shop.Items.Count, "shop lists every single-use card and the three upgrade items (" + shopRows.Length + ")");
+            Check(shopRows.Length > 0 && shopRows[0].Icon.sprite != null && shopRows[0].Icon.sprite.name.StartsWith("face_"), "a card on sale shows its card face");
             var shopItem = app.Shop.Items[0];
             app.Save.Gold += shopItem.Price;
             int shopGold = app.Save.Gold, shopOwned = app.Shop.Owned(app.Save, shopItem);
@@ -305,6 +306,7 @@ namespace Pokiwar.EditorTools
             yield return null;
 
             int energy = app.Save.Energy;
+            int potionStock = app.Save.CardCount("card.mana_potion");
             app.Prep.FightButton.onClick.Invoke();
             yield return null;
             var bc = app.Battle;
@@ -389,10 +391,11 @@ namespace Pokiwar.EditorTools
             yield return Capture("04a_buff");
             yield return new WaitForSecondsRealtime(1.4f);
             int liveBeforeSwirl = vfx.ActiveCount;
-            vfx.Swirl(bc.PlayerHud.Feet, app.Sprites.Get("fx.wisp"), new Color(1f, 0.5f, 0.15f), bc.PlayerHud.Portrait.rectTransform, app.Sprites.Get("fx.vortex"));
+            vfx.Swirl(bc.PlayerHud.Feet, app.Sprites.Get("fx.wisp"), new Color(1f, 0.5f, 0.15f), bc.PlayerHud.Portrait.rectTransform);
             yield return new WaitForSecondsRealtime(0.55f);
             Check(vfx.ActiveCount >= liveBeforeSwirl + 10, "rage gain spins a fire vortex at the pet's feet (" + vfx.ActiveCount + " live)");
             Check(vfx.BehindCount >= 4 && vfx.BehindCount < vfx.ActiveCount, "the far half of the vortex is drawn behind the pet (" + vfx.BehindCount + " behind)");
+            Check(vfx.ActiveCount - liveBeforeSwirl == 16, "the rage vortex is one ring of flames and nothing else (" + (vfx.ActiveCount - liveBeforeSwirl) + " sprites)");
             yield return Capture("04a2_rage_swirl");
             yield return new WaitForSecondsRealtime(1.3f);
             int liveBeforeSiphon = vfx.ActiveCount;
@@ -467,6 +470,7 @@ namespace Pokiwar.EditorTools
             bool won = app.Result.Title.text == "VICTORY";
             Log("first battle " + (won ? "won" : "lost") + " in " + bc.Engine.State.TurnNumber + " turns");
             Check(app.Save.CommittedBattleIds.Contains(firstBattle), "result committed for this battle id");
+            Check(app.Save.CardCount("card.mana_potion") == potionStock - 1, "the potion played in battle left the stock (" + potionStock + " -> " + app.Save.CardCount("card.mana_potion") + ")");
             if (won) Check(app.Progression.IsNodeUnlocked(app.Save, app.Db.Node("node.2")), "win unlocked node 2");
             if (won)
             {

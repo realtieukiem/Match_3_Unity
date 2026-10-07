@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Pokiwar.App;
 using Pokiwar.Domain;
 using UnityEngine;
@@ -88,6 +89,7 @@ namespace Pokiwar.UI
             var s = app.Save;
             if (s.Pet(s.SelectedPetUid) == null && s.Pets.Count > 0) s.SelectedPetUid = s.Pets[0].Uid;
             s.SelectedCardIds.RemoveAll(id => !s.Cards.Contains(id) && s.SkillCard(id) == null);
+            app.Progression.TrimLoadout(s);
             int skills = 0;
             s.SelectedCardIds.RemoveAll(id => s.SkillCard(id) != null && ++skills > ProgressionService.MaxSkillsInLoadout);
 
@@ -163,18 +165,21 @@ namespace Pokiwar.UI
                         });
                     }
                 }
+                var listed = new HashSet<string>();
                 foreach (var id in s.Cards)
                 {
                     var card = app.Db.TryCard(id);
-                    if (card == null) continue;
+                    if (card == null || !listed.Add(id)) continue;
                     var row = cardRows.Add();
                     int copies = s.SelectedCardIds.FindAll(x => x == id).Count;
+                    int stock = s.CardCount(id);
                     string cost = (card.ManaCost > 0 ? card.ManaCost + " MP " : "") + (card.RageCost > 0 ? card.RageCost + " RG " : "") + (card.ManaCost == 0 && card.RageCost == 0 ? "Free " : "") + (card.EndTurnAfterUse ? " ends turn" : "");
-                    row.Set(card.Name + (copies > 0 ? "   x" + copies : ""), cost + "\n" + card.Description, CardFaces.Sprite(app.Sprites, card), copies > 0);
+                    row.Set(card.Name + "   " + copies + "/" + stock, cost + "\n" + card.Description, CardFaces.Sprite(app.Sprites, card), copies > 0);
                     var cid = id;
                     row.Button.onClick.AddListener(() =>
                     {
-                        if (s.SelectedCardIds.Count < MaxCards) s.SelectedCardIds.Add(cid);
+                        if (s.SelectedCardIds.FindAll(x => x == cid).Count >= s.CardCount(cid)) app.Toast("No more copies - buy them in the card shop");
+                        else if (s.SelectedCardIds.Count < MaxCards) s.SelectedCardIds.Add(cid);
                         else app.Toast("Max " + MaxCards + " cards");
                         Refresh();
                     });

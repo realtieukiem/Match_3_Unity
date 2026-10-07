@@ -34,6 +34,10 @@ MonoBehaviour:
     - card.fire_bolt
     - card.summon_sprite
     - card.iron_skin
+    - card.mana_potion
+    - card.mana_potion
+    - card.herbal_salve
+    - card.fire_bolt
     StarterSkillIds:
     - skill.blaze_burst
     - skill.thorn_bind
@@ -72,6 +76,123 @@ MonoBehaviour:
     - avatar.top.tee
     - avatar.bottom.shorts
     Shop:
+    - Id: shop.card.mana_potion
+      Name: Mana Potion
+      Description: +150 mana. You can still match this turn. Used up when played.
+      IconKey: face.card.mana_potion
+      Price: 40
+      Grant:
+        Kind: 1
+        ItemId: card.mana_potion
+        Element: 0
+        Tier: 1
+        Count: 1
+        Chance: 1
+        FirstClearOnly: 0
+    - Id: shop.card.rage_ember
+      Name: Rage Ember
+      Description: +25 rage. You can still match this turn. Used up when played.
+      IconKey: face.card.rage_ember
+      Price: 40
+      Grant:
+        Kind: 1
+        ItemId: card.rage_ember
+        Element: 0
+        Tier: 1
+        Count: 1
+        Chance: 1
+        FirstClearOnly: 0
+    - Id: shop.card.herbal_salve
+      Name: Herbal Salve
+      Description: Heal 12% max HP. Used up when played.
+      IconKey: face.card.herbal_salve
+      Price: 60
+      Grant:
+        Kind: 1
+        ItemId: card.herbal_salve
+        Element: 0
+        Tier: 1
+        Count: 1
+        Chance: 1
+        FirstClearOnly: 0
+    - Id: shop.card.iron_skin
+      Name: Iron Skin
+      Description: Gain a shield of 15% max HP. Used up when played.
+      IconKey: face.card.iron_skin
+      Price: 60
+      Grant:
+        Kind: 1
+        ItemId: card.iron_skin
+        Element: 0
+        Tier: 1
+        Count: 1
+        Chance: 1
+        FirstClearOnly: 0
+    - Id: shop.card.fire_bolt
+      Name: Fire Bolt
+      Description: Deal 150% ATK damage. Used up when played.
+      IconKey: face.card.fire_bolt
+      Price: 50
+      Grant:
+        Kind: 1
+        ItemId: card.fire_bolt
+        Element: 0
+        Tier: 1
+        Count: 1
+        Chance: 1
+        FirstClearOnly: 0
+    - Id: shop.card.summon_sprite
+      Name: Summon Sprite
+      Description: Sprite hits for 60% ATK on your next 3 turns. Used up when played.
+      IconKey: face.card.summon_sprite
+      Price: 60
+      Grant:
+        Kind: 1
+        ItemId: card.summon_sprite
+        Element: 0
+        Tier: 1
+        Count: 1
+        Chance: 1
+        FirstClearOnly: 0
+    - Id: shop.card.mana_leech
+      Name: Mana Leech
+      Description: Drain 40% of the enemy's current mana. Used up when played.
+      IconKey: face.card.mana_leech
+      Price: 70
+      Grant:
+        Kind: 1
+        ItemId: card.mana_leech
+        Element: 0
+        Tier: 1
+        Count: 1
+        Chance: 1
+        FirstClearOnly: 0
+    - Id: shop.card.war_cry
+      Name: War Cry
+      Description: +30% ATK for 3 turns. Used up when played.
+      IconKey: face.card.war_cry
+      Price: 70
+      Grant:
+        Kind: 1
+        ItemId: card.war_cry
+        Element: 0
+        Tier: 1
+        Count: 1
+        Chance: 1
+        FirstClearOnly: 0
+    - Id: shop.card.meteor
+      Name: Meteor
+      Description: Deal 350% ATK damage. Ends your turn. Used up when played.
+      IconKey: face.card.meteor
+      Price: 120
+      Grant:
+        Kind: 1
+        ItemId: card.meteor
+        Element: 0
+        Tier: 1
+        Count: 1
+        Chance: 1
+        FirstClearOnly: 0
     - Id: shop.card_stone
       Name: Card Stone T1
       Description: Feeds a reusable card in the card forge.

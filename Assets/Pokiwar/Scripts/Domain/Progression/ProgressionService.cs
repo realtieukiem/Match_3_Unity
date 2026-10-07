@@ -11,6 +11,7 @@ namespace Pokiwar.Domain
         public string PetUid;
         public bool Won;
         public int Turns;
+        public List<string> UsedCardIds = new List<string>();
     }
 
     public sealed class RewardGrant
@@ -54,7 +55,7 @@ namespace Pokiwar.Domain
                 var pet = AddPet(d, cfg.StarterPetIds[i]);
                 pet.Level = i < cfg.StarterPetLevels.Count ? cfg.StarterPetLevels[i] : 1;
             }
-            foreach (var c in cfg.StarterCardIds) if (!d.Cards.Contains(c)) d.Cards.Add(c);
+            d.Cards.AddRange(cfg.StarterCardIds);
             foreach (var item in cfg.StarterItems) GrantItem(d, item, null);
             d.SelectedPetUid = d.Pets.Count > 0 ? d.Pets[0].Uid : null;
             foreach (var id in cfg.StarterSkillIds)
@@ -63,7 +64,11 @@ namespace Pokiwar.Domain
                 d.SkillCards.Add(new OwnedCard { Id = id });
                 if (d.SelectedCardIds.Count < MaxSkillsInLoadout) d.SelectedCardIds.Add(id);
             }
-            d.SelectedCardIds.AddRange(d.Cards.GetRange(0, Math.Min(LoadoutSize - d.SelectedCardIds.Count, d.Cards.Count)));
+            foreach (var c in d.Cards)
+            {
+                if (d.SelectedCardIds.Count >= LoadoutSize) break;
+                if (!d.SelectedCardIds.Contains(c)) d.SelectedCardIds.Add(c);
+            }
             new AvatarService(Db).GrantStarter(d);
             return d;
         }
@@ -198,7 +203,7 @@ namespace Pokiwar.Domain
             {
                 if (n >= LoadoutSize) break;
                 var c = Db.TryCard(id);
-                if (c == null || !d.Cards.Contains(id)) continue;
+                if (c == null || s.Cards.FindAll(x => x.Id == id).Count >= d.CardCount(id)) continue;
                 s.Cards.Add(c);
                 n++;
             }
@@ -268,6 +273,8 @@ namespace Pokiwar.Domain
             if (d.CommittedBattleIds.Count > 200) d.CommittedBattleIds.RemoveAt(0);
 
             var grant = new RewardGrant { BattleId = report.BattleId, Won = report.Won };
+            foreach (var used in report.UsedCardIds) d.Cards.Remove(used);
+            TrimLoadout(d);
             var node = Db.Map.Nodes.Find(n => n.Id == report.NodeId);
             var np = node != null ? d.Node(node.Id, true) : null;
             if (!report.Won)
@@ -319,6 +326,17 @@ namespace Pokiwar.Domain
             return grant;
         }
 
+        /// <summary>Drops loadout entries the stock no longer covers: a card can be carried as many times as it is owned.</summary>
+        public void TrimLoadout(SaveData d)
+        {
+            for (int i = d.SelectedCardIds.Count - 1; i >= 0; i--)
+            {
+                string id = d.SelectedCardIds[i];
+                if (d.SkillCard(id) != null) continue;
+                if (d.SelectedCardIds.FindAll(x => x == id).Count > d.CardCount(id)) d.SelectedCardIds.RemoveAt(i);
+            }
+        }
+
         private List<MapNodeDef> NextNodes(MapNodeDef node)
         {
             if (node == null) return new List<MapNodeDef>();
@@ -334,11 +352,9 @@ namespace Pokiwar.Domain
                     lines?.Add("+" + drop.Count + " " + drop.Element + " Stone T" + drop.Tier);
                     break;
                 case RewardKind.Card:
-                    if (!d.Cards.Contains(drop.ItemId))
-                    {
-                        d.Cards.Add(drop.ItemId);
-                        lines?.Add("New card: " + Db.Card(drop.ItemId).Name);
-                    }
+                    bool known = d.Cards.Contains(drop.ItemId);
+                    for (int i = 0; i < Math.Max(1, drop.Count); i++) d.Cards.Add(drop.ItemId);
+                    lines?.Add((known ? "+" + Math.Max(1, drop.Count) + " " : "New card: ") + Db.Card(drop.ItemId).Name + (!known && drop.Count > 1 ? " x" + drop.Count : ""));
                     break;
                 case RewardKind.LuckyCharm:
                     d.LuckyCharms += drop.Count;

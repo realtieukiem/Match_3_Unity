@@ -30,18 +30,19 @@ Every piece of art the game needs has exactly one status. Codex paints ONLY rows
 | 2 | East Sea second forms: Ngoclam, Doimora, Voirong, Ongnamhai | 16 | `HAVE` | painted 2026-10-07, in the game |
 | 3 | East Sea region art: world island, region emblem, battle background | 3 | `HAVE` | painted 2026-10-07, in the game |
 | 4 | Battle effects: rage fire vortex, flame wisp, siphon mote, hit burst, sparkle | 5 | `HAVE` | painted 2026-10-07, in the game |
-| 5 | Card faces `face_*.png` (9 single-use cards + the one skill face) | 11 | `CODE-DRAWN` | `Tools/DrawCardFaces.ps1` (ten cards and the skill face). Kept code-drawn: flat pictogram and a big number is the brief, and a new card gets its face the same day |
+| 5 | Card faces `face_*.png` (9 single-use cards + the one skill face) | 11 | `PAINT NEW` | Batch 18 below, part A (the owner found the code-drawn faces ugly, 2026-10-07); the code-drawn ones stay in the game until then |
 | 6 | Buff icons `buff_{heart,lightning,fire,shield}.png` | 4 | `CODE-DRAWN` | `Tools/DrawCardFaces.ps1`; heal and mana effects approved by the user 2026-10-07 |
 | 7 | UI primitives (`ui.circle`, `ui.ring`, `ui.round`, `ui.frame`, `ui.gradient`, bar shapes) | - | `CODE-DRAWN` | plain shapes, tinted in game |
 | 8 | Everything in Batches 1-13 (gems, starter pets, Dunewing, Psyling, Azurewing, cards art, elements, HUD, buttons, room, avatar, lobby, forge, stones, world map, town) | 179 files | `HAVE` | table "Already painted" below |
 | 11 | Second forms of Dunewing and Psyling (`enemy_beetle_form02_*`, `enemy_psyling_form02_*`) | 8 | `HAVE` | painted small (68% of the frame); the game enlarges them with `Tools/ReframeSecondForms.ps1`. Do NOT repaint unless the user asks |
-| 12 | Arrow mini game kit (`Battle/QTE`: four arrows, slot frame, timing marker, timer frame) | 7 | `HAVE` | in the game since 2026-10-07 |
+| 12 | Arrow mini game kit, first set (`Battle/QTE`: four arrows, slot frame, timing marker, timer frame) | 7 | `HAVE` | in the game since 2026-10-07 |
+| 15 | Arrow mini game kit after the original: pill bar, round tokens, slider, damage flame, touch buttons | 12 | `PAINT NEW` | Batch 18 below, part B |
 | 13 | Idle animation frames 2 and 3 for the eleven creatures in play (Emberkit, six East Sea first forms, four East Sea second forms) | 22 | `PAINT NEW` | Batch 17 below |
 | 14 | East Sea battle background, version 2: the same reef with two flat rock outcrops where the two creatures stand | 1 | `PAINT NEW` | Batch 17 below, item 12 |
 | 9 | Second forms of Emberkit, Leafling, Tidepup; a card for Tidal Siphon | - | `NEVER` | decided 2026-10-06 |
 | 10 | Third and later forms of any creature | - | `WAIT` | the rule for when a pet takes a third form is not decided |
 
-One batch is ordered: Batch 17 (22 idle animation frames and one battle background, one Codex thread). Nothing else.
+Two batches are ordered, one Codex thread each: Batch 17 (22 idle animation frames and one battle background) and Batch 18 (11 card faces and 12 arrow mini game pieces). Nothing else.
 
 Framing rule for every future creature batch (learned from Batches 12, 14 and 15): the game shows a creature at
 the size it fills its canvas, so paint the idle at about 80% of the canvas height, keep every pose (the hit pose
@@ -99,6 +100,52 @@ shrink or change proportions. If it does, redo that frame rather than keeping it
     The whole middle of the image between x = 640 and x = 1410 stays calm open water (the game board covers it),
     and the top 190 px stay simple sky (the health bars cover it).
     Do not overwrite v01.
+```
+### Batch 18 - card faces and the arrow mini game kit (23 images)
+
+```
+<shared preamble>
+PART A - eleven card faces. The owner finds the current code-drawn faces ugly; paint them properly in the set's
+style (chunky shapes, near-black brown outline, two or three flat shade bands, cream highlight).
+Every face: 864x1104, rounded corners (radius about 80 px, transparent outside), NO text, NO numbers, NO frame -
+the game draws the frame, a big number and the cost on top. Layout of every face:
+- one flat background colour block for the whole card, with one lighter diagonal band from the top-left corner;
+- ONE big pictogram, centred at about x 432, y 400, filling roughly 520x520 px - readable at 100 px card width;
+- the lower 40% of the card (below y 660) stays plain background: the game prints the number there.
+A player must tell the resource from the colour alone. Save to Cards/Faces/ (new folder):
+
+ 1. face_mana_potion_v02.png   - BLUE card. A round flask of glowing blue liquid with a small lightning bolt on it.
+ 2. face_rage_ember_v02.png    - RED card with a YELLOW diagonal band. One fat flame, orange core.
+ 3. face_herbal_salve_v02.png  - GREEN card. A white heart with a green cross on it, two small leaves.
+ 4. face_iron_skin_v02.png     - PURPLE card. A heater shield, steel rim, purple field.
+ 5. face_fire_bolt_v02.png     - DARK SLATE card with a yellow band. A fireball flying down-right with a tail.
+ 6. face_meteor_v02.png        - DARK SLATE card with a red band. A large burning rock with a long flame tail.
+ 7. face_summon_sprite_v02.png - DARK SLATE card with a yellow band. A small winged sprite, white-gold, arms open.
+ 8. face_war_cry_v02.png       - DARK SLATE card with an orange band. A war horn with three sound arcs.
+ 9. face_mana_leech_v02.png    - TEAL card. A blue lightning bolt being pulled into a dark swirl.
+10. face_skill_v02.png         - ORANGE-GOLD card. A black silhouette fighter mid-punch with a white impact star
+                                 at the fist (this one face is shared by every reusable skill card).
+11. face_back_v02.png          - card back: deep blue with a gold paw-print emblem in a ring.
+
+PART B - arrow mini game kit, after the original game's bar: a pill-shaped bar holding five round arrow tokens,
+a small timing slider above it, the damage number in a flame at the right. Transparent background, no text.
+Save to Battle/QTE/ :
+
+12. qte_bar_v01.png            - 1280x288: a horizontal pill (fully rounded ends), dark teal glass inside, glowing
+                                 cyan rim, thin dark outline. Empty - the tokens are drawn on top by the game.
+13. qte_token_v01.png          - 256x256: a round glossy button, pink-magenta, white rim, soft top highlight. Empty.
+14. qte_token_ok_v01.png       - 256x256: the same button in bright green with a faint glow.
+15. qte_token_bad_v01.png      - 256x256: the same button in dull red-grey, slightly cracked.
+16. qte_arrow_white_v01.png    - 256x256: a bold WHITE arrow pointing UP, rounded, thin dark outline (the game
+                                 rotates it for the other three directions and puts it on a token).
+17. qte_slider_track_v01.png   - 1024x96: a thin capsule slider track, dark inside, silver rim.
+18. qte_slider_good_v01.png    - 256x96: a green glowing segment that sits inside that track (the game stretches it).
+19. qte_slider_perfect_v01.png - 128x96: a gold glowing segment for the centre of the track.
+20. qte_slider_knob_v01.png    - 128x128: a round red knob with a white ring - the moving marker.
+21. qte_damage_flame_v01.png   - 768x288: a horizontal burst of flame pointing right, orange to yellow, darker
+                                 in the middle so a white number reads on it.
+22. qte_button_dir_v01.png     - 256x256: a round blue touch button, raised, empty (the white arrow goes on it).
+23. qte_button_strike_v01.png  - 512x256: a wide red touch button with a crossed-swords emblem, raised, no text.
 ```
 ## Already painted - do NOT repaint
 

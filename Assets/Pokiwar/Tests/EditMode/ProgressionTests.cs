@@ -453,7 +453,7 @@ namespace Pokiwar.Tests
             var prog = new ProgressionService(db);
             var shop = new ShopService(prog);
             var save = prog.CreateNewSave(0);
-            Assert.AreEqual(3, shop.Items.Count);
+            Assert.AreEqual(db.Cards.Count + 3, shop.Items.Count, "every single-use card and the three upgrade items");
 
             var charm = shop.Item("shop.lucky_charm");
             int gold = save.Gold, charms = save.LuckyCharms;
@@ -475,6 +475,39 @@ namespace Pokiwar.Tests
             Assert.AreEqual(before, save.Gold);
             Assert.AreEqual(protect, save.ProtectionCharms);
             Assert.IsFalse(shop.Buy(save, "shop.nothing").Ok);
+        }
+
+        [Test]
+        public void SingleUseCards_AreAStock_BoughtInTheShop_AndSpentWhenPlayed()
+        {
+            var db = DefaultContent.Create();
+            var prog = new ProgressionService(db);
+            var shop = new ShopService(prog);
+            var save = prog.CreateNewSave(0);
+            const string potion = "card.mana_potion";
+            int stock = save.CardCount(potion);
+            Assert.Greater(stock, 1, "the starter holds several potions");
+
+            Assert.IsTrue(shop.Buy(save, "shop." + potion).Ok);
+            Assert.AreEqual(stock + 1, save.CardCount(potion));
+            Assert.AreEqual(stock + 1, shop.Owned(save, shop.Item("shop." + potion)));
+
+            var greedy = new System.Collections.Generic.List<string> { "skill.blaze_burst", "card.iron_skin", "card.iron_skin", "card.iron_skin" };
+            Assert.AreEqual(save.CardCount("card.iron_skin"), prog.BuildPlayer(save, save.Pets[0], greedy).Cards.Count, "a card is carried as many times as it is owned");
+
+            save.SelectedCardIds.Clear();
+            save.SelectedCardIds.AddRange(new[] { "skill.blaze_burst", potion, potion, "card.iron_skin" });
+            save.Energy = 10;
+            var battle = prog.StartBattle(save, db.Node("node.1"), 4);
+            int iron = save.CardCount("card.iron_skin");
+            var report = new BattleReport { BattleId = battle.BattleId, EncounterId = "enc.samgong", NodeId = "node.1", PetUid = save.SelectedPetUid, Won = false };
+            report.UsedCardIds.Add(potion);
+            report.UsedCardIds.Add("card.iron_skin");
+            prog.CommitBattle(save, report);
+            Assert.AreEqual(stock, save.CardCount(potion), "a played card leaves the stock, win or lose");
+            Assert.AreEqual(iron - 1, save.CardCount("card.iron_skin"));
+            Assert.AreEqual(2, save.SelectedCardIds.FindAll(id => id == potion).Count, "copies still in stock stay in the loadout");
+            Assert.AreEqual(iron - 1, save.SelectedCardIds.FindAll(id => id == "card.iron_skin").Count, "a card that ran out leaves the loadout");
         }
 
         [Test]

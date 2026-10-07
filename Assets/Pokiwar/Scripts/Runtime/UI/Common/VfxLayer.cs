@@ -152,27 +152,20 @@ namespace Pokiwar.UI
             }
         }
 
-        /// <summary>Fire vortex at the feet: flames circle on a flat ellipse, widening and climbing as they go. With a body, the ground glow and the far half of the circle draw behind it.</summary>
-        public void Swirl(Vector3 feetWorld, Sprite flame, Color color, RectTransform body = null, Sprite ring = null, int flames = 20, float radiusX = 170f, float radiusY = 44f, float rise = 110f, float size = 84f, float turnsPerSecond = 1.3f)
+        /// <summary>Fire vortex at the feet: flames circle on a flat ellipse, one ring of evenly spaced flames turning around the body. With a body, the far half of the ring draws behind it.</summary>
+        public void Swirl(Vector3 feetWorld, Sprite flame, Color color, RectTransform body = null, int flames = 16, float radiusX = 190f, float radiusY = 50f, float rise = 26f, float size = 96f, float turnsPerSecond = 0.9f, float seconds = 1.3f)
         {
             var c = ToLocal(feetWorld);
-            var glow = Spawn(Kind.RingFx, Dot, new Color(color.r, color.g, color.b, 0.55f), c, 0.7f, radiusX * 0.8f, radiusX * 2.4f);
-            if (glow != null) glow.Body = body;
-            var ground = ring != null
-                ? Spawn(Kind.Decal, ring, Color.white, c + new Vector2(0f, radiusY * 0.6f), 1.1f, radiusX * 1.6f, radiusX * 2.9f)
-                : Spawn(Kind.RingFx, RingSprite, color, c, 0.6f, radiusX * 0.4f, radiusX * 2.2f);
-            if (ground != null) ground.Body = body;
             for (int i = 0; i < flames; i++)
             {
-                var p = Spawn(Kind.Orbit, flame, flame != null ? Color.white : color, c, UnityEngine.Random.Range(0.85f, 1.1f), size * UnityEngine.Random.Range(0.65f, 1f), 0f);
+                var p = Spawn(Kind.Orbit, flame, flame != null ? Color.white : color, c, seconds, size * (i % 2 == 0 ? 1f : 0.78f), 0f);
                 if (p == null) return;
                 p.Body = body;
                 p.From = c;
                 p.Ctrl = new Vector2(radiusX, radiusY);
-                p.Angle = i * 137.5f;
+                p.Angle = i * 360f / flames;
                 p.Spin = 360f * turnsPerSecond;
-                p.Vel = new Vector2(0f, rise / p.MaxLife * UnityEngine.Random.Range(0.5f, 1f));
-                p.Delay = i * 0.03f;
+                p.Vel = new Vector2(0f, rise / seconds);
             }
         }
 
@@ -304,7 +297,7 @@ namespace Pokiwar.UI
                     case Kind.Orbit:
                         p.Angle += p.Spin * dt;
                         float rad = p.Angle * Mathf.Deg2Rad;
-                        float widen = 0.5f + 0.5f * k;
+                        float widen = 0.9f + 0.1f * k;
                         p.Pos = p.From + new Vector2(Mathf.Cos(rad) * p.Ctrl.x * widen, Mathf.Sin(rad) * p.Ctrl.y * widen + p.Vel.y * p.Life);
                         Draw(p, p.Size0 * (0.8f - 0.2f * Mathf.Sin(rad)) * Mathf.Min(1f, 0.4f + k * 3f), k < 0.12f ? k / 0.12f : 1f - Mathf.Max(0f, k - 0.6f) / 0.4f);
                         break;

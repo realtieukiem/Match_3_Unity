@@ -21,7 +21,7 @@ namespace Pokiwar.Domain
                 StartGold = 500,
                 StarterPetIds = new List<string> { "pet.emberkit" },
                 StarterPetLevels = new List<int> { 1 },
-                StarterCardIds = new List<string> { "card.mana_potion", "card.herbal_salve", "card.fire_bolt", "card.summon_sprite", "card.iron_skin" },
+                StarterCardIds = new List<string> { "card.mana_potion", "card.herbal_salve", "card.fire_bolt", "card.summon_sprite", "card.iron_skin", "card.mana_potion", "card.mana_potion", "card.herbal_salve", "card.fire_bolt" },
                 StarterSkillIds = new List<string> { "skill.blaze_burst", "skill.thorn_bind" },
                 StarterItems = new List<RewardDrop>
                 {
@@ -40,6 +40,7 @@ namespace Pokiwar.Domain
                 }
             };
             AddAvatarItems(db);
+            AddCardShop(db);
             return db;
         }
 
@@ -121,6 +122,24 @@ namespace Pokiwar.Domain
             var c = new CardDef { Id = id, Name = name, Description = desc, IconKey = id, ManaCost = mana, RageCost = rage };
             c.Effects.AddRange(fx);
             return c;
+        }
+
+        private static void AddCardShop(ContentDatabase db)
+        {
+            var prices = new (string id, int price)[]
+            {
+                ("card.mana_potion", 40), ("card.rage_ember", 40), ("card.herbal_salve", 60), ("card.iron_skin", 60), ("card.fire_bolt", 50),
+                ("card.summon_sprite", 60), ("card.mana_leech", 70), ("card.war_cry", 70), ("card.meteor", 120)
+            };
+            for (int i = 0; i < prices.Length; i++)
+            {
+                var card = db.Card(prices[i].id);
+                db.Progression.Shop.Insert(i, new ShopItemDef
+                {
+                    Id = "shop." + card.Id, Name = card.Name, Description = card.Description + " Used up when played.", IconKey = "face." + card.Id, Price = prices[i].price,
+                    Grant = new RewardDrop { Kind = RewardKind.Card, ItemId = card.Id, Count = 1 }
+                });
+            }
         }
 
         private static void AddCards(ContentDatabase db)
@@ -315,7 +334,7 @@ namespace Pokiwar.Domain
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 1, Chance = 0.6f },
                     new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 3 },
                     new RewardDrop { Kind = RewardKind.SkillCard, ItemId = "skill.mind_spark", FirstClearOnly = true },
-                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.mana_leech", FirstClearOnly = true },
+                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.mana_leech", Count = 3, FirstClearOnly = true },
                     new RewardDrop { Kind = RewardKind.ProtectionCharm, Count = 1, Chance = 0.5f }
                 }
             });
@@ -327,8 +346,8 @@ namespace Pokiwar.Domain
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Water, Tier = 2, Count = 2 },
                     new RewardDrop { Kind = RewardKind.CardStone, Tier = 2, Count = 2 },
                     new RewardDrop { Kind = RewardKind.SkillCard, ItemId = "skill.tide_lance", FirstClearOnly = true },
-                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.war_cry", FirstClearOnly = true },
-                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.meteor", FirstClearOnly = true }
+                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.war_cry", Count = 3, FirstClearOnly = true },
+                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.meteor", Count = 3, FirstClearOnly = true }
                 }
             });
             db.RewardTables.Add(new RewardTable
@@ -349,7 +368,7 @@ namespace Pokiwar.Domain
                 {
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 3 },
                     new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 2 },
-                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.war_cry", FirstClearOnly = true }
+                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.war_cry", Count = 3, FirstClearOnly = true }
                 }
             });
             db.RewardTables.Add(new RewardTable
@@ -372,7 +391,7 @@ namespace Pokiwar.Domain
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Wood, Tier = 1, Count = 3 },
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 2, Chance = 0.6f },
                     new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 3 },
-                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.rage_ember", FirstClearOnly = true },
+                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.rage_ember", Count = 3, FirstClearOnly = true },
                     new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1, Chance = 0.4f }
                 }
             });
@@ -384,7 +403,7 @@ namespace Pokiwar.Domain
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Water, Tier = 1, Count = 4 },
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Fire, Tier = 1, Count = 2, Chance = 0.6f },
                     new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 4 },
-                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.mana_leech", FirstClearOnly = true },
+                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.mana_leech", Count = 3, FirstClearOnly = true },
                     new RewardDrop { Kind = RewardKind.ProtectionCharm, Count = 1, Chance = 0.5f }
                 }
             });
@@ -396,7 +415,7 @@ namespace Pokiwar.Domain
                     new RewardDrop { Kind = RewardKind.Stone, Element = Element.Water, Tier = 2, Count = 2 },
                     new RewardDrop { Kind = RewardKind.CardStone, Tier = 2, Count = 2 },
                     new RewardDrop { Kind = RewardKind.SkillCard, ItemId = "skill.tide_lance", FirstClearOnly = true },
-                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.meteor", FirstClearOnly = true }
+                    new RewardDrop { Kind = RewardKind.Card, ItemId = "card.meteor", Count = 3, FirstClearOnly = true }
                 }
             });
         }

@@ -41,6 +41,6 @@ MonoBehaviour:
       ItemId: card.meteor
       Element: 0
       Tier: 1
-      Count: 1
+      Count: 3
       Chance: 1
       FirstClearOnly: 1

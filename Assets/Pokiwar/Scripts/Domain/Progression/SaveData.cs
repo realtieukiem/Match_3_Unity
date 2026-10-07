@@ -49,6 +49,9 @@ namespace Pokiwar.Domain
         public int Gold;
         public int PlayerLevel = 1;
         public int PlayerExp;
+
+        /// <summary>Copies of a single-use card in stock; each entry of Cards is one copy.</summary>
+        public int CardCount(string id) => Cards.FindAll(c => c == id).Count;
         public int Energy;
         public long EnergyStampUtcTicks;
         public int LuckyCharms;

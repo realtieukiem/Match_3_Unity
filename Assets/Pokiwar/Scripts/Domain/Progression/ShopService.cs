@@ -28,6 +28,7 @@ namespace Pokiwar.Domain
         {
             switch (item.Grant.Kind)
             {
+                case RewardKind.Card: return d.CardCount(item.Grant.ItemId);
                 case RewardKind.CardStone: return d.CardStoneCount(item.Grant.Tier);
                 case RewardKind.LuckyCharm: return d.LuckyCharms;
                 case RewardKind.ProtectionCharm: return d.ProtectionCharms;

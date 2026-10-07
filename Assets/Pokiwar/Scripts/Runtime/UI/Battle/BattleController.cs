@@ -213,6 +213,8 @@ namespace Pokiwar.UI
             yield return ShowBanner(won ? "VICTORY!" : "DEFEAT", 1.0f);
             report.Won = won;
             report.Turns = s.TurnNumber;
+            report.UsedCardIds.Clear();
+            foreach (var slot in s.Get(Side.Player).Cards) if (slot.UsesLeft <= 0) report.UsedCardIds.Add(slot.Def.Id);
             if (!reported)
             {
                 reported = true;
@@ -568,7 +570,7 @@ namespace Pokiwar.UI
                     break;
                 case ResourceKind.Rage:
                     AudioDirector.Sfx("rage");
-                    if (VfxLayer.Instance != null) VfxLayer.Instance.Swirl(hud.Feet, Art("fx.wisp") ?? Art("buff.Fire"), new Color(1f, 0.5f, 0.15f), hud.Portrait.rectTransform, Art("fx.vortex"));
+                    if (VfxLayer.Instance != null) VfxLayer.Instance.Swirl(hud.Feet, Art("fx.wisp") ?? Art("buff.Fire"), new Color(1f, 0.5f, 0.15f), hud.Portrait.rectTransform);
                     break;
                 case ResourceKind.Shield:
                     AudioDirector.Sfx("shield");
