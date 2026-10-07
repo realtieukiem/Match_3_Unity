@@ -104,8 +104,8 @@ namespace Pokiwar.UI
                 var skill = has && card == null ? app.Db.TrySkill(s.SelectedCardIds[i]) : null;
                 string iconKey = card != null ? card.IconKey : skill?.IconKey;
                 CardSlotIcons[i].gameObject.SetActive(iconKey != null);
-                CardSlotIcons[i].preserveAspect = skill != null;
-                if (iconKey != null) CardSlotIcons[i].sprite = app.Sprites.Get(iconKey);
+                CardSlotIcons[i].preserveAspect = true;
+                if (iconKey != null) CardSlotIcons[i].sprite = card != null ? CardFaces.Sprite(app.Sprites, card) : app.Sprites.Get(iconKey);
                 CardSlotRemove[i].gameObject.SetActive(iconKey != null);
             }
 
@@ -165,7 +165,7 @@ namespace Pokiwar.UI
                     var row = cardRows.Add();
                     int copies = s.SelectedCardIds.FindAll(x => x == id).Count;
                     string cost = (card.ManaCost > 0 ? card.ManaCost + " MP " : "") + (card.RageCost > 0 ? card.RageCost + " RG " : "") + (card.ManaCost == 0 && card.RageCost == 0 ? "Free " : "") + (card.EndTurnAfterUse ? " ends turn" : "");
-                    row.Set(card.Name + (copies > 0 ? "   x" + copies : ""), cost + "\n" + card.Description, app.Sprites.Get(card.IconKey), copies > 0);
+                    row.Set(card.Name + (copies > 0 ? "   x" + copies : ""), cost + "\n" + card.Description, CardFaces.Sprite(app.Sprites, card), copies > 0);
                     var cid = id;
                     row.Button.onClick.AddListener(() =>
                     {

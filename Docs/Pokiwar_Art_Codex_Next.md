@@ -11,9 +11,107 @@ batch moves to the "Already painted" table below - never leave a finished prompt
 again. Before painting anything, check the file name under `D:\Project\Pokiwar_Art_FG38\Assets`: a file that
 exists is finished, do not repaint or overwrite it unless the user asks for a new version by name.
 
-## Still to paint (checked 2026-10-06 15:30 against `D:\Project\Pokiwar_Art_FG38\Assets`)
+## Still to paint (checked 2026-10-07 against `D:\Project\Pokiwar_Art_FG38\Assets`)
 
-Nothing. Every image ordered so far is painted and in the game. New orders are added below as new batches.
+Three batches, one Codex thread each: Batch 14 (East Sea creatures, first forms, 24 images), Batch 15 (East Sea
+second forms and region art, 19 images), Batch 16 (card faces and buff icons, 12 images). The roster behind 14 and 15 is in
+`Docs/EastSea.md`.
+
+### Batch 14 - East Sea creatures, first forms (24 images)
+
+```
+<shared preamble>
+Paint six sea creatures of the East Sea region. Each one is a real animal of that sea fused with one object from
+Vietnamese coastal life, so the silhouette reads as ONE creature, not an animal carrying a prop.
+Every creature: four poses (idle, attack, hit, defeat), 1024x1024, transparent background, the creature FACES
+LEFT, same scale and ground line across its four poses, same style as enemy_beetle_idle_01.png.
+Save to Battle/Characters/ under exactly these names:
+
+1. enemy_samgong_{idle,attack,hit,defeat}_01.png
+   SAMGONG - a horseshoe crab whose domed shell IS a Dong Son bronze drum: star in the centre of the shell,
+   concentric bands, verdigris green in the grooves, warm bronze on the ridges. Long spike tail held up like a
+   drumstick, small glowing eyes under the rim. Sturdy, low, earthy. Attack: slams its tail on its own shell,
+   a shock ring bursts out. Element Earth.
+2. enemy_bebeboom_{idle,attack,hit,defeat}_01.png
+   BEBEBOOM - a peacock mantis shrimp boxer: rainbow shell (teal, orange, magenta), two club arms shaped like
+   bundles of red firecrackers with short lit fuses, big round stalk eyes, cocky stance on its tail. Attack:
+   a punch so fast the club leaves a white flash and sparks. Element Fire.
+3. enemy_ngoclam_{idle,attack,hit,defeat}_01.png
+   NGOCLAM - a giant clam with thick wavy lips, mantle in electric blue and violet with gold spots, shell plated
+   like mother-of-pearl armour. It is almost shut: only two shy eyes and a faint glow show in the gap. Attack:
+   snaps shut, a blade of water shoots out. Element Metal.
+4. enemy_doimora_{idle,attack,hit,defeat}_01.png
+   DOIMORA - a hawksbill turtle with a sharp hooked beak and amber tortoiseshell plates; on its back grows a
+   tiny islet: sand, grass and one young sea-almond tree with square green fruit. Calm, old eyes. Attack: swings
+   its body, the square fruit fly like sling stones. Element Wood.
+5. enemy_voirong_{idle,attack,hit,defeat}_01.png
+   VOIRONG - a banded sea krait (blue-grey and black rings, paddle tail) coiled upward inside a small waterspout,
+   head above the spray, yellow snout, forked tongue. Attack: the spout bends forward like a whip. Element Water.
+6. boss_ongnamhai_form01_{idle,attack,hit,defeat}_01.png
+   ONGNAMHAI - the whale lord of the fishermen: a broad Bryde's whale with three ridges on its head, wearing a
+   red and gold ceremonial sash across the brow, bronze bells on its flippers, barnacles like old medals, two
+   round lantern-buoys trailing from its tail. Dignified, heavy, kind eyes but huge. Fills the frame more than
+   the others. Attack: blows a tall spout that falls as a wave. Element Water.
+```
+
+### Batch 15 - East Sea second forms and region art (19 images)
+
+```
+<shared preamble>
+Second forms of four East Sea creatures painted in Batch 14 - open the Batch 14 idle of each first and keep its
+colours and proportions; the second form is the same creature after it powers up, about 10% bigger and brighter.
+Four poses each (idle, attack, hit, defeat), 1024x1024, transparent, FACING LEFT. Save to Battle/Characters/:
+
+1. enemy_ngoclam_form02_{idle,attack,hit,defeat}_01.png
+   NGOCLAM RADIANT - the clam stands wide open: a great glowing pearl floats between the valves, light rays and
+   small orbiting pearls, the mantle flares like a crown.
+2. enemy_doimora_form02_{idle,attack,hit,defeat}_01.png
+   DOIMORA BEACON - the sea-almond tree is fully grown and in white-pink bloom, a small stone lighthouse stands
+   beside it with a warm beam, roots wrap the shell edges.
+3. enemy_voirong_form02_{idle,attack,hit,defeat}_01.png
+   VOIRONG TEMPEST - the waterspout is twice as tall and dark, lightning crawls inside it, the snake has grown a
+   dragon crest and whiskers, storm cloud ring around its head.
+4. boss_ongnamhai_form02_{idle,attack,hit,defeat}_01.png
+   ONGNAMHAI THE TIDE LORD - the whale rises on a wave shaped like a temple roof, sash turned to a gold mantle,
+   bells ringing with visible sound rings, a school of small glowing fish forms a halo.
+
+Region art, no creature:
+5. Meta/World/world_island_eastsea_v01.png - 1024, transparent: a cluster of coral reef and sand cays seen from
+   above at the same angle as world_island_sunny_v01.png: turquoise lagoon, one lighthouse, a fishing boat.
+6. Meta/Lobby/region_east_sea_v01.png - 256, transparent: emblem tile, a wave curling around a coral branch.
+7. Battle/Background/battle_bg_eastsea_v01.png - 2048x1152, opaque: a shallow reef flat at low tide, coral
+   heads and tide pools at the sides, open sea and far cays at the horizon; the middle and the two bottom
+   corners stay calm and empty (the board and the pets stand there), same camera as battle_bg_canyon_v01.png.
+```
+
+### Batch 16 - card faces and buff icons (12 images)
+
+```
+<shared preamble>
+Repaint the eight single-use cards so that ONE symbol tells what the card gives. Rules for every card: 512x512,
+opaque, one big centred symbol filling about 70% of the square, flat one-colour background in the colour named
+below with a soft darker vignette, NO scenery, NO small details, NO text, NO frame (the game draws the frame).
+The symbols and colours are the ones of the board gems in Battle/Gems - open those first and match them.
+Save to Cards/:
+
+1. face_mana_potion_v01.png   - blue: a lightning bolt inside a round potion flask.            (gives mana)
+2. face_herbal_salve_v01.png  - green: a heart with a small leaf.                              (gives HP)
+3. face_iron_skin_v01.png     - purple: a shield.                                              (gives a shield)
+4. face_fire_bolt_v01.png     - yellow: a sword wrapped in one flame.                          (damage)
+5. face_meteor_v01.png        - yellow: a falling rock with a flame tail, sword-gold rim.      (big damage)
+6. face_summon_sprite_v01.png - yellow: a tiny winged sprite holding a sword.                  (damage over turns)
+7. face_war_cry_v01.png       - yellow: a sword with a bold up arrow.                          (attack up)
+8. face_mana_leech_v01.png    - white/grey: a yin-yang with a blue lightning drop being pulled out. (steals mana)
+
+Then four buff icons - the small pictures that float up over a pet when it gains something. 256x256, transparent
+background, the bare symbol only (no tile, no square behind it), thick dark outline, soft glow of its own colour,
+readable at 50 px. Save to Battle/VFX/:
+
+9.  buff_heart_v01.png     - green heart with a small plus.        (HP)
+10. buff_lightning_v01.png - blue lightning bolt.                  (mana)
+11. buff_fire_v01.png      - red-orange flame.                     (rage)
+12. buff_shield_v01.png    - purple shield.                        (shield)
+```
 
 ## Already painted - do NOT repaint
 

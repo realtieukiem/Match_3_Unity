@@ -158,6 +158,9 @@ namespace Pokiwar.EditorTools
             I("UI/Room/room_pet_pedestal_v01.png", "room_stand", 512, false, "room.stand"),
             S("UI/Room/room_card_slot_add_v01.png", "card_add", 512, 40, "card.add"),
             I("Meta/Icons/icon_gold_v01.png", "icon_gold", 256, false, "icon.gold"),
+            Face("mana_potion"), Face("herbal_salve"), Face("iron_skin"), Face("fire_bolt"),
+            Face("meteor"), Face("summon_sprite"), Face("war_cry"), Face("mana_leech"),
+            BuffIcon("heart", "Heart"), BuffIcon("lightning", "Lightning"), BuffIcon("fire", "Fire"), BuffIcon("shield", "Shield"),
             I("Avatar/avatar_base_v01.png", "avatar_base", 512, false, "avatar.base"),
             Doll("hair", "spiky"), Doll("hair", "bob"), Doll("hair", "ponytail"),
             Doll("top", "tee"), Doll("top", "jacket"), Doll("top", "robe"),
@@ -168,6 +171,12 @@ namespace Pokiwar.EditorTools
             Icon("bottom", "shorts"), Icon("bottom", "pants"), Icon("bottom", "skirt"),
             Icon("hat", "cap"), Icon("hat", "wizard"),
         };
+
+        private static Item Face(string card) =>
+            I("Cards/face_" + card + "_v01.png", "face_" + card, 512, false, "face.card." + card);
+
+        private static Item BuffIcon(string file, string gem) =>
+            I("Battle/VFX/buff_" + file + "_v01.png", "buff_" + file, 256, false, "buff." + gem);
 
         private static Item Doll(string slot, string name) =>
             I("Avatar/avatar_" + slot + "_" + name + "_v01.png", "avatar_" + slot + "_" + name, 512, false, "avatar." + slot + "." + name);

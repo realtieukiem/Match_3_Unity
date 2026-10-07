@@ -51,6 +51,14 @@ namespace Pokiwar.UI
         public bool AutoPlay;
         [Tooltip("Also print every CombatEvent to the Console.")]
         public bool LogToConsole;
+        [Tooltip("How many gem icons float up over a pet when it gains HP, mana, rage or shield.")]
+        public int BuffIcons = 7;
+        [Tooltip("Width of the buff effect around the pet (px).")]
+        public float BuffWidth = 240f;
+        [Tooltip("How far the buff icons float up (px).")]
+        public float BuffRise = 280f;
+        [Tooltip("Size of one floating buff icon (px).")]
+        public float BuffIconSize = 60f;
 
         public BattleEngine Engine { get; private set; }
         public TurnClock Clock { get; private set; }
@@ -543,31 +551,33 @@ namespace Pokiwar.UI
         private void GainFeedback(CombatantHud hud, ResourceKind k)
         {
             hud.PopBar(k);
-            var vfx = VfxLayer.Instance;
-            var at = hud.BarRect(k).position;
             switch (k)
             {
                 case ResourceKind.Hp:
                     AudioDirector.Sfx("heal");
-                    Decal("fx.heal", hud.BodyCenter, 320f, 0.7f);
-                    vfx?.Burst(hud.FloatAnchor.position, new Color(0.45f, 1f, 0.5f), 14, 260f, 18f, 0.8f, -260f, vfx.Star);
+                    Buff(hud, GemType.Heart, new Color(0.45f, 1f, 0.5f));
                     break;
                 case ResourceKind.Mana:
                     AudioDirector.Sfx("mana");
-                    Decal("fx.mana", hud.BodyCenter, 260f, 0.55f);
-                    vfx?.Burst(at, new Color(0.45f, 0.7f, 1f), 8, 260f, 14f, 0.45f, -100f);
+                    Buff(hud, GemType.Lightning, new Color(0.45f, 0.7f, 1f));
                     break;
                 case ResourceKind.Rage:
                     AudioDirector.Sfx("rage");
-                    Decal("fx.rage", hud.BodyCenter, 300f, 0.55f);
-                    vfx?.Burst(at, new Color(1f, 0.55f, 0.2f), 8, 300f, 14f, 0.45f, -200f);
+                    Buff(hud, GemType.Fire, new Color(1f, 0.55f, 0.2f));
                     break;
                 case ResourceKind.Shield:
                     AudioDirector.Sfx("shield");
-                    Decal("fx.shield", hud.BodyCenter, 360f, 0.6f);
-                    vfx?.Ring(hud.FloatAnchor.position, new Color(0.75f, 0.5f, 1f, 0.85f), 420f, 0.45f);
+                    Buff(hud, GemType.Shield, new Color(0.75f, 0.5f, 1f));
                     break;
             }
+        }
+
+        private void Buff(CombatantHud hud, GemType gem, Color color)
+        {
+            var vfx = VfxLayer.Instance;
+            if (vfx == null) return;
+            Sprite icon = sprites == null ? null : sprites.Has("buff." + gem) ? sprites.Get("buff." + gem) : sprites.Gem(gem);
+            vfx.Buff(hud.BodyCenter, icon, color, BuffIcons, BuffWidth, BuffRise, BuffIconSize);
         }
 
         private void Decal(string key, Vector3 at, float size, float life, float rot = 0f)
@@ -654,8 +664,9 @@ namespace Pokiwar.UI
                 if (c.UsesLeft <= 0) continue;
                 var b = CardButtons[shown];
                 cardSlotOf[shown] = i;
-                string cost = c.Def.ManaCost > 0 ? c.Def.ManaCost.ToString() : c.Def.RageCost > 0 ? "<color=#FFD23A>" + c.Def.RageCost + "</color>" : null;
-                b.Bind(c.Def.Name, "", "", sprites.Get(c.Def.IconKey), new Color(0.35f, 0.55f, 0.85f));
+                string cost = c.Def.ManaCost > 0 ? c.Def.ManaCost.ToString() : c.Def.RageCost > 0 ? c.Def.RageCost.ToString() : null;
+                b.Bind(c.Def.Name, "", "", CardFaces.Sprite(sprites, c.Def), new Color(0.35f, 0.55f, 0.85f));
+                b.SetLook(CardFaces.Plate(c.Def), sprites.Gem(CardFaces.CostGem(c.Def)));
                 b.SetFace(cost, null, null);
                 b.SetUsable(myTurn && Engine.CardBlockReason(Side.Player, i) == null);
                 shown++;
@@ -675,7 +686,7 @@ namespace Pokiwar.UI
                 }
                 var sk = me.Skills[i];
                 b.Bind(sk.Name, "", "SKILL", sprites.Get(sk.IconKey), new Color(0.9f, 0.6f, 0.2f));
-                b.SetFace(sk.ManaCost.ToString(), me.SkillLevel(sk).ToString(), BattleEngine.SkillBase(me, sk).ToString());
+                b.SetFace(sk.ManaCost.ToString(), null, BattleEngine.SkillBase(me, sk).ToString());
                 b.SetUsable(myTurn && Engine.SkillBlockReason(Side.Player, i) == null);
             }
         }

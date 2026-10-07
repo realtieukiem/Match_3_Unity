@@ -1355,6 +1355,7 @@ namespace Pokiwar.EditorTools
             v.Button.targetGraphic = bg;
             bg.gameObject.AddComponent<ClickSound>();
             v.Group = bg.gameObject.AddComponent<CanvasGroup>();
+            v.Plate = bg;
             v.Icon = Img(bg.transform, "Icon", "card.mana_potion", Color.white);
             v.Icon.preserveAspect = false;
             Fill(v.Icon.rectTransform, 6, 6, 6, 6);
@@ -1368,6 +1369,7 @@ namespace Pokiwar.EditorTools
             var bolt = Img(costBg.transform, "Bolt", "gem.Lightning", Color.white);
             bolt.preserveAspect = true;
             At(bolt.rectTransform, 0, 0.5f, 15, 0, 24, 24);
+            v.CostIcon = bolt;
             v.Cost = Txt(costBg.transform, "Cost", "0", 20, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
             Fill(v.Cost.rectTransform, 26, 4, 0, 0);
             v.CostBar = costBg.gameObject;

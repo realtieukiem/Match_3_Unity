@@ -136,6 +136,12 @@ and in the AVATAR wardrobe (tabs PANTS / TOP / HAIR / HAT, tap a row to try on, 
   replace a WAV under the same name to swap in final audio. Mix the per-key volume on the Audio object.
 - `Canvas/VfxLayer` (`VfxLayer`): pooled UI-sprite particles (bursts, rings, orbs that fly from cleared gems to the
   bar they fill, screen flash), because an overlay canvas cannot draw a ParticleSystem.
+- Gaining HP, mana, rage or shield plays `VfxLayer.Buff` on the pet: a glow swells, a ring opens at its feet and
+  icons of that resource float up one after another. The icon is the board gem until a painted `buff.<Gem>` sprite
+  exists; count, width, rise and icon size are on `BattleController` (Tuning).
+- A single-use card shows the board gem of what it gives (`CardFaces`: heart = HP, lightning = mana, fire = rage,
+  shield, sword = damage, yin-yang = steal) on a plate of that colour, and its cost chip carries the gem of the
+  resource it costs. A painted `face.<card id>` sprite replaces the gem when it lands (Codex Batch 16).
 - `BattleScreen` (`ScreenShake`): trauma shake on hits, death and the boss transform; strong hits add a 50-110 ms hit-stop.
 
 ## Formulas in use

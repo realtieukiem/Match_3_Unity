@@ -14,6 +14,10 @@ namespace Pokiwar.UI
         public CanvasGroup Group;
         public Image Frame;
         public GameObject CostBar;
+        [Tooltip("Gem beside the cost: lightning for mana, fire for rage.")]
+        public Image CostIcon;
+        [Tooltip("Card background, tinted by what the card gives.")]
+        public Image Plate;
         public GameObject LevelBadge;
         public Text Level;
         public GameObject PowerBar;
@@ -38,6 +42,13 @@ namespace Pokiwar.UI
             if (Uses != null) Uses.text = uses;
             if (Icon != null && icon != null) Icon.sprite = icon;
             if (Frame != null) Frame.color = frame;
+        }
+
+        public void SetLook(Color plate, Sprite costIcon)
+        {
+            if (Plate != null) Plate.color = plate;
+            if (CostIcon != null && costIcon != null) CostIcon.sprite = costIcon;
+            if (Icon != null) Icon.preserveAspect = true;
         }
 
         public void SetUsable(bool usable)

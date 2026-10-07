@@ -327,6 +327,21 @@ namespace Pokiwar.EditorTools
             Log("board cell " + cell.ToString("0") + " px on a " + Screen.width + "x" + Screen.height + " screen");
             Check(cell >= shortSide * (ResponsiveCanvas.IsPortrait ? 0.095f : 0.065f), "board cells are big enough to tap (" + cell.ToString("0") + " px)");
             yield return Capture("04_battle_start");
+            int gemFaces = 0, shownCards = 0;
+            foreach (var cb in bc.CardButtons)
+            {
+                if (!cb.gameObject.activeSelf) continue;
+                shownCards++;
+                foreach (var g in Gems.All)
+                    if (cb.Icon.sprite == app.Sprites.Gem(g)) { gemFaces++; break; }
+            }
+            Check(shownCards > 0 && gemFaces == shownCards, "every single-use card shows the board gem of what it gives (" + gemFaces + "/" + shownCards + ")");
+            int liveBeforeBuff = vfx.ActiveCount;
+            vfx.Buff(bc.PlayerHud.BodyCenter, app.Sprites.Gem(GemType.Heart), new Color(0.45f, 1f, 0.5f));
+            yield return new WaitForSecondsRealtime(0.45f);
+            Check(vfx.ActiveCount > liveBeforeBuff, "buff effect floats gem icons over the pet (" + vfx.ActiveCount + " live)");
+            yield return Capture("04a_buff");
+            yield return new WaitForSecondsRealtime(1.4f);
 
             var moves = BoardEngine.FindMoves(bc.Engine.State.Board, 3);
             Check(moves.Count > 0, "board has moves");

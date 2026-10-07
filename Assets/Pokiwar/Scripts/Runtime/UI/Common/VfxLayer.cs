@@ -21,7 +21,7 @@ namespace Pokiwar.UI
         public int ActiveCount { get; private set; }
         public int SpawnedTotal { get; private set; }
 
-        private enum Kind { Burst, RingFx, Orb, Decal }
+        private enum Kind { Burst, RingFx, Orb, Decal, Rise }
 
         private sealed class P
         {
@@ -129,6 +129,22 @@ namespace Pokiwar.UI
             if (p != null) p.Rot = rot;
         }
 
+        /// <summary>Buff on a body: a glow swells, a ring opens at the feet and the icons float up one after another.</summary>
+        public void Buff(Vector3 world, Sprite icon, Color color, int icons = 7, float width = 240f, float rise = 280f, float iconSize = 60f)
+        {
+            var c = ToLocal(world);
+            Spawn(Kind.RingFx, Dot, new Color(color.r, color.g, color.b, 0.5f), c, 0.55f, width * 0.6f, width * 2f);
+            Spawn(Kind.RingFx, RingSprite, color, c + new Vector2(0f, -rise * 0.4f), 0.6f, width * 0.3f, width * 1.7f);
+            for (int i = 0; i < icons; i++)
+            {
+                var from = c + new Vector2(UnityEngine.Random.Range(-width * 0.5f, width * 0.5f), UnityEngine.Random.Range(-rise * 0.45f, -rise * 0.1f));
+                var p = Spawn(Kind.Rise, icon, icon != null ? Color.white : color, from, UnityEngine.Random.Range(0.75f, 1.05f), iconSize * UnityEngine.Random.Range(0.6f, 1f), 0f);
+                if (p == null) return;
+                p.Vel = new Vector2(UnityEngine.Random.Range(-18f, 18f), rise / p.MaxLife * UnityEngine.Random.Range(0.8f, 1.1f));
+                p.Delay = i * 0.07f;
+            }
+        }
+
         /// <summary>Homing orbs on a curved path; onFirstArrive fires once when the first lands. Returns the time until then.</summary>
         public float Orbs(IList<Vector3> fromWorld, Vector3 toWorld, Color color, int perSource = 2, float travel = 0.42f, float size = 26f, Action onFirstArrive = null)
         {
@@ -216,6 +232,11 @@ namespace Pokiwar.UI
                         float q = Mathf.Clamp01(k / 0.22f) - 1f;
                         float pop = 1f + 2.70158f * q * q * q + 1.70158f * q * q;
                         Draw(p, Mathf.LerpUnclamped(p.Size0, p.Size1, pop), k < 0.55f ? 1f : (1f - k) / 0.45f);
+                        break;
+                    case Kind.Rise:
+                        p.Pos += p.Vel * dt;
+                        float grow = Mathf.Clamp01(k / 0.2f);
+                        Draw(p, p.Size0 * (0.4f + 0.6f * grow * (2f - grow)), k < 0.15f ? k / 0.15f : 1f - Mathf.Max(0f, k - 0.55f) / 0.45f);
                         break;
                     case Kind.Orb:
                         float e = k * k;
