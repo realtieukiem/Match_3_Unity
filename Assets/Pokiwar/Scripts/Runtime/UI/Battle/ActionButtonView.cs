@@ -14,11 +14,11 @@ namespace Pokiwar.UI
         public CanvasGroup Group;
         public Image Frame;
         public GameObject CostBar;
-        [Tooltip("Gem beside the cost: lightning for mana, fire for rage.")]
-        public Image CostIcon;
-        [Tooltip("Card background, tinted by what the card gives.")]
-        public Image Plate;
         public GameObject LevelBadge;
+        [Tooltip("Big number across a single-use card: what one use gives.")]
+        public Text Value;
+        [Tooltip("Icon in the bottom strip: the sword beside a skill's damage, or the gem a single-use card costs.")]
+        public Image PowerIcon;
         public Text Level;
         public GameObject PowerBar;
         public Text Power;
@@ -44,11 +44,12 @@ namespace Pokiwar.UI
             if (Frame != null) Frame.color = frame;
         }
 
-        public void SetLook(Color plate, Sprite costIcon)
+        /// <summary>Single-use card: the number it gives across the face, its cost with the cost gem in the bottom strip. A free card has no strip.</summary>
+        public void SetCard(string value, string cost, Sprite costGem)
         {
-            if (Plate != null) Plate.color = plate;
-            if (CostIcon != null && costIcon != null) CostIcon.sprite = costIcon;
-            if (Icon != null) Icon.preserveAspect = true;
+            SetFace(null, null, cost);
+            if (Value != null) Value.text = value ?? "";
+            if (PowerIcon != null && costGem != null) PowerIcon.sprite = costGem;
         }
 
         public void SetUsable(bool usable)

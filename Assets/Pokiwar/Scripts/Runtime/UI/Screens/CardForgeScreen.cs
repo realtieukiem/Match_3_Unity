@@ -84,7 +84,7 @@ namespace Pokiwar.UI
             {
                 var def = app.Db.Skill(card.Id);
                 int now = BattleEngine.SkillPower(atk, def, card.Level);
-                CardFace.Bind(def.Name, "", "", app.Sprites.Get(def.IconKey), new Color(0.9f, 0.6f, 0.2f));
+                CardFace.Bind(def.Name, "", "", CardFaces.Sprite(app.Sprites, def), new Color(0.9f, 0.6f, 0.2f));
                 CardFace.SetFace(def.ManaCost.ToString(), card.Level.ToString(), now.ToString());
                 CardDetails.text = def.Name + "\n" + def.Description +
                                    (card.Level >= maxLevel

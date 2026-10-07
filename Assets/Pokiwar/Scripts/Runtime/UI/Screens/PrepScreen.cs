@@ -26,6 +26,7 @@ namespace Pokiwar.UI
         public RowView CardTemplate;
         public Button[] CardSlots = new Button[MaxCards];
         public Image[] CardSlotIcons = new Image[MaxCards];
+        public Text[] CardSlotValues = new Text[MaxCards];
         public Button[] CardSlotRemove = new Button[MaxCards];
         public Button FightButton;
         public Text FightLabel;
@@ -105,7 +106,8 @@ namespace Pokiwar.UI
                 string iconKey = card != null ? card.IconKey : skill?.IconKey;
                 CardSlotIcons[i].gameObject.SetActive(iconKey != null);
                 CardSlotIcons[i].preserveAspect = true;
-                if (iconKey != null) CardSlotIcons[i].sprite = card != null ? CardFaces.Sprite(app.Sprites, card) : app.Sprites.Get(iconKey);
+                if (iconKey != null) CardSlotIcons[i].sprite = card != null ? CardFaces.Sprite(app.Sprites, card) : CardFaces.Sprite(app.Sprites, skill);
+                CardSlotValues[i].text = card != null ? CardFaces.Value(card) : "";
                 CardSlotRemove[i].gameObject.SetActive(iconKey != null);
             }
 

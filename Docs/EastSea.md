@@ -24,6 +24,14 @@ Why these six: one per element plus the boss, so every pet stone drops somewhere
 (Emberkit, Fire) meets both a favourable opponent (Ngoclam, Metal) and unfavourable ones (Voirong and the boss,
 Water) before the region ends.
 
+## More forms later
+
+Owner (2026-10-07): creatures will get more than two phases later. The battle engine already takes any number
+(see "Forms" in `Docs/Pokiwar.md`). Art for a further form follows the same file pattern with the next number -
+`enemy_<name>_form03_{idle,attack,hit,defeat}_01.png` - and its sprite key is `<name>_form3`, `_form4`, ...
+(the second form keeps the existing `_evolved` suffix). What is not decided: at which pet level a COLLECTED
+creature takes its third form.
+
 ## Planned content numbers (to be tuned with `PokiwarBalance` when the region is switched on)
 
 | Node | Encounter | Hunt level | Wins to open the next | Rank points | Stones dropped |

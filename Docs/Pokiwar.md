@@ -139,9 +139,21 @@ and in the AVATAR wardrobe (tabs PANTS / TOP / HAIR / HAT, tap a row to try on, 
 - Gaining HP, mana, rage or shield plays `VfxLayer.Buff` on the pet: a glow swells, a ring opens at its feet and
   icons of that resource float up one after another. The icon is the board gem until a painted `buff.<Gem>` sprite
   exists; count, width, rise and icon size are on `BattleController` (Tuning).
-- A single-use card shows the board gem of what it gives (`CardFaces`: heart = HP, lightning = mana, fire = rage,
-  shield, sword = damage, yin-yang = steal) on a plate of that colour, and its cost chip carries the gem of the
-  resource it costs. A painted `face.<card id>` sprite replaces the gem when it lands (Codex Batch 16).
+- Card faces follow the original's cards (owner's screenshots, 2026-10-07): flat colour, one pictogram, a big
+  number. A single-use card wears `face.<card id>`, shows what one use gives as a big yellow number
+  (`CardFaces.Value`, read from the card's first effect, so tuning the card changes the number) and its cost with
+  the cost gem in the bottom strip. Colour says the kind: blue mana, green HP, purple shield, slate with a yellow
+  wedge attack, teal steal. Every reusable skill card wears the one `face.skill` (orange, striking figure) with
+  cost top-left, level top-right, damage at the bottom. The faces and the four `buff.<Gem>` icons are drawn by
+  `Tools/DrawCardFaces.ps1` into `Art/FG38`; edit the script and re-run it to change them.
+- An attack is a dash: `CombatantHud.Lunge(target)` runs the attacker across to stop `ReachGap` px in front of the
+  target, the hit lands while it is there, then it walks back on its own (`DashSeconds`, `HitHoldSeconds`,
+  `ReturnSeconds` on each HUD).
+- Forms: a creature carries a LIST of phases (`CreatureDef.Phases`); the engine fires each once, in list order,
+  when its trigger is met, and a hit that would kill fires the next unfired phase marked `TriggerOnLethal`
+  instead. A third or fourth form is one more list entry with its own sprite key - no engine change. Covered by
+  `ThreeForms_FireInListOrder_OneEach_ThenTheBossDies`. Still single-form: an owned pet shows only the first
+  phase sprite from `ProgressionConfig.EvolveAtLevel`.
 - `BattleScreen` (`ScreenShake`): trauma shake on hits, death and the boss transform; strong hits add a 50-110 ms hit-stop.
 
 ## Formulas in use

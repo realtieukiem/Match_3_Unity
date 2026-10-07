@@ -28,6 +28,14 @@ namespace Pokiwar.UI
         public float ArrowSpeed = 1.6f;
         [Tooltip("Gap between the pet's name and the turn arrow beside it (px).")]
         public float ArrowGap = 58f;
+        [Tooltip("How far in front of its target the attacker stops (px, centre to centre).")]
+        public float ReachGap = 340f;
+        [Tooltip("Seconds the dash across to the target takes.")]
+        public float DashSeconds = 0.2f;
+        [Tooltip("Seconds the attacker stays on the target before walking back.")]
+        public float HitHoldSeconds = 0.14f;
+        [Tooltip("Seconds the walk back takes.")]
+        public float ReturnSeconds = 0.28f;
 
         private Vector2 portraitHome;
         private bool homeSet;
@@ -39,9 +47,11 @@ namespace Pokiwar.UI
         private bool busy;
         private bool dead;
         private float bobPhase;
+        private Coroutine returning;
 
         public void Setup(Combatant c, SpriteLibrary sprites, bool facesRight)
         {
+            StopReturn();
             direction = facesRight ? 1f : -1f;
             if (!homeSet)
             {
@@ -160,17 +170,40 @@ namespace Pokiwar.UI
             AttackArrow.gameObject.SetActive(on);
         }
 
-        public IEnumerator Lunge()
+        /// <summary>Dashes across to the target and returns as soon as the attacker is in front of it; the walk back runs on its own.</summary>
+        public IEnumerator Lunge(Vector3 targetWorld)
         {
             var rt = Portrait.rectTransform;
+            StopReturn();
             busy = true;
             rt.localScale = Vector3.one;
-            yield return Tween.Run(0.1f, t => rt.anchoredPosition = portraitHome + new Vector2(-14f * direction * t, 0));
+            rt.anchoredPosition = portraitHome;
+            var parent = rt.parent;
+            float reach = parent.InverseTransformPoint(targetWorld).x - parent.InverseTransformPoint(BodyCenter).x - direction * ReachGap;
+            if (reach * direction < 60f) reach = 60f * direction;
+            var back = portraitHome + new Vector2(-14f * direction, 0f);
+            var hit = portraitHome + new Vector2(reach, 0f);
+            yield return Tween.Run(0.1f, t => rt.anchoredPosition = Vector2.Lerp(portraitHome, back, t));
             Portrait.sprite = Pose("attack");
-            yield return Tween.Run(0.1f, t => rt.anchoredPosition = portraitHome + new Vector2(direction * Mathf.Lerp(-14f, 60f, t), 0));
-            yield return Tween.Run(0.16f, t => rt.anchoredPosition = portraitHome + new Vector2(60f * direction * (1f - t), 0));
+            yield return Tween.Run(DashSeconds, t => rt.anchoredPosition = Vector2.Lerp(back, hit, t * t));
+            returning = StartCoroutine(Return(hit));
+        }
+
+        private IEnumerator Return(Vector2 from)
+        {
+            var rt = Portrait.rectTransform;
+            yield return Tween.Wait(HitHoldSeconds);
             if (!dead) Portrait.sprite = Pose(null);
+            yield return Tween.Run(ReturnSeconds, t => rt.anchoredPosition = Vector2.Lerp(from, portraitHome, t * (2f - t)));
+            rt.anchoredPosition = portraitHome;
             busy = false;
+            returning = null;
+        }
+
+        private void StopReturn()
+        {
+            if (returning != null) StopCoroutine(returning);
+            returning = null;
         }
 
         public IEnumerator Shake()

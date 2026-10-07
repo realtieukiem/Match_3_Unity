@@ -13,9 +13,9 @@ exists is finished, do not repaint or overwrite it unless the user asks for a ne
 
 ## Still to paint (checked 2026-10-07 against `D:\Project\Pokiwar_Art_FG38\Assets`)
 
-Three batches, one Codex thread each: Batch 14 (East Sea creatures, first forms, 24 images), Batch 15 (East Sea
-second forms and region art, 19 images), Batch 16 (card faces and buff icons, 12 images). The roster behind 14 and 15 is in
-`Docs/EastSea.md`.
+Two batches, one Codex thread each: Batch 14 (East Sea creatures, first forms, 24 images) and Batch 15 (East Sea
+second forms and region art, 19 images). The roster behind them is in `Docs/EastSea.md`. Card faces and buff
+icons are NOT ordered: they are flat pictograms drawn by `Tools/DrawCardFaces.ps1` (2026-10-07).
 
 ### Batch 14 - East Sea creatures, first forms (24 images)
 
@@ -82,35 +82,6 @@ Region art, no creature:
 7. Battle/Background/battle_bg_eastsea_v01.png - 2048x1152, opaque: a shallow reef flat at low tide, coral
    heads and tide pools at the sides, open sea and far cays at the horizon; the middle and the two bottom
    corners stay calm and empty (the board and the pets stand there), same camera as battle_bg_canyon_v01.png.
-```
-
-### Batch 16 - card faces and buff icons (12 images)
-
-```
-<shared preamble>
-Repaint the eight single-use cards so that ONE symbol tells what the card gives. Rules for every card: 512x512,
-opaque, one big centred symbol filling about 70% of the square, flat one-colour background in the colour named
-below with a soft darker vignette, NO scenery, NO small details, NO text, NO frame (the game draws the frame).
-The symbols and colours are the ones of the board gems in Battle/Gems - open those first and match them.
-Save to Cards/:
-
-1. face_mana_potion_v01.png   - blue: a lightning bolt inside a round potion flask.            (gives mana)
-2. face_herbal_salve_v01.png  - green: a heart with a small leaf.                              (gives HP)
-3. face_iron_skin_v01.png     - purple: a shield.                                              (gives a shield)
-4. face_fire_bolt_v01.png     - yellow: a sword wrapped in one flame.                          (damage)
-5. face_meteor_v01.png        - yellow: a falling rock with a flame tail, sword-gold rim.      (big damage)
-6. face_summon_sprite_v01.png - yellow: a tiny winged sprite holding a sword.                  (damage over turns)
-7. face_war_cry_v01.png       - yellow: a sword with a bold up arrow.                          (attack up)
-8. face_mana_leech_v01.png    - white/grey: a yin-yang with a blue lightning drop being pulled out. (steals mana)
-
-Then four buff icons - the small pictures that float up over a pet when it gains something. 256x256, transparent
-background, the bare symbol only (no tile, no square behind it), thick dark outline, soft glow of its own colour,
-readable at 50 px. Save to Battle/VFX/:
-
-9.  buff_heart_v01.png     - green heart with a small plus.        (HP)
-10. buff_lightning_v01.png - blue lightning bolt.                  (mana)
-11. buff_fire_v01.png      - red-orange flame.                     (rage)
-12. buff_shield_v01.png    - purple shield.                        (shield)
 ```
 
 ## Already painted - do NOT repaint

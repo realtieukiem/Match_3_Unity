@@ -520,6 +520,7 @@ namespace Pokiwar.EditorTools
                 }
                 var icon = Img(slot.transform, "Icon", "card.mana_potion", Color.white);
                 Fill(icon.rectTransform, 8, 8, 8, 8);
+                prep.CardSlotValues[i] = CardValue(icon.transform, 40);
                 if (art.ContainsKey("card.slot"))
                 {
                     var fr = Img(slot.transform, "Frame", "card.slot", Color.white);
@@ -1355,10 +1356,10 @@ namespace Pokiwar.EditorTools
             v.Button.targetGraphic = bg;
             bg.gameObject.AddComponent<ClickSound>();
             v.Group = bg.gameObject.AddComponent<CanvasGroup>();
-            v.Plate = bg;
             v.Icon = Img(bg.transform, "Icon", "card.mana_potion", Color.white);
             v.Icon.preserveAspect = false;
             Fill(v.Icon.rectTransform, 6, 6, 6, 6);
+            v.Value = CardValue(v.Icon.transform, 34);
             bool slot = art.ContainsKey("card.slot");
             v.Frame = Img(bg.transform, "Frame", slot ? "card.slot" : "ui.frame", slot ? Color.white : new Color(0.35f, 0.55f, 0.85f));
             Fill(v.Frame.rectTransform, -6, -6, -6, -6);
@@ -1369,7 +1370,6 @@ namespace Pokiwar.EditorTools
             var bolt = Img(costBg.transform, "Bolt", "gem.Lightning", Color.white);
             bolt.preserveAspect = true;
             At(bolt.rectTransform, 0, 0.5f, 15, 0, 24, 24);
-            v.CostIcon = bolt;
             v.Cost = Txt(costBg.transform, "Cost", "0", 20, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
             Fill(v.Cost.rectTransform, 26, 4, 0, 0);
             v.CostBar = costBg.gameObject;
@@ -1386,10 +1386,29 @@ namespace Pokiwar.EditorTools
             var sword = Img(powerBg.transform, "Sword", "gem.Sword", Color.white);
             sword.preserveAspect = true;
             At(sword.rectTransform, 0, 0.5f, 17, 0, 24, 24);
+            v.PowerIcon = sword;
             v.Power = Txt(powerBg.transform, "Power", "0", 20, new Color(1f, 0.75f, 0.2f), TextAnchor.MiddleCenter, FontStyle.Bold);
             Fill(v.Power.rectTransform, 28, 4, 0, 0);
             v.PowerBar = powerBg.gameObject;
             return v;
+        }
+
+        private static Text CardValue(Transform face, int size)
+        {
+            var t = Txt(face, "Value", "", size, new Color(1f, 0.92f, 0.25f), TextAnchor.MiddleCenter, FontStyle.Bold);
+            var rt = t.rectTransform;
+            rt.anchorMin = new Vector2(0f, 0.2f);
+            rt.anchorMax = new Vector2(1f, 0.52f);
+            rt.offsetMin = rt.offsetMax = Vector2.zero;
+            rt.localEulerAngles = new Vector3(0f, 0f, 8f);
+            t.resizeTextForBestFit = true;
+            t.resizeTextMinSize = 14;
+            t.resizeTextMaxSize = size;
+            t.raycastTarget = false;
+            var ink = t.gameObject.AddComponent<Outline>();
+            ink.effectColor = new Color(0.25f, 0.05f, 0.02f, 1f);
+            ink.effectDistance = new Vector2(2f, -2f);
+            return t;
         }
 
         private static RowView MakeRow(Transform parent, string name, float w, float h, Color bgColor, float icon, int extras, int titleSize, int subSize, Color? extraA = null)

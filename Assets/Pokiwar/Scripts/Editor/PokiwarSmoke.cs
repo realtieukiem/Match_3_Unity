@@ -327,17 +327,27 @@ namespace Pokiwar.EditorTools
             Log("board cell " + cell.ToString("0") + " px on a " + Screen.width + "x" + Screen.height + " screen");
             Check(cell >= shortSide * (ResponsiveCanvas.IsPortrait ? 0.095f : 0.065f), "board cells are big enough to tap (" + cell.ToString("0") + " px)");
             yield return Capture("04_battle_start");
-            int gemFaces = 0, shownCards = 0;
+            int valued = 0, shownCards = 0;
             foreach (var cb in bc.CardButtons)
             {
                 if (!cb.gameObject.activeSelf) continue;
                 shownCards++;
-                foreach (var g in Gems.All)
-                    if (cb.Icon.sprite == app.Sprites.Gem(g)) { gemFaces++; break; }
+                if (cb.Value.text.Length > 0 && cb.Icon.sprite != null && cb.Icon.sprite.name.StartsWith("face_")) valued++;
             }
-            Check(shownCards > 0 && gemFaces == shownCards, "every single-use card shows the board gem of what it gives (" + gemFaces + "/" + shownCards + ")");
+            Check(shownCards > 0 && valued == shownCards, "every single-use card wears its own face and shows the number it gives (" + valued + "/" + shownCards + ")");
+            Check(bc.SkillButtons[0].Icon.sprite == app.Sprites.Get(CardFaces.SkillFace) && bc.SkillButtons[1].Icon.sprite == bc.SkillButtons[0].Icon.sprite && bc.SkillButtons[0].LevelBadge.activeSelf, "skill cards share one face and show their level");
+            float homeX = bc.PlayerHud.Portrait.rectTransform.position.x;
+            bc.PlayerHud.StartCoroutine(bc.PlayerHud.Lunge(bc.EnemyHud.BodyCenter));
+            yield return new WaitForSecondsRealtime(0.34f);
+            float reached = bc.PlayerHud.Portrait.rectTransform.position.x - homeX;
+            float span = bc.EnemyHud.Portrait.rectTransform.position.x - homeX;
+            Check(reached > span * 0.5f, "an attacker dashes across to its target (" + reached.ToString("0") + " of " + span.ToString("0") + " px)");
+            yield return Capture("04a0_dash");
+            yield return new WaitForSecondsRealtime(0.7f);
+            Check(Mathf.Abs(bc.PlayerHud.Portrait.rectTransform.position.x - homeX) < 1f, "and walks back to its place");
             int liveBeforeBuff = vfx.ActiveCount;
-            vfx.Buff(bc.PlayerHud.BodyCenter, app.Sprites.Gem(GemType.Heart), new Color(0.45f, 1f, 0.5f));
+            Check(app.Sprites.Has("buff.Heart") && app.Sprites.Has("buff.Lightning") && app.Sprites.Has("buff.Fire") && app.Sprites.Has("buff.Shield"), "buff icons are in the sprite library");
+            vfx.Buff(bc.PlayerHud.BodyCenter, app.Sprites.Get("buff.Heart"), new Color(0.45f, 1f, 0.5f));
             yield return new WaitForSecondsRealtime(0.45f);
             Check(vfx.ActiveCount > liveBeforeBuff, "buff effect floats gem icons over the pet (" + vfx.ActiveCount + " live)");
             yield return Capture("04a_buff");

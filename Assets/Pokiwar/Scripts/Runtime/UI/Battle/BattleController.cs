@@ -58,7 +58,7 @@ namespace Pokiwar.UI
         [Tooltip("How far the buff icons float up (px).")]
         public float BuffRise = 280f;
         [Tooltip("Size of one floating buff icon (px).")]
-        public float BuffIconSize = 60f;
+        public float BuffIconSize = 78f;
 
         public BattleEngine Engine { get; private set; }
         public TurnClock Clock { get; private set; }
@@ -444,7 +444,7 @@ namespace Pokiwar.UI
                         yield return Tween.Wait(wait * 0.7f);
                     }
                     else AudioDirector.Sfx("swing");
-                    yield return actorHud.Lunge();
+                    yield return actorHud.Lunge(Opponent(actorHud).BodyCenter);
                     break;
                 case CombatEventKind.Damage:
                 {
@@ -495,7 +495,7 @@ namespace Pokiwar.UI
                 case CombatEventKind.QteResolved:
                     Float(actorHud, ev.Text + "  " + ev.Computed, Color.yellow, 34);
                     AudioDirector.Sfx("swing");
-                    yield return actorHud.Lunge();
+                    yield return actorHud.Lunge(Opponent(actorHud).BodyCenter);
                     break;
                 case CombatEventKind.Buff:
                     AudioDirector.Sfx("buff");
@@ -547,6 +547,8 @@ namespace Pokiwar.UI
                     break;
             }
         }
+
+        private CombatantHud Opponent(CombatantHud hud) => hud == PlayerHud ? EnemyHud : PlayerHud;
 
         private void GainFeedback(CombatantHud hud, ResourceKind k)
         {
@@ -664,10 +666,8 @@ namespace Pokiwar.UI
                 if (c.UsesLeft <= 0) continue;
                 var b = CardButtons[shown];
                 cardSlotOf[shown] = i;
-                string cost = c.Def.ManaCost > 0 ? c.Def.ManaCost.ToString() : c.Def.RageCost > 0 ? c.Def.RageCost.ToString() : null;
                 b.Bind(c.Def.Name, "", "", CardFaces.Sprite(sprites, c.Def), new Color(0.35f, 0.55f, 0.85f));
-                b.SetLook(CardFaces.Plate(c.Def), sprites.Gem(CardFaces.CostGem(c.Def)));
-                b.SetFace(cost, null, null);
+                b.SetCard(CardFaces.Value(c.Def), CardFaces.Cost(c.Def), sprites.Gem(CardFaces.CostGem(c.Def)));
                 b.SetUsable(myTurn && Engine.CardBlockReason(Side.Player, i) == null);
                 shown++;
             }
@@ -685,8 +685,8 @@ namespace Pokiwar.UI
                     continue;
                 }
                 var sk = me.Skills[i];
-                b.Bind(sk.Name, "", "SKILL", sprites.Get(sk.IconKey), new Color(0.9f, 0.6f, 0.2f));
-                b.SetFace(sk.ManaCost.ToString(), null, BattleEngine.SkillBase(me, sk).ToString());
+                b.Bind(sk.Name, "", "SKILL", CardFaces.Sprite(sprites, sk), new Color(0.9f, 0.6f, 0.2f));
+                b.SetFace(sk.ManaCost.ToString(), me.SkillLevel(sk).ToString(), BattleEngine.SkillBase(me, sk).ToString());
                 b.SetUsable(myTurn && Engine.SkillBlockReason(Side.Player, i) == null);
             }
         }

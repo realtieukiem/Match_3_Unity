@@ -160,6 +160,7 @@ namespace Pokiwar.EditorTools
             I("Meta/Icons/icon_gold_v01.png", "icon_gold", 256, false, "icon.gold"),
             Face("mana_potion"), Face("herbal_salve"), Face("iron_skin"), Face("fire_bolt"),
             Face("meteor"), Face("summon_sprite"), Face("war_cry"), Face("mana_leech"),
+            I("Cards/face_skill_v01.png", "face_skill", 512, false, "face.skill"),
             BuffIcon("heart", "Heart"), BuffIcon("lightning", "Lightning"), BuffIcon("fire", "Fire"), BuffIcon("shield", "Shield"),
             I("Avatar/avatar_base_v01.png", "avatar_base", 512, false, "avatar.base"),
             Doll("hair", "spiky"), Doll("hair", "bob"), Doll("hair", "ponytail"),

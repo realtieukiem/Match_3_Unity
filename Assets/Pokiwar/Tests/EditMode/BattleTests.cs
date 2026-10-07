@@ -284,6 +284,34 @@ namespace Pokiwar.Tests
         }
 
         [Test]
+        public void ThreeForms_FireInListOrder_OneEach_ThenTheBossDies()
+        {
+            var boss = Boss();
+            boss.Phases.Add(new BossPhaseDef { Id = "p3", FormName = "Boss III", SpriteKey = "boss3", TriggerValue = 0.2f, SetHpPctOfMax = 0.4f, AtkMultiplier = 1.5f, ContinueTurn = false });
+            var nuke = TestKit.Card("nuke", 0, 0, new EffectSpec(EffectKind.FlatDamage, TargetKind.Opponent, 5000));
+            var e = TestKit.Engine(player: s => s.Cards.AddRange(new[] { nuke, nuke, nuke }), enemyDef: boss);
+            e.BeginTurn();
+            var foe = e.State.Get(Side.Enemy);
+
+            var r1 = e.UseCard(Side.Player, 0);
+            Assert.AreEqual("p2", r1.Of(CombatEventKind.PhaseTriggered)[0].SourceId);
+            Assert.AreEqual("boss2", foe.SpriteKey);
+            Assert.AreEqual(500, foe.Hp.Current);
+
+            var r2 = e.UseCard(Side.Player, 1);
+            Assert.IsFalse(r2.BattleEnded, "the third form also survives the hit that would kill");
+            Assert.AreEqual("p3", r2.Of(CombatEventKind.PhaseTriggered)[0].SourceId);
+            Assert.AreEqual("boss3", foe.SpriteKey);
+            Assert.AreEqual("Boss III", foe.FormName);
+            Assert.AreEqual(400, foe.Hp.Current);
+            Assert.AreEqual(1.2f * 1.5f, foe.FormAtkMultiplier, 1e-4, "form multipliers stack");
+
+            var r3 = e.UseCard(Side.Player, 2);
+            Assert.AreEqual(0, r3.Of(CombatEventKind.PhaseTriggered).Count);
+            Assert.IsTrue(r3.BattleEnded);
+        }
+
+        [Test]
         public void ContinueTurn_BossActsRightAfterTransform_OverridingAnExtraTurn()
         {
             var nuke = TestKit.Card("nuke", 0, 0, new EffectSpec(EffectKind.FlatDamage, TargetKind.Opponent, 300));
