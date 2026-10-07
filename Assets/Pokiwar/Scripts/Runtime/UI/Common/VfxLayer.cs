@@ -20,6 +20,7 @@ namespace Pokiwar.UI
 
         public int ActiveCount { get; private set; }
         public int SpawnedTotal { get; private set; }
+        public int BehindCount { get; private set; }
 
         private enum Kind { Burst, RingFx, Orb, Decal, Rise, Orbit }
 
@@ -27,6 +28,7 @@ namespace Pokiwar.UI
         {
             public Image Img;
             public RectTransform Rt;
+            public RectTransform Body;
             public Kind Kind;
             public Vector2 Pos, Vel, From, Ctrl, To;
             public float Life, MaxLife, Delay, Size0, Size1, Spin, Rot, Gravity, Drag, Angle;
@@ -81,6 +83,7 @@ namespace Pokiwar.UI
             p.Drag = 0;
             p.Angle = 0;
             p.Arrived = null;
+            p.Body = null;
             p.Alive = true;
             p.Rt.anchoredPosition = pos;
             p.Rt.sizeDelta = new Vector2(size0, size0);
@@ -146,16 +149,19 @@ namespace Pokiwar.UI
             }
         }
 
-        /// <summary>Fire vortex at the feet: flames circle on a flat ellipse, widening and climbing as they go.</summary>
-        public void Swirl(Vector3 feetWorld, Sprite flame, Color color, int flames = 20, float radiusX = 170f, float radiusY = 44f, float rise = 110f, float size = 84f, float turnsPerSecond = 1.3f)
+        /// <summary>Fire vortex at the feet: flames circle on a flat ellipse, widening and climbing as they go. With a body, the ground glow and the far half of the circle draw behind it.</summary>
+        public void Swirl(Vector3 feetWorld, Sprite flame, Color color, RectTransform body = null, int flames = 20, float radiusX = 170f, float radiusY = 44f, float rise = 110f, float size = 84f, float turnsPerSecond = 1.3f)
         {
             var c = ToLocal(feetWorld);
-            Spawn(Kind.RingFx, Dot, new Color(color.r, color.g, color.b, 0.55f), c, 0.7f, radiusX * 0.8f, radiusX * 2.4f);
-            Spawn(Kind.RingFx, RingSprite, color, c, 0.6f, radiusX * 0.4f, radiusX * 2.2f);
+            var glow = Spawn(Kind.RingFx, Dot, new Color(color.r, color.g, color.b, 0.55f), c, 0.7f, radiusX * 0.8f, radiusX * 2.4f);
+            if (glow != null) glow.Body = body;
+            var ground = Spawn(Kind.RingFx, RingSprite, color, c, 0.6f, radiusX * 0.4f, radiusX * 2.2f);
+            if (ground != null) ground.Body = body;
             for (int i = 0; i < flames; i++)
             {
                 var p = Spawn(Kind.Orbit, flame, flame != null ? Color.white : color, c, UnityEngine.Random.Range(0.85f, 1.1f), size * UnityEngine.Random.Range(0.65f, 1f), 0f);
                 if (p == null) return;
+                p.Body = body;
                 p.From = c;
                 p.Ctrl = new Vector2(radiusX, radiusY);
                 p.Angle = i * 137.5f;
@@ -242,6 +248,12 @@ namespace Pokiwar.UI
         private void Release(P p, bool remove)
         {
             p.Alive = false;
+            p.Body = null;
+            if (p.Rt.parent != transform)
+            {
+                p.Rt.SetParent(transform, false);
+                p.Rt.localScale = Vector3.one;
+            }
             p.Img.gameObject.SetActive(false);
             pool.Push(p);
             if (remove) live.Remove(p);
@@ -250,6 +262,7 @@ namespace Pokiwar.UI
         private void Update()
         {
             float dt = Time.unscaledDeltaTime * Mathf.Max(0.01f, Tween.Speed);
+            int behind = 0;
             for (int i = live.Count - 1; i >= 0; i--)
             {
                 var p = live[i];
@@ -296,6 +309,7 @@ namespace Pokiwar.UI
                         Draw(p, Mathf.Lerp(p.Size0, p.Size1, k), k < 0.15f ? k / 0.15f : 1f);
                         break;
                 }
+                if (p.Body != null && Seat(p, p.Kind != Kind.Orbit || Mathf.Sin(p.Angle * Mathf.Deg2Rad) > 0f)) behind++;
                 if (k >= 1f)
                 {
                     var arrived = p.Arrived;
@@ -306,6 +320,7 @@ namespace Pokiwar.UI
                 }
             }
             ActiveCount = live.Count;
+            BehindCount = behind;
             if (Flash != null)
             {
                 if (flashAlpha > 0f)
@@ -315,6 +330,20 @@ namespace Pokiwar.UI
                 }
                 else if (Flash.color.a != 0f) Flash.color = new Color(1, 1, 1, 0);
             }
+        }
+
+        private bool Seat(P p, bool behind)
+        {
+            var parent = behind ? p.Body.parent : transform;
+            if (p.Rt.parent != parent)
+            {
+                p.Rt.SetParent(parent, false);
+                p.Rt.localScale = behind ? Vector3.one * (rect.lossyScale.x / Mathf.Max(0.0001f, parent.lossyScale.x)) : Vector3.one;
+                if (behind) p.Rt.SetSiblingIndex(p.Body.GetSiblingIndex());
+                else p.Rt.SetAsLastSibling();
+            }
+            if (behind) p.Rt.position = rect.TransformPoint(p.Pos);
+            return behind;
         }
 
         private static void Draw(P p, float size, float alpha)

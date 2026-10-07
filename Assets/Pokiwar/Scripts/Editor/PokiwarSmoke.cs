@@ -354,9 +354,10 @@ namespace Pokiwar.EditorTools
             yield return Capture("04a_buff");
             yield return new WaitForSecondsRealtime(1.4f);
             int liveBeforeSwirl = vfx.ActiveCount;
-            vfx.Swirl(bc.PlayerHud.Feet, app.Sprites.Get("buff.Fire"), new Color(1f, 0.5f, 0.15f));
+            vfx.Swirl(bc.PlayerHud.Feet, app.Sprites.Get("buff.Fire"), new Color(1f, 0.5f, 0.15f), bc.PlayerHud.Portrait.rectTransform);
             yield return new WaitForSecondsRealtime(0.55f);
             Check(vfx.ActiveCount >= liveBeforeSwirl + 10, "rage gain spins a fire vortex at the pet's feet (" + vfx.ActiveCount + " live)");
+            Check(vfx.BehindCount >= 4 && vfx.BehindCount < vfx.ActiveCount, "the far half of the vortex is drawn behind the pet (" + vfx.BehindCount + " behind)");
             yield return Capture("04a2_rage_swirl");
             yield return new WaitForSecondsRealtime(1.3f);
             int liveBeforeSiphon = vfx.ActiveCount;

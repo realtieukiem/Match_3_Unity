@@ -566,7 +566,7 @@ namespace Pokiwar.UI
                     break;
                 case ResourceKind.Rage:
                     AudioDirector.Sfx("rage");
-                    if (VfxLayer.Instance != null) VfxLayer.Instance.Swirl(hud.Feet, sprites != null && sprites.Has("buff.Fire") ? sprites.Get("buff.Fire") : null, new Color(1f, 0.5f, 0.15f));
+                    if (VfxLayer.Instance != null) VfxLayer.Instance.Swirl(hud.Feet, sprites != null && sprites.Has("buff.Fire") ? sprites.Get("buff.Fire") : null, new Color(1f, 0.5f, 0.15f), hud.Portrait.rectTransform);
                     break;
                 case ResourceKind.Shield:
                     AudioDirector.Sfx("shield");
