@@ -1,0 +1,27 @@
+﻿{
+    "batch":  21,
+    "status":  "complete",
+    "requested":  3,
+    "completed":  [
+                      "Battle/Shots/shot_bebeboom_bomb_v01.png",
+                      "Battle/Shots/shot_ngoclam_pearl_v01.png",
+                      "Battle/Shots/shot_voirong_bolt_v01.png"
+                  ],
+    "remaining":  [
+
+                  ],
+    "artRoot":  "Art/Pokiwar_FG38",
+    "generationCalls":  4,
+    "selectedRevisions":  {
+                              "bomb":  "r01",
+                              "pearl":  "r01",
+                              "bolt":  "r02"
+                          },
+    "rejectedRevisions":  {
+                              "bolt_r01":  "Protruding wave curls made the outer contour asymmetric; raw and processing report retained."
+                          },
+    "processing":  "sprite-tool slice 1x1, Cell256, Anchor center, ScaleMode fit, Margin0.10, NoKey",
+    "verification":  "V2 art",
+    "gameImported":  false,
+    "userApproval":  "Authorized existing art direction and Batch21 order; no separate revision approval"
+}

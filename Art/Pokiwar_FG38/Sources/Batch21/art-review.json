@@ -1,0 +1,17 @@
+{
+  "batch": 21,
+  "checked": "2026-10-08",
+  "nativeScalesViewed": [64, 120, 160, 256],
+  "preview": "Previews/Shots_batch21_contact_v01.png",
+  "criteria": [
+    {"criterion":"Identity and silhouette","status":"pass","observation":"Red bound firecracker bundle, ivory pearl and cyan water bolt remain distinct at 120 and 160 px; all are recognizable at 64 px."},
+    {"criterion":"Construction and overlap","status":"pass","observation":"Bomb bands wrap three cylinders, one fuse joins the top cap; the pearl trail joins behind the round head; three interior water bands cross a connected bolt."},
+    {"criterion":"Drawing and edges","status":"pass","observation":"Closed dark contours and clean transparent margins; selected bolt r02 removes the protruding wave caps from r01."},
+    {"criterion":"Value, light and materials","status":"pass","observation":"Upper-left cream accents, warm red/gold bomb, ivory/lavender pearl and teal/cyan water; cream zigzag is visible inside the water bolt at native scale."},
+    {"criterion":"Composition and restraint","status":"pass","observation":"One centered projectile per canvas. Pearl and bolt lead right with a tapering left tail; both have visually balanced upper/lower contours around a horizontal axis."},
+    {"criterion":"Family continuity","status":"pass","observation":"Shared brown contour, chunky shapes and restrained cel shading; no character parts, text or unrelated decoration."},
+    {"criterion":"Technical delivery","status":"pass","observation":"All three exports are 256x256 with generated alpha; full scans find zero nontransparent edge pixels, minimum 25 px clear margins, and near-opaque interiors. Slicer reports have zero clipping/source-edge touch."}
+  ],
+  "rejected": {"shot_voirong_bolt_v01.r01":"Protruding upper/lower wave caps made the outer contour asymmetric. Retained raw, prompt and Bolt report; replaced by r02."},
+  "limits":"Visual shape balance rather than exact reflected-pixel equality. Flat RGB regions and native game integration were not proved; generated near-opaque alpha was preserved. Separate user approval of these revisions has not been collected."
+}

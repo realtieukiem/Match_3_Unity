@@ -7265,6 +7265,102 @@
     "rightsReview":  "Sources/Batch20/rights-review.json",
     "preview":  "Previews/Charms_batch20_contact_v01.png",
     "gameImported":  false
+},
+{
+    "file":  "Battle/Shots/shot_bebeboom_bomb_v01.png",
+    "purpose":  "projectile",
+    "resolution":  [
+                       256,
+                       256
+                   ],
+    "transparent":  true,
+    "pivot":  [
+                  0.5,
+                  0.5
+              ],
+    "layer":  "vfx",
+    "sceneTarget":  "BattleCanvas",
+    "version":  "v01",
+    "status":  "exported_png",
+    "source":  "imagegen",
+    "origin":  "generated",
+    "batch":  21,
+    "verification":  "V2",
+    "selectedRevision":  "r01",
+    "promptFile":  "Sources/Batch21/shot_bebeboom_bomb_v01.r01.prompt.txt",
+    "generatePrompt":  "Create one finished original 2D game projectile sprite for the existing Pokiwar FG38 art set: the compact FIRECRACKER BOMB thrown by Bebeboom. Exactly one detached compact bundle of three chunky red cylindrical firecrackers, tightly bound by two warm brass-gold bands, with dark brown end caps and ONE short curved brown fuse emerging at the top, tipped with a small cream-orange lit spark. Upright orientation with the cylindrical bundle\u0027s long axis vertical, slightly three-quarter so its rounded cylindrical construction is clear; balanced compact silhouette that reads when tumbling. Bright vermilion #EA473B main bodies, deep burgundy shadow band, gold #F5C554 binding bands. Square canvas, genuine transparent background, single object centered and entirely contained, approximately 80% canvas height with at least 10% clear padding on every side including the fuse spark. Canyon-fantasy casual cartoon: chunky silhouette, thick closed near-black brown outline #21191F, two or three crisp flat cel shade bands, restrained cream #FFF0BE highlight from upper left, very little texture. The bands visibly wrap around the red cylinders; no ornamental symbols. Readable at 120 px. No creature, shrimp, hand, claw, mechanical arm, impact burst, smoke cloud, ground, cast shadow, text, letters, UI, borders, unrelated objects or background. Avoid photorealism, glossy 3D, airbrush gradients and excessive tiny sparks. Transparent alpha outside the object. This is a new standalone projectile, not a character pose.",
+    "rawCopy":  "Sources/Batch21/shot_bebeboom_bomb_v01.r01.raw.png",
+    "rawSha256":  "809E370E5E9B9940C650308AB61C37B1E7D341E6911FBEE5AB5C34CEEAFEA60C",
+    "processing":  "sprite-tool slice 1x1, Cell256, Anchor center, ScaleMode fit, Margin0.10, NoKey",
+    "qcReport":  "Sources/Batch21/final-qc.json",
+    "drawingReview":  "Sources/Batch21/art-review.json",
+    "rightsReview":  "Sources/Batch21/rights-review.json",
+    "preview":  "Previews/Shots_batch21_contact_v01.png",
+    "gameImported":  false
+},
+{
+    "file":  "Battle/Shots/shot_ngoclam_pearl_v01.png",
+    "purpose":  "projectile",
+    "resolution":  [
+                       256,
+                       256
+                   ],
+    "transparent":  true,
+    "pivot":  [
+                  0.5,
+                  0.5
+              ],
+    "layer":  "vfx",
+    "sceneTarget":  "BattleCanvas",
+    "version":  "v01",
+    "status":  "exported_png",
+    "source":  "imagegen",
+    "origin":  "generated",
+    "batch":  21,
+    "verification":  "V2",
+    "selectedRevision":  "r01",
+    "promptFile":  "Sources/Batch21/shot_ngoclam_pearl_v01.r01.prompt.txt",
+    "generatePrompt":  "Create one finished original 2D game projectile sprite for the existing Pokiwar FG38 art set: NG OCLAM PEARL, one glowing pearl launched by a pearl-shell sea creature. One creamy ivory spherical pearl with a restrained warm cream upper-left highlight, one pale lavender curved shadow band and a thin turquoise reflected rim, followed by ONE short tapering pale cyan-and-ivory light trail that joins directly behind the pearl. The circular pearl is at the RIGHT leading end; the trail points LEFT and narrows smoothly to one tip. The projectile is centered on a perfectly HORIZONTAL flight axis, with its silhouette symmetric above and below that axis. Pearl silhouette is solid and opaque, with a thick closed near-black brown #21191F contour; the connected short luminous tail has a simple clean dark outline and two crisp flat pale cyan and cream shade bands. Favor broad clear shapes over glow noise. Exactly one complete projectile, with no detached droplets or sparkles. Square canvas, genuine transparent background, entire object centered, about 80% canvas width with at least 10% clear padding everywhere. Canyon-fantasy casual cartoon: chunky silhouette, two or three crisp flat cel shade bands, restrained cream #FFF0BE highlight from the upper left, very little texture. The pearl must read clearly at 120 px; distinguish the round pearl head from its tapered trail. No creature, shell, hand, claw, impact burst, smoke cloud, ground, cast shadow, text, UI, border, scene, extra objects or background. No glossy 3D render or airbrush gradients. Transparent alpha outside the object.",
+    "rawCopy":  "Sources/Batch21/shot_ngoclam_pearl_v01.r01.raw.png",
+    "rawSha256":  "68A2B3951F639A20B1ACAF6556C6F23076829E1FDA4A704490C6906E48E6792C",
+    "processing":  "sprite-tool slice 1x1, Cell256, Anchor center, ScaleMode fit, Margin0.10, NoKey",
+    "qcReport":  "Sources/Batch21/final-qc.json",
+    "drawingReview":  "Sources/Batch21/art-review.json",
+    "rightsReview":  "Sources/Batch21/rights-review.json",
+    "preview":  "Previews/Shots_batch21_contact_v01.png",
+    "gameImported":  false
+},
+{
+    "file":  "Battle/Shots/shot_voirong_bolt_v01.png",
+    "purpose":  "projectile",
+    "resolution":  [
+                       256,
+                       256
+                   ],
+    "transparent":  true,
+    "pivot":  [
+                  0.5,
+                  0.5
+              ],
+    "layer":  "vfx",
+    "sceneTarget":  "BattleCanvas",
+    "version":  "v01",
+    "status":  "exported_png",
+    "source":  "imagegen",
+    "origin":  "generated",
+    "batch":  21,
+    "verification":  "V2",
+    "selectedRevision":  "r02",
+    "promptFile":  "Sources/Batch21/shot_voirong_bolt_v01.r02.prompt.txt",
+    "generatePrompt":  "Revise ONLY the supplied water-lightning projectile sprite\u0027s construction for a 2D game. The supplied image is the edit target and exact palette/line-style reference. Preserve its cyan/turquoise water, dark brown #21191F ink, flat cel shade bands, cream highlights, orientation pointing RIGHT and transparent background. REQUIRED CORRECTION: the OUTER SILHOUETTE must be exactly symmetric above and below its horizontal central axis. Replace all the protruding curling splash caps along its top and bottom with a SINGLE smooth streamlined teardrop-shaped water silhouette: broad rounded blunt head on the RIGHT, long gently narrowing tail that ends in one straight LEFT tip. Top outer contour mirrors bottom outer contour exactly, with no hooks, fins, drops or separate spray on either side. Suggest the spiraling water exclusively with THREE broad interior curved cyan/teal bands wrapping diagonally around the water mass; interior shading can describe a spiral while the outside boundary stays symmetric. Simplify the interior to two or three clean flat value groups. A thin sharply defined warm cream-white ZIGZAG LIGHTNING filament runs visibly through the central horizontal interior, left to right, never leaving the water contour, with no soft glow. Leave clear contrasting teal immediately beside this thin core so it reads at 120 px. Single connected projectile, no other objects. Keep the entire object centered on a square transparent canvas, about 80% canvas width and at least 10% clear padding. No background, text, UI, creature, impact burst, detached sparkle, airbrush gradients or 3D gloss.",
+    "rawCopy":  "Sources/Batch21/shot_voirong_bolt_v01.r02.raw.png",
+    "rawSha256":  "328EBDA72153CA0788CF569F0C24EF4323F9F45BE51F315FF347DDAE6D32236A",
+    "processing":  "sprite-tool slice 1x1, Cell256, Anchor center, ScaleMode fit, Margin0.10, NoKey",
+    "qcReport":  "Sources/Batch21/final-qc.json",
+    "drawingReview":  "Sources/Batch21/art-review.json",
+    "rightsReview":  "Sources/Batch21/rights-review.json",
+    "preview":  "Previews/Shots_batch21_contact_v01.png",
+    "gameImported":  false
 }
               ],
     "planned":  [

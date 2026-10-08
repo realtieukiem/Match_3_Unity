@@ -1,0 +1,14 @@
+{
+  "checked": "2026-10-08",
+  "intendedUse": "Projectile sprites for this game",
+  "origin": "generated",
+  "tool": "built-in image_gen",
+  "inputReview": "Existing project preview and three attack poses inspected locally for general palette, construction and outline properties. Initial drawings used independent text descriptions from the authorized Batch21 order; no external reference images uploaded.",
+  "uploadedReferenceImages": [{"path":"Sources/Batch21/shot_voirong_bolt_v01.r01.raw.png","role":"Edit target for r02","basis":"Original text-generated r01 created in this authorized task; preserved provenance and exact prompt."}],
+  "termsSource": "https://openai.com/policies/row-terms-of-use/",
+  "termsChecked": "2026-10-08",
+  "termsReview": "Opened the current provider page and reviewed input responsibility, output ownership and non-uniqueness provisions. Actual account agreement and plan applicability are not independently established.",
+  "outputReview": "Generic firecracker bundle, pearl and water-lightning motifs; no text, brand mark, signature or recognizable franchise character observed.",
+  "copyrightGuarantee": false,
+  "limitations": "No human-authorship, exclusivity, exhaustive similarity-search or legal-clearance claim."
+}

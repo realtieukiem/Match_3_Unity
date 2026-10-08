@@ -1,0 +1,77 @@
+﻿{
+    "checked":  "2026-10-08",
+    "domain":  "All pixels of the three 256x256 exports",
+    "batch":  21,
+    "assets":  [
+                   {
+                       "marginsLTRB":  [
+                                           80,
+                                           26,
+                                           79,
+                                           25
+                                       ],
+                       "alphaBorderPixels":  0,
+                       "contentSize":  [
+                                           97,
+                                           205
+                                       ],
+                       "status":  "pass",
+                       "transparentPixels":  51073,
+                       "resolution":  [
+                                          256,
+                                          256
+                                      ],
+                       "maxAlpha":  254,
+                       "sha256":  "ABAE638B8663C86D9D076DB354FE6435D2BAEAE019966C52CC63C7710CE23185",
+                       "nearOpaquePixels":  13628,
+                       "file":  "Assets/Battle/Shots/shot_bebeboom_bomb_v01.png"
+                   },
+                   {
+                       "marginsLTRB":  [
+                                           26,
+                                           92,
+                                           25,
+                                           93
+                                       ],
+                       "alphaBorderPixels":  0,
+                       "contentSize":  [
+                                           205,
+                                           71
+                                       ],
+                       "status":  "pass",
+                       "transparentPixels":  58515,
+                       "resolution":  [
+                                          256,
+                                          256
+                                      ],
+                       "maxAlpha":  254,
+                       "sha256":  "A2879DA0B803C07C1ED994E781EFB5482DC6E396DBFDD6B38448576AE2B36896",
+                       "nearOpaquePixels":  6424,
+                       "file":  "Assets/Battle/Shots/shot_ngoclam_pearl_v01.png"
+                   },
+                   {
+                       "marginsLTRB":  [
+                                           26,
+                                           92,
+                                           25,
+                                           91
+                                       ],
+                       "alphaBorderPixels":  0,
+                       "contentSize":  [
+                                           205,
+                                           73
+                                       ],
+                       "status":  "pass",
+                       "transparentPixels":  57152,
+                       "resolution":  [
+                                          256,
+                                          256
+                                      ],
+                       "maxAlpha":  254,
+                       "sha256":  "1BCF79A252BF05C48A8453038CFEC892554587DE24A9AB2B543A6C9EFEE297A9",
+                       "nearOpaquePixels":  7806,
+                       "file":  "Assets/Battle/Shots/shot_voirong_bolt_v01.png"
+                   }
+               ],
+    "result":  "pass"
+}

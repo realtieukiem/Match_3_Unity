@@ -45,12 +45,12 @@ Every piece of art the game needs has exactly one status. Codex paints ONLY rows
 | 14 | East Sea battle background, version 2: the same reef with two flat rock outcrops where the two creatures stand | 1 | `HAVE` | Batch 19, in the game since 2026-10-08 (both creatures stand on the outcrops); v01 preserved |
 | 18 | Charm icons `Meta/UI/charm_lucky_v01.png`, `Meta/UI/charm_protection_v01.png` | 2 | `HAVE` | Batch 20 painted 2026-10-08; exported, awaiting game import |
 | 19 | Idle frames 2 and 3 for Dunewing, Psyling, Azurewing and their later forms | - | `WAIT` | none of them is on the map now (all six nodes are East Sea); paint only if they return |
-| 20 | Projectiles for ranged creatures `Battle/Shots/shot_{bebeboom_bomb,ngoclam_pearl,voirong_bolt}_v01.png` | 3 | `PAINT NEW` | Batch 21 below; Bebeboom throws a code-drawn placeholder bomb until its file exists, the other two fight up close until theirs do |
+| 20 | Projectiles for ranged creatures `Battle/Shots/shot_{bebeboom_bomb,ngoclam_pearl,voirong_bolt}_v01.png` | 3 | `HAVE` | Batch 21 painted 2026-10-08; transparent 256x256 exports, awaiting game import |
 | 21 | Green confirm button (READY, BUY, WEAR, hub BACK are flat green rectangles; the painted kit has blue, red, gray, orange only) and a checkbox pair (the two charm toggles are flat white squares) | 3 | `PAINT NEW` | Batch 22 below (user, 2026-10-08: order what is best) |
 | 9 | Second forms of Emberkit, Leafling, Tidepup; a card for Tidal Siphon | - | `NEVER` | decided 2026-10-06 |
 | 10 | Third and later forms of any creature | - | `WAIT` | the rule for when a pet takes a third form is not decided |
 
-Open orders, 6 images in all: Batch 21 (three projectiles), Batch 22 (green button, checkbox pair). Both fit one Codex thread. Batches 19 and 20 are complete; rows marked `WAIT` remain undecided.
+Open orders, 3 images in all: Batch 22 (green button, checkbox pair). Batches 19, 20 and 21 are complete; rows marked `WAIT` remain undecided.
 
 Framing rule for every future creature batch (learned from Batches 12, 14 and 15): the game shows a creature at
 the size it fills its canvas, so paint the idle at about 80% of the canvas height, keep every pose (the hit pose
@@ -79,35 +79,11 @@ included) under 90%, and keep one ground line across the four poses. Creatures p
 | 16 | battle effects | `Battle/FX` | `fx_{rage_vortex,flame_wisp,siphon_mote,hit_burst,sparkle}_v01.png` |
 | 19 | remaining card faces, touch buttons and reef standing platforms | `Cards/Faces`, `Battle/QTE`, `Battle/Background` | `face_mana_potion_v02.png`, `face_fire_bolt_v02.png`, `qte_button_dir_v01.png`, `qte_button_strike_v01.png`, `battle_bg_eastsea_v02.png` |
 | 20 | lucky and protection charm icons | `Meta/UI` | `charm_lucky_v01.png`, `charm_protection_v01.png`; transparent 256x256, awaiting game import |
+| 21 | ranged creature projectiles | `Battle/Shots` | `shot_bebeboom_bomb_v01.png`, `shot_ngoclam_pearl_v01.png`, `shot_voirong_bolt_v01.png`; transparent 256x256, awaiting game import; prompts and raws in `Sources/Batch21` |
 
 Do NOT paint either (decided 2026-10-06, they would never be shown): second forms for Emberkit, Leafling or
 Tidepup - the free starter never changes form and the other two are not obtainable; a card for Tidal Siphon -
 only the boss uses it and boss cards are not drawn.
-
-## Batch 21 - projectiles for ranged creatures (3 images, `PAINT NEW`)
-
-A creature is either a melee fighter (it dashes across and hits) or a ranged one (it stays on its rock, throws
-or shoots, and the projectile bursts on the target). The game decides by file: a creature with a projectile
-here is ranged. Each projectile is one object alone on a transparent 256x256 canvas, filling about 80% of it,
-drawn at 120-160 px in battle. Save under `Art/Pokiwar_FG38/Assets/Battle/Shots/`. Look at the creature's own
-`Battle/Characters/<name>_attack_01.png` first so the projectile matches what it holds or spits.
-
-| File | Motion in game | Subject |
-|---|---|---|
-| `shot_bebeboom_bomb_v01.png` | thrown in a high arc, tumbling | The round bomb or firecracker Bebeboom holds in its attack pose: same colours and fuse, a small lit spark on the fuse. Drawn upright; it reads from every angle because it spins. |
-| `shot_ngoclam_pearl_v01.png` | flies straight, pointing along its path | One glowing pearl with a short tapering trail of pale light behind it. The pearl leads at the RIGHT edge, the trail points LEFT. Symmetric above and below the horizontal axis. |
-| `shot_voirong_bolt_v01.png` | flies straight, pointing along its path | One spiralling water bolt with a thin core of lightning, blunt head at the RIGHT edge, tail thinning to the LEFT. Symmetric above and below the horizontal axis. |
-
-```
-Create one finished 2D game projectile sprite: <SUBJECT FROM THE TABLE>. Square canvas, genuine transparent
-background, one single object centred, filling about 80% of the canvas. Canyon-fantasy casual cartoon: chunky
-silhouette, thick closed near-black brown outline #21191F, two or three crisp flat shade bands, a cream
-highlight from the upper left, very little texture. Readable at 120 px. No creature, hand, claw, impact burst,
-smoke cloud, ground, cast shadow, text, UI or background. Transparent alpha outside the object.
-```
-
-Later creatures and second forms follow the same rule: a thrown projectile is `<creature>.lob`, a straight one
-is `<creature>.shot` in `Fg38Art`; a second form without its own file uses its first form's.
 
 ## Batch 22 - green button and checkbox (3 images, `PAINT NEW`)
 
@@ -135,7 +111,7 @@ Continue the Pokiwar FG38 art set. Reply to me in Vietnamese.
 Read first: Art/Pokiwar_FG38/ART_BIBLE.md and Art/Pokiwar_FG38/AssetManifest.json, and look at
 Art/Pokiwar_FG38/Previews/Battle_form01_v01.png as the style target (canyon fantasy, chunky
 silhouettes, near-black brown outline #21191F, two or three flat shade bands, cream highlight).
-Batch 19 definitions and prompts are an archive of completed work, not a new drawing order. Read only Batches 20, 21 and 22 below.
+Completed definitions and prompts are archived under Sources/Batch19, Sources/Batch20 and Sources/Batch21. Read only Batch 22 above as a new drawing order.
 The ordered definitions resolve their references and output filenames inside Art/Pokiwar_FG38.
 Thread budget rules - this thread dies above ~30 inline images:
 - generate at most the images listed below, one at a time;
