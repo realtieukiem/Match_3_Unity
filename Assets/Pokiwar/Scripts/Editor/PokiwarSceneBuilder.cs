@@ -297,8 +297,8 @@ namespace Pokiwar.EditorTools
             At(chips, 0.5f, 0.5f, 0, 228, 960, 64);
             hub.GoldLabel = Chip(chips, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, -360);
             hub.EnergyLabel = Chip(chips, "Energy", "gem.Lightning", Color.white, -120);
-            hub.LuckyLabel = Chip(chips, "Lucky", "fx.star", Gold, 120);
-            hub.ProtectLabel = Chip(chips, "Protect", "gem.Shield", Color.white, 360);
+            hub.LuckyLabel = Chip(chips, "Lucky", Key("charm.lucky", "fx.star"), art.ContainsKey("charm.lucky") ? Color.white : Gold, 120);
+            hub.ProtectLabel = Chip(chips, "Protect", Key("charm.protection", "gem.Shield"), Color.white, 360);
 
             var card = Img(s, "PetCard", "ui.round", PanelCol);
             At(card.rectTransform, 0.5f, 0.5f, -360, -110, 620, 560);
@@ -1062,8 +1062,8 @@ namespace Pokiwar.EditorTools
             var wallet = NewUI("Wallet", cp.transform);
             At(wallet, 0.5f, 0, 0, 170, 500, 60);
             up.GoldLabel = Chip(wallet, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, -152, 176);
-            up.LuckyLabel = Chip(wallet, "Lucky", "fx.star", Gold, 14, 136);
-            up.ProtectLabel = Chip(wallet, "Protect", "gem.Shield", Color.white, 160, 136);
+            up.LuckyLabel = Chip(wallet, "Lucky", Key("charm.lucky", "fx.star"), art.ContainsKey("charm.lucky") ? Color.white : Gold, 14, 136);
+            up.ProtectLabel = Chip(wallet, "Protect", Key("charm.protection", "gem.Shield"), Color.white, 160, 136);
             up.MessageLabel = Txt(cp.transform, "Message", "", 22, new Color(0.8f, 0.95f, 1f), TextAnchor.MiddleCenter);
             At(up.MessageLabel.rectTransform, 0.5f, 0, 0, 90, 490, 90);
 
@@ -1125,8 +1125,8 @@ namespace Pokiwar.EditorTools
             var wallet = NewUI("Wallet", cp.transform);
             At(wallet, 0.5f, 0, 0, 170, 500, 60);
             f.GoldLabel = Chip(wallet, "Gold", Key("icon.gold", "ui.circle"), art.ContainsKey("icon.gold") ? Color.white : Gold, -152, 176);
-            f.LuckyLabel = Chip(wallet, "Lucky", "fx.star", Gold, 14, 136);
-            f.ProtectLabel = Chip(wallet, "Protect", "gem.Shield", Color.white, 160, 136);
+            f.LuckyLabel = Chip(wallet, "Lucky", Key("charm.lucky", "fx.star"), art.ContainsKey("charm.lucky") ? Color.white : Gold, 14, 136);
+            f.ProtectLabel = Chip(wallet, "Protect", Key("charm.protection", "gem.Shield"), Color.white, 160, 136);
             f.MessageLabel = Txt(cp.transform, "Message", "", 22, new Color(0.8f, 0.95f, 1f), TextAnchor.MiddleCenter);
             At(f.MessageLabel.rectTransform, 0.5f, 0, 0, 90, 490, 90);
 
@@ -1511,10 +1511,12 @@ namespace Pokiwar.EditorTools
         {
             var root = NewUI(name, parent);
             var t = root.gameObject.AddComponent<Toggle>();
-            var box = Img(root, "Box", "ui.round", new Color(0.9f, 0.9f, 0.95f), true);
-            At(box.rectTransform, 0, 0.5f, 28, 0, 46, 46);
-            var check = Img(box.transform, "Check", "ui.round", Green);
-            At(check.rectTransform, 0.5f, 0.5f, 0, 0, 28, 28);
+            bool painted = art.ContainsKey("ui.checkbox.off") && art.ContainsKey("ui.checkbox.on");
+            var box = painted ? Img(root, "Box", "ui.checkbox.off", Color.white) : Img(root, "Box", "ui.round", new Color(0.9f, 0.9f, 0.95f), true);
+            At(box.rectTransform, 0, 0.5f, 28, 0, painted ? 54 : 46, painted ? 54 : 46);
+            var check = Img(box.transform, "Check", painted ? "ui.checkbox.on" : "ui.round", painted ? Color.white : Green);
+            if (painted) Fill(check.rectTransform);
+            else At(check.rectTransform, 0.5f, 0.5f, 0, 0, 28, 28);
             var text = Txt(root, "Label", label, 26, Color.white, TextAnchor.MiddleLeft);
             var rt = text.rectTransform;
             rt.anchorMin = new Vector2(0, 0);
@@ -1711,7 +1713,7 @@ namespace Pokiwar.EditorTools
             string key = c == Green ? "ui.button.green" : c == Blue ? "ui.button.blue" : c == Red ? "ui.button.red" : c == Gray ? "ui.button.gray" : c == Gold ? "ui.button.orange" : null;
             bool skin = key != null && art.ContainsKey(key);
             var img = Img(parent, name, skin ? key : "ui.round", skin ? Color.white : c, true);
-            if (skin) SliceTo(img, c == Green ? 34 : 24);
+            if (skin) SliceTo(img, 24);
             var b = img.gameObject.AddComponent<Button>();
             b.targetGraphic = img;
             img.gameObject.AddComponent<ClickSound>();

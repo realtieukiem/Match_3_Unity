@@ -209,7 +209,7 @@ MonoBehaviour:
     - Id: shop.lucky_charm
       Name: Lucky Charm
       Description: +15% chance on one merge or upgrade.
-      IconKey: fx.star
+      IconKey: charm.lucky
       Price: 300
       Grant:
         Kind: 2
@@ -222,7 +222,7 @@ MonoBehaviour:
     - Id: shop.protection_charm
       Name: Protection Charm
       Description: A failed upgrade does not drop the level.
-      IconKey: gem.Shield
+      IconKey: charm.protection
       Price: 500
       Grant:
         Kind: 3

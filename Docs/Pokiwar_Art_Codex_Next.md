@@ -43,10 +43,10 @@ Every piece of art the game needs has exactly one status. Codex paints ONLY rows
 | 17 | Arrow mini game touch buttons `qte_button_dir_v01.png`, `qte_button_strike_v01.png` | 2 | `HAVE` | Batch 19, in the game since 2026-10-08 |
 | 13 | Idle animation frames 2 and 3 for the eleven creatures in play (Emberkit, six East Sea first forms, four East Sea second forms) | 22 | `HAVE` | painted 2026-10-07, in the game |
 | 14 | East Sea battle background, version 2: the same reef with two flat rock outcrops where the two creatures stand | 1 | `HAVE` | Batch 19, in the game since 2026-10-08 (both creatures stand on the outcrops); v01 preserved |
-| 18 | Charm icons `Meta/UI/charm_lucky_v01.png`, `Meta/UI/charm_protection_v01.png` | 2 | `HAVE` | Batch 20 painted 2026-10-08; exported, awaiting game import |
+| 18 | Charm icons `Meta/UI/charm_lucky_v01.png`, `Meta/UI/charm_protection_v01.png` | 2 | `HAVE` | Batch 20 painted 2026-10-08; exported, in the game since 2026-10-08 |
 | 19 | Idle frames 2 and 3 for Dunewing, Psyling, Azurewing and their later forms | - | `WAIT` | none of them is on the map now (all six nodes are East Sea); paint only if they return |
-| 20 | Projectiles for ranged creatures `Battle/Shots/shot_{bebeboom_bomb,ngoclam_pearl,voirong_bolt}_v01.png` | 3 | `HAVE` | Batch 21 painted 2026-10-08; transparent 256x256 exports, awaiting game import |
-| 21 | Green confirm button and stone-rim checkbox pair | 3 | `HAVE` | Batch 22 painted 2026-10-08; transparent 512x160 button and 128x128 checkbox exports, awaiting game import |
+| 20 | Projectiles for ranged creatures `Battle/Shots/shot_{bebeboom_bomb,ngoclam_pearl,voirong_bolt}_v01.png` | 3 | `HAVE` | Batch 21 painted 2026-10-08; transparent 256x256 exports, in the game since 2026-10-08 |
+| 21 | Green confirm button and stone-rim checkbox pair | 3 | `HAVE` | Batch 22 painted 2026-10-08; transparent 512x160 button and 128x128 checkbox exports, in the game since 2026-10-08 |
 | 9 | Second forms of Emberkit, Leafling, Tidepup; a card for Tidal Siphon | - | `NEVER` | decided 2026-10-06 |
 | 10 | Third and later forms of any creature | - | `WAIT` | the rule for when a pet takes a third form is not decided |
 
@@ -78,8 +78,8 @@ included) under 90%, and keep one ground line across the four poses. Creatures p
 | 15 | East Sea second forms and region art | `Battle/Characters`, `Meta/World`, `Meta/Lobby`, `Battle/Background` | `enemy_{ngoclam,doimora,voirong}_form02_*`, `boss_ongnamhai_form02_*` x16, `world_island_eastsea_v01.png`, `region_east_sea_v01.png`, `battle_bg_eastsea_v01.png` |
 | 16 | battle effects | `Battle/FX` | `fx_{rage_vortex,flame_wisp,siphon_mote,hit_burst,sparkle}_v01.png` |
 | 19 | remaining card faces, touch buttons and reef standing platforms | `Cards/Faces`, `Battle/QTE`, `Battle/Background` | `face_mana_potion_v02.png`, `face_fire_bolt_v02.png`, `qte_button_dir_v01.png`, `qte_button_strike_v01.png`, `battle_bg_eastsea_v02.png` |
-| 20 | lucky and protection charm icons | `Meta/UI` | `charm_lucky_v01.png`, `charm_protection_v01.png`; transparent 256x256, awaiting game import |
-| 21 | ranged creature projectiles | `Battle/Shots` | `shot_bebeboom_bomb_v01.png`, `shot_ngoclam_pearl_v01.png`, `shot_voirong_bolt_v01.png`; transparent 256x256, awaiting game import; prompts and raws in `Sources/Batch21` |
+| 20 | lucky and protection charm icons | `Meta/UI` | `charm_lucky_v01.png`, `charm_protection_v01.png`; transparent 256x256, in the game since 2026-10-08 |
+| 21 | ranged creature projectiles | `Battle/Shots` | `shot_bebeboom_bomb_v01.png`, `shot_ngoclam_pearl_v01.png`, `shot_voirong_bolt_v01.png`; transparent 256x256, in the game since 2026-10-08; prompts and raws in `Sources/Batch21` |
 | 22 | green button and checkbox pair | `UI/Common` | `ui_button_green_v01.png`, `ui_checkbox_off_v01.png`, `ui_checkbox_on_v01.png` |
 
 Do NOT paint either (decided 2026-10-06, they would never be shown): second forms for Emberkit, Leafling or

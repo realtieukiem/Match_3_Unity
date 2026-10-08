@@ -63,7 +63,7 @@ MonoBehaviour:
   - Key: stone
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   - Key: bebeboom.lob
-    Sprite: {fileID: 21300000, guid: 8afaba38b5879c44d9e8e8a4ce20e861, type: 3}
+    Sprite: {fileID: 21300000, guid: 07f57059896d3534b8363ee8f895bc85, type: 3}
   - Key: emberkit
     Sprite: {fileID: 21300000, guid: 258bc4773cd85d044aa4329e163be108, type: 3}
   - Key: leafling
@@ -161,7 +161,7 @@ MonoBehaviour:
   - Key: hud.bar
     Sprite: {fileID: 21300000, guid: 9719f6bd60c487d4da4fda9ad1c0d817, type: 3}
   - Key: ui.button.green
-    Sprite: {fileID: 21300000, guid: ee0e6e0d71c90824bbd2276bb820f2ca, type: 3}
+    Sprite: {fileID: 21300000, guid: 655224155e75857439bb22125eb1ff12, type: 3}
   - Key: card.slot
     Sprite: {fileID: 21300000, guid: b1f71e96010878e499e4375bf8ff828d, type: 3}
   - Key: qte.slot
@@ -452,6 +452,10 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: db1d8a7c1cb64fb47bc8be3982eebc51, type: 3}
   - Key: fx.hit
     Sprite: {fileID: 21300000, guid: b3910dd72a3997d46aacedc00fbb653a, type: 3}
+  - Key: ngoclam.shot
+    Sprite: {fileID: 21300000, guid: 4eead77d6211b22478f77ac7a980bd9e, type: 3}
+  - Key: voirong.shot
+    Sprite: {fileID: 21300000, guid: b0a375bc651a51e42be312568c83646a, type: 3}
   - Key: fx.sparkle
     Sprite: {fileID: 21300000, guid: 065b2dba989a9cd4091f8fc771cdd317, type: 3}
   - Key: world.eastsea
@@ -466,6 +470,14 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: b4139bf64094b1a4a826558bed579079, type: 3}
   - Key: ui.button.orange
     Sprite: {fileID: 21300000, guid: 19219b76281b71a40805f0888c18a877, type: 3}
+  - Key: ui.checkbox.off
+    Sprite: {fileID: 21300000, guid: 60f177f4fbe1d2a46aedc41ac8fd636f, type: 3}
+  - Key: ui.checkbox.on
+    Sprite: {fileID: 21300000, guid: 075ff83022f31b94bb740df3b0ca9dec, type: 3}
+  - Key: charm.lucky
+    Sprite: {fileID: 21300000, guid: 8b6240001aa164845ba42f9217493413, type: 3}
+  - Key: charm.protection
+    Sprite: {fileID: 21300000, guid: 05adc0cecd685334b92a59fe8d2ed333, type: 3}
   - Key: ui.panel
     Sprite: {fileID: 21300000, guid: 2632e0a5675be7a40804de5e742edff2, type: 3}
   - Key: ui.close
@@ -694,6 +706,12 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 218955965aab72149907868dbd2123c1, type: 3}
   - Key: right.ongnamhai_evolved.idle3
     Sprite: {fileID: 21300000, guid: 74a51f28cb76df94cb8ee0f8aa1ee964, type: 3}
+  - Key: right.bebeboom.lob
+    Sprite: {fileID: 21300000, guid: 262123a0814b21a489f703fcb92c9487, type: 3}
+  - Key: right.ngoclam.shot
+    Sprite: {fileID: 21300000, guid: 1174370408125a6439556b73a15c284c, type: 3}
+  - Key: right.voirong.shot
+    Sprite: {fileID: 21300000, guid: 0f87aca728222f94b8126940d3bef060, type: 3}
   - Key: stone.Neutral
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
   Fallback: {fileID: 21300000, guid: 47a677a696f0f5f419663a7ebdd0c7e3, type: 3}

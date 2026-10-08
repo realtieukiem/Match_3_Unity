@@ -35,8 +35,8 @@ namespace Pokiwar.Domain
                 Shop = new List<ShopItemDef>
                 {
                     new ShopItemDef { Id = "shop.card_stone", Name = "Card Stone T1", Description = "Feeds a reusable card in the card forge.", IconKey = "stone.card", Price = 150, Grant = new RewardDrop { Kind = RewardKind.CardStone, Tier = 1, Count = 1 } },
-                    new ShopItemDef { Id = "shop.lucky_charm", Name = "Lucky Charm", Description = "+15% chance on one merge or upgrade.", IconKey = "fx.star", Price = 300, Grant = new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1 } },
-                    new ShopItemDef { Id = "shop.protection_charm", Name = "Protection Charm", Description = "A failed upgrade does not drop the level.", IconKey = "gem.Shield", Price = 500, Grant = new RewardDrop { Kind = RewardKind.ProtectionCharm, Count = 1 } }
+                    new ShopItemDef { Id = "shop.lucky_charm", Name = "Lucky Charm", Description = "+15% chance on one merge or upgrade.", IconKey = "charm.lucky", Price = 300, Grant = new RewardDrop { Kind = RewardKind.LuckyCharm, Count = 1 } },
+                    new ShopItemDef { Id = "shop.protection_charm", Name = "Protection Charm", Description = "A failed upgrade does not drop the level.", IconKey = "charm.protection", Price = 500, Grant = new RewardDrop { Kind = RewardKind.ProtectionCharm, Count = 1 } }
                 }
             };
             AddAvatarItems(db);
