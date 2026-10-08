@@ -1,0 +1,69 @@
+﻿{
+  "schema": "pokiwar-sprite-swap-v1",
+  "coordinateSystem": "local UI pixels at 1920x1080; x positive to screen right",
+  "pivot": { "characters": [0.5, 0.05], "ui": [0.5, 0.5] },
+  "states": [
+    { "actor": "player", "name": "idle", "loop": true, "durationMs": 1200, "keys": [
+      { "t": 0, "sprite": "pet_player_idle_01.png", "scale": [1, 1], "y": 0 },
+      { "t": 600, "sprite": "pet_player_idle_01.png", "scale": [1.01, 1.018], "y": 5 },
+      { "t": 1200, "sprite": "pet_player_idle_01.png", "scale": [1, 1], "y": 0 }
+    ]},
+    { "actor": "player", "name": "attack", "loop": false, "durationMs": 390, "keys": [
+      { "t": 0, "sprite": "pet_player_idle_01.png", "x": -12 },
+      { "t": 100, "sprite": "pet_player_attack_01.png", "x": 24 },
+      { "t": 180, "sprite": "pet_player_attack_01.png", "x": 40, "effect": "vfx_slash_v01.png" },
+      { "t": 390, "sprite": "pet_player_idle_01.png", "x": 0 }
+    ]},
+    { "actor": "player", "name": "hit", "loop": false, "durationMs": 300, "keys": [
+      { "t": 0, "sprite": "pet_player_hit_01.png", "x": 0 },
+      { "t": 65, "sprite": "pet_player_hit_01.png", "x": -8 },
+      { "t": 130, "sprite": "pet_player_hit_01.png", "x": 4 },
+      { "t": 300, "sprite": "pet_player_idle_01.png", "x": 0 }
+    ]},
+    { "actor": "player", "name": "defeat", "loop": false, "durationMs": 500, "keys": [
+      { "t": 0, "sprite": "pet_player_hit_01.png" },
+      { "t": 160, "sprite": "pet_player_defeat_01.png" }
+    ]},
+    { "actor": "enemy", "name": "idle", "loop": true, "durationMs": 1100, "keys": [
+      { "t": 0, "sprite": "enemy_beetle_idle_01.png", "y": 0 },
+      { "t": 550, "sprite": "enemy_beetle_idle_01.png", "y": 4 },
+      { "t": 1100, "sprite": "enemy_beetle_idle_01.png", "y": 0 }
+    ]},
+    { "actor": "enemy", "name": "attack", "loop": false, "durationMs": 390, "keys": [
+      { "t": 0, "sprite": "enemy_beetle_idle_01.png", "x": 10 },
+      { "t": 110, "sprite": "enemy_beetle_attack_01.png", "x": -25 },
+      { "t": 190, "sprite": "enemy_beetle_attack_01.png", "x": -36 },
+      { "t": 390, "sprite": "enemy_beetle_idle_01.png", "x": 0 }
+    ]},
+    { "actor": "enemy", "name": "hit", "loop": false, "durationMs": 290, "keys": [
+      { "t": 0, "sprite": "enemy_beetle_hit_01.png", "x": 7 },
+      { "t": 290, "sprite": "enemy_beetle_idle_01.png", "x": 0 }
+    ]},
+    { "actor": "enemy", "name": "defeat", "loop": false, "durationMs": 400, "keys": [
+      { "t": 0, "sprite": "enemy_beetle_hit_01.png" },
+      { "t": 160, "sprite": "enemy_beetle_defeat_01.png" }
+    ]},
+    { "actor": "boss", "name": "transform", "loop": false, "durationMs": 620, "keys": [
+      { "t": 0, "sprite": "boss_crystaldrake_form01_idle_01.png", "scale": [1, 1] },
+      { "t": 100, "sprite": "boss_crystaldrake_form01_idle_01.png", "effect": "vfx_boss_transform_v01.png" },
+      { "t": 350, "sprite": "boss_crystaldrake_form02_idle_01.png", "scale": [0.88, 0.88] },
+      { "t": 620, "sprite": "boss_crystaldrake_form02_idle_01.png", "scale": [1, 1] }
+    ]},
+    { "actor": "boss", "name": "rage_attack", "loop": false, "durationMs": 520, "keys": [
+      { "t": 0, "sprite": "boss_crystaldrake_form02_idle_01.png", "x": 8 },
+      { "t": 160, "sprite": "boss_crystaldrake_form02_attack_01.png", "x": -25 },
+      { "t": 220, "sprite": "boss_crystaldrake_form02_attack_01.png", "effect": "vfx_fire_rage_v01.png" },
+      { "t": 520, "sprite": "boss_crystaldrake_form02_idle_01.png", "x": 0 }
+    ]},
+    { "actor": "boss", "name": "hit", "loop": false, "durationMs": 320, "keys": [
+      { "t": 0, "sprite": "boss_crystaldrake_form02_hit_01.png", "x": 8 },
+      { "t": 320, "sprite": "boss_crystaldrake_form02_idle_01.png", "x": 0 }
+    ]},
+    { "actor": "boss", "name": "defeat", "loop": false, "durationMs": 500, "keys": [
+      { "t": 0, "sprite": "boss_crystaldrake_form02_hit_01.png" },
+      { "t": 180, "sprite": "boss_crystaldrake_form02_defeat_01.png" }
+    ]}
+  ],
+  "qte": { "slots": 5, "directions": ["up", "down", "left", "right"], "markerDurationMs": 650, "labels": ["GOOD", "PERFECT", "MISS"] },
+  "note": "One authored sprite per key pose. These keys are a usable sprite-swap/tween specification; they are not a multi-frame hand-drawn animation sheet."
+}

@@ -1,0 +1,49 @@
+[
+  {
+    "key": "face_mana_potion",
+    "file": "Cards/Faces/face_mana_potion_v02.png",
+    "width": 864,
+    "height": 1104,
+    "transparent": true,
+    "matte": true,
+    "reference": "Assets/Cards/Faces/face_herbal_salve_v02.png",
+    "prompt": "Continue the Pokiwar FG38 art family. Chunky clean silhouettes, near-black brown #21191F contours, two or three flat shade bands, cream upper-left highlight. No text, numbers, watermark or extra UI. One finished asset only. Create a BLUE card face, final canvas 864x1104. Match the supplied herbal-salve card as a layout reference: solid flat blue rounded rectangle, corner radius about 80 pixels, a single lighter diagonal band from top-left, no frame. ONE big pictogram centered at x432 y400, roughly 520x520: a round flask of glowing blue liquid with a small lightning bolt on it. Keep the lower 40% entirely plain blue. The entire card face must be fully opaque, including the blank lower area. Generate on a solid pure magenta #FF00FF matte outside the rounded rectangle only; do not use magenta anywhere in the card. No transparency holes in the card, no cast shadow, no lettering or numerals."
+  },
+  {
+    "key": "face_fire_bolt",
+    "file": "Cards/Faces/face_fire_bolt_v02.png",
+    "width": 864,
+    "height": 1104,
+    "transparent": true,
+    "matte": true,
+    "reference": "Assets/Cards/Faces/face_meteor_v02.png",
+    "prompt": "Continue the Pokiwar FG38 art family. Chunky clean silhouettes, near-black brown #21191F contours, two or three flat shade bands, cream upper-left highlight. No text, numbers, watermark or extra UI. One finished asset only. Create a DARK SLATE card face, final canvas 864x1104. Match the supplied meteor card as a layout reference: solid flat dark slate rounded rectangle, corner radius about 80 pixels, one YELLOW diagonal band from top-left, no frame. ONE big centered pictogram around x432 y400, within a roughly 520x520 area: a small simple fireball flying diagonally down-right with a short tail; clearly smaller and simpler than a meteor, no massive rocky meteor core. Keep the lower 40% entirely plain slate. The entire card face must be fully opaque, including blank fill. Generate on a solid pure magenta #FF00FF matte outside the rounded rectangle only; no magenta within the card. No transparency holes, no cast shadow, no lettering or numerals."
+  },
+  {
+    "key": "qte_button_dir",
+    "file": "Battle/QTE/qte_button_dir_v01.png",
+    "width": 256,
+    "height": 256,
+    "transparent": true,
+    "reference": "Assets/Battle/QTE/qte_token_v01.png",
+    "prompt": "Create one finished Pokiwar FG38 2D game UI sprite, qte_button_dir_v01: a round BLUE touch button on a genuinely transparent background. The supplied pink token image is a STYLE REFERENCE ONLY: match its circular geometry, raised beveled construction, thick near-black brown #21191F outer contour, warm ivory-white rim, crisp planar shade bands, large upper-left glossy highlight and darker lower-right bevel. Replace pink with vivid lightning blue #188EE9. Keep the circular blue center completely empty: no icon, arrows, lettering, numbers or markings. Exactly one circular button, front-facing, centered on a square canvas, occupying approximately 86% of width and height with clear transparent padding on all four edges. Match the existing chunky casual-cartoon UI family; clean sparse rendering, no scenery, cast shadow, extra objects or watermark. Final intended asset is 256x256; preserve a clear silhouette at 64px. Actual transparent alpha outside the full button silhouette."
+  },
+  {
+    "key": "qte_button_strike",
+    "file": "Battle/QTE/qte_button_strike_v01.png",
+    "width": 512,
+    "height": 256,
+    "transparent": true,
+    "reference": "Assets/Battle/QTE/qte_token_v01.png",
+    "prompt": "Continue the Pokiwar FG38 art family. Chunky clean silhouettes, near-black brown #21191F contours, two or three flat shade bands, cream upper-left highlight. No text, numbers, watermark or extra UI. One finished asset only. Create a wide RED touch button for the arrow mini-game, final canvas 512x256, genuine transparent alpha outside. Use the supplied pink QTE token solely as a material/style reference: raised glossy bevel, white-ivory rim, clean dark contour, strong upper-left highlight and darker lower-right shade bands. Button is a horizontal capsule with fully rounded ends, centered with clear transparent padding on every side. Red #EA473B face with ONE bold crossed-swords emblem centered, chunky ivory/silver blades and dark contours readable at small game scale. No text, letters, numerals, extra icons, external cast shadows or scenery."
+  },
+  {
+    "key": "battle_bg_eastsea_v02",
+    "file": "Battle/Background/battle_bg_eastsea_v02.png",
+    "width": 2048,
+    "height": 1152,
+    "transparent": false,
+    "reference": "Assets/Battle/Background/battle_bg_eastsea_v01.png",
+    "prompt": "Continue the Pokiwar FG38 art family. Chunky clean silhouettes, near-black brown #21191F contours, two or three flat shade bands, cream upper-left highlight. No text, numbers, watermark or extra UI. One finished asset only. Edit the supplied East Sea v01 background into a NEW version, final 2048x1152, completely opaque. Preserve its sea, sky, far cays, coral, colors, lighting, slightly raised camera and composition. Change only this: add two flat-topped rock outcrops rising out of the shallow water for two creatures to stand on. In final image coordinates measured from top-left, left rock top center x350 y885; right rock top center x1700 y885. Each top is a LEVEL clearly readable standing surface about 560 pixels wide and 110 pixels deep, seen from the same slightly raised camera, lit from above, slightly wet at its edge. The reef-stone rock face below each top extends to the bottom edge, with weathering, barnacles and a few small low corals, enough unobstructed face for a live name label. No tall plants, props or posts on either standing platform, no creatures, labels, board or UI. Entire middle x640 through x1410 remains calm open water; top 190 pixels remain simple sky. Keep v01 unchanged."
+  }
+]

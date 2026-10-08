@@ -203,10 +203,11 @@ Balance (AI vs AI, 40 seeds, pet Lv 1/3/5/8/12): the six East Sea nodes run from
 
 ## Art (FG38 set)
 
-`Assets/Pokiwar/Art/FG38` holds the canyon-fantasy set made from `D:\Project\Pokiwar_Art_FG38` (Codex, 2026-10-05). `Fg38Art.Apply`
+`Assets/Pokiwar/Art/FG38` holds the imported canyon-fantasy set. Its portable source workspace is
+`Art/Pokiwar_FG38`, including `ART_BIBLE.md`, saved prompts, the manifest and reference images. `Fg38Art.Apply`
 runs inside Rebuild Scene: it copies any file still missing from that folder, draws the six square gems itself (FG38 palette,
 ink outline, bevel, dark emblem), sets importers and 9-slice borders, and overrides the sprite keys below. Drop a new PNG
-under the same name in `Art/FG38` to replace one.
+under its canonical name in `Art/Pokiwar_FG38/Assets` for the importer to discover it.
 
 | Key | File |
 |---|---|

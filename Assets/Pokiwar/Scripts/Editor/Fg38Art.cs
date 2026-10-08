@@ -9,7 +9,7 @@ namespace Pokiwar.EditorTools
     /// <summary>Brings the FG38 art set into the project and maps each file onto the sprite keys the game reads.</summary>
     public static class Fg38Art
     {
-        public const string Source = "D:/Project/Pokiwar_Art_FG38/Assets";
+        public static string Source => Path.GetFullPath(Path.Combine(Application.dataPath, "../Art/Pokiwar_FG38/Assets"));
         public const string Folder = "Assets/Pokiwar/Art/FG38";
 
         private sealed class Item

@@ -1,5 +1,5 @@
 param(
-    [string]$Source = 'D:\Project\Pokiwar_Art_FG38\Assets\Battle\Characters',
+    [string]$Source = (Join-Path $PSScriptRoot '..\Art\Pokiwar_FG38\Assets\Battle\Characters'),
     [string]$Dest = (Join-Path $PSScriptRoot '..\Assets\Pokiwar\Art\FG38'),
     [double]$Grow = 1.10,
     [int]$CanvasWidth = 1402,

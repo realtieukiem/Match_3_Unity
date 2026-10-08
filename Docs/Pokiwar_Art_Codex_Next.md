@@ -7,12 +7,14 @@ and cannot be used again.
 ## Rule for this file
 
 Prompts exist here ONLY for what is still to paint; the status board names everything else so nothing is painted
-twice. When a batch is painted its prompt is deleted from here, its board row turns to `HAVE` and the batch
+twice. The portable art workspace is `Art/Pokiwar_FG38` inside this repository; all paths below resolve
+from the repository root, on any machine. Read `Art/Pokiwar_FG38/README.md` for the bundled inputs.
+When a batch is painted its prompt is deleted from here, its board row turns to `HAVE` and the batch
 moves to the "Already painted" table below - never leave a finished prompt in place, Codex would paint it
-again. Before painting anything, check the file name under `D:\Project\Pokiwar_Art_FG38\Assets`: a file that
+again. Before painting anything, check the file name under `Art/Pokiwar_FG38/Assets`: a file that
 exists is finished, do not repaint or overwrite it unless the user asks for a new version by name.
 
-## Status board - read this first (checked 2026-10-07 12:34 against `D:\Project\Pokiwar_Art_FG38\Assets`, 227 PNG)
+## Status board - read this first (checked 2026-10-08 against `Art/Pokiwar_FG38/Assets`, 268 PNG; five Batch 19 exports still absent)
 
 Every piece of art the game needs has exactly one status. Codex paints ONLY rows marked `PAINT NEW`.
 
@@ -108,19 +110,25 @@ only the boss uses it and boss cards are not drawn.
 
 ```
 Continue the Pokiwar FG38 art set. Reply to me in Vietnamese.
-Read first: D:\Project\Pokiwar_Art_FG38\ART_BIBLE.md, AssetManifest.json, and look at
-D:\Project\Pokiwar_Art_FG38\Previews\Battle_form01_v01.png as the style target (canyon fantasy, chunky
+Read first: Art/Pokiwar_FG38/ART_BIBLE.md and Art/Pokiwar_FG38/AssetManifest.json, and look at
+Art/Pokiwar_FG38/Previews/Battle_form01_v01.png as the style target (canyon fantasy, chunky
 silhouettes, near-black brown outline #21191F, two or three flat shade bands, cream highlight).
+Read Art/Pokiwar_FG38/Sources/Batch19/definitions.json for the exact saved prompts and references.
+Its reference paths and output filenames resolve inside Art/Pokiwar_FG38.
 Thread budget rules - this thread dies above ~30 inline images:
 - generate at most the images listed below, one at a time;
 - never open a full-size output to check it; build a 512 px contact sheet and view only that;
 - copy every accepted image out of ~/.codex/generated_images/<session>/ into the exact path below at
-  once, with a transparent background, and update AssetManifest.json for it.
-The game picks files up by these exact names (Fg38Art in D:\Project\GitHub\Match_3_Unity); do not rename.
-Do not edit anything inside D:\Project\GitHub\Match_3_Unity.
+  once into Art/Pokiwar_FG38/Assets/<requested filename>, and update the local AssetManifest.json.
+- use an opaque magenta matte for raw card faces, then key only the outside corners; blank card
+  interiors must remain opaque. Buttons use alpha; the battle background stays fully opaque.
+- preserve new prompts, immutable raws and reports in Art/Pokiwar_FG38/Sources/Batch19.
+The game picks files up by these exact names (Assets/Pokiwar/Scripts/Editor/Fg38Art.cs); do not rename.
+Limit art-generation edits to Art/Pokiwar_FG38 and this order file. Keep existing scenes and gameplay.
 ```
 
 ## After any batch
 
-Tell Claude Code "lấy asset Codex mới vào game" (or run `Pokiwar/Rebuild Scene + Art` in Unity). Painted
-square gems replace the code-drawn ones automatically; everything else fills the matching sprite key.
+Verify exports, update the manifest and mark completed order rows `HAVE` before handing off.
+New exports are available to the Unity importer at `Art/Pokiwar_FG38/Assets`; preserve existing
+scene layout when importing them. Do not rebuild the whole scene as part of an art-only request.
