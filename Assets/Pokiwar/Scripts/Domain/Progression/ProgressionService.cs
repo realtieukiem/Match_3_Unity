@@ -119,7 +119,9 @@ namespace Pokiwar.Domain
             if (string.IsNullOrEmpty(node.RequiresNodeId)) return true;
             var req = Db.Map.Nodes.Find(n => n.Id == node.RequiresNodeId);
             if (req == null) return true;
-            return d.Wins(req.Id) >= Math.Max(1, req.WinsRequired);
+            if (d.Wins(req.Id) >= Math.Max(1, req.WinsRequired)) return true;
+            var enc = Db.Encounters.Find(e => e.Id == req.EncounterId);
+            return enc != null && d.Pets.Exists(p => p.PetId == enc.CreatureId);
         }
 
         public EntryCheck CanEnter(SaveData d, MapNodeDef node)
@@ -316,11 +318,17 @@ namespace Pokiwar.Domain
                 if (drop.Chance < 1f && !rng.Chance(drop.Chance)) continue;
                 GrantItem(d, drop, grant.Lines);
             }
-            if (firstClear && enc.CaptureOnFirstWin && !d.Pets.Exists(p => p.PetId == enc.CreatureId))
+            int winsToCapture = node != null ? Math.Max(1, node.WinsRequired) : 1;
+            bool enoughWins = np == null ? firstClear : np.Wins >= winsToCapture;
+            if (enc.CaptureOnFirstWin && !d.Pets.Exists(p => p.PetId == enc.CreatureId))
             {
-                AddPet(d, enc.CreatureId);
-                grant.CapturedPetId = enc.CreatureId;
-                grant.Lines.Add("New pet: " + Db.Creature(enc.CreatureId).Name);
+                if (enoughWins)
+                {
+                    AddPet(d, enc.CreatureId);
+                    grant.CapturedPetId = enc.CreatureId;
+                    grant.Lines.Add("New pet: " + Db.Creature(enc.CreatureId).Name);
+                }
+                else grant.Lines.Add("Wins " + np.Wins + "/" + winsToCapture + " to capture " + Db.Creature(enc.CreatureId).Name);
             }
             if (grant.UnlockedNext) grant.Lines.Add("New area unlocked!");
             return grant;

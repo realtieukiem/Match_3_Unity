@@ -513,6 +513,7 @@ namespace Pokiwar.EditorTools
 
             app.Save.Node("node.1", true).Wins = Math.Max(1, app.Save.Wins("node.1"));
             foreach (var open in new[] { "node.2", "node.3", "node.4", "node.5" }) app.Save.Node(open, true).Wins = app.Db.Node(open).WinsRequired;
+            app.Save.Node("node.6", true).Wins = app.Db.Node("node.6").WinsRequired - 1;
             var pet = app.Save.Pet(app.Save.SelectedPetUid);
             pet.Level = 30;
             app.Save.Energy = 30;
@@ -544,7 +545,7 @@ namespace Pokiwar.EditorTools
             yield return new WaitForSecondsRealtime(0.5f);
             Check(app.Save.CommittedBattleIds.Count == commits, "no second commit after result");
             if (app.Result.Title.text == "VICTORY")
-                Check(app.Save.Pets.Exists(p => p.PetId == "boss.ongnamhai" && p.Level == 1), "first boss win captured the boss itself at level 1");
+                Check(app.Save.Pets.Exists(p => p.PetId == "boss.ongnamhai" && p.Level == 1), "the boss win that completes its wins captured the boss itself at level 1");
             yield return Capture("07a_boss_reward");
 
             var captured = app.Save.Pets.Find(p => p.PetId == "boss.ongnamhai") ?? app.Progression.AddPet(app.Save, "boss.ongnamhai");

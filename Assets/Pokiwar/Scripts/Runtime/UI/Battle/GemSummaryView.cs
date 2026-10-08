@@ -62,7 +62,7 @@ namespace Pokiwar.UI
             if (order < 0) return;
             for (int i = 0; i < shown; i++)
             {
-                if (System.Array.IndexOf(Gems.ResolveOrder, slotGem[i]) > order || !SlotIcons[i].gameObject.activeSelf) continue;
+                if (System.Array.IndexOf(Gems.ResolveOrder, slotGem[i]) > order || !SlotIcons[i].gameObject.activeSelf || SlotIcons[i].canvasRenderer.GetAlpha() < 0.999f) continue;
                 if (isActiveAndEnabled) StartCoroutine(FadeOut(i));
                 else SlotIcons[i].gameObject.SetActive(false);
             }

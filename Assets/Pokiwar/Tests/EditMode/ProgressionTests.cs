@@ -78,8 +78,16 @@ namespace Pokiwar.Tests
             var b = prog.StartBattle(save, node, 2);
             var won = prog.CommitBattle(save, new BattleReport { BattleId = b.BattleId, EncounterId = "enc.azurewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = true });
 
+            bool openedEarly = prog.IsNodeUnlocked(save, db.Node("node.4"));
+            var c = prog.StartBattle(save, node, 3);
+            var wonAgain = prog.CommitBattle(save, new BattleReport { BattleId = c.BattleId, EncounterId = "enc.azurewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = true });
+
             Assert.IsNull(lost.CapturedPetId);
-            Assert.AreEqual("boss.azurewing", won.CapturedPetId);
+            Assert.AreEqual(2, node.WinsRequired);
+            Assert.IsNull(won.CapturedPetId, "one win of the two the node asks for does not capture yet");
+            Assert.IsFalse(openedEarly, "and does not open the next node either");
+            Assert.AreEqual("boss.azurewing", wonAgain.CapturedPetId);
+            Assert.IsTrue(prog.IsNodeUnlocked(save, db.Node("node.4")), "the capturing win opens the next node");
             Assert.IsFalse(save.Pets.Exists(p => p.PetId == "pet.tidepup"));
             var mine = prog.BuildPlayer(save, save.Pets.Find(p => p.PetId == "boss.azurewing"), save.SelectedCardIds);
             Assert.AreEqual(0, mine.LockedSkills.Count, "an owned boss does not ascend in battle");
@@ -531,6 +539,7 @@ namespace Pokiwar.Tests
             var lost = prog.CommitBattle(save, new BattleReport { BattleId = b.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = false });
             Assert.AreEqual(1, lost.PlayerExp, "a loss still gives 1 EXP");
             Assert.AreEqual(1, save.PlayerLevel, "one win and one loss do not reach level 2, as in clip A");
+            bool openedEarly = prog.IsNodeUnlocked(save, db.Node("node.4"));
             var c = prog.StartBattle(save, node, 3);
             prog.CommitBattle(save, new BattleReport { BattleId = c.BattleId, EncounterId = "enc.dunewing", NodeId = node.Id, PetUid = save.SelectedPetUid, Won = true });
             Assert.AreEqual(2, save.PlayerLevel, "the second win does");

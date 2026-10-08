@@ -62,7 +62,7 @@ namespace Pokiwar.UI
         [Tooltip("How many times a boss's HP bar empties before it falls: green, then yellow, then red.")]
         public int BossHpLayers = 3;
         [Tooltip("Seconds one gem's gain holds the stage before the next gem in the row plays; the bar itself changes at once.")]
-        public float GainBeatSeconds = 0.8f;
+        public float GainBeatSeconds = 1.2f;
 
         public BattleEngine Engine { get; private set; }
         public TurnClock Clock { get; private set; }
@@ -372,19 +372,15 @@ namespace Pokiwar.UI
                 yield return FadeBoard(0f);
                 yield return Summary.Show(r.Actor, r.Board.Tally);
             }
-            var playing = GemType.None;
-            foreach (var ev in r.Events)
+            for (int i = 0; i < r.Events.Count; i++)
             {
+                var ev = r.Events[i];
                 Log.Add(ev.ToString());
                 if (LogToConsole) Debug.Log("[Pokiwar] " + ev);
-                if (ev.Gem != GemType.None && ev.Gem != playing)
-                {
-                    if (playing != GemType.None) Summary.Consume(playing);
-                    playing = ev.Gem;
-                }
+                tallyDone = ev.Gem != GemType.None && r.Events.FindIndex(i + 1, e => e.Gem == ev.Gem) < 0 ? ev.Gem : GemType.None;
                 yield return PlayEvent(ev);
+                FadeTallyIcon();
             }
-            if (playing != GemType.None) Summary.Consume(playing);
             if (r.Board != null && r.Board.Valid)
             {
                 yield return Summary.Hide();
@@ -396,6 +392,15 @@ namespace Pokiwar.UI
             EnemyHud.SetStatus(Engine.State.Get(Side.Enemy));
             if (!Board.Matches(Engine.State.Board)) Board.Rebuild(Engine.State.Board);
             RefreshActionBar();
+        }
+
+        private GemType tallyDone = GemType.None;
+
+        private void FadeTallyIcon()
+        {
+            if (tallyDone == GemType.None) return;
+            Summary.Consume(tallyDone);
+            tallyDone = GemType.None;
         }
 
         private CombatantHud Hud(Side s) => s == Side.Player ? PlayerHud : EnemyHud;
@@ -424,7 +429,13 @@ namespace Pokiwar.UI
                         if (ev.Applied != ev.Computed && ev.Computed > 0) label += " (" + ev.Computed + ")";
                         Float(targetHud, label, ResourceColor(ev.Resource), ev.SourceId == "turn-start" ? 30 : 40);
                         if (ev.Applied > 0 && ev.SourceId != "turn-start" && ev.SourceId != "hp-damage") GainFeedback(targetHud, ev.Resource);
-                        yield return Tween.Wait(fromGem ? GainBeatSeconds : 0.15f);
+                        if (fromGem)
+                        {
+                            yield return Tween.Wait(Mathf.Max(0f, GainBeatSeconds - Summary.FadeSeconds));
+                            FadeTallyIcon();
+                            yield return Tween.Wait(Summary.FadeSeconds);
+                        }
+                        else yield return Tween.Wait(0.15f);
                     }
                     break;
                 }
@@ -443,6 +454,7 @@ namespace Pokiwar.UI
                     targetHud.Set(ev.TargetAfter);
                     Float(targetHud, "-" + ev.Applied + " " + ResourceShort(ev.Resource) + (ev.Applied < ev.Computed ? " (" + ev.Computed + ")" : ""), new Color(0.85f, 0.85f, 0.85f), 36);
                     Float(actorHud, "STEAL " + ResourceShort(ev.Resource), Color.white, 32);
+                    FadeTallyIcon();
                     yield return Tween.Wait(0.3f);
                     break;
                 case CombatEventKind.Attack:
@@ -479,6 +491,7 @@ namespace Pokiwar.UI
                     string dmg = (ev.Strong ? "RAGE! " : "") + "-" + ev.Applied;
                     if (ev.ShieldAbsorbed > 0) dmg += "  [shield -" + ev.ShieldAbsorbed + "]";
                     Float(targetHud, dmg, ev.Strong ? new Color(1f, 0.55f, 0.1f) : new Color(1f, 0.3f, 0.3f), big ? 56 : 46);
+                    FadeTallyIcon();
                     yield return targetHud.Shake();
                     break;
                 }
@@ -584,7 +597,7 @@ namespace Pokiwar.UI
                     break;
                 case ResourceKind.Rage:
                     AudioDirector.Sfx("rage");
-                    if (VfxLayer.Instance != null) VfxLayer.Instance.Swirl(hud.Feet, Art("fx.wisp") ?? Art("buff.Fire"), new Color(1f, 0.5f, 0.15f), hud.Portrait.rectTransform);
+                    if (VfxLayer.Instance != null) VfxLayer.Instance.Swirl(hud.Feet, Art("fx.wisp") ?? Art("buff.Fire"), new Color(1f, 0.5f, 0.15f), hud.Portrait.rectTransform, seconds: GainBeatSeconds);
                     break;
                 case ResourceKind.Shield:
                     AudioDirector.Sfx("shield");
