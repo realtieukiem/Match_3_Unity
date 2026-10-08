@@ -45,10 +45,11 @@ Every piece of art the game needs has exactly one status. Codex paints ONLY rows
 | 14 | East Sea battle background, version 2: the same reef with two flat rock outcrops where the two creatures stand | 1 | `HAVE` | Batch 19, in the game since 2026-10-08 (both creatures stand on the outcrops); v01 preserved |
 | 18 | Charm icons `Meta/UI/charm_lucky_v01.png`, `Meta/UI/charm_protection_v01.png` | 2 | `PAINT NEW` | Batch 20 below; the game shows a flat white star and the purple shield gem tile in their place |
 | 19 | Idle frames 2 and 3 for Dunewing, Psyling, Azurewing and their later forms | - | `WAIT` | none of them is on the map now (all six nodes are East Sea); paint only if they return |
+| 20 | Projectiles for ranged creatures `Battle/Shots/shot_{bebeboom_bomb,ngoclam_pearl,voirong_bolt}_v01.png` | 3 | `PAINT NEW` | Batch 21 below; Bebeboom throws a code-drawn placeholder bomb until its file exists, the other two fight up close until theirs do |
 | 9 | Second forms of Emberkit, Leafling, Tidepup; a card for Tidal Siphon | - | `NEVER` | decided 2026-10-06 |
 | 10 | Third and later forms of any creature | - | `WAIT` | the rule for when a pet takes a third form is not decided |
 
-Batch 20 (two charm icons) is the only open order. Batch 19 is complete; rows marked `WAIT` remain undecided.
+Open orders: Batch 20 (two charm icons) and Batch 21 (three projectiles). Batch 19 is complete; rows marked `WAIT` remain undecided.
 
 Framing rule for every future creature batch (learned from Batches 12, 14 and 15): the game shows a creature at
 the size it fills its canvas, so paint the idle at about 80% of the canvas height, keep every pose (the hit pose
@@ -101,6 +102,31 @@ restrained cream highlight from the upper left, very little texture. The two cha
 outline weight, same scale. No letters, numbers, text, UI frame, panel, coin, scenery, sparkles outside the
 object, external cast shadow, glossy 3D rendering or airbrush gradients. Transparent alpha outside the object.
 ```
+## Batch 21 - projectiles for ranged creatures (3 images, `PAINT NEW`)
+
+A creature is either a melee fighter (it dashes across and hits) or a ranged one (it stays on its rock, throws
+or shoots, and the projectile bursts on the target). The game decides by file: a creature with a projectile
+here is ranged. Each projectile is one object alone on a transparent 256x256 canvas, filling about 80% of it,
+drawn at 120-160 px in battle. Save under `Art/Pokiwar_FG38/Assets/Battle/Shots/`. Look at the creature's own
+`Battle/Characters/<name>_attack_01.png` first so the projectile matches what it holds or spits.
+
+| File | Motion in game | Subject |
+|---|---|---|
+| `shot_bebeboom_bomb_v01.png` | thrown in a high arc, tumbling | The round bomb or firecracker Bebeboom holds in its attack pose: same colours and fuse, a small lit spark on the fuse. Drawn upright; it reads from every angle because it spins. |
+| `shot_ngoclam_pearl_v01.png` | flies straight, pointing along its path | One glowing pearl with a short tapering trail of pale light behind it. The pearl leads at the RIGHT edge, the trail points LEFT. Symmetric above and below the horizontal axis. |
+| `shot_voirong_bolt_v01.png` | flies straight, pointing along its path | One spiralling water bolt with a thin core of lightning, blunt head at the RIGHT edge, tail thinning to the LEFT. Symmetric above and below the horizontal axis. |
+
+```
+Create one finished 2D game projectile sprite: <SUBJECT FROM THE TABLE>. Square canvas, genuine transparent
+background, one single object centred, filling about 80% of the canvas. Canyon-fantasy casual cartoon: chunky
+silhouette, thick closed near-black brown outline #21191F, two or three crisp flat shade bands, a cream
+highlight from the upper left, very little texture. Readable at 120 px. No creature, hand, claw, impact burst,
+smoke cloud, ground, cast shadow, text, UI or background. Transparent alpha outside the object.
+```
+
+Later creatures and second forms follow the same rule: a thrown projectile is `<creature>.lob`, a straight one
+is `<creature>.shot` in `Fg38Art`; a second form without its own file uses its first form's.
+
 ## Shared preamble (put at the top of every batch)
 
 ```
@@ -108,7 +134,7 @@ Continue the Pokiwar FG38 art set. Reply to me in Vietnamese.
 Read first: Art/Pokiwar_FG38/ART_BIBLE.md and Art/Pokiwar_FG38/AssetManifest.json, and look at
 Art/Pokiwar_FG38/Previews/Battle_form01_v01.png as the style target (canyon fantasy, chunky
 silhouettes, near-black brown outline #21191F, two or three flat shade bands, cream highlight).
-Batch 19 definitions and prompts are an archive of completed work, not a new drawing order. Read only Batch 20 below.
+Batch 19 definitions and prompts are an archive of completed work, not a new drawing order. Read only the batch pasted with this preamble (20 or 21).
 The ordered definitions resolve their references and output filenames inside Art/Pokiwar_FG38.
 Thread budget rules - this thread dies above ~30 inline images:
 - generate at most the images listed below, one at a time;

@@ -11,7 +11,7 @@ namespace Pokiwar.Domain
         public int Width = 8;
         public int Height = 8;
         public int MinMatch = 3;
-        public float[] SpawnWeights = { 1f, 1f, 1f, 1f, 1f, 1f };
+        public float[] SpawnWeights = { 0.5f, 1.15f, 1.1f, 1f, 1.25f, 0.85f };
         public float X2SpawnChance = 0.05f;
         public float X3SpawnChance = 0.015f;
         public bool MultipliersOnInitialFill = true;

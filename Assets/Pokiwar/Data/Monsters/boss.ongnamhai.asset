@@ -19,14 +19,14 @@ MonoBehaviour:
     Element: 3
     ElementBonus: 2
     BaseStats:
-      MaxHp: 4700
-      Atk: 100
+      MaxHp: 7500
+      Atk: 90
       Def: 24
       MaxMana: 1600
       MaxRage: 200
     PerLevel:
-      MaxHp: 190
-      Atk: 6
+      MaxHp: 300
+      Atk: 5
       Def: 2
       MaxMana: 60
       MaxRage: 0

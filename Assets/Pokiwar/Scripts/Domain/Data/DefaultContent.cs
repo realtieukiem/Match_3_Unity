@@ -256,32 +256,32 @@ namespace Pokiwar.Domain
             db.Creatures.Add(new CreatureDef
             {
                 Id = "mon.bebeboom", Name = "Bebeboom", SpriteKey = "bebeboom", Element = Element.Fire, ElementBonus = 1,
-                BaseStats = new StatBlock(2800, 200, 14, 900, 100), PerLevel = new StatBlock(110, 11, 1, 50, 0),
+                BaseStats = new StatBlock(4000, 215, 14, 900, 100), PerLevel = new StatBlock(150, 12, 1, 50, 0),
                 GemProfileId = "gem.monster", CardIds = { "card.war_cry" },
                 Rage = new RageProfile { AttackThreshold = 100, AttackCost = 100, StrongMultiplier = 1.9f }
             });
             db.Creatures.Add(SecondForm(new CreatureDef
             {
                 Id = "mon.ngoclam", Name = "Ngoclam", SpriteKey = "ngoclam", Element = Element.Metal, ElementBonus = 1,
-                BaseStats = new StatBlock(4200, 150, 34, 1000, 100), PerLevel = new StatBlock(160, 7, 3, 60, 0),
+                BaseStats = new StatBlock(5000, 150, 34, 1000, 100), PerLevel = new StatBlock(190, 7, 3, 60, 0),
                 GemProfileId = "gem.monster", SkillIds = { "skill.mind_spark" }, CardIds = { "card.iron_skin" }
             }, "Ngoclam Radiant", 0.45f, 1.15f));
             db.Creatures.Add(SecondForm(new CreatureDef
             {
                 Id = "mon.doimora", Name = "Doimora", SpriteKey = "doimora", Element = Element.Wood, ElementBonus = 1,
-                BaseStats = new StatBlock(3300, 118, 26, 1100, 100), PerLevel = new StatBlock(120, 6, 2, 60, 0),
+                BaseStats = new StatBlock(3950, 118, 26, 1100, 100), PerLevel = new StatBlock(145, 6, 2, 60, 0),
                 GemProfileId = "gem.monster", SkillIds = { "skill.thorn_bind" }, CardIds = { "card.herbal_salve" }
             }, "Doimora Beacon", 0.50f, 1.10f));
             db.Creatures.Add(SecondForm(new CreatureDef
             {
                 Id = "mon.voirong", Name = "Voirong", SpriteKey = "voirong", Element = Element.Water, ElementBonus = 1,
-                BaseStats = new StatBlock(3000, 95, 22, 1000, 100), PerLevel = new StatBlock(120, 5, 2, 50, 0),
+                BaseStats = new StatBlock(3600, 95, 22, 1000, 100), PerLevel = new StatBlock(145, 5, 2, 50, 0),
                 GemProfileId = "gem.monster", SkillIds = { "skill.tide_lance" }, CardIds = { "card.mana_leech" }
             }, "Voirong Tempest", 0.45f, 1.20f));
             var lord = new CreatureDef
             {
                 Id = "boss.ongnamhai", Name = "Ongnamhai", SpriteKey = "ongnamhai", Element = Element.Water, ElementBonus = 2,
-                BaseStats = new StatBlock(4700, 100, 24, 1600, 200), PerLevel = new StatBlock(190, 6, 2, 60, 0),
+                BaseStats = new StatBlock(7500, 90, 24, 1600, 200), PerLevel = new StatBlock(300, 5, 2, 60, 0),
                 GemProfileId = "gem.boss", CardIds = { "card.iron_skin", "card.war_cry" },
                 Rage = new RageProfile { AttackThreshold = 100, AttackCost = 100, StrongMultiplier = 1.7f }
             };

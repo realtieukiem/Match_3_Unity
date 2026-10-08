@@ -41,6 +41,8 @@ namespace Pokiwar.EditorTools
             made["element.Earth"] = WriteElement("element_earth", Hex("#B9803F"), (x, y) => Mathf.Abs(x) * 0.9f + Mathf.Abs(y) * 0.75f <= 0.8f);
             made["stone"] = Write("stone", 128, (x, y) => Mathf.Abs(x) * 0.9f + Mathf.Abs(y) * 0.75f <= 0.9f ? Shade(Color.white, x, y) : Color.clear);
 
+            made["bebeboom.lob"] = Write("shot_bomb", 128, Bomb);
+
             foreach (var g in Gems.All) made["gem." + g] = WriteGem(g);
 
             made["emberkit"] = WriteCreature("emberkit", new Color(1f, 0.5f, 0.25f), ears: true, tail: true);
@@ -178,6 +180,18 @@ namespace Pokiwar.EditorTools
             File.WriteAllBytes(path, tex.EncodeToPNG());
             UnityEngine.Object.DestroyImmediate(tex);
             return path;
+        }
+
+        private static Color Bomb(float x, float y)
+        {
+            float bx = x, by = y + 0.18f;
+            float d = Mathf.Sqrt(bx * bx + by * by);
+            if ((x - 0.2f) * (x - 0.2f) + (y - 0.86f) * (y - 0.86f) < 0.018f) return Hex("#FFB02E");
+            if (Mathf.Abs(x - 0.1f) < 0.09f && y > 0.4f && y < 0.8f) return Hex("#8A5A2B");
+            if (d > 0.72f) return Color.clear;
+            if (d > 0.61f) return Hex("#21191F");
+            if ((bx + 0.24f) * (bx + 0.24f) + (by - 0.24f) * (by - 0.24f) < 0.03f) return Hex("#FFF0BE");
+            return by < -0.2f ? Hex("#2A2D3C") : Hex("#3D4257");
         }
 
         private static Color Shade(Color c, float x, float y)

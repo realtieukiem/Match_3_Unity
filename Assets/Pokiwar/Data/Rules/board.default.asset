@@ -18,12 +18,12 @@ MonoBehaviour:
     Height: 8
     MinMatch: 3
     SpawnWeights:
+    - 0.5
+    - 1.15
+    - 1.1
     - 1
-    - 1
-    - 1
-    - 1
-    - 1
-    - 1
+    - 1.25
+    - 0.85
     X2SpawnChance: 0.05
     X3SpawnChance: 0.015
     MultipliersOnInitialFill: 1

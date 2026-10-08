@@ -41,6 +41,16 @@ namespace Pokiwar.UI
         public float FeetHeight = 0.05f;
         [Tooltip("Painted idle frames shown per second; a creature with only one idle picture just breathes.")]
         public float IdleFps = 5f;
+        [Tooltip("Size of a ranged attacker's projectile (px).")]
+        public float ShotSize = 150f;
+        [Tooltip("Seconds a projectile takes to reach its target.")]
+        public float ShotSeconds = 0.45f;
+        [Tooltip("How high a thrown projectile arcs above the straight line (px).")]
+        public float LobArc = 420f;
+        [Tooltip("Degrees per second a thrown projectile tumbles.")]
+        public float LobSpin = 540f;
+        [Tooltip("How far a ranged attacker steps forward as it lets go (px).")]
+        public float ThrowStep = 36f;
 
         private Vector2 portraitHome;
         private bool homeSet;
@@ -49,6 +59,7 @@ namespace Pokiwar.UI
         private float direction = 1f;
         private SpriteLibrary lib;
         private string key;
+        private string shotKey;
         private bool busy;
         private bool dead;
         private float bobPhase;
@@ -56,8 +67,9 @@ namespace Pokiwar.UI
         private readonly List<Sprite> idleFrames = new List<Sprite>();
         private float idleClock;
 
-        public void Setup(Combatant c, SpriteLibrary sprites, bool facesRight)
+        public void Setup(Combatant c, SpriteLibrary sprites, bool facesRight, int hpLayers = 1)
         {
+            Hp.SetLayers(hpLayers, Mathf.CeilToInt((float)c.Hp.Current / Mathf.Max(1, hpLayers)));
             StopReturn();
             direction = facesRight ? 1f : -1f;
             if (!homeSet)
@@ -69,6 +81,7 @@ namespace Pokiwar.UI
             Portrait.color = Color.white;
             lib = sprites;
             key = sprites.Facing(c.SpriteKey, facesRight);
+            shotKey = FindShot(c.SpriteKey);
             busy = false;
             dead = false;
             bobPhase = facesRight ? 0f : 1.3f;
@@ -139,6 +152,22 @@ namespace Pokiwar.UI
             if (lib == null) return Portrait.sprite;
             return pose != null && lib.Has(key + "." + pose) ? lib.Get(key + "." + pose) : lib.Get(key);
         }
+
+        private string FindShot(string creature)
+        {
+            if (lib == null || creature == null) return null;
+            string first = creature.EndsWith(SpriteKeys.EvolvedSuffix) ? creature.Substring(0, creature.Length - SpriteKeys.EvolvedSuffix.Length) : creature;
+            foreach (var owner in new[] { creature, first })
+                foreach (var kind in new[] { ".lob", ".shot" })
+                    if (lib.Has(owner + kind)) return owner + kind;
+            return null;
+        }
+
+        /// <summary>The projectile this creature attacks with, or null when it fights up close.</summary>
+        public Sprite Shot => shotKey == null ? null : lib.Get(shotKey);
+
+        /// <summary>True when the projectile is thrown in an arc, false when it flies straight.</summary>
+        public bool ShotIsLobbed => shotKey != null && shotKey.EndsWith(".lob");
 
         private void Update()
         {
@@ -223,6 +252,22 @@ namespace Pokiwar.UI
             returning = StartCoroutine(Return(hit));
         }
 
+        /// <summary>Winds up and lets go on the spot; returns the moment the projectile should leave.</summary>
+        public IEnumerator Throw()
+        {
+            var rt = Portrait.rectTransform;
+            StopReturn();
+            busy = true;
+            rt.localScale = Vector3.one;
+            rt.anchoredPosition = portraitHome;
+            var back = portraitHome + new Vector2(-22f * direction, 0f);
+            var let = portraitHome + new Vector2(ThrowStep * direction, 0f);
+            yield return Tween.Run(0.14f, t => rt.anchoredPosition = Vector2.Lerp(portraitHome, back, t));
+            Portrait.sprite = Pose("attack");
+            yield return Tween.Run(0.1f, t => rt.anchoredPosition = Vector2.Lerp(back, let, t * t));
+            returning = StartCoroutine(Return(let));
+        }
+
         private IEnumerator Return(Vector2 from)
         {
             var rt = Portrait.rectTransform;
@@ -261,6 +306,7 @@ namespace Pokiwar.UI
             var baseScale = Vector3.one;
             yield return Tween.Run(0.3f, t => rt.localScale = new Vector3(baseScale.x * (1f - t), baseScale.y * (1f + 0.3f * t), 1f));
             key = lib != null ? lib.Facing(newKey, direction > 0f) : newKey;
+            shotKey = FindShot(newKey);
             CollectIdle();
             Portrait.sprite = Pose(null);
             yield return Tween.Run(0.35f, t => rt.localScale = new Vector3(baseScale.x * t, baseScale.y * (1.3f - 0.3f * t), 1f));

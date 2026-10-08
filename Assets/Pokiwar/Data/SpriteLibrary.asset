@@ -62,6 +62,8 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 8c235aed66b51c9428437391ad7f6651, type: 3}
   - Key: stone
     Sprite: {fileID: 21300000, guid: 7564ec31c1b2b8c4cb786dc793cdfd71, type: 3}
+  - Key: bebeboom.lob
+    Sprite: {fileID: 21300000, guid: 8afaba38b5879c44d9e8e8a4ce20e861, type: 3}
   - Key: emberkit
     Sprite: {fileID: 21300000, guid: 258bc4773cd85d044aa4329e163be108, type: 3}
   - Key: leafling

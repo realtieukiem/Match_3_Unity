@@ -1382,6 +1382,10 @@ namespace Pokiwar.EditorTools
             SliceTo(back, 8);
             var area = NewUI("FillArea", body);
             Fill(area, 3, 3, 3, 3);
+            bv.Under = Img(area, "Under", "bar.shape", c);
+            Fill(bv.Under.rectTransform);
+            SliceTo(bv.Under, 8);
+            bv.Under.enabled = false;
             bv.Fill = Img(area, "Fill", "bar.shape", c);
             Fill(bv.Fill.rectTransform);
             SliceTo(bv.Fill, 8);

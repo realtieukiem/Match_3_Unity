@@ -136,6 +136,31 @@ Clip **D** is `danh boss pokiwar 2015 phan 2.mp4` (about 11:00): three players a
 | A 08:00 | Lucky wheel | not built (event meta, out of the offline slice) | out of scope |
 | B 01:20 | Team portraits at the left, chat box at the bottom | not built (online room features) | out of scope |
 
+## Gems on the board (counted 2026-10-08)
+
+Five whole 8x8 boards counted gem by gem (320 gems): A 02:12 (first frame of a battle), A 05:41, B 01:22,
+D 00:20, D 03:00.
+
+| Gem | A 02:12 | A 05:41 | B 01:22 | D 00:20 | D 03:00 | Share |
+|---|---|---|---|---|---|---|
+| Sword | 0 | 2 | 4 | 8 | 7 | 6.6% |
+| Lightning | 14 | 13 | 13 | 11 | 14 | 20.3% |
+| Fire | 11 | 9 | 12 | 18 | 12 | 19.4% |
+| Heart | 10 | 15 | 12 | 8 | 11 | 17.5% |
+| Shield | 13 | 16 | 16 | 11 | 14 | 21.9% |
+| Yin-yang | 16 | 9 | 7 | 8 | 6 | 14.4% |
+
+- Sword is the rare gem, not a common one: none at all on an untouched opening board (uniform spawn would do
+  that once in 100000 boards). CONFIRMED_BY_VIDEO. Mid-battle boards under-count it somewhat because both
+  sides take swords first, so the game uses weight 0.5 rather than the measured 0.38.
+- Heart is at the even share; shield and lightning sit a little above it. CONFIRMED_BY_VIDEO.
+- The game follows this in `BoardRuleProfile.SpawnWeights` = sword 0.5, lightning 1.15, fire 1.1, heart 1,
+  shield 1.25, yin-yang 0.85.
+- Clip D (hunt level far above 100) carries x2 / x3 / x4 on about half its gems; clips A and B show none. The
+  game keeps 5% x2 and 1.5% x3; a multiplier rate that grows with hunt level is NOT built.
+- The HP bars in all five frames are a single red bar for both sides. The three-layer boss bar (green, yellow,
+  red) is CONFIRMED_BY_USER (2026-10-08), not read from these clips.
+
 ## Re-checking a frame
 
 Close the Editor, then:

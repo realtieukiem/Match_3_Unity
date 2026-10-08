@@ -59,6 +59,12 @@ namespace Pokiwar.UI
         public float BuffRise = 280f;
         [Tooltip("Size of one floating buff icon (px).")]
         public float BuffIconSize = 78f;
+        [Tooltip("How many times a boss's HP bar empties before it falls: green, then yellow, then red.")]
+        public int BossHpLayers = 3;
+        [Tooltip("Seconds the orbs take from the cleared gems to the bar; the bar itself changes at once.")]
+        public float GainOrbSeconds = 0.26f;
+        [Tooltip("Pause after one gem's gain before the next gem in the row plays.")]
+        public float GainBeatSeconds = 0.2f;
 
         public BattleEngine Engine { get; private set; }
         public TurnClock Clock { get; private set; }
@@ -129,7 +135,7 @@ namespace Pokiwar.UI
             report = new BattleReport { BattleId = setup.BattleId, EncounterId = encounter.Id, NodeId = nodeId, PetUid = petUid };
             var s = Engine.State;
             PlayerHud.Setup(s.Get(Side.Player), sprites, true);
-            EnemyHud.Setup(s.Get(Side.Enemy), sprites, false);
+            EnemyHud.Setup(s.Get(Side.Enemy), sprites, false, encounter.IsBoss ? BossHpLayers : 1);
             Board.Sprites = sprites;
             Board.Rebuild(s.Board);
             Board.InputEnabled = false;
@@ -407,10 +413,7 @@ namespace Pokiwar.UI
                 {
                     bool fromGem = ev.Kind == CombatEventKind.GemEffect;
                     if (fromGem && vfx != null && Board.LastCleared.TryGetValue(ev.Gem, out var cells) && cells.Count > 0)
-                    {
-                        float wait = vfx.Orbs(Sample(cells, 6), targetHud.BarRect(ev.Resource).position, ResourceColor(ev.Resource), 2);
-                        yield return Tween.Wait(wait);
-                    }
+                        vfx.Orbs(Sample(cells, 6), targetHud.BarRect(ev.Resource).position, ResourceColor(ev.Resource), 2, GainOrbSeconds);
                     targetHud.Set(ev.TargetAfter);
                     actorHud.Set(ev.ActorAfter);
                     if (ev.Applied != 0 || ev.Computed != 0)
@@ -419,7 +422,7 @@ namespace Pokiwar.UI
                         if (ev.Applied != ev.Computed && ev.Computed > 0) label += " (" + ev.Computed + ")";
                         Float(targetHud, label, ResourceColor(ev.Resource), ev.SourceId == "turn-start" ? 30 : 40);
                         if (ev.Applied > 0 && ev.SourceId != "turn-start" && ev.SourceId != "hp-damage") GainFeedback(targetHud, ev.Resource);
-                        yield return Tween.Wait(fromGem ? 0.3f : 0.15f);
+                        yield return Tween.Wait(fromGem ? GainBeatSeconds : 0.15f);
                     }
                     break;
                 }
@@ -448,7 +451,7 @@ namespace Pokiwar.UI
                         yield return Tween.Wait(wait * 0.7f);
                     }
                     else AudioDirector.Sfx("swing");
-                    yield return actorHud.Lunge(Opponent(actorHud).BodyCenter);
+                    yield return Strike(actorHud);
                     break;
                 case CombatEventKind.Damage:
                 {
@@ -500,7 +503,7 @@ namespace Pokiwar.UI
                 case CombatEventKind.QteResolved:
                     Float(actorHud, ev.Text + "  " + ev.Computed, Color.yellow, 34);
                     AudioDirector.Sfx("swing");
-                    yield return actorHud.Lunge(Opponent(actorHud).BodyCenter);
+                    yield return Strike(actorHud);
                     break;
                 case CombatEventKind.Buff:
                     AudioDirector.Sfx("buff");
@@ -554,6 +557,21 @@ namespace Pokiwar.UI
         }
 
         private CombatantHud Opponent(CombatantHud hud) => hud == PlayerHud ? EnemyHud : PlayerHud;
+
+        private IEnumerator Strike(CombatantHud hud)
+        {
+            var target = Opponent(hud);
+            var vfx = VfxLayer.Instance;
+            var shot = hud.Shot;
+            if (shot == null || vfx == null)
+            {
+                yield return hud.Lunge(target.BodyCenter);
+                yield break;
+            }
+            yield return hud.Throw();
+            bool lob = hud.ShotIsLobbed;
+            yield return Tween.Wait(vfx.Shot(hud.BodyCenter, target.BodyCenter, shot, hud.ShotSize, hud.ShotSeconds, lob ? hud.LobArc : 0f, lob ? hud.LobSpin : 0f));
+        }
 
         private void GainFeedback(CombatantHud hud, ResourceKind k)
         {

@@ -36,6 +36,7 @@ namespace Pokiwar.UI
             public Action Arrived;
             public bool Alive;
             public bool Aim;
+            public bool Linear;
         }
 
         private readonly List<P> live = new List<P>();
@@ -86,6 +87,7 @@ namespace Pokiwar.UI
             p.Arrived = null;
             p.Body = null;
             p.Aim = false;
+            p.Linear = false;
             p.Img.preserveAspect = true;
             p.Alive = true;
             p.Rt.anchoredPosition = pos;
@@ -228,6 +230,23 @@ namespace Pokiwar.UI
             return first ? 0f : firstTime;
         }
 
+        /// <summary>One projectile from an attacker to its target; arc lifts the path, spin tumbles it, no spin points it along the path. Returns the flight time.</summary>
+        public float Shot(Vector3 fromWorld, Vector3 toWorld, Sprite sprite, float size, float travel, float arc, float spin)
+        {
+            var from = ToLocal(fromWorld);
+            var to = ToLocal(toWorld);
+            var p = Spawn(Kind.Orb, sprite, Color.white, from, travel, size, size);
+            if (p == null) return 0f;
+            p.From = from;
+            p.To = to;
+            p.Ctrl = (from + to) * 0.5f + new Vector2(0f, arc);
+            p.Spin = to.x < from.x ? spin : -spin;
+            p.Aim = spin == 0f;
+            p.Linear = true;
+            if (p.Aim) p.Rot = Mathf.Atan2(to.y - from.y, to.x - from.x) * Mathf.Rad2Deg;
+            return p.MaxLife;
+        }
+
         public void ScreenFlash(Color color, float alpha = 0.45f, float seconds = 0.25f)
         {
             if (Flash == null) return;
@@ -302,10 +321,11 @@ namespace Pokiwar.UI
                         Draw(p, p.Size0 * (0.8f - 0.2f * Mathf.Sin(rad)) * Mathf.Min(1f, 0.4f + k * 3f), k < 0.12f ? k / 0.12f : 1f - Mathf.Max(0f, k - 0.6f) / 0.4f);
                         break;
                     case Kind.Orb:
-                        float e = k * k;
+                        float e = p.Linear ? k : k * k;
                         float u = 1f - e;
                         var next = u * u * p.From + 2f * u * e * p.Ctrl + e * e * p.To;
                         if (p.Aim && (next - p.Pos).sqrMagnitude > 0.01f) p.Rot = Mathf.Atan2(next.y - p.Pos.y, next.x - p.Pos.x) * Mathf.Rad2Deg;
+                        else if (!p.Aim) p.Rot += p.Spin * dt;
                         p.Pos = next;
                         Draw(p, Mathf.Lerp(p.Size0, p.Size1, k), k < 0.15f ? k / 0.15f : 1f);
                         break;
