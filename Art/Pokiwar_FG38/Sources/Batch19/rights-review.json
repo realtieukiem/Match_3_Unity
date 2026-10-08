@@ -1,0 +1,45 @@
+﻿{
+    "checked":  "2026-10-08",
+    "intendedUse":  "Original assets for this commercial game",
+    "references":  [
+                       {
+                           "file":  "Assets/Cards/Faces/face_herbal_salve_v02.png",
+                           "sha256":  "6CE5853BCFD7CD686DAF89B755E36932ED1CC4773CF98CE836152E2448074BDB",
+                           "origin":  "prior built-in image_gen output for this project",
+                           "sourceBatch":  18,
+                           "eligibility":  "documented first-party generated reference",
+                           "originalManifestProvenance":  "Historical raw source/copy hashes checked equal before upload in this session"
+                       },
+                       {
+                           "file":  "Assets/Cards/Faces/face_meteor_v02.png",
+                           "sha256":  "9D183F93FF7D06D46137B86C1B543F0A4CAE346D3440A6886BAFF8FA25AFE765",
+                           "origin":  "prior built-in image_gen output for this project",
+                           "sourceBatch":  18,
+                           "eligibility":  "documented first-party generated reference",
+                           "originalManifestProvenance":  "Historical raw source/copy hashes checked equal before upload in this session"
+                       },
+                       {
+                           "file":  "Assets/Battle/QTE/qte_token_v01.png",
+                           "sha256":  "1B18C8C7B262047DF5F4571E0526ABBA3907A7F145A5A915E5274936B00EE5D2",
+                           "origin":  "prior built-in image_gen output for this project",
+                           "sourceBatch":  18,
+                           "eligibility":  "documented first-party generated reference",
+                           "originalManifestProvenance":  "Historical raw source/copy hashes checked equal before upload in this session"
+                       },
+                       {
+                           "file":  "Assets/Battle/Background/battle_bg_eastsea_v01.png",
+                           "sha256":  "4E85BE1EDB9850BB731AD7A8AC8EABAF396F39103E61DA31B729D99142EEEBF3",
+                           "origin":  "prior built-in image_gen output for this project",
+                           "sourceBatch":  15,
+                           "eligibility":  "documented first-party generated reference",
+                           "originalManifestProvenance":  "Historical raw source/copy hashes checked equal before upload in this session"
+                       }
+                   ],
+    "tool":  "built-in image_gen",
+    "termsSource":  "https://openai.com/policies/terms-of-use/",
+    "termsChecked":  "2026-10-08",
+    "referenceReview":  "No external franchise artwork, extracted game artwork or named artist reference was uploaded. Existing project-generated assets supplied the layout/material references.",
+    "outputReview":  "All five selected images visually inspected: generic potion/fire/swords/reef motifs; no recognizable protected character, logo, artist signature or text observed.",
+    "limitations":  "A visual review and source provenance are not a comprehensive similarity search or legal clearance. Outputs may not be unique. No human-authorship claim.",
+    "copyrightGuarantee":  false
+}

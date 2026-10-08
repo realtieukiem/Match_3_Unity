@@ -8,13 +8,16 @@ Read `Docs/Pokiwar_Art_Codex_Next.md` for the current order, then the files in t
 - `ART_BIBLE.md`: drawing style, palette, silhouette, shading and export rules.
 - `AssetManifest.json`: accepted exports and their canonical filenames under `Assets/`.
 - `Previews/Battle_form01_v01.png`: the visual style reference.
-- `Sources/Batch19/definitions.json`: the exact five remaining prompts, sizes and reference paths.
+- `Sources/Batch19/definitions.json`: the five completed Batch 19 definitions, sizes and references.
 - `Sources/**/*.prompt.txt`: preserved generation prompts from earlier batches.
 - `AnimationSpec.json`: animation timing; `ASSET_PLAN.md`: the original production plan.
 
 The current order overrides the original production plan. Check actual files before generating:
-existing exports are `HAVE`, even if an old plan or provenance entry says otherwise. Batch 19 still
-has five missing exports; this migration does not generate them or change previous approvals.
+existing exports are `HAVE`, even if an old plan or provenance entry says otherwise. Batch 19
+is complete: two card faces, two touch buttons and the standing-rock reef background are exported.
+Their exact prompts, immutable raw revisions, reference snapshots and QC reports are bundled in
+`Sources/Batch19`; `Previews/Cards_QTE_reef_batch19_contact_v01.png` shows the selected exports.
+These files have numeric and visual art verification; a Unity import is not part of this delivery.
 
 Paths inside Batch 19 definitions are relative to this art workspace. Save accepted PNGs under
 `Assets/<file from the definition>`, preserve new raw sources and prompts under `Sources/<batch>`,

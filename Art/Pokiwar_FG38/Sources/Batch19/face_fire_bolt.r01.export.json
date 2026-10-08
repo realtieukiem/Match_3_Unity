@@ -1,0 +1,66 @@
+﻿{
+    "id":  "face_fire_bolt",
+    "file":  "Cards/Faces/face_fire_bolt_v02.png",
+    "revision":  "r01",
+    "rawSource":  "C:/Users/TS03128/.codex/generated_images/01a11a2d-085e-7be1-bf42-faf1dbc237d4/exec-4968efc0-87b7-4170-87f3-fcda4d1972a9.png",
+    "rawCopy":  "Sources/Batch19/face_fire_bolt.r01.raw.png",
+    "rawHash":  "4D59A8DE8B7C07DEDB4BB5469599EF6494FE22B78CAD7F0060425671C63F66CD",
+    "promptFile":  "Sources/Batch19/face_fire_bolt.r01.prompt.txt",
+    "sourceInspection":  {
+                             "file":  "face_fire_bolt",
+                             "width":  1254,
+                             "height":  1254,
+                             "has_alpha":  true,
+                             "transparent_share":  0.2911,
+                             "partial_alpha_pixels":  5223,
+                             "content_box":  [
+                                                 163,
+                                                 22,
+                                                 929,
+                                                 1208
+                                             ],
+                             "padding_waste":  0.2863,
+                             "colours":  "\u003e4096",
+                             "power_of_two":  false,
+                             "flat_border":  null,
+                             "touches_edge":  false
+                         },
+    "key":  {
+                "key":  [
+                            255,
+                            0,
+                            255
+                        ],
+                "border_share":  1,
+                "erased":  457725,
+                "erased_enclosed":  0,
+                "unmixed":  5223,
+                "pixel":  false
+            },
+    "removedAlphaOne":  0,
+    "outputInspection":  {
+                             "file":  "face_fire_bolt",
+                             "width":  864,
+                             "height":  1104,
+                             "has_alpha":  true,
+                             "transparent_share":  0.0304,
+                             "partial_alpha_pixels":  6643,
+                             "content_box":  [
+                                                 9,
+                                                 2,
+                                                 845,
+                                                 1100
+                                             ],
+                             "padding_waste":  0.0255,
+                             "colours":  "\u003e4096",
+                             "power_of_two":  false,
+                             "flat_border":  null,
+                             "touches_edge":  false
+                         },
+    "edgePixels":  0,
+    "interiorAlphaHoles":  0,
+    "minimumAlpha":  0,
+    "verification":  "V2",
+    "origin":  "generated",
+    "tool":  "built-in image_gen"
+}

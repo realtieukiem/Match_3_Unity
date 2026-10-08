@@ -1,4 +1,4 @@
-{
+﻿{
     "schema":  "pokiwar-art-manifest-v1",
     "styleReference":  "Previews/Battle_form01_v01.png",
     "originalStyleReference":  "D:/FG38/rucksackGameIaaYN/client/assets",
@@ -7022,6 +7022,181 @@
                                    2,
                                    1
                                ]
+                  },
+                  {
+                      "file":  "Cards/Faces/face_mana_potion_v02.png",
+                      "purpose":  "card_face",
+                      "resolution":  [
+                                         864,
+                                         1104
+                                     ],
+                      "transparent":  true,
+                      "pivot":  [
+                                    0.5,
+                                    0.5
+                                ],
+                      "layer":  "ui",
+                      "sceneTarget":  "BattleCanvas",
+                      "version":  "v02",
+                      "status":  "exported_png",
+                      "source":  "imagegen",
+                      "origin":  "generated",
+                      "tool":  "built-in image_gen",
+                      "batch":  19,
+                      "verification":  "V2",
+                      "selectedRevision":  "r02",
+                      "userApproval":  "not separately recorded",
+                      "rawCopy":  "Sources/Batch19/face_mana_potion.r02.raw.png",
+                      "rawSource":  "C:/Users/TS03128/.codex/generated_images/01a11a2d-085e-7be1-bf42-faf1dbc237d4/exec-ce1ce6e9-8f42-446b-be51-9370136b086a.png",
+                      "rawSha256":  "B5F51DA5EF9DE6CE5F560488ABE0C233B606561F5974A020BB0EC628F479EC33",
+                      "prompt":  "Sources/Batch19/face_mana_potion.r02.prompt.txt",
+                      "reference":  "Assets/Cards/Faces/face_herbal_salve_v02.png",
+                      "referenceSnapshot":  "Sources/Batch19/References/salve.png",
+                      "report":  "Sources/Batch19/face_mana_potion.r02.export.json",
+                      "drawingReview":  "Sources/Batch19/art-review.json",
+                      "rightsReview":  "Sources/Batch19/rights-review.json",
+                      "preview":  "Previews/Cards_QTE_reef_batch19_contact_v01.png",
+                      "gameImported":  false
+                  },
+                  {
+                      "file":  "Cards/Faces/face_fire_bolt_v02.png",
+                      "purpose":  "card_face",
+                      "resolution":  [
+                                         864,
+                                         1104
+                                     ],
+                      "transparent":  true,
+                      "pivot":  [
+                                    0.5,
+                                    0.5
+                                ],
+                      "layer":  "ui",
+                      "sceneTarget":  "BattleCanvas",
+                      "version":  "v02",
+                      "status":  "exported_png",
+                      "source":  "imagegen",
+                      "origin":  "generated",
+                      "tool":  "built-in image_gen",
+                      "batch":  19,
+                      "verification":  "V2",
+                      "selectedRevision":  "r01",
+                      "userApproval":  "not separately recorded",
+                      "rawCopy":  "Sources/Batch19/face_fire_bolt.r01.raw.png",
+                      "rawSource":  "C:/Users/TS03128/.codex/generated_images/01a11a2d-085e-7be1-bf42-faf1dbc237d4/exec-4968efc0-87b7-4170-87f3-fcda4d1972a9.png",
+                      "rawSha256":  "4D59A8DE8B7C07DEDB4BB5469599EF6494FE22B78CAD7F0060425671C63F66CD",
+                      "prompt":  "Sources/Batch19/face_fire_bolt.r01.prompt.txt",
+                      "reference":  "Assets/Cards/Faces/face_meteor_v02.png",
+                      "referenceSnapshot":  "Sources/Batch19/References/meteor.png",
+                      "report":  "Sources/Batch19/face_fire_bolt.r01.export.json",
+                      "drawingReview":  "Sources/Batch19/art-review.json",
+                      "rightsReview":  "Sources/Batch19/rights-review.json",
+                      "preview":  "Previews/Cards_QTE_reef_batch19_contact_v01.png",
+                      "gameImported":  false
+                  },
+                  {
+                      "file":  "Battle/QTE/qte_button_dir_v01.png",
+                      "purpose":  "qte_control",
+                      "resolution":  [
+                                         256,
+                                         256
+                                     ],
+                      "transparent":  true,
+                      "pivot":  [
+                                    0.5,
+                                    0.5
+                                ],
+                      "layer":  "ui",
+                      "sceneTarget":  "BattleCanvas",
+                      "version":  "v01",
+                      "status":  "exported_png",
+                      "source":  "imagegen",
+                      "origin":  "generated",
+                      "tool":  "built-in image_gen",
+                      "batch":  19,
+                      "verification":  "V2",
+                      "selectedRevision":  "r01",
+                      "userApproval":  "not separately recorded",
+                      "rawCopy":  "Sources/Batch19/qte_button_dir.r01.raw.png",
+                      "rawSource":  "C:/Users/TS03128/.codex/generated_images/01a11a2d-085e-7be1-bf42-faf1dbc237d4/exec-3987c51d-46a3-4349-9df6-70f5f1178651.png",
+                      "rawSha256":  "0B4C48AF49BAFD7FE0778E7381FDE97A86CD05CEBD0DB718F149D5E424F80096",
+                      "prompt":  "Sources/Batch19/qte_button_dir.r01.prompt.txt",
+                      "reference":  "Assets/Battle/QTE/qte_token_v01.png",
+                      "referenceSnapshot":  "Sources/Batch19/References/token.png",
+                      "report":  "Sources/Batch19/qte_button_dir.r01.export.json",
+                      "drawingReview":  "Sources/Batch19/art-review.json",
+                      "rightsReview":  "Sources/Batch19/rights-review.json",
+                      "preview":  "Previews/Cards_QTE_reef_batch19_contact_v01.png",
+                      "gameImported":  false
+                  },
+                  {
+                      "file":  "Battle/QTE/qte_button_strike_v01.png",
+                      "purpose":  "qte_control",
+                      "resolution":  [
+                                         512,
+                                         256
+                                     ],
+                      "transparent":  true,
+                      "pivot":  [
+                                    0.5,
+                                    0.5
+                                ],
+                      "layer":  "ui",
+                      "sceneTarget":  "BattleCanvas",
+                      "version":  "v01",
+                      "status":  "exported_png",
+                      "source":  "imagegen",
+                      "origin":  "generated",
+                      "tool":  "built-in image_gen",
+                      "batch":  19,
+                      "verification":  "V2",
+                      "selectedRevision":  "r01",
+                      "userApproval":  "not separately recorded",
+                      "rawCopy":  "Sources/Batch19/qte_button_strike.r01.raw.png",
+                      "rawSource":  "C:/Users/TS03128/.codex/generated_images/01a11a2d-085e-7be1-bf42-faf1dbc237d4/exec-8412481b-a6da-4653-b8bf-07125b17f20f.png",
+                      "rawSha256":  "C4592A89D8140E58357B29E1B764EE6FD96BC4E836F04BB83A7A2B564AB9BAD0",
+                      "prompt":  "Sources/Batch19/qte_button_strike.r01.prompt.txt",
+                      "reference":  "Assets/Battle/QTE/qte_token_v01.png",
+                      "referenceSnapshot":  "Sources/Batch19/References/token.png",
+                      "report":  "Sources/Batch19/qte_button_strike.r01.export.json",
+                      "drawingReview":  "Sources/Batch19/art-review.json",
+                      "rightsReview":  "Sources/Batch19/rights-review.json",
+                      "preview":  "Previews/Cards_QTE_reef_batch19_contact_v01.png",
+                      "gameImported":  false
+                  },
+                  {
+                      "file":  "Battle/Background/battle_bg_eastsea_v02.png",
+                      "purpose":  "battle_background",
+                      "resolution":  [
+                                         2048,
+                                         1152
+                                     ],
+                      "transparent":  false,
+                      "pivot":  [
+                                    0.5,
+                                    0.5
+                                ],
+                      "layer":  "background",
+                      "sceneTarget":  "BattleCanvas",
+                      "version":  "v02",
+                      "status":  "exported_png",
+                      "source":  "imagegen",
+                      "origin":  "generated",
+                      "tool":  "built-in image_gen",
+                      "batch":  19,
+                      "verification":  "V2",
+                      "selectedRevision":  "r03",
+                      "userApproval":  "not separately recorded",
+                      "rawCopy":  "Sources/Batch19/battle_bg_eastsea_v02.r03.raw.png",
+                      "rawSource":  "C:/Users/TS03128/.codex/generated_images/01a11a2d-085e-7be1-bf42-faf1dbc237d4/exec-505b4c5a-ce4a-4041-9d70-fabda4d60125.png",
+                      "rawSha256":  "7470E852FFC272BE4ACCD29F42C868FBD0E1C9AC99D34BD7050D4111BDE3208E",
+                      "prompt":  "Sources/Batch19/battle_bg_eastsea_v02.r03.prompt.txt",
+                      "reference":  "Assets/Battle/Background/battle_bg_eastsea_v01.png",
+                      "referenceSnapshot":  "Sources/Batch19/References/eastsea.png",
+                      "report":  "Sources/Batch19/battle_bg_eastsea_v02.r03.export.json",
+                      "drawingReview":  "Sources/Batch19/art-review.json",
+                      "rightsReview":  "Sources/Batch19/rights-review.json",
+                      "preview":  "Previews/Cards_QTE_reef_batch19_contact_v01.png",
+                      "gameImported":  false
                   }
               ],
     "planned":  [

@@ -1,0 +1,24 @@
+﻿{
+  "checked": "2026-10-08",
+  "verification": "V2",
+  "preview": "Previews/Cards_QTE_reef_batch19_contact_v01.png",
+  "scales": "Cards 176x225 and 100x128; direction button 96px and64px; strike button240x120 and128x64; reef512x288 with240x120 standing-top crops.",
+  "approval": "Inherited project drawing family; these exact revisions have no separate user approval recorded.",
+  "criteria": [
+    {"criterion":"Identity and silhouette","status":"pass","observation":"Potion/lightning and down-right fireball remain distinct at100px card width. Empty blue control and crossed-swords red control read at small UI scale."},
+    {"criterion":"Construction and overlap","status":"pass","observation":"Flask neck joins stopper/body, crossed blades have clear foreground overlap and handles, and two reef ledges support flat empty tops above cliff faces."},
+    {"criterion":"Drawing and edges","status":"pass","observation":"Dark contours separate pictograms, cream rims remain continuous, no clipped forms or visible magenta corner fringe in the inspected preview."},
+    {"criterion":"Value, light and materials","status":"pass","observation":"Cream upper-left accents, blue glass/liquid bands, silver blades/gold guards and glossy colored controls are coherent with existing assets."},
+    {"criterion":"Composition and restraint","status":"pass","observation":"Lower roughly40% of each card is free of pictograms/decorations. Two foreground platforms have empty tops; middle water and upper sky remain clear of characters or UI."},
+    {"criterion":"Family continuity","status":"pass","observation":"Cards retain rounded flat-fill/band layouts; controls retain the ivory-rim token construction; reef retains the reference horizon, distant cays, lighting and coral family."},
+    {"criterion":"Technical delivery","status":"pass","observation":"final-qc.json scans all exported pixels: prescribed dimensions, clear sprite borders, no sampled-domain card alpha holes and entirely opaque background."}
+  ],
+  "assets": [
+    {"id":"face_mana_potion","revision":"r02","status":"pass","observation":"Compact flask/lightning in upper card region; lower region blank blue. r01 rejected for encroaching on the quiet region."},
+    {"id":"face_fire_bolt","revision":"r01","status":"pass","observation":"Short flame silhouette with a smooth bright fireball head, no meteor rock core; lower card region blank slate."},
+    {"id":"qte_button_dir","revision":"r01","status":"pass","observation":"One empty blue round button, continuous ivory rim and upper-left highlights."},
+    {"id":"qte_button_strike","revision":"r01","status":"pass","observation":"One red capsule; two joined blade/guard/handle constructions cross clearly at small scale."},
+    {"id":"battle_bg_eastsea_v02","revision":"r03","status":"pass","observation":"Two narrower foreground pillars, empty standing tops, rock faces continuing through the bottom crop and broad open center. r01 was too high; r02 too wide. Requested coordinates are approximate visual placement, not measured exact platform geometry."}
+  ],
+  "limits": "Card paint has subtle generated tonal variation; no exact RGB-flatness claim. Background region coordinates and anatomical/construction readings are visual observations. No Unity import or gameplay test."
+}

@@ -1,0 +1,67 @@
+﻿[
+    {
+        "file":  "Cards/Faces/face_mana_potion_v02.png",
+        "dimensions":  [
+                           864,
+                           1104
+                       ],
+        "transparent":  true,
+        "borderPixels":  0,
+        "cardInteriorHoles":  0,
+        "minimumAlpha":  0,
+        "sha256":  "D65B41E4B7C2D8E1DF9FCC6781454124CD868AB26F9AF4DAA20E140DFA8FAE4E",
+        "status":  "pass"
+    },
+    {
+        "file":  "Cards/Faces/face_fire_bolt_v02.png",
+        "dimensions":  [
+                           864,
+                           1104
+                       ],
+        "transparent":  true,
+        "borderPixels":  0,
+        "cardInteriorHoles":  0,
+        "minimumAlpha":  0,
+        "sha256":  "82EB4184DECB4AE056E491992355046D6913CCA0A0773A3B9F511C0A2AE41915",
+        "status":  "pass"
+    },
+    {
+        "file":  "Battle/QTE/qte_button_dir_v01.png",
+        "dimensions":  [
+                           256,
+                           256
+                       ],
+        "transparent":  true,
+        "borderPixels":  0,
+        "cardInteriorHoles":  0,
+        "minimumAlpha":  0,
+        "sha256":  "E346EA6CECD84E8B906E981F868720B11FB12AE78A0321152BC3800A5FB8AD21",
+        "status":  "pass"
+    },
+    {
+        "file":  "Battle/QTE/qte_button_strike_v01.png",
+        "dimensions":  [
+                           512,
+                           256
+                       ],
+        "transparent":  true,
+        "borderPixels":  0,
+        "cardInteriorHoles":  0,
+        "minimumAlpha":  0,
+        "sha256":  "D1C16E4768D53AA1DD519CAD01C2216A1F3A6023C6A697262FF0EBFFC622FD83",
+        "status":  "pass"
+    },
+    {
+        "file":  "Battle/Background/battle_bg_eastsea_v02.png",
+        "dimensions":  [
+                           2048,
+                           1152
+                       ],
+        "transparent":  false,
+        "borderPixels":  6396,
+        "cardInteriorHoles":  0,
+        "minimumAlpha":  255,
+        "sha256":  "F3B8C73760985209652FCA70A2CD6197C1F6612E38531720473A7944E0C3A399",
+        "status":  "pass"
+    }
+]

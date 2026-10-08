@@ -1,0 +1,20 @@
+﻿{
+    "batch":  19,
+    "status":  "complete",
+    "requested":  5,
+    "completed":  [
+                      "Cards/Faces/face_mana_potion_v02.png",
+                      "Cards/Faces/face_fire_bolt_v02.png",
+                      "Battle/QTE/qte_button_dir_v01.png",
+                      "Battle/QTE/qte_button_strike_v01.png",
+                      "Battle/Background/battle_bg_eastsea_v02.png"
+                  ],
+    "remaining":  [
+
+                  ],
+    "artRoot":  "Art/Pokiwar_FG38",
+    "termsSource":  "https://openai.com/policies/terms-of-use/",
+    "termsChecked":  "2026-10-08",
+    "verification":  "V2",
+    "gameImported":  false
+}

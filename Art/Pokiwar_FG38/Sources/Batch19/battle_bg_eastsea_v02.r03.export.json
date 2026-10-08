@@ -1,0 +1,55 @@
+﻿{
+    "id":  "battle_bg_eastsea_v02",
+    "file":  "Battle/Background/battle_bg_eastsea_v02.png",
+    "revision":  "r03",
+    "rawSource":  "C:/Users/TS03128/.codex/generated_images/01a11a2d-085e-7be1-bf42-faf1dbc237d4/exec-505b4c5a-ce4a-4041-9d70-fabda4d60125.png",
+    "rawCopy":  "Sources/Batch19/battle_bg_eastsea_v02.r03.raw.png",
+    "rawHash":  "7470E852FFC272BE4ACCD29F42C868FBD0E1C9AC99D34BD7050D4111BDE3208E",
+    "promptFile":  "Sources/Batch19/battle_bg_eastsea_v02.r03.prompt.txt",
+    "sourceInspection":  {
+                             "file":  "battle_bg_eastsea_v02",
+                             "width":  1672,
+                             "height":  941,
+                             "has_alpha":  false,
+                             "transparent_share":  0,
+                             "partial_alpha_pixels":  0,
+                             "content_box":  [
+                                                 0,
+                                                 0,
+                                                 1672,
+                                                 941
+                                             ],
+                             "padding_waste":  0,
+                             "colours":  "\u003e4096",
+                             "power_of_two":  false,
+                             "flat_border":  null,
+                             "touches_edge":  true
+                         },
+    "key":  null,
+    "removedAlphaOne":  0,
+    "outputInspection":  {
+                             "file":  "battle_bg_eastsea_v02",
+                             "width":  2048,
+                             "height":  1152,
+                             "has_alpha":  false,
+                             "transparent_share":  0,
+                             "partial_alpha_pixels":  0,
+                             "content_box":  [
+                                                 0,
+                                                 0,
+                                                 2048,
+                                                 1152
+                                             ],
+                             "padding_waste":  0,
+                             "colours":  "\u003e4096",
+                             "power_of_two":  false,
+                             "flat_border":  null,
+                             "touches_edge":  true
+                         },
+    "edgePixels":  6396,
+    "interiorAlphaHoles":  0,
+    "minimumAlpha":  255,
+    "verification":  "V2",
+    "origin":  "generated",
+    "tool":  "built-in image_gen"
+}

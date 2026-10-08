@@ -1,0 +1,66 @@
+﻿{
+    "id":  "face_mana_potion",
+    "file":  "Cards/Faces/face_mana_potion_v02.png",
+    "revision":  "r02",
+    "rawSource":  "C:/Users/TS03128/.codex/generated_images/01a11a2d-085e-7be1-bf42-faf1dbc237d4/exec-ce1ce6e9-8f42-446b-be51-9370136b086a.png",
+    "rawCopy":  "Sources/Batch19/face_mana_potion.r02.raw.png",
+    "rawHash":  "B5F51DA5EF9DE6CE5F560488ABE0C233B606561F5974A020BB0EC628F479EC33",
+    "promptFile":  "Sources/Batch19/face_mana_potion.r02.prompt.txt",
+    "sourceInspection":  {
+                             "file":  "face_mana_potion",
+                             "width":  1254,
+                             "height":  1254,
+                             "has_alpha":  true,
+                             "transparent_share":  0.342,
+                             "partial_alpha_pixels":  5306,
+                             "content_box":  [
+                                                 188,
+                                                 35,
+                                                 881,
+                                                 1185
+                                             ],
+                             "padding_waste":  0.3361,
+                             "colours":  "\u003e4096",
+                             "power_of_two":  false,
+                             "flat_border":  null,
+                             "touches_edge":  false
+                         },
+    "key":  {
+                "key":  [
+                            255,
+                            0,
+                            255
+                        ],
+                "border_share":  1,
+                "erased":  537866,
+                "erased_enclosed":  0,
+                "unmixed":  5306,
+                "pixel":  false
+            },
+    "removedAlphaOne":  0,
+    "outputInspection":  {
+                             "file":  "face_mana_potion",
+                             "width":  864,
+                             "height":  1104,
+                             "has_alpha":  true,
+                             "transparent_share":  0.0647,
+                             "partial_alpha_pixels":  6784,
+                             "content_box":  [
+                                                 23,
+                                                 2,
+                                                 817,
+                                                 1100
+                                             ],
+                             "padding_waste":  0.0578,
+                             "colours":  "\u003e4096",
+                             "power_of_two":  false,
+                             "flat_border":  null,
+                             "touches_edge":  false
+                         },
+    "edgePixels":  0,
+    "interiorAlphaHoles":  0,
+    "minimumAlpha":  0,
+    "verification":  "V2",
+    "origin":  "generated",
+    "tool":  "built-in image_gen"
+}

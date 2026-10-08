@@ -1,0 +1,55 @@
+﻿{
+    "id":  "qte_button_dir",
+    "file":  "Battle/QTE/qte_button_dir_v01.png",
+    "revision":  "r01",
+    "rawSource":  "C:/Users/TS03128/.codex/generated_images/01a11a2d-085e-7be1-bf42-faf1dbc237d4/exec-3987c51d-46a3-4349-9df6-70f5f1178651.png",
+    "rawCopy":  "Sources/Batch19/qte_button_dir.r01.raw.png",
+    "rawHash":  "0B4C48AF49BAFD7FE0778E7381FDE97A86CD05CEBD0DB718F149D5E424F80096",
+    "promptFile":  "Sources/Batch19/qte_button_dir.r01.prompt.txt",
+    "sourceInspection":  {
+                             "file":  "qte_button_dir",
+                             "width":  1254,
+                             "height":  1254,
+                             "has_alpha":  true,
+                             "transparent_share":  0.3989,
+                             "partial_alpha_pixels":  943523,
+                             "content_box":  [
+                                                 72,
+                                                 80,
+                                                 1109,
+                                                 1101
+                                             ],
+                             "padding_waste":  0.2235,
+                             "colours":  "\u003e4096",
+                             "power_of_two":  false,
+                             "flat_border":  null,
+                             "touches_edge":  false
+                         },
+    "key":  null,
+    "removedAlphaOne":  2208,
+    "outputInspection":  {
+                             "file":  "qte_button_dir",
+                             "width":  256,
+                             "height":  256,
+                             "has_alpha":  true,
+                             "transparent_share":  0.4074,
+                             "partial_alpha_pixels":  38839,
+                             "content_box":  [
+                                                 16,
+                                                 17,
+                                                 224,
+                                                 222
+                                             ],
+                             "padding_waste":  0.2412,
+                             "colours":  "\u003e4096",
+                             "power_of_two":  true,
+                             "flat_border":  null,
+                             "touches_edge":  false
+                         },
+    "edgePixels":  0,
+    "interiorAlphaHoles":  0,
+    "minimumAlpha":  0,
+    "verification":  "V2",
+    "origin":  "generated",
+    "tool":  "built-in image_gen"
+}
