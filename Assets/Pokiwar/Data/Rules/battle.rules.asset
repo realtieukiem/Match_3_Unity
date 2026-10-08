@@ -25,7 +25,7 @@ MonoBehaviour:
       MaxPercentReduction: 0.6
       ApplyDefStat: 0
       Confidence: 3
-    AiThinkSeconds: 0.9
+    AiThinkSeconds: 2
     MinimumHpDamageOnHit: 1
     ShieldExpiresOnOwnTurnStart: 1
     StartHpPct: 0.75

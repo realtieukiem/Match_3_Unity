@@ -16,6 +16,8 @@ namespace Pokiwar.UI
         public SpriteLibrary Sprites;
         [Tooltip("Distance between gem icons (px); the row is always centred.")]
         public float SlotSpacing = 100f;
+        [Tooltip("Seconds an icon takes to fade out once its effect has played.")]
+        public float FadeSeconds = 0.22f;
 
         private readonly GemType[] slotGem = new GemType[6];
         private int shown;
@@ -27,6 +29,7 @@ namespace Pokiwar.UI
 
         public IEnumerator Show(Side side, GemTally tally)
         {
+            StopAllCoroutines();
             if (Header != null) Header.text = side == Side.Player ? "YOU" : "ENEMY";
             int slot = 0;
             foreach (var t in Gems.ResolveOrder)
@@ -34,6 +37,8 @@ namespace Pokiwar.UI
                 int eff = tally.EffectiveOf(t);
                 if (eff <= 0) continue;
                 SlotIcons[slot].gameObject.SetActive(true);
+                SlotIcons[slot].canvasRenderer.SetAlpha(1f);
+                SlotLabels[slot].canvasRenderer.SetAlpha(1f);
                 SlotIcons[slot].sprite = Sprites.Gem(t);
                 SlotLabels[slot].text = eff.ToString();
                 slotGem[slot] = t;
@@ -50,13 +55,27 @@ namespace Pokiwar.UI
             yield return Tween.Wait(0.45f);
         }
 
-        /// <summary>Hides the icon of this gem and of every gem resolved before it.</summary>
+        /// <summary>Fades out the icon of this gem and of every gem resolved before it.</summary>
         public void Consume(GemType gem)
         {
             int order = System.Array.IndexOf(Gems.ResolveOrder, gem);
             if (order < 0) return;
             for (int i = 0; i < shown; i++)
-                if (System.Array.IndexOf(Gems.ResolveOrder, slotGem[i]) <= order) SlotIcons[i].gameObject.SetActive(false);
+            {
+                if (System.Array.IndexOf(Gems.ResolveOrder, slotGem[i]) > order || !SlotIcons[i].gameObject.activeSelf) continue;
+                if (isActiveAndEnabled) StartCoroutine(FadeOut(i));
+                else SlotIcons[i].gameObject.SetActive(false);
+            }
+        }
+
+        private IEnumerator FadeOut(int slot)
+        {
+            yield return Tween.Run(FadeSeconds, t =>
+            {
+                SlotIcons[slot].canvasRenderer.SetAlpha(1f - t);
+                SlotLabels[slot].canvasRenderer.SetAlpha(1f - t);
+            });
+            SlotIcons[slot].gameObject.SetActive(false);
         }
 
         public IEnumerator Hide()

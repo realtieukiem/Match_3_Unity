@@ -150,17 +150,47 @@ D 00:20, D 03:00.
 | Shield | 13 | 16 | 16 | 11 | 14 | 21.9% |
 | Yin-yang | 16 | 9 | 7 | 8 | 6 | 14.4% |
 
-- Sword is the rare gem, not a common one: none at all on an untouched opening board (uniform spawn would do
-  that once in 100000 boards). CONFIRMED_BY_VIDEO. Mid-battle boards under-count it somewhat because both
-  sides take swords first, so the game uses weight 0.5 rather than the measured 0.38.
+- Sword is scarce on the OPENING board and common in the REFILL. Opening boards: A 02:12 has none, B 01:22
+  (boss at its starting 81000/108000, nobody has mana yet) has 4. Refill: in the turn A 02:13 -> 02:16.5 the
+  player cleared 21 gems and 6 swords fell in (3 were matched in the cascade, 3 are left on the board) against
+  3 hearts, 4 fire, 1 lightning, 5 shield, 2 yin-yang - sword 29% of the refill. Boards read mid-battle sit low
+  (3-12%) because both sides take swords first. CONFIRMED_BY_VIDEO; one refill sample, so the rate is rough.
+- The reading of 2026-10-08 morning ("sword is the rare gem, weight 0.5 everywhere") was WRONG: it treated
+  board snapshots as the spawn rate. The user had said sword comes out more, and the refill count agrees.
 - Heart is at the even share; shield and lightning sit a little above it. CONFIRMED_BY_VIDEO.
-- The game follows this in `BoardRuleProfile.SpawnWeights` = sword 0.5, lightning 1.15, fire 1.1, heart 1,
-  shield 1.25, yin-yang 0.85.
+- The game follows this with two tables on `BoardRuleProfile`: `InitialSpawnWeights` = sword 0.2, the rest 1;
+  `SpawnWeights` (refill) = sword 1.5, lightning 1, fire 1, heart 1, shield 1.1, yin-yang 0.9.
 - Clip D (hunt level far above 100) carries x2 / x3 / x4 on about half its gems; clips A and B show none. The
   game keeps 5% x2 and 1.5% x3; a multiplier rate that grows with hunt level is NOT built.
 - The HP bars in all five frames are a single red bar for both sides. The three-layer boss bar (green, yellow,
   red) is CONFIRMED_BY_USER (2026-10-08), not read from these clips.
 
+## One whole turn, frame by frame (read 2026-10-08, clip A 02:12.5 -> 02:30.2 at 4 frames per second)
+
+| Time | What is on screen | Ours |
+|---|---|---|
+| 02:13.0 -> 02:16.5 | The swap and three cascade steps play on the board; refill drops in from the top | same |
+| 02:16.7 | The board is gone within one frame step; the tally row stands where its top row was: lightning 3, fire 3, yin-yang 6, shield 6, sword 3 - red counts under the icons | board fades in 0.15 s, same row, same order (`Gems.ResolveOrder`) |
+| 02:17.2 -> 02:18.5 | Lightning: a blue ring spins at the pet's feet, the pet holds a charging pose, `+144` in blue floats over it at 02:17.7, the mana text in the HUD changes by 02:18.0; the lightning icon fades only at 02:18.5 | bar and number change at the start of the beat (user rule), ring and icons at the pet, icon fades when the next gem starts |
+| 02:18.7 -> 02:20.0 | Fire: red flame swirl on the ground under the pet, `+83` in red; icon fades at 02:20.0 | `VfxLayer.Swirl` |
+| 02:20.0 -> 02:21.5 | Yin-yang: the whole scene darkens, a white orb and a cone of light on the ENEMY, `+0` on the player and `-0` on the enemy (a steal that found nothing) | `Steal` event with motes, no darkening |
+| 02:21.7 -> 02:23.2 | Shield: a column of gold light and sparkles around the pet, `+318` in gold | bubble and ring |
+| 02:23.5 -> 02:24.7 | Sword: the pet stays where it is and THROWS its crescent; it crosses in about 0.4 s and bursts on the enemy; the damage `788` sits inside a red spiky badge on the target for about 0.7 s | ranged creatures throw (`<key>.lob` / `.shot`), hit burst for 0.6 s, number floats above |
+| 02:25.0 -> 02:25.5 | Empty stage for half a second | summary hides, board fades in |
+| 02:25.7 | Board back, timer 10, the turn arrow moves to the enemy's name | same |
+| 02:28.2 | The enemy swaps after about 2.5 s of thinking | `BattleRules.AiThinkSeconds` 2 |
+| 02:29.2 -> 02:30.2 | Enemy tally: sword 3. Flygon DASHES about half way across and strikes; the badge on the player reads `0` (the 318 shield took it) | melee creatures dash (`CombatantHud.Lunge`) |
+
+What that settles:
+
+- One gem's effect holds the stage for 1.2 to 1.5 s and its icon stays lit until that effect is over. The game
+  uses `GainBeatSeconds` 0.8 - shorter on purpose, the user asked for the smoothest read.
+- Nothing flies from the board to the bars: the board is hidden, every effect happens AT the pet. The orbs the
+  game used to send from the cleared cells are removed.
+- The original has both attack kinds in one fight: the player's pet throws, the wild creature dashes.
+  CONFIRMED_BY_VIDEO, and it is what the user asked for the same day.
+- NOT built: the charging pose during a gain, the scene darkening on yin-yang, the damage number inside the
+  badge, multipliers that grow with hunt level.
 ## Re-checking a frame
 
 Close the Editor, then:

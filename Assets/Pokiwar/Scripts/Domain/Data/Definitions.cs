@@ -130,7 +130,7 @@ namespace Pokiwar.Domain
     {
         public ElementChart Elements = new ElementChart();
         public DefenseRules Defense = new DefenseRules();
-        public float AiThinkSeconds = 0.9f;
+        public float AiThinkSeconds = 2f;
         public int MinimumHpDamageOnHit = 1;
         public bool ShieldExpiresOnOwnTurnStart = true;
         public float StartHpPct = 0.75f;

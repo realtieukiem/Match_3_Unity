@@ -11,7 +11,8 @@ namespace Pokiwar.Domain
         public int Width = 8;
         public int Height = 8;
         public int MinMatch = 3;
-        public float[] SpawnWeights = { 0.5f, 1.15f, 1.1f, 1f, 1.25f, 0.85f };
+        public float[] SpawnWeights = { 1.5f, 1f, 1f, 1f, 1.1f, 0.9f };
+        public float[] InitialSpawnWeights = { 0.2f, 1f, 1f, 1f, 1f, 1f };
         public float X2SpawnChance = 0.05f;
         public float X3SpawnChance = 0.015f;
         public bool MultipliersOnInitialFill = true;
@@ -214,6 +215,7 @@ namespace Pokiwar.Domain
     {
         public static void FillInitial(BoardState b, BoardRuleProfile rules, SeededRng rng)
         {
+            var weights = rules.InitialSpawnWeights != null && rules.InitialSpawnWeights.Length == rules.SpawnWeights.Length ? rules.InitialSpawnWeights : rules.SpawnWeights;
             for (int attempt = 0; attempt < 200; attempt++)
             {
                 for (int y = 0; y < b.Height; y++)
@@ -224,7 +226,7 @@ namespace Pokiwar.Domain
                         int guard = 0;
                         do
                         {
-                            t = (GemType)rng.PickWeighted(rules.SpawnWeights);
+                            t = (GemType)rng.PickWeighted(weights);
                             guard++;
                         } while (guard < 50 && CreatesInitialRun(b, x, y, t));
                         int mult = 1;

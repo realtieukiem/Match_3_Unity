@@ -61,10 +61,8 @@ namespace Pokiwar.UI
         public float BuffIconSize = 78f;
         [Tooltip("How many times a boss's HP bar empties before it falls: green, then yellow, then red.")]
         public int BossHpLayers = 3;
-        [Tooltip("Seconds the orbs take from the cleared gems to the bar; the bar itself changes at once.")]
-        public float GainOrbSeconds = 0.26f;
-        [Tooltip("Pause after one gem's gain before the next gem in the row plays.")]
-        public float GainBeatSeconds = 0.2f;
+        [Tooltip("Seconds one gem's gain holds the stage before the next gem in the row plays; the bar itself changes at once.")]
+        public float GainBeatSeconds = 0.8f;
 
         public BattleEngine Engine { get; private set; }
         public TurnClock Clock { get; private set; }
@@ -374,13 +372,19 @@ namespace Pokiwar.UI
                 yield return FadeBoard(0f);
                 yield return Summary.Show(r.Actor, r.Board.Tally);
             }
+            var playing = GemType.None;
             foreach (var ev in r.Events)
             {
                 Log.Add(ev.ToString());
                 if (LogToConsole) Debug.Log("[Pokiwar] " + ev);
-                if (ev.Gem != GemType.None) Summary.Consume(ev.Gem);
+                if (ev.Gem != GemType.None && ev.Gem != playing)
+                {
+                    if (playing != GemType.None) Summary.Consume(playing);
+                    playing = ev.Gem;
+                }
                 yield return PlayEvent(ev);
             }
+            if (playing != GemType.None) Summary.Consume(playing);
             if (r.Board != null && r.Board.Valid)
             {
                 yield return Summary.Hide();
@@ -412,8 +416,6 @@ namespace Pokiwar.UI
                 case CombatEventKind.ResourceChange:
                 {
                     bool fromGem = ev.Kind == CombatEventKind.GemEffect;
-                    if (fromGem && vfx != null && Board.LastCleared.TryGetValue(ev.Gem, out var cells) && cells.Count > 0)
-                        vfx.Orbs(Sample(cells, 6), targetHud.BarRect(ev.Resource).position, ResourceColor(ev.Resource), 2, GainOrbSeconds);
                     targetHud.Set(ev.TargetAfter);
                     actorHud.Set(ev.ActorAfter);
                     if (ev.Applied != 0 || ev.Computed != 0)
@@ -444,13 +446,7 @@ namespace Pokiwar.UI
                     yield return Tween.Wait(0.3f);
                     break;
                 case CombatEventKind.Attack:
-                    if (ev.Gem == GemType.Sword && vfx != null && Board.LastCleared.TryGetValue(GemType.Sword, out var swords) && swords.Count > 0)
-                    {
-                        float wait = vfx.Orbs(Sample(swords, 6), targetHud.FloatAnchor.position, SpriteLibrary.GemColor(GemType.Sword), 2, 0.36f, 30f);
-                        AudioDirector.Sfx("swing");
-                        yield return Tween.Wait(wait * 0.7f);
-                    }
-                    else AudioDirector.Sfx("swing");
+                    AudioDirector.Sfx("swing");
                     yield return Strike(actorHud);
                     break;
                 case CombatEventKind.Damage:
@@ -461,7 +457,7 @@ namespace Pokiwar.UI
                     var at = targetHud.FloatAnchor.position;
                     bool big = ev.Strong || ev.SourceId != null && ev.SourceId.StartsWith("skill:");
                     AudioDirector.Sfx(big ? "hit.strong" : "hit");
-                    Decal("fx.hit", targetHud.BodyCenter, big ? 520f : 380f, 0.32f);
+                    Decal("fx.hit", targetHud.BodyCenter, big ? 520f : 380f, 0.6f);
                     Decal("fx.slash", targetHud.BodyCenter, big ? 560f : 420f, 0.42f, ev.Actor == Side.Player ? 0f : 180f);
                     if (ev.ShieldAbsorbed > 0)
                     {
@@ -613,13 +609,7 @@ namespace Pokiwar.UI
             if (vfx != null && sprites != null && sprites.Has(key)) vfx.Decal(at, sprites.Get(key), size, life, rot);
         }
 
-        private static List<Vector3> Sample(List<Vector3> src, int max)
-        {
-            if (src.Count <= max) return src;
-            var r = new List<Vector3>(max);
-            for (int i = 0; i < max; i++) r.Add(src[i * src.Count / max]);
-            return r;
-        }
+
         private void Float(CombatantHud hud, string text, Color c, int size)
         {
             if (Floating != null) Floating.Spawn(text, c, hud.FloatAnchor, new Vector2(UnityEngine.Random.Range(-40f, 40f), 0), size == 0 ? 40 : size);
