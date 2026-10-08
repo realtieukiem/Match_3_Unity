@@ -1,4 +1,5 @@
 using System.Text;
+using Pokiwar.App;
 using Pokiwar.Data;
 using Pokiwar.Domain;
 using UnityEditor;
@@ -32,6 +33,15 @@ namespace Pokiwar.EditorTools
             Debug.Log(sb.ToString());
         }
 
+        [MenuItem("Pokiwar/Reset Save Data")]
+        public static void ResetSaveData()
+        {
+            if (!EditorUtility.DisplayDialog("Pokiwar", "Xóa toàn bộ dữ liệu chơi (pet, thẻ, vàng, tiến độ) và bắt đầu lại từ đầu?", "Xóa", "Hủy")) return;
+            var app = Application.isPlaying ? Object.FindFirstObjectByType<GameApp>() : null;
+            if (app != null) app.ResetSave();
+            else new FileSaveStore().Delete();
+            Debug.Log("[POKIWAR] Save data reset");
+        }
         [MenuItem("Pokiwar/Reset Content Assets To Defaults")]
         public static void ResetContent() => PokiwarContentSeeder.Seed(true);
 
