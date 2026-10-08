@@ -46,6 +46,7 @@ Every piece of art the game needs has exactly one status. Codex paints ONLY rows
 | 18 | Charm icons `Meta/UI/charm_lucky_v01.png`, `Meta/UI/charm_protection_v01.png` | 2 | `PAINT NEW` | Batch 20 below; the game shows a flat white star and the purple shield gem tile in their place |
 | 19 | Idle frames 2 and 3 for Dunewing, Psyling, Azurewing and their later forms | - | `WAIT` | none of them is on the map now (all six nodes are East Sea); paint only if they return |
 | 20 | Projectiles for ranged creatures `Battle/Shots/shot_{bebeboom_bomb,ngoclam_pearl,voirong_bolt}_v01.png` | 3 | `PAINT NEW` | Batch 21 below; Bebeboom throws a code-drawn placeholder bomb until its file exists, the other two fight up close until theirs do |
+| 21 | Green confirm button (READY, BUY, WEAR, hub BACK are flat green rectangles; the painted kit has blue, red, gray, orange only) and a checkbox pair (the two charm toggles are flat white squares) | 3 | `WAIT` | found 2026-10-08 on the smoke screenshots; not ordered until the user says so |
 | 9 | Second forms of Emberkit, Leafling, Tidepup; a card for Tidal Siphon | - | `NEVER` | decided 2026-10-06 |
 | 10 | Third and later forms of any creature | - | `WAIT` | the rule for when a pet takes a third form is not decided |
 
