@@ -46,11 +46,11 @@ Every piece of art the game needs has exactly one status. Codex paints ONLY rows
 | 18 | Charm icons `Meta/UI/charm_lucky_v01.png`, `Meta/UI/charm_protection_v01.png` | 2 | `PAINT NEW` | Batch 20 below; the game shows a flat white star and the purple shield gem tile in their place |
 | 19 | Idle frames 2 and 3 for Dunewing, Psyling, Azurewing and their later forms | - | `WAIT` | none of them is on the map now (all six nodes are East Sea); paint only if they return |
 | 20 | Projectiles for ranged creatures `Battle/Shots/shot_{bebeboom_bomb,ngoclam_pearl,voirong_bolt}_v01.png` | 3 | `PAINT NEW` | Batch 21 below; Bebeboom throws a code-drawn placeholder bomb until its file exists, the other two fight up close until theirs do |
-| 21 | Green confirm button (READY, BUY, WEAR, hub BACK are flat green rectangles; the painted kit has blue, red, gray, orange only) and a checkbox pair (the two charm toggles are flat white squares) | 3 | `WAIT` | found 2026-10-08 on the smoke screenshots; not ordered until the user says so |
+| 21 | Green confirm button (READY, BUY, WEAR, hub BACK are flat green rectangles; the painted kit has blue, red, gray, orange only) and a checkbox pair (the two charm toggles are flat white squares) | 3 | `PAINT NEW` | Batch 22 below (user, 2026-10-08: order what is best) |
 | 9 | Second forms of Emberkit, Leafling, Tidepup; a card for Tidal Siphon | - | `NEVER` | decided 2026-10-06 |
 | 10 | Third and later forms of any creature | - | `WAIT` | the rule for when a pet takes a third form is not decided |
 
-Open orders: Batch 20 (two charm icons) and Batch 21 (three projectiles). Batch 19 is complete; rows marked `WAIT` remain undecided.
+Open orders, 8 images in all: Batch 20 (two charm icons), Batch 21 (three projectiles), Batch 22 (green button, checkbox pair). All three fit one Codex thread. Batch 19 is complete; rows marked `WAIT` remain undecided.
 
 Framing rule for every future creature batch (learned from Batches 12, 14 and 15): the game shows a creature at
 the size it fills its canvas, so paint the idle at about 80% of the canvas height, keep every pose (the hit pose
@@ -128,6 +128,25 @@ smoke cloud, ground, cast shadow, text, UI or background. Transparent alpha outs
 Later creatures and second forms follow the same rule: a thrown projectile is `<creature>.lob`, a straight one
 is `<creature>.shot` in `Fg38Art`; a second form without its own file uses its first form's.
 
+## Batch 22 - green button and checkbox (3 images, `PAINT NEW`)
+
+Same family as the existing kit in `Art/Pokiwar_FG38/Assets/UI/Common/`. Open `ui_button_blue_v01.png` as the
+reference and match it exactly in shape, rim, studs, bevel and outline weight. Save all three under
+`Art/Pokiwar_FG38/Assets/UI/Common/`, transparent PNG, no text.
+
+| File | Size | Subject |
+|---|---|---|
+| `ui_button_green_v01.png` | 512x160 | The blue button recoloured to a fresh leaf green (#5DBB2F body, darker green lower band, cream top highlight). Same silhouette and the same 48 px corner caps, so it 9-slices like the others. Used for READY, BUY, WEAR. |
+| `ui_checkbox_off_v01.png` | 128x128 | An empty square tick box: dark navy recessed face, pale stone rim with the kit's brown outline, slightly rounded corners. |
+| `ui_checkbox_on_v01.png` | 128x128 | The same box, pixel-aligned with the empty one, holding one bold leaf-green tick with a cream highlight that breaks slightly over the top right corner. |
+
+```
+Create one finished 2D game UI sprite: <SUBJECT FROM THE TABLE>. Genuine transparent background, the sprite
+centred with a thin clear margin. Canyon-fantasy casual cartoon UI: thick closed near-black brown outline
+#21191F, two or three crisp flat shade bands, a restrained cream highlight along the top, no airbrush gradients,
+no glossy 3D look. No letters, numbers, icons other than the one named, drop shadow or background.
+```
+
 ## Shared preamble (put at the top of every batch)
 
 ```
@@ -135,7 +154,7 @@ Continue the Pokiwar FG38 art set. Reply to me in Vietnamese.
 Read first: Art/Pokiwar_FG38/ART_BIBLE.md and Art/Pokiwar_FG38/AssetManifest.json, and look at
 Art/Pokiwar_FG38/Previews/Battle_form01_v01.png as the style target (canyon fantasy, chunky
 silhouettes, near-black brown outline #21191F, two or three flat shade bands, cream highlight).
-Batch 19 definitions and prompts are an archive of completed work, not a new drawing order. Read only the batch pasted with this preamble (20 or 21).
+Batch 19 definitions and prompts are an archive of completed work, not a new drawing order. Read only Batches 20, 21 and 22 below.
 The ordered definitions resolve their references and output filenames inside Art/Pokiwar_FG38.
 Thread budget rules - this thread dies above ~30 inline images:
 - generate at most the images listed below, one at a time;
