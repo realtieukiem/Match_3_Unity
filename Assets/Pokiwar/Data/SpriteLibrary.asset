@@ -127,7 +127,7 @@ MonoBehaviour:
   - Key: avatar.hat.wizard
     Sprite: {fileID: 21300000, guid: 6bf4b596dccbebc49a8cfff912306329, type: 3}
   - Key: bg.battle
-    Sprite: {fileID: 21300000, guid: 2d4b5a6d2795413448c386cf1782148d, type: 3}
+    Sprite: {fileID: 21300000, guid: 96002876c38e6704cbd1e89c820897e2, type: 3}
   - Key: bg.hub
     Sprite: {fileID: 21300000, guid: 275daf989293a5d458b5659052e2f496, type: 3}
   - Key: bg.map
@@ -186,6 +186,10 @@ MonoBehaviour:
     Sprite: {fileID: 21300000, guid: 29e114bb440cf6c47a6bce8703592fe0, type: 3}
   - Key: qte.flame
     Sprite: {fileID: 21300000, guid: 8785452fc0345ad45b17ac700078a361, type: 3}
+  - Key: qte.button.dir
+    Sprite: {fileID: 21300000, guid: 2e934c4746e6424448d898bc935a0978, type: 3}
+  - Key: qte.button.strike
+    Sprite: {fileID: 21300000, guid: c2efa4c78fa782e4b8ce2b3a309bab63, type: 3}
   - Key: fx.slash
     Sprite: {fileID: 21300000, guid: a8dd9f23dc7714e4ba03f11a498d142f, type: 3}
   - Key: fx.heal
@@ -477,13 +481,13 @@ MonoBehaviour:
   - Key: icon.gold
     Sprite: {fileID: 21300000, guid: 2a20ada942b54f14a9f89a2a6164d355, type: 3}
   - Key: face.card.mana_potion
-    Sprite: {fileID: 21300000, guid: d6a2f25092177994faed50f84d781bdb, type: 3}
+    Sprite: {fileID: 21300000, guid: d989edd0eaab8a5409593015543b71de, type: 3}
   - Key: face.card.herbal_salve
     Sprite: {fileID: 21300000, guid: 9d92fc88dae23384a8d9de655a0b20f3, type: 3}
   - Key: face.card.iron_skin
     Sprite: {fileID: 21300000, guid: 6126ec4bf4aa3eb4aad13451fe208cde, type: 3}
   - Key: face.card.fire_bolt
-    Sprite: {fileID: 21300000, guid: 2aa9b3d6a8219d64b98b1abc93585672, type: 3}
+    Sprite: {fileID: 21300000, guid: f52e640f7fa324c44bc9fa694ccbab6c, type: 3}
   - Key: face.card.meteor
     Sprite: {fileID: 21300000, guid: cfdaea2def63c9744a8fd5110275a62a, type: 3}
   - Key: face.card.summon_sprite

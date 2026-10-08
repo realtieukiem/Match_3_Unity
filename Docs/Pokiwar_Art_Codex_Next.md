@@ -14,7 +14,7 @@ moves to the "Already painted" table below - never leave a finished prompt in pl
 again. Before painting anything, check the file name under `Art/Pokiwar_FG38/Assets`: a file that
 exists is finished, do not repaint or overwrite it unless the user asks for a new version by name.
 
-## Status board - read this first (checked 2026-10-08 against `Art/Pokiwar_FG38/Assets`, 273 PNG; all five Batch 19 exports present)
+## Status board - read this first (checked 2026-10-08 15:00 against `Art/Pokiwar_FG38/Assets`, 273 PNG; Batch 19 is in the game; Batch 20 is the only open order)
 
 Every piece of art the game needs has exactly one status. Codex paints ONLY rows marked `PAINT NEW`.
 
@@ -33,20 +33,22 @@ Every piece of art the game needs has exactly one status. Codex paints ONLY rows
 | 3 | East Sea region art: world island, region emblem, battle background | 3 | `HAVE` | painted 2026-10-07, in the game |
 | 4 | Battle effects: rage fire vortex, flame wisp, siphon mote, hit burst, sparkle | 5 | `HAVE` | painted 2026-10-07, in the game |
 | 5 | Card faces `Cards/Faces/face_*_v02.png`: herbal salve, iron skin, rage ember, meteor, summon sprite, war cry, mana leech, the skill face, the card back | 9 | `HAVE` | painted 2026-10-07, in the game (the card back has no use yet) |
-| 16 | Card faces `face_mana_potion_v02.png`, `face_fire_bolt_v02.png` | 2 | `HAVE` | Batch 19, exported 2026-10-08; available to the importer |
+| 16 | Card faces `face_mana_potion_v02.png`, `face_fire_bolt_v02.png` | 2 | `HAVE` | Batch 19, in the game since 2026-10-08 |
 | 6 | Buff icons `buff_{heart,lightning,fire,shield}.png` | 4 | `CODE-DRAWN` | `Tools/DrawCardFaces.ps1`; heal and mana effects approved by the user 2026-10-07 |
 | 7 | UI primitives (`ui.circle`, `ui.ring`, `ui.round`, `ui.frame`, `ui.gradient`, bar shapes) | - | `CODE-DRAWN` | plain shapes, tinted in game |
 | 8 | Everything in Batches 1-13 (gems, starter pets, Dunewing, Psyling, Azurewing, cards art, elements, HUD, buttons, room, avatar, lobby, forge, stones, world map, town) | 179 files | `HAVE` | table "Already painted" below |
 | 11 | Second forms of Dunewing and Psyling (`enemy_beetle_form02_*`, `enemy_psyling_form02_*`) | 8 | `HAVE` | painted small (68% of the frame); the game enlarges them with `Tools/ReframeSecondForms.ps1`. Do NOT repaint unless the user asks |
 | 12 | Arrow mini game kit, first set (`Battle/QTE`: four arrows, slot frame, timing marker, timer frame) | 7 | `HAVE` | in the game since 2026-10-07 |
 | 15 | Arrow mini game kit after the original (`Battle/QTE/qte_*_v01.png`): pill bar, three tokens, white arrow, slider track / good / perfect / knob, damage flame | 10 | `HAVE` | painted 2026-10-07, in the game |
-| 17 | Arrow mini game touch buttons `qte_button_dir_v01.png`, `qte_button_strike_v01.png` | 2 | `HAVE` | Batch 19, exported 2026-10-08; available to the importer |
+| 17 | Arrow mini game touch buttons `qte_button_dir_v01.png`, `qte_button_strike_v01.png` | 2 | `HAVE` | Batch 19, in the game since 2026-10-08 |
 | 13 | Idle animation frames 2 and 3 for the eleven creatures in play (Emberkit, six East Sea first forms, four East Sea second forms) | 22 | `HAVE` | painted 2026-10-07, in the game |
-| 14 | East Sea battle background, version 2: the same reef with two flat rock outcrops where the two creatures stand | 1 | `HAVE` | Batch 19, exported 2026-10-08; v01 preserved |
+| 14 | East Sea battle background, version 2: the same reef with two flat rock outcrops where the two creatures stand | 1 | `HAVE` | Batch 19, in the game since 2026-10-08 (both creatures stand on the outcrops); v01 preserved |
+| 18 | Charm icons `Meta/UI/charm_lucky_v01.png`, `Meta/UI/charm_protection_v01.png` | 2 | `PAINT NEW` | Batch 20 below; the game shows a flat white star and the purple shield gem tile in their place |
+| 19 | Idle frames 2 and 3 for Dunewing, Psyling, Azurewing and their later forms | - | `WAIT` | none of them is on the map now (all six nodes are East Sea); paint only if they return |
 | 9 | Second forms of Emberkit, Leafling, Tidepup; a card for Tidal Siphon | - | `NEVER` | decided 2026-10-06 |
 | 10 | Third and later forms of any creature | - | `WAIT` | the rule for when a pet takes a third form is not decided |
 
-No images are currently ordered for painting. Batch 19 is complete; rows marked `WAIT` remain undecided.
+Batch 20 (two charm icons) is the only open order. Batch 19 is complete; rows marked `WAIT` remain undecided.
 
 Framing rule for every future creature batch (learned from Batches 12, 14 and 15): the game shows a creature at
 the size it fills its canvas, so paint the idle at about 80% of the canvas height, keep every pose (the hit pose
@@ -79,6 +81,26 @@ Do NOT paint either (decided 2026-10-06, they would never be shown): second form
 Tidepup - the free starter never changes form and the other two are not obtainable; a card for Tidal Siphon -
 only the boss uses it and boss cards are not drawn.
 
+## Batch 20 - charm icons (2 images, `PAINT NEW`)
+
+Both are item icons shown at 48-96 px in the wallet chips of the pet, forge and hub screens and in a shop row.
+Save as transparent 256x256 PNG under `Art/Pokiwar_FG38/Assets/Meta/UI/`. Style reference: the five pet stones
+`Meta/Stones/stone_*_v01.png` and `Meta/UI/stone_card_v01.png` - same outline weight, same shading, same
+frame occupancy (subject about 86% of the canvas, clear transparent margin on every side).
+
+| File | Subject |
+|---|---|
+| `charm_lucky_v01.png` | One lucky charm: a gold four-leaf clover medallion hanging from a short red knotted cord, one cream glint upper left. Reads as "luck" at 48 px. |
+| `charm_protection_v01.png` | One protection charm: a small violet heraldic shield amulet with a silver rim and a pale star-shaped gem at its centre, hanging from the same short red knotted cord. Reads as "protect" at 48 px. |
+
+```
+Create one finished 2D game item icon: <SUBJECT FROM THE TABLE>. Square canvas, genuine transparent background,
+one single object centred and front-facing, filling about 86% of the canvas. Canyon-fantasy casual cartoon:
+chunky silhouette, thick closed near-black brown outline #21191F, two or three crisp flat shade bands, a
+restrained cream highlight from the upper left, very little texture. The two charms are a pair: same cord, same
+outline weight, same scale. No letters, numbers, text, UI frame, panel, coin, scenery, sparkles outside the
+object, external cast shadow, glossy 3D rendering or airbrush gradients. Transparent alpha outside the object.
+```
 ## Shared preamble (put at the top of every batch)
 
 ```
@@ -86,7 +108,7 @@ Continue the Pokiwar FG38 art set. Reply to me in Vietnamese.
 Read first: Art/Pokiwar_FG38/ART_BIBLE.md and Art/Pokiwar_FG38/AssetManifest.json, and look at
 Art/Pokiwar_FG38/Previews/Battle_form01_v01.png as the style target (canyon fantasy, chunky
 silhouettes, near-black brown outline #21191F, two or three flat shade bands, cream highlight).
-Batch 19 definitions and prompts are an archive of completed work, not a new drawing order. Read only the next explicitly ordered batch.
+Batch 19 definitions and prompts are an archive of completed work, not a new drawing order. Read only Batch 20 below.
 The ordered definitions resolve their references and output filenames inside Art/Pokiwar_FG38.
 Thread budget rules - this thread dies above ~30 inline images:
 - generate at most the images listed below, one at a time;
