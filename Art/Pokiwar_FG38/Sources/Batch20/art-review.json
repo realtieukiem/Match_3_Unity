@@ -1,0 +1,18 @@
+{
+  "batch": 20,
+  "checked": "2026-10-08",
+  "nativeScales": [48, 96],
+  "workingScale": 256,
+  "preview": "Previews/Charms_batch20_contact_v01.png",
+  "result": "pass",
+  "criteria": [
+    {"criterion":"Identity and silhouette","status":"pass","observation":"Four gold clover leaves and the violet shield with a central pale star remain distinct at 48 px."},
+    {"criterion":"Construction and overlap","status":"pass","observation":"Each braided red loop ends at a central knot with two tails; a visible metal eye joins the cord to its amulet."},
+    {"criterion":"Drawing and edges","status":"pass","observation":"Closed dark contours surround both amulets; loop interiors retain transparency and no detached decoration remains in the exports."},
+    {"criterion":"Value, light and materials","status":"pass","observation":"Upper-left cream accents distinguish gold, silver and violet surfaces; red cords share the same warm light and dark outline."},
+    {"criterion":"Composition and restraint","status":"pass","observation":"Each canvas contains one centered charm. The four-leaf silhouette and shield star carry the identity without text or external effects."},
+    {"criterion":"Family continuity","status":"pass","observation":"Both occupy 220 px vertically, about 86% of the export. Braided red oval loops, compact knots, ink weight and highlight direction match visually."},
+    {"criterion":"Technical delivery","status":"pass","observation":"Full scans of both 256x256 files found zero nontransparent border pixels, minimum 18 px margin, and over 10000 pixels with alpha at least 250."}
+  ],
+  "limits": "Visual observations at the stated sizes, not exact per-color flatness or pixel-identical cord geometry. Generated interiors predominantly have alpha 254; preserved rather than forced to 255. No Unity import or runtime verification."
+}

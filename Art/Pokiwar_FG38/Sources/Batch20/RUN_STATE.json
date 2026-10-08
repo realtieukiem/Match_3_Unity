@@ -1,0 +1,14 @@
+{
+  "batch": 20,
+  "status": "complete",
+  "requested": 2,
+  "completed": ["Meta/UI/charm_lucky_v01.png", "Meta/UI/charm_protection_v01.png"],
+  "remaining": [],
+  "artRoot": "Art/Pokiwar_FG38",
+  "generationCalls": 2,
+  "selectedRevision": "r01 for both",
+  "processing": "sprite-tool slice: 1x1, Cell256, Anchor center, ScaleMode fit, Margin0.071, NoKey",
+  "verification": "V2 art",
+  "gameImported": false,
+  "userApproval": "Existing style and Batch20 order; no separate approval of these revisions"
+}

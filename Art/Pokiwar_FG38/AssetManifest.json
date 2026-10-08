@@ -1,4 +1,4 @@
-﻿{
+{
     "schema":  "pokiwar-art-manifest-v1",
     "styleReference":  "Previews/Battle_form01_v01.png",
     "originalStyleReference":  "D:/FG38/rucksackGameIaaYN/client/assets",
@@ -7197,7 +7197,75 @@
                       "rightsReview":  "Sources/Batch19/rights-review.json",
                       "preview":  "Previews/Cards_QTE_reef_batch19_contact_v01.png",
                       "gameImported":  false
-                  }
+                  },
+{
+    "file":  "Meta/UI/charm_lucky_v01.png",
+    "purpose":  "charm_item_icon",
+    "resolution":  [
+                       256,
+                       256
+                   ],
+    "transparent":  true,
+    "pivot":  [
+                  0.5,
+                  0.5
+              ],
+    "layer":  "ui",
+    "sceneTarget":  "PetScreen, ForgeScreen, HubScreen, Shop",
+    "version":  "v01",
+    "status":  "exported_png",
+    "source":  "imagegen",
+    "origin":  "generated",
+    "tool":  "built-in image_gen",
+    "batch":  20,
+    "verification":  "V2",
+    "selectedRevision":  "r01",
+    "userApproval":  "Existing Batch20 order; no separate revision approval",
+    "rawCopy":  "Sources/Batch20/charm_lucky_v01.r01.raw.png",
+    "rawSha256":  "4D0C817B731C273CA58BDAA5622E8FD182F4BBCC256E567B27E96C146810B783",
+    "prompt":  "Sources/Batch20/charm_lucky_v01.r01.prompt.txt",
+    "reference":  "Independent text generation; existing stone palette viewed locally only",
+    "report":  "Sources/Batch20/Lucky/report.json",
+    "finalQc":  "Sources/Batch20/final-qc.json",
+    "drawingReview":  "Sources/Batch20/art-review.json",
+    "rightsReview":  "Sources/Batch20/rights-review.json",
+    "preview":  "Previews/Charms_batch20_contact_v01.png",
+    "gameImported":  false
+},
+{
+    "file":  "Meta/UI/charm_protection_v01.png",
+    "purpose":  "charm_item_icon",
+    "resolution":  [
+                       256,
+                       256
+                   ],
+    "transparent":  true,
+    "pivot":  [
+                  0.5,
+                  0.5
+              ],
+    "layer":  "ui",
+    "sceneTarget":  "PetScreen, ForgeScreen, HubScreen, Shop",
+    "version":  "v01",
+    "status":  "exported_png",
+    "source":  "imagegen",
+    "origin":  "generated",
+    "tool":  "built-in image_gen",
+    "batch":  20,
+    "verification":  "V2",
+    "selectedRevision":  "r01",
+    "userApproval":  "Existing Batch20 order; no separate revision approval",
+    "rawCopy":  "Sources/Batch20/charm_protection_v01.r01.raw.png",
+    "rawSha256":  "A461E54573F19446540A38064B942E116DCC27461962A8ACB2798E760F19313E",
+    "prompt":  "Sources/Batch20/charm_protection_v01.r01.prompt.txt",
+    "reference":  "Independent text generation; existing stone palette viewed locally only",
+    "report":  "Sources/Batch20/Protection/report.json",
+    "finalQc":  "Sources/Batch20/final-qc.json",
+    "drawingReview":  "Sources/Batch20/art-review.json",
+    "rightsReview":  "Sources/Batch20/rights-review.json",
+    "preview":  "Previews/Charms_batch20_contact_v01.png",
+    "gameImported":  false
+}
               ],
     "planned":  [
                     {
@@ -7280,5 +7348,5 @@
                         "status":  "planned",
                         "version":  "v01"
                     }
-                ]
+    ]
 }

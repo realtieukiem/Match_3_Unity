@@ -1,0 +1,50 @@
+﻿{
+    "batch":  20,
+    "checked":  "2026-10-08",
+    "domain":  "All pixels of both 256x256 exports",
+    "assets":  [
+                   {
+                       "file":  "Assets/Meta/UI/charm_lucky_v01.png",
+                       "resolution":  [
+                                          256,
+                                          256
+                                      ],
+                       "marginsLTRB":  [
+                                           66,
+                                           18,
+                                           67,
+                                           18
+                                       ],
+                       "alphaBorderPixels":  0,
+                       "contentHeight":  220,
+                       "heightOccupancy":  0.859375,
+                       "nearOpaquePixels":  13766,
+                       "maxAlpha":  254,
+                       "transparentPixels":  50607,
+                       "sha256":  "A05A0CEA2607403BB684926918D13BD0050A836CCDCC0F517A9D1D8C9CB11260",
+                       "status":  "pass"
+                   },
+                   {
+                       "file":  "Assets/Meta/UI/charm_protection_v01.png",
+                       "resolution":  [
+                                          256,
+                                          256
+                                      ],
+                       "marginsLTRB":  [
+                                           66,
+                                           18,
+                                           66,
+                                           18
+                                       ],
+                       "alphaBorderPixels":  0,
+                       "contentHeight":  220,
+                       "heightOccupancy":  0.859375,
+                       "nearOpaquePixels":  13986,
+                       "maxAlpha":  254,
+                       "transparentPixels":  50516,
+                       "sha256":  "395D9ED5C27888A0D6575B59C719B44B456C30F10792D29738AF812E3215B774",
+                       "status":  "pass"
+                   }
+               ],
+    "result":  "pass"
+}
