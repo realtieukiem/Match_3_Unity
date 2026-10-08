@@ -1,0 +1,193 @@
+{
+    "assets":  [
+                   {
+                       "file":  "UI/Common/ui_button_green_v01.png",
+                       "resolution":  [
+                                          512,
+                                          160
+                                      ],
+                       "sourceInspection":  {
+                                                "file":  "ui_button_green_v01",
+                                                "width":  2241,
+                                                "height":  702,
+                                                "has_alpha":  true,
+                                                "transparent_share":  0.245,
+                                                "partial_alpha_pixels":  5324,
+                                                "content_box":  [
+                                                                    46,
+                                                                    56,
+                                                                    2149,
+                                                                    568
+                                                                ],
+                                                "padding_waste":  0.2241,
+                                                "colours":  "\u003e4096",
+                                                "power_of_two":  false,
+                                                "flat_border":  null,
+                                                "touches_edge":  false
+                                            },
+                       "removedAlphaOne":  0,
+                       "outputInspection":  {
+                                                "file":  "ui_button_green_v01",
+                                                "width":  512,
+                                                "height":  160,
+                                                "has_alpha":  true,
+                                                "transparent_share":  0.0881,
+                                                "partial_alpha_pixels":  1362,
+                                                "content_box":  [
+                                                                    4,
+                                                                    4,
+                                                                    504,
+                                                                    152
+                                                                ],
+                                                "padding_waste":  0.0648,
+                                                "colours":  4060,
+                                                "power_of_two":  false,
+                                                "flat_border":  null,
+                                                "touches_edge":  false
+                                            },
+                       "borderPixels":  0,
+                       "clipped":  false,
+                       "key":  {
+                                   "key":  [
+                                               255,
+                                               0,
+                                               255
+                                           ],
+                                   "border_share":  1,
+                                   "erased":  385481,
+                                   "erased_enclosed":  0,
+                                   "unmixed":  5324,
+                                   "pixel":  false
+                               },
+                       "selectedRevision":  "r03",
+                       "buttonInteriorMinimumAlpha":  255,
+                       "rawSha256":  "A506FD4D6EDC5073E8C9698888333E420B4515074BE5DC6B7FAFCA2F7706C312",
+                       "sha256":  "F186FB30BF5A03180B60A9D7B6DA8D2464F36C8856496BEC0106AF5B3C922653",
+                       "status":  "pass"
+                   },
+                   {
+                       "file":  "UI/Common/ui_checkbox_off_v01.png",
+                       "resolution":  [
+                                          128,
+                                          128
+                                      ],
+                       "sourceInspection":  {
+                                                "file":  "ui_checkbox_off_v01",
+                                                "width":  1254,
+                                                "height":  1254,
+                                                "has_alpha":  true,
+                                                "transparent_share":  0.436,
+                                                "partial_alpha_pixels":  884401,
+                                                "content_box":  [
+                                                                    138,
+                                                                    157,
+                                                                    978,
+                                                                    936
+                                                                ],
+                                                "padding_waste":  0.4179,
+                                                "colours":  "\u003e4096",
+                                                "power_of_two":  false,
+                                                "flat_border":  null,
+                                                "touches_edge":  false
+                                            },
+                       "removedAlphaOne":  3799,
+                       "outputInspection":  {
+                                                "file":  "ui_checkbox_off_v01",
+                                                "width":  128,
+                                                "height":  128,
+                                                "has_alpha":  true,
+                                                "transparent_share":  0.4275,
+                                                "partial_alpha_pixels":  9380,
+                                                "content_box":  [
+                                                                    14,
+                                                                    16,
+                                                                    100,
+                                                                    96
+                                                                ],
+                                                "padding_waste":  0.4141,
+                                                "colours":  980,
+                                                "power_of_two":  true,
+                                                "flat_border":  null,
+                                                "touches_edge":  false
+                                            },
+                       "borderPixels":  0,
+                       "clipped":  false,
+                       "key":  null,
+                       "selectedRevision":  "r01",
+                       "buttonInteriorMinimumAlpha":  null,
+                       "rawSha256":  "1B086A6868665DA975E30E71AB98E9BF1430A5CBD96E0FC60B0BCD36E298208A",
+                       "sha256":  "BC0591B67A7C4A85A8EAB33758C7E89A321A40E4F2050845A31BFF4A4326E35F",
+                       "status":  "pass"
+                   },
+                   {
+                       "file":  "UI/Common/ui_checkbox_on_v01.png",
+                       "resolution":  [
+                                          128,
+                                          128
+                                      ],
+                       "sourceInspection":  {
+                                                "file":  "ui_checkbox_on_v01",
+                                                "width":  1254,
+                                                "height":  1254,
+                                                "has_alpha":  true,
+                                                "transparent_share":  0.4318,
+                                                "partial_alpha_pixels":  891169,
+                                                "content_box":  [
+                                                                    137,
+                                                                    158,
+                                                                    1010,
+                                                                    935
+                                                                ],
+                                                "padding_waste":  0.3995,
+                                                "colours":  "\u003e4096",
+                                                "power_of_two":  false,
+                                                "flat_border":  null,
+                                                "touches_edge":  false
+                                            },
+                       "removedAlphaOne":  2836,
+                       "outputInspection":  {
+                                                "file":  "ui_checkbox_on_v01",
+                                                "width":  128,
+                                                "height":  128,
+                                                "has_alpha":  true,
+                                                "transparent_share":  0.4235,
+                                                "partial_alpha_pixels":  9445,
+                                                "content_box":  [
+                                                                    14,
+                                                                    16,
+                                                                    103,
+                                                                    96
+                                                                ],
+                                                "padding_waste":  0.3965,
+                                                "colours":  1646,
+                                                "power_of_two":  true,
+                                                "flat_border":  null,
+                                                "touches_edge":  false
+                                            },
+                       "borderPixels":  0,
+                       "clipped":  false,
+                       "key":  null,
+                       "selectedRevision":  "r01",
+                       "buttonInteriorMinimumAlpha":  null,
+                       "rawSha256":  "610BCC5D419FF8AAF79484E3E77DD5A86270DA7E345E79D3BEB3C022A4ABDBDF",
+                       "sha256":  "12B48D5D56D78C11E8A7C8D6A4E52F429ED2E733828472E6730AC6050F55E053",
+                       "status":  "pass"
+                   }
+               ],
+    "checkboxRegistration":  {
+                                 "transform":  "Identical whole-canvas 1254x1254 to 128x128 premultiplied area resample; no independent fit or recenter",
+                                 "observedRegion":  "Left 22 percent plus bottom 20 percent, outside added tick",
+                                 "alphaMaskDifferences":  1,
+                                 "comparedPixels":  6187,
+                                 "maximumAlphaDelta":  26,
+                                 "pixelIdenticalArtwork":  false
+                             },
+    "buttonSliceBorder":  [
+                              48,
+                              48,
+                              48,
+                              48
+                          ],
+    "buttonNormalization":  "Key opaque magenta raw, crop whole silhouette, normalize to existing blue 504x152 content frame at 4,4",
+    "verification":  "V2 art: numeric QC and final contact read"
+}

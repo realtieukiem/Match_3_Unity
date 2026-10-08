@@ -1,0 +1,23 @@
+{
+  "batch": 22,
+  "status": "complete",
+  "generationCalls": 5,
+  "completed": [
+    "UI/Common/ui_button_green_v01.png",
+    "UI/Common/ui_checkbox_off_v01.png",
+    "UI/Common/ui_checkbox_on_v01.png"
+  ],
+  "remaining": [],
+  "selectedRevisions": {
+    "green": "r03",
+    "off": "r01",
+    "on": "r01"
+  },
+  "rejectedRevisions": {
+    "green_r01": "Central face alpha59; dark mottled appearance on UI background",
+    "green_r02": "Central face alpha1 despite explicit opacity edit"
+  },
+  "verification": "V2 art",
+  "gameImported": false,
+  "userApproval": "Existing family and Batch22 order authorized; no separate revision approval"
+}

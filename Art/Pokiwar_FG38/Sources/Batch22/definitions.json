@@ -1,0 +1,36 @@
+[
+  {
+    "id": "ui_button_green_v01",
+    "file": "UI/Common/ui_button_green_v01.png",
+    "raw": "ui_button_green_v01.r03.raw.png",
+    "resolution": [
+      512,
+      160
+    ],
+    "prompt": "Create the LEAF-GREEN variant of this exact supplied blue game button. Preserve its wide 3.2:1 silhouette, clipped beveled corners, four gold brass rivets at the same corner positions, thick dark-brown #21191F outline, bevel geometry and empty center. Recolor ONLY blue face and blue bevels to leaf green: the large central face is a clean even SOLID #5DBB2F fill, darker forest-green lower bevel, pale cream-green top bevel, 2-3 discrete planar shade bands. ALL solid button material is fully opaque. No text, symbols, cloudy patches, center shadow, internal holes, gradients, gloss or mottling. Front orthographic casual-cartoon UI. PRODUCTION MATTE: the complete image must be fully opaque including the background; behind the button use one perfectly flat saturated MAGENTA #FF00FF field, with no gradient or shadow. Magenta appears ONLY OUTSIDE the closed outlined button. Leave 3 percent magenta padding around the full button on every side. Do not create an alpha channel cutout; the magenta background will be deterministically keyed afterward, keeping the entire green button opaque. Exactly one wide button centered on a wide landscape canvas. Keep every stud and corner inside the outermost 48 pixels of either end at final 512x160.",
+    "revision": "r03",
+    "matte": "magenta"
+  },
+  {
+    "id": "ui_checkbox_off_v01",
+    "file": "UI/Common/ui_checkbox_off_v01.png",
+    "raw": "ui_checkbox_off_v01.r01.raw.png",
+    "resolution": [
+      128,
+      128
+    ],
+    "prompt": "Create exactly ONE empty OFF-state checkbox sprite for the existing Pokiwar FG38 canyon-fantasy casual-cartoon UI. Square front-facing orthographic control, square canvas, centered. A slightly rounded sturdy PALE STONE RIM surrounds a dark navy #202D42 flat recessed square face. Thick closed near-black brown #21191F outer outline, thinner inner outline, two or three crisp planar cel shade bands, a restrained warm cream #FFF0BE highlight along the top and upper-left rim, darker taupe lower bevel. Match the provided UI button's brown ink weight, beveled chunky construction, small-scale readability and warm highlight language, but this is a simple checkbox without button studs or side mounts. The square box is about 80 percent of canvas width and height; its bounding box is centered with equal clear margins on every side. Keep inner face quiet and empty, no mark. Softly rounded corners, no oval or circular silhouette. Genuine transparent alpha background. No tick, text, letters, numbers, symbols, cast shadow, background, gradients, glossy 3D, texture noise or extra controls. Output will be 128x128 and displayed at 32 to 64 pixels. Make stone rim and recessed face distinct at small size. This empty box will be the locked alignment seed for the ON-state.",
+    "revision": "r01"
+  },
+  {
+    "id": "ui_checkbox_on_v01",
+    "file": "UI/Common/ui_checkbox_on_v01.png",
+    "raw": "ui_checkbox_on_v01.r01.raw.png",
+    "resolution": [
+      128,
+      128
+    ],
+    "prompt": "Edit this supplied OFF checkbox sprite to its ON state. Keep the same square canvas dimensions, exact pixel positions, exact outer silhouette, exact pale stone rim, dark brown outline, corner bevels, recessed navy face, lighting and alpha outside the checkbox. Do not move, resize, recenter, redesign or redraw the box. ADD ONLY ONE bold leaf-green checkmark, #5DBB2F main color, darker green underside, restrained narrow cream #FFF0BE upper-left highlight, thick near-black brown #21191F closed contour. Clearly recognizable check shape: short arm descends from middle left to a low central elbow; one longer arm rises diagonally to upper right. The green tick is the single focal symbol. Its long-arm tip crosses slightly over the pale upper-right rim and reaches just 2-3 percent of canvas beyond that corner, entirely contained with clear transparent padding. Keep the entire existing box visible, especially its top and right boundaries. Front-facing orthographic casual-cartoon 2D UI, crisp flat shade bands. No letters, numbers, other icons, duplicate ticks, sparkles, shadow, glow, new background, airbrush or glossy 3D. Genuine transparent background identical to original. This is the checked state of this exact box, not a new control.",
+    "revision": "r01"
+  }
+]

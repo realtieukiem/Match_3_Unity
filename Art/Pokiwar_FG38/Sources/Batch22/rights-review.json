@@ -1,0 +1,27 @@
+{
+  "checked": "2026-10-08",
+  "tool": "built-in image_gen",
+  "origin": "generated",
+  "intendedUse": "UI assets for the existing game",
+  "references": [
+    {
+      "file": "Sources/Batch22/reference_button_blue_v01.png",
+      "role": "Button edit seed and checkbox visual-family reference",
+      "provenance": "Manifest Batch7 source=imagegen, exact historical prompt and reference provenance retained",
+      "permission": "User commissioned the family continuation and exact seed match within this project",
+      "eligibility": "documented first-party project-generated reference; historical upstream reference rights not independently re-established"
+    },
+    {
+      "file": "Sources/Batch22/ui_checkbox_off_v01.r01.raw.png",
+      "role": "ON-state edit seed",
+      "provenance": "Generated in this task",
+      "eligibility": "own generated output"
+    }
+  ],
+  "termsSource": "https://openai.com/policies/terms-of-use/",
+  "termsChecked": "2026-10-08",
+  "accountPlanRestrictions": "Not independently inspected; built-in tool access used",
+  "similarityReview": "Inspected eligible project seed and outputs; generic bevel/rivet/check motifs, no named artist or franchise reference; no exhaustive similarity search or legal-clearance claim",
+  "rightsReview": "eligible_for_documented_use",
+  "attribution": "No separate asset licence supplied; record AI origin honestly"
+}

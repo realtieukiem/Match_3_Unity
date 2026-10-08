@@ -1,0 +1,20 @@
+{
+  "status": "pass",
+  "inspectedPreview": "Previews/UI_batch22_contact_v01.png",
+  "scales": {
+    "button": "480x150; 9-slice at 240x100 and 240x160",
+    "checkbox": [
+      128,
+      64,
+      32
+    ]
+  },
+  "silhouette": "Front-facing bevels and four studs remain readable and lie in the 48px end caps",
+  "construction": "Stone rim and recessed navy face stay registered across checkbox states; one pixel differs in sampled unaffected alpha-mask region",
+  "drawing": "Closed brown outlines, simple planar bevels; tick is clear at 32px",
+  "value": "Cream upper-left rims and leaf-green face; rejected alpha artifacts removed through matte regeneration",
+  "restraint": "Blank central face, no baked labels or extra ornaments",
+  "familyContinuity": "Existing blue reference compared beside green; matching 504x152 content frame. Generated contours are not pixel-identical",
+  "technical": "Exact canvases, zero nontransparent border pixels, button tested interior alpha255",
+  "limitations": "Native-scale art preview only; no Unity import/runtime capture or exact uniform RGB proof"
+}

@@ -1,0 +1,19 @@
+## Batch 22 - green button and checkbox (3 images, `PAINT NEW`)
+
+Same family as the existing kit in `Art/Pokiwar_FG38/Assets/UI/Common/`. Open `ui_button_blue_v01.png` as the
+reference and match it exactly in shape, rim, studs, bevel and outline weight. Save all three under
+`Art/Pokiwar_FG38/Assets/UI/Common/`, transparent PNG, no text.
+
+| File | Size | Subject |
+|---|---|---|
+| `ui_button_green_v01.png` | 512x160 | The blue button recoloured to a fresh leaf green (#5DBB2F body, darker green lower band, cream top highlight). Same silhouette and the same 48 px corner caps, so it 9-slices like the others. Used for READY, BUY, WEAR. |
+| `ui_checkbox_off_v01.png` | 128x128 | An empty square tick box: dark navy recessed face, pale stone rim with the kit's brown outline, slightly rounded corners. |
+| `ui_checkbox_on_v01.png` | 128x128 | The same box, pixel-aligned with the empty one, holding one bold leaf-green tick with a cream highlight that breaks slightly over the top right corner. |
+
+```
+Create one finished 2D game UI sprite: <SUBJECT FROM THE TABLE>. Genuine transparent background, the sprite
+centred with a thin clear margin. Canyon-fantasy casual cartoon UI: thick closed near-black brown outline
+#21191F, two or three crisp flat shade bands, a restrained cream highlight along the top, no airbrush gradients,
+no glossy 3D look. No letters, numbers, icons other than the one named, drop shadow or background.
+```
+

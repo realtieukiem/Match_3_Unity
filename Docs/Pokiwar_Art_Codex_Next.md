@@ -14,7 +14,7 @@ moves to the "Already painted" table below - never leave a finished prompt in pl
 again. Before painting anything, check the file name under `Art/Pokiwar_FG38/Assets`: a file that
 exists is finished, do not repaint or overwrite it unless the user asks for a new version by name.
 
-## Status board - read this first (checked 2026-10-08 against `Art/Pokiwar_FG38/Assets`, 275 PNG; Batch 20 exported; Batches 21 and 22 remain open)
+## Status board - read this first (checked 2026-10-08 against `Art/Pokiwar_FG38/Assets`, 281 PNG; Batches 20-22 exported; no open drawing orders)
 
 Every piece of art the game needs has exactly one status. Codex paints ONLY rows marked `PAINT NEW`.
 
@@ -46,11 +46,11 @@ Every piece of art the game needs has exactly one status. Codex paints ONLY rows
 | 18 | Charm icons `Meta/UI/charm_lucky_v01.png`, `Meta/UI/charm_protection_v01.png` | 2 | `HAVE` | Batch 20 painted 2026-10-08; exported, awaiting game import |
 | 19 | Idle frames 2 and 3 for Dunewing, Psyling, Azurewing and their later forms | - | `WAIT` | none of them is on the map now (all six nodes are East Sea); paint only if they return |
 | 20 | Projectiles for ranged creatures `Battle/Shots/shot_{bebeboom_bomb,ngoclam_pearl,voirong_bolt}_v01.png` | 3 | `HAVE` | Batch 21 painted 2026-10-08; transparent 256x256 exports, awaiting game import |
-| 21 | Green confirm button (READY, BUY, WEAR, hub BACK are flat green rectangles; the painted kit has blue, red, gray, orange only) and a checkbox pair (the two charm toggles are flat white squares) | 3 | `PAINT NEW` | Batch 22 below (user, 2026-10-08: order what is best) |
+| 21 | Green confirm button and stone-rim checkbox pair | 3 | `HAVE` | Batch 22 painted 2026-10-08; transparent 512x160 button and 128x128 checkbox exports, awaiting game import |
 | 9 | Second forms of Emberkit, Leafling, Tidepup; a card for Tidal Siphon | - | `NEVER` | decided 2026-10-06 |
 | 10 | Third and later forms of any creature | - | `WAIT` | the rule for when a pet takes a third form is not decided |
 
-Open orders, 3 images in all: Batch 22 (green button, checkbox pair). Batches 19, 20 and 21 are complete; rows marked `WAIT` remain undecided.
+No open drawing orders. Batches 19-22 are complete; rows marked `WAIT` remain undecided.
 
 Framing rule for every future creature batch (learned from Batches 12, 14 and 15): the game shows a creature at
 the size it fills its canvas, so paint the idle at about 80% of the canvas height, keep every pose (the hit pose
@@ -80,29 +80,11 @@ included) under 90%, and keep one ground line across the four poses. Creatures p
 | 19 | remaining card faces, touch buttons and reef standing platforms | `Cards/Faces`, `Battle/QTE`, `Battle/Background` | `face_mana_potion_v02.png`, `face_fire_bolt_v02.png`, `qte_button_dir_v01.png`, `qte_button_strike_v01.png`, `battle_bg_eastsea_v02.png` |
 | 20 | lucky and protection charm icons | `Meta/UI` | `charm_lucky_v01.png`, `charm_protection_v01.png`; transparent 256x256, awaiting game import |
 | 21 | ranged creature projectiles | `Battle/Shots` | `shot_bebeboom_bomb_v01.png`, `shot_ngoclam_pearl_v01.png`, `shot_voirong_bolt_v01.png`; transparent 256x256, awaiting game import; prompts and raws in `Sources/Batch21` |
+| 22 | green button and checkbox pair | `UI/Common` | `ui_button_green_v01.png`, `ui_checkbox_off_v01.png`, `ui_checkbox_on_v01.png` |
 
 Do NOT paint either (decided 2026-10-06, they would never be shown): second forms for Emberkit, Leafling or
 Tidepup - the free starter never changes form and the other two are not obtainable; a card for Tidal Siphon -
 only the boss uses it and boss cards are not drawn.
-
-## Batch 22 - green button and checkbox (3 images, `PAINT NEW`)
-
-Same family as the existing kit in `Art/Pokiwar_FG38/Assets/UI/Common/`. Open `ui_button_blue_v01.png` as the
-reference and match it exactly in shape, rim, studs, bevel and outline weight. Save all three under
-`Art/Pokiwar_FG38/Assets/UI/Common/`, transparent PNG, no text.
-
-| File | Size | Subject |
-|---|---|---|
-| `ui_button_green_v01.png` | 512x160 | The blue button recoloured to a fresh leaf green (#5DBB2F body, darker green lower band, cream top highlight). Same silhouette and the same 48 px corner caps, so it 9-slices like the others. Used for READY, BUY, WEAR. |
-| `ui_checkbox_off_v01.png` | 128x128 | An empty square tick box: dark navy recessed face, pale stone rim with the kit's brown outline, slightly rounded corners. |
-| `ui_checkbox_on_v01.png` | 128x128 | The same box, pixel-aligned with the empty one, holding one bold leaf-green tick with a cream highlight that breaks slightly over the top right corner. |
-
-```
-Create one finished 2D game UI sprite: <SUBJECT FROM THE TABLE>. Genuine transparent background, the sprite
-centred with a thin clear margin. Canyon-fantasy casual cartoon UI: thick closed near-black brown outline
-#21191F, two or three crisp flat shade bands, a restrained cream highlight along the top, no airbrush gradients,
-no glossy 3D look. No letters, numbers, icons other than the one named, drop shadow or background.
-```
 
 ## Shared preamble (put at the top of every batch)
 
@@ -111,7 +93,7 @@ Continue the Pokiwar FG38 art set. Reply to me in Vietnamese.
 Read first: Art/Pokiwar_FG38/ART_BIBLE.md and Art/Pokiwar_FG38/AssetManifest.json, and look at
 Art/Pokiwar_FG38/Previews/Battle_form01_v01.png as the style target (canyon fantasy, chunky
 silhouettes, near-black brown outline #21191F, two or three flat shade bands, cream highlight).
-Completed definitions and prompts are archived under Sources/Batch19, Sources/Batch20 and Sources/Batch21. Read only Batch 22 above as a new drawing order.
+Completed definitions and prompts are archived under Sources/Batch19, Sources/Batch20, Sources/Batch21 and Sources/Batch22. No new drawing orders remain.
 The ordered definitions resolve their references and output filenames inside Art/Pokiwar_FG38.
 Thread budget rules - this thread dies above ~30 inline images:
 - generate at most the images listed below, one at a time;
