@@ -51,6 +51,8 @@ namespace Pokiwar.UI
         public float LobSpin = 540f;
         [Tooltip("How far a ranged attacker steps forward as it lets go (px).")]
         public float ThrowStep = 36f;
+        [Tooltip("Colour the creature pales to while it gathers power for a change of form.")]
+        public Color ChargeTint = new Color(0.6f, 0.92f, 1f);
 
         private Vector2 portraitHome;
         private bool homeSet;
@@ -69,7 +71,7 @@ namespace Pokiwar.UI
 
         public void Setup(Combatant c, SpriteLibrary sprites, bool facesRight, int hpLayers = 1)
         {
-            Hp.SetLayers(hpLayers, Mathf.CeilToInt((float)c.Hp.Current / Mathf.Max(1, hpLayers)));
+            Hp.SetLayers(hpLayers, Mathf.CeilToInt((float)c.Hp.Max / Mathf.Max(1, hpLayers)));
             StopReturn();
             direction = facesRight ? 1f : -1f;
             if (!homeSet)
@@ -299,6 +301,23 @@ namespace Pokiwar.UI
             busy = false;
         }
 
+        /// <summary>The creature trembles, swells and pales while it gathers power for a change of form.</summary>
+        public IEnumerator Charge(float seconds)
+        {
+            var rt = Portrait.rectTransform;
+            StopReturn();
+            busy = true;
+            var home = portraitHome;
+            yield return Tween.Run(seconds, t =>
+            {
+                rt.anchoredPosition = home + new Vector2(Mathf.Sin(t * seconds * 70f) * (3f + 13f * t), 0f);
+                float s = 1f + 0.1f * t + 0.03f * Mathf.Sin(t * seconds * 22f);
+                rt.localScale = new Vector3(s, s, 1f);
+                Portrait.color = Color.Lerp(Color.white, ChargeTint, t);
+            });
+            rt.anchoredPosition = home;
+        }
+
         public IEnumerator Transform(string newKey)
         {
             var rt = Portrait.rectTransform;
@@ -309,6 +328,7 @@ namespace Pokiwar.UI
             shotKey = FindShot(newKey);
             CollectIdle();
             Portrait.sprite = Pose(null);
+            Portrait.color = Color.white;
             yield return Tween.Run(0.35f, t => rt.localScale = new Vector3(baseScale.x * t, baseScale.y * (1.3f - 0.3f * t), 1f));
             rt.localScale = baseScale;
             busy = false;

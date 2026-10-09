@@ -15,6 +15,12 @@ namespace Pokiwar.UI
         public Sprite NodeOpen;
         public Sprite NodeLocked;
         public Sprite NodeBoss;
+        [Tooltip("Draws a creature the player does not own yet in grey; owned ones show their colours.")]
+        public Material NotOwnedMaterial;
+        [Tooltip("How dark a node's pedestal is against its element colour (0 to 1).")]
+        public float PedestalShade = 0.5f;
+        [Tooltip("Rim colour of a boss node.")]
+        public Color BossRim = new Color(1f, 0.83f, 0.32f);
         public RectTransform NodeArea;
         public RowView NodeTemplate;
         public Image PathTemplate;
@@ -106,19 +112,30 @@ namespace Pokiwar.UI
                 var creature = a.Db.Creature(enc.CreatureId);
                 bool unlocked = a.Progression.IsNodeUnlocked(a.Save, n);
                 int wins = a.Save.Wins(n.Id);
-                string sub = unlocked
-                    ? enc.Name + "  Hunt Lv " + enc.Level + "\nWins " + wins + "/" + Mathf.Max(1, n.WinsRequired) + "   Energy " + enc.EnergyCost
-                    : "LOCKED";
-                row.Set((i + 1) + ". " + n.Name, sub, a.Sprites.Get(creature.SpriteKey), wins > 0);
+                int need = Mathf.Max(1, n.WinsRequired);
+                bool owned = wins >= need;
+                string sub = unlocked ? "Wins " + wins + "/" + need + "   Energy " + enc.EnergyCost : "LOCKED";
+                row.Set(creature.Name, sub, a.Sprites.Get(creature.SpriteKey), owned);
+                if (row.Tag != null) row.Tag.text = (i + 1).ToString();
                 row.Rect.anchoredPosition = NodePosition(n, i, map.Nodes.Count, size);
+                var tint = SpriteLibrary.ElementColor(creature.Element);
                 var skin = !unlocked ? NodeLocked : enc.IsBoss ? NodeBoss : NodeOpen;
                 if (skin != null)
                 {
                     row.Background.sprite = skin;
                     row.Background.color = Color.white;
                 }
-                else row.Background.color = !unlocked ? new Color(0.25f, 0.25f, 0.28f) : enc.IsBoss ? new Color(0.65f, 0.2f, 0.25f) : new Color(0.2f, 0.45f, 0.7f);
-                row.Icon.color = unlocked ? Color.white : new Color(0.2f, 0.2f, 0.2f);
+                else row.Background.color = unlocked ? new Color(tint.r * PedestalShade, tint.g * PedestalShade, tint.b * PedestalShade, 0.92f) : new Color(0.22f, 0.24f, 0.3f, 0.85f);
+                if (row.Frame != null) row.Frame.color = !unlocked ? new Color(0.5f, 0.52f, 0.58f) : enc.IsBoss ? BossRim : tint;
+                row.Icon.material = owned ? null : NotOwnedMaterial;
+                row.Icon.color = unlocked ? Color.white : new Color(0.55f, 0.55f, 0.55f);
+                if (row.Badge != null)
+                {
+                    string ek = "element." + creature.Element;
+                    row.Badge.gameObject.SetActive(a.Sprites.Has(ek));
+                    if (a.Sprites.Has(ek)) row.Badge.sprite = a.Sprites.Get(ek);
+                    row.Badge.color = unlocked ? Color.white : new Color(0.45f, 0.45f, 0.45f);
+                }
                 row.Button.interactable = unlocked;
                 var node = n;
                 row.Button.onClick.AddListener(() => app.ShowPrep(node));

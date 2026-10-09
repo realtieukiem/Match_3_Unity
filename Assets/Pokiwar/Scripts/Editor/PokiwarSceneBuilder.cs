@@ -19,6 +19,7 @@ namespace Pokiwar.EditorTools
         public const string GemPrefabPath = "Assets/Pokiwar/Prefabs/GemView.prefab";
 
         private static Font font;
+        private static Font boldFont;
         private static Dictionary<string, Sprite> art;
 
         private static readonly Color Gold = new Color(1f, 0.83f, 0.32f);
@@ -53,7 +54,8 @@ namespace Pokiwar.EditorTools
 
         public static void BuildAll(bool overwriteScene)
         {
-            font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            font = AssetDatabase.LoadAssetAtPath<Font>("Assets/Pokiwar/Fonts/Baloo2-Medium.ttf") ?? Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            boldFont = AssetDatabase.LoadAssetAtPath<Font>("Assets/Pokiwar/Fonts/Baloo2-ExtraBold.ttf") ?? font;
             art = PlaceholderArt.BuildAll();
             Fg38Art.Apply(art);
             var catalog = PokiwarContentSeeder.Seed(false);
@@ -388,6 +390,7 @@ namespace Pokiwar.EditorTools
             map.PathTemplate = Img(area, "PathTemplate", "ui.round", new Color(1f, 0.9f, 0.5f));
             At(map.PathTemplate.rectTransform, 0.5f, 0.5f, 0, 0, 100, 12);
             map.NodeTemplate = MakeLobbyNode(area, "NodeTemplate");
+            map.NotOwnedMaterial = GrayMaterial();
             map.PathTemplate.gameObject.SetActive(false);
             map.NodeTemplate.gameObject.SetActive(false);
 
@@ -440,6 +443,18 @@ namespace Pokiwar.EditorTools
             return row;
         }
 
+        private static Material GrayMaterial()
+        {
+            const string path = "Assets/Pokiwar/Shaders/UIGrayscale.mat";
+            var mat = AssetDatabase.LoadAssetAtPath<Material>(path);
+            if (mat != null) return mat;
+            var shader = AssetDatabase.LoadAssetAtPath<Shader>("Assets/Pokiwar/Shaders/UIGrayscale.shader");
+            if (shader == null) return null;
+            mat = new Material(shader);
+            AssetDatabase.CreateAsset(mat, path);
+            return mat;
+        }
+
         private static RowView MakeLobbyNode(Transform parent, string name)
         {
             var bg = Img(parent, name, "ui.circle", Blue, true);
@@ -449,18 +464,34 @@ namespace Pokiwar.EditorTools
             row.Button = bg.gameObject.AddComponent<Button>();
             row.Button.targetGraphic = bg;
             bg.gameObject.AddComponent<ClickSound>();
+            row.Frame = Img(bg.transform, "Frame", "ui.ring", Color.white);
+            At(row.Frame.rectTransform, 0.5f, 0.5f, 0, 0, 186, 186);
             row.Icon = Img(bg.transform, "Icon", null, Color.white);
             row.Icon.preserveAspect = true;
             At(row.Icon.rectTransform, 0.5f, 0.5f, 0, 14, 200, 200);
-            var star = Img(bg.transform, "Highlight", "fx.star", Gold);
-            At(star.rectTransform, 1, 1, -8, -8, 60, 60);
+            row.Tag = Txt(bg.transform, "Number", "1", 58, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(row.Tag.rectTransform, 1, 0, 14, 30, 70, 70);
+            var numberOutline = row.Tag.gameObject.AddComponent<Outline>();
+            numberOutline.effectColor = new Color(0.03f, 0.08f, 0.2f);
+            numberOutline.effectDistance = new Vector2(3, -3);
+            var plate = Img(bg.transform, "Plate", "ui.round", new Color(0.04f, 0.09f, 0.24f, 0.9f), true);
+            At(plate.rectTransform, 0.5f, 1, 0, 70, 290, 76);
+            row.Badge = Img(plate.transform, "Element", "element.Fire", Color.white);
+            row.Badge.preserveAspect = true;
+            At(row.Badge.rectTransform, 0, 0.5f, 38, 0, 56, 56);
+            row.Title = Txt(plate.transform, "Title", "Creature", 26, new Color(0.72f, 1f, 0.55f), TextAnchor.MiddleLeft, FontStyle.Bold);
+            At(row.Title.rectTransform, 0.5f, 0.5f, 11, 16, 172, 36);
+            row.Title.horizontalOverflow = HorizontalWrapMode.Overflow;
+            row.Title.resizeTextForBestFit = true;
+            row.Title.resizeTextMinSize = 16;
+            row.Title.resizeTextMaxSize = 26;
+            row.Subtitle = Txt(plate.transform, "Subtitle", "", 19, new Color(0.85f, 0.92f, 1f), TextAnchor.MiddleLeft);
+            At(row.Subtitle.rectTransform, 0.5f, 0.5f, 11, -17, 172, 28);
+            row.Subtitle.horizontalOverflow = HorizontalWrapMode.Overflow;
+            var star = Img(plate.transform, "Highlight", "fx.star", Gold);
+            star.preserveAspect = true;
+            At(star.rectTransform, 1, 0.5f, -30, 0, 44, 44);
             row.Highlight = star.gameObject;
-            row.Title = Txt(bg.transform, "Title", "1. Node", 28, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(row.Title.rectTransform, 0.5f, 0, 0, -22, 340, 38);
-            row.Title.gameObject.AddComponent<Outline>().effectColor = new Color(0.03f, 0.08f, 0.2f);
-            row.Subtitle = Txt(bg.transform, "Subtitle", "", 21, new Color(0.9f, 0.95f, 1f), TextAnchor.UpperCenter);
-            At(row.Subtitle.rectTransform, 0.5f, 0, 0, -70, 340, 56);
-            row.Subtitle.gameObject.AddComponent<Outline>().effectColor = new Color(0.03f, 0.08f, 0.2f);
             return row;
         }
 
@@ -503,6 +534,9 @@ namespace Pokiwar.EditorTools
             prep.EnemyTitle = Txt(s, "EnemyTitle", "", 36, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
             At(prep.EnemyTitle.rectTransform, 0.5f, 0.5f, 540, -150, 640, 52);
             prep.EnemyTitle.gameObject.AddComponent<Outline>().effectColor = new Color(0.05f, 0.15f, 0.4f);
+            prep.EnemyElement = Img(s, "EnemyElement", "element.Fire", Color.white);
+            prep.EnemyElement.preserveAspect = true;
+            At(prep.EnemyElement.rectTransform, 0.5f, 0.5f, 400, -150, 60, 60);
 
             prep.FightButton = Btn(s, "FightButton", "READY", Green, 44, out prep.FightLabel);
             At(Rt(prep.FightButton), 0.5f, 0.5f, 0, 60, 380, 116);
@@ -584,8 +618,10 @@ namespace Pokiwar.EditorTools
         {
             var s = Screen(root, "BattleScreen");
             Fill(Img(s, "Bg", Key("bg.battle", null), art.ContainsKey("bg.battle") ? Color.white : new Color(0.09f, 0.13f, 0.21f)).rectTransform);
-            Fill(Img(s, "Shade", null, new Color(0, 0, 0, 0.12f)).rectTransform);
+            var shade = Img(s, "Shade", null, new Color(0, 0, 0, 0.12f));
+            Fill(shade.rectTransform);
             var bc = s.gameObject.AddComponent<BattleController>();
+            bc.Dim = shade;
             bc.Shake = s.gameObject.AddComponent<ScreenShake>();
             bc.Shake.Target = s;
 
@@ -1693,12 +1729,13 @@ namespace Pokiwar.EditorTools
         {
             var rt = NewUI(name, parent);
             var t = rt.gameObject.AddComponent<Text>();
-            t.font = font;
+            bool heavy = style == FontStyle.Bold || style == FontStyle.BoldAndItalic;
+            t.font = heavy ? boldFont : font;
             t.text = text;
             t.fontSize = size;
             t.color = c;
             t.alignment = align;
-            t.fontStyle = style;
+            t.fontStyle = !heavy || boldFont == font ? style : style == FontStyle.Bold ? FontStyle.Normal : FontStyle.Italic;
             t.horizontalOverflow = HorizontalWrapMode.Wrap;
             t.verticalOverflow = VerticalWrapMode.Overflow;
             t.raycastTarget = false;

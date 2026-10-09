@@ -521,6 +521,8 @@ namespace Pokiwar.EditorTools
             yield return null;
             nodes = app.Map.NodeArea.GetComponentsInChildren<RowView>(false);
             Check(nodes.Length == 6 && nodes[5].Button.interactable, "boss node unlocked");
+            Check(nodes[0].Highlight.activeSelf && nodes[0].Icon.material != app.Map.NotOwnedMaterial && !nodes[5].Highlight.activeSelf && nodes[5].Icon.material == app.Map.NotOwnedMaterial, "an owned creature shows its star and colours, one not owned yet is grey without a star");
+            yield return Capture("06b_map_owned");
             nodes[5].Button.onClick.Invoke();
             yield return null;
             app.Prep.FightButton.onClick.Invoke();

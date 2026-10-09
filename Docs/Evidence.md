@@ -163,7 +163,12 @@ D 00:20, D 03:00.
 - Clip D (hunt level far above 100) carries x2 / x3 / x4 on about half its gems; clips A and B show none. The
   game keeps 5% x2 and 1.5% x3; a multiplier rate that grows with hunt level is NOT built.
 - The HP bars in all five frames are a single red bar for both sides. The three-layer boss bar (green, yellow,
-  red) is CONFIRMED_BY_USER (2026-10-08), not read from these clips.
+  red) is CONFIRMED_BY_USER (2026-10-08), not read from these clips. Re-read 2026-10-09 on the user's word:
+  clip B (BlueWings 68703 -> 55321 of 108000) and clip D (Kaiorga 1254365 -> 102264 of 2500000, 34 frames) both
+  show ONE red bar whose length is current / max. The layered bar is the user's rule, and it applies only to a foe
+  with far more HP than the player's pet - max HP at least `BattleController.LayeredHpRatio` (2) times the pet's;
+  any other foe keeps the plain red bar (user, 2026-10-09, after seeing three layers on every foe: "trong khong
+  hay lam").
 
 ## One whole turn, frame by frame (read 2026-10-08, clip A 02:12.5 -> 02:30.2 at 4 frames per second)
 
@@ -191,6 +196,32 @@ What that settles:
   CONFIRMED_BY_VIDEO, and it is what the user asked for the same day.
 - NOT built: the charging pose during a gain, the scene darkening on yin-yang, the damage number inside the
   badge, multipliers that grow with hunt level.
+
+## A boss changes form, frame by frame (read 2026-10-09, clip B 04:30 -> 04:44 at 4 frames per second)
+
+| Time | What is on screen | Ours |
+|---|---|---|
+| 04:32.0 | the player's skill lands for 6748 and takes BlueWings under the trigger | the hit that crosses the phase trigger |
+| 04:34.5 | the board is gone and the scene is dark; one card icon (orange, a running figure) hangs top centre | `FadeBoard(0)`, `BattleController.Dim` deepens to `TransformDim`, `fx.transform` over the foe |
+| 04:35.0 -> 04:35.3 | a white glow pulses round the icon, then it holds; the small form still stands | `CombatantHud.Charge` for `TransformChargeSeconds`: tremble, swell, pale, flames circling the feet |
+| 04:36.7 | the large form is there in one frame - 2.2 s after the board went | white flash, ring, stars, shake, `CombatantHud.Transform` |
+| 04:37.0 -> 04:38.7 | the scene is bright, the board is back, a red number stands over the boss while its bar refills | bar refills over `TransformHealSeconds` with heart icons and `+N`, then sword icons for the attack rise, then light and board return |
+
+Ours is longer on purpose (about 4.5 s against 2.5 s): the user asked for a beat of its own, a visible heal and a
+visible attack rise. Attack rise is shown as icons, not text ([[minimal-hud-text]] rule).
+
+## Lobby node label (read 2026-10-09, clips A 00:22 and B 00:20)
+
+Each node is a small card: creature name in green, a bare red number at its right (hunt level: Flygon 2, Abra 3,
+Whiscash 14), second line `THANG x/y`. The creature stands on a pedestal with a big node number beside it; one
+not beaten yet is drawn in GREY, a beaten one in colour (clip A: Flygon 1/1 coloured, the rest grey). No element
+is shown anywhere in the lobby. Ours (user, 2026-10-09) follows that card - plate above with name and
+`Wins x/y`, number beside the pedestal, grey until owned (`MapScreen.NotOwnedMaterial`) - with three changes the
+user asked for: no level ("de hien cho ten dai ra de lam gi"); the element on the node itself, as rim and
+pedestal colour plus a badge on the plate, so the player can pick what to farm for stones of that element; a
+gold star on the plate only once the creature is owned. The room shows the badge before the name
+(`PrepScreen.EnemyElement`).
+
 ## Re-checking a frame
 
 Close the Editor, then:

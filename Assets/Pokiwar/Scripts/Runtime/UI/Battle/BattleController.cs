@@ -59,8 +59,18 @@ namespace Pokiwar.UI
         public float BuffRise = 280f;
         [Tooltip("Size of one floating buff icon (px).")]
         public float BuffIconSize = 78f;
-        [Tooltip("How many times a boss's HP bar empties before it falls: green, then yellow, then red.")]
+        [Tooltip("How many times a layered HP bar empties before the foe falls: green, then yellow, then red.")]
         public int BossHpLayers = 3;
+        [Tooltip("A foe gets the layered HP bar when its max HP is at least this many times the player pet's; below that the bar stays plain red.")]
+        public float LayeredHpRatio = 2f;
+        [Tooltip("Dark layer over the battle background; a transformation deepens it.")]
+        public Image Dim;
+        [Tooltip("How dark the background gets while a foe transforms (0 to 1).")]
+        public float TransformDim = 0.62f;
+        [Tooltip("Seconds a foe gathers power before it changes form.")]
+        public float TransformChargeSeconds = 1.4f;
+        [Tooltip("Seconds the HP bar takes to refill after the change of form.")]
+        public float TransformHealSeconds = 0.8f;
         [Tooltip("Seconds one gem's gain holds the stage before the next gem in the row plays; the bar itself changes at once.")]
         public float GainBeatSeconds = 1.2f;
 
@@ -133,13 +143,18 @@ namespace Pokiwar.UI
             report = new BattleReport { BattleId = setup.BattleId, EncounterId = encounter.Id, NodeId = nodeId, PetUid = petUid };
             var s = Engine.State;
             PlayerHud.Setup(s.Get(Side.Player), sprites, true);
-            EnemyHud.Setup(s.Get(Side.Enemy), sprites, false, encounter.IsBoss ? BossHpLayers : 1);
+            EnemyHud.Setup(s.Get(Side.Enemy), sprites, false, s.Get(Side.Enemy).Hp.Max >= s.Get(Side.Player).Hp.Max * LayeredHpRatio ? BossHpLayers : 1);
             Board.Sprites = sprites;
             Board.Rebuild(s.Board);
             Board.InputEnabled = false;
             Log.Clear();
             Log.Add("Battle " + setup.BattleId + " seed " + setup.Seed);
             if (BoardGroup != null) BoardGroup.alpha = 1f;
+            if (Dim != null)
+            {
+                if (dimHome < 0f) dimHome = Dim.color.a;
+                Dim.color = new Color(Dim.color.r, Dim.color.g, Dim.color.b, dimHome);
+            }
             if (TurnPop != null) TurnPop.alpha = 0f;
             RefreshAutoLabel();
             RefreshActionBar();
@@ -534,23 +549,35 @@ namespace Pokiwar.UI
                     break;
                 case CombatEventKind.PhaseTriggered:
                 {
-                    actorHud.Set(ev.ActorAfter);
                     var at = actorHud.FloatAnchor.position;
-                    AudioDirector.Instance?.Duck(-12f, 1.6f);
+                    float boardWas = BoardGroup != null ? BoardGroup.alpha : 1f;
+                    AudioDirector.Instance?.Duck(-12f, TransformChargeSeconds + 2.4f);
+                    yield return FadeBoard(0f);
+                    yield return FadeDim(TransformDim);
                     AudioDirector.Sfx("transform");
-                    yield return ShowBanner(ev.Text + " transforms!", 0.4f);
+                    Decal("fx.transform", at, 320f, TransformChargeSeconds);
+                    if (vfx != null) vfx.Swirl(actorHud.Feet, Art("fx.wisp") ?? Art("buff.Fire"), new Color(0.5f, 0.9f, 1f), actorHud.Portrait.rectTransform, seconds: TransformChargeSeconds);
+                    yield return actorHud.Charge(TransformChargeSeconds);
                     if (vfx != null)
                     {
-                        vfx.ScreenFlash(Color.white, 0.75f, 0.45f);
+                        vfx.ScreenFlash(Color.white, 0.85f, 0.5f);
                         vfx.Ring(at, new Color(0.5f, 0.95f, 1f, 1f), 900f, 0.6f);
                         vfx.Burst(at, new Color(0.4f, 0.9f, 1f), 40, 1100f, 30f, 0.8f, 500f, vfx.Star);
                     }
                     Shake?.Add(0.9f);
-                    Decal("fx.transform", actorHud.BodyCenter, 900f, 0.9f);
                     yield return actorHud.Transform(ev.ActorAfter.SpriteKey);
                     vfx?.Burst(at, new Color(1f, 0.9f, 0.5f), 20, 300f, 18f, 0.9f, -300f, vfx.Star);
-                    Float(actorHud, "HP " + ev.Before + " -> " + ev.After, new Color(0.5f, 1f, 0.6f), 38);
-                    yield return Tween.Wait(0.6f);
+                    AudioDirector.Sfx("heal");
+                    Buff(actorHud, GemType.Heart, new Color(0.45f, 1f, 0.5f));
+                    if (ev.Applied > 0) Float(actorHud, "+" + ev.Applied, new Color(0.5f, 1f, 0.6f), 46);
+                    int maxHp = ev.ActorAfter.MaxHp;
+                    yield return Tween.Run(TransformHealSeconds, t => actorHud.Hp.Set(Mathf.RoundToInt(Mathf.Lerp(ev.Before, ev.After, Tween.EaseOut(t))), maxHp));
+                    actorHud.Set(ev.ActorAfter);
+                    AudioDirector.Sfx("rage");
+                    Buff(actorHud, GemType.Sword, new Color(1f, 0.35f, 0.2f));
+                    yield return Tween.Wait(0.7f);
+                    yield return FadeDim(dimHome);
+                    yield return FadeBoard(boardWas);
                     break;
                 }
                 case CombatEventKind.Death:
@@ -680,6 +707,15 @@ namespace Pokiwar.UI
             float from = BoardGroup.alpha;
             yield return Tween.Run(0.15f, t => BoardGroup.alpha = Mathf.Lerp(from, to, t));
             BoardGroup.alpha = to;
+        }
+
+        private float dimHome = -1f;
+
+        private IEnumerator FadeDim(float to)
+        {
+            if (Dim == null) yield break;
+            var c = Dim.color;
+            yield return Tween.Run(0.25f, t => Dim.color = new Color(c.r, c.g, c.b, Mathf.Lerp(c.a, to, t)));
         }
 
         private void RefreshActionBar()

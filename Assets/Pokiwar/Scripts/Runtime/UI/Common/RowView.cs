@@ -12,6 +12,12 @@ namespace Pokiwar.UI
         public Text Title;
         public Text Subtitle;
         public GameObject Highlight;
+        [Tooltip("Small mark on the row, such as a creature's element.")]
+        public Image Badge;
+        [Tooltip("Rim around the row's picture; a map node tints it by element.")]
+        public Image Frame;
+        [Tooltip("Short label beside the picture, such as a map node's number.")]
+        public Text Tag;
         public Button ExtraA;
         public Text ExtraALabel;
         public Button ExtraB;

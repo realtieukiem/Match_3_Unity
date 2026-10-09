@@ -13,6 +13,10 @@ namespace Pokiwar.UI
 
         public Image EnemyImage;
         public Text EnemyTitle;
+        [Tooltip("Element of the creature about to be fought.")]
+        public Image EnemyElement;
+        [Tooltip("Gap between the element badge and the creature's name (px).")]
+        public float ElementGap = 10f;
         public Image PetImage;
         public Text PetName;
         [Tooltip("How many battles the chosen pet has won.")]
@@ -71,7 +75,16 @@ namespace Pokiwar.UI
             var enc = a.Db.Encounter(n.EncounterId);
             var c = a.Db.Creature(enc.CreatureId);
             EnemyImage.sprite = a.Sprites.Get(c.SpriteKey);
-            EnemyTitle.text = enc.Name + "  (Hunt Lv " + enc.Level + ")";
+            EnemyTitle.text = enc.Name;
+            if (EnemyElement != null)
+            {
+                string ek = "element." + c.Element;
+                EnemyElement.gameObject.SetActive(a.Sprites.Has(ek));
+                if (a.Sprites.Has(ek)) EnemyElement.sprite = a.Sprites.Get(ek);
+                var title = EnemyTitle.rectTransform;
+                var badge = EnemyElement.rectTransform;
+                badge.anchoredPosition = title.anchoredPosition - new Vector2(Mathf.Min(EnemyTitle.preferredWidth, title.rect.width) * 0.5f + badge.rect.width * 0.5f + ElementGap, 0f);
+            }
             PetPicker.SetActive(false);
             CardPicker.SetActive(false);
             if (Avatar != null) Avatar.Show(a.Avatars.Look(a.Save), a.Db, a.Sprites);
