@@ -16,8 +16,10 @@ namespace Pokiwar.UI
         public Image Badge;
         [Tooltip("Rim around the row's picture; a map node tints it by element.")]
         public Image Frame;
-        [Tooltip("Short label beside the picture, such as a map node's number.")]
-        public Text Tag;
+        [Tooltip("Progress dots under the row's name, such as wins toward owning a creature.")]
+        public Image[] Pips;
+        [Tooltip("Shown over the picture while the row is locked.")]
+        public GameObject Lock;
         public Button ExtraA;
         public Text ExtraALabel;
         public Button ExtraB;

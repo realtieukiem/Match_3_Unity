@@ -19,6 +19,14 @@ namespace Pokiwar.UI
         public Material NotOwnedMaterial;
         [Tooltip("How dark a node's pedestal is against its element colour (0 to 1).")]
         public float PedestalShade = 0.5f;
+        [Tooltip("Colour of a progress dot for a win already earned.")]
+        public Color PipWon = new Color(1f, 0.83f, 0.32f);
+        [Tooltip("Colour of a progress dot for a win still to earn.")]
+        public Color PipOpen = new Color(0.04f, 0.09f, 0.24f, 0.8f);
+        [Tooltip("Distance between two progress dots (px).")]
+        public float PipSpacing = 28f;
+        [Tooltip("Gap between the element badge and the creature's name on a node (px).")]
+        public float BadgeGap = 8f;
         [Tooltip("Rim colour of a boss node.")]
         public Color BossRim = new Color(1f, 0.83f, 0.32f);
         public RectTransform NodeArea;
@@ -114,9 +122,17 @@ namespace Pokiwar.UI
                 int wins = a.Save.Wins(n.Id);
                 int need = Mathf.Max(1, n.WinsRequired);
                 bool owned = wins >= need;
-                string sub = unlocked ? "Wins " + wins + "/" + need + "   Energy " + enc.EnergyCost : "LOCKED";
-                row.Set(creature.Name, sub, a.Sprites.Get(creature.SpriteKey), owned);
-                if (row.Tag != null) row.Tag.text = (i + 1).ToString();
+                row.Set(creature.Name, "", a.Sprites.Get(creature.SpriteKey), owned);
+                row.Title.color = unlocked ? Color.white : new Color(0.72f, 0.76f, 0.84f);
+                if (row.Lock != null) row.Lock.SetActive(!unlocked);
+                if (row.Pips != null)
+                    for (int k = 0; k < row.Pips.Length; k++)
+                    {
+                        var pip = row.Pips[k];
+                        pip.gameObject.SetActive(unlocked && !owned && k < need);
+                        pip.color = k < wins ? PipWon : PipOpen;
+                        pip.rectTransform.anchoredPosition = new Vector2((k - (Mathf.Min(need, row.Pips.Length) - 1) * 0.5f) * PipSpacing, pip.rectTransform.anchoredPosition.y);
+                    }
                 row.Rect.anchoredPosition = NodePosition(n, i, map.Nodes.Count, size);
                 var tint = SpriteLibrary.ElementColor(creature.Element);
                 var skin = !unlocked ? NodeLocked : enc.IsBoss ? NodeBoss : NodeOpen;
@@ -128,13 +144,16 @@ namespace Pokiwar.UI
                 else row.Background.color = unlocked ? new Color(tint.r * PedestalShade, tint.g * PedestalShade, tint.b * PedestalShade, 0.92f) : new Color(0.22f, 0.24f, 0.3f, 0.85f);
                 if (row.Frame != null) row.Frame.color = !unlocked ? new Color(0.5f, 0.52f, 0.58f) : enc.IsBoss ? BossRim : tint;
                 row.Icon.material = owned ? null : NotOwnedMaterial;
-                row.Icon.color = unlocked ? Color.white : new Color(0.55f, 0.55f, 0.55f);
+                row.Icon.color = unlocked ? Color.white : new Color(0.3f, 0.3f, 0.3f);
                 if (row.Badge != null)
                 {
                     string ek = "element." + creature.Element;
                     row.Badge.gameObject.SetActive(a.Sprites.Has(ek));
                     if (a.Sprites.Has(ek)) row.Badge.sprite = a.Sprites.Get(ek);
-                    row.Badge.color = unlocked ? Color.white : new Color(0.45f, 0.45f, 0.45f);
+                    row.Badge.color = unlocked ? Color.white : new Color(0.6f, 0.6f, 0.6f);
+                    var title = row.Title.rectTransform;
+                    var badge = row.Badge.rectTransform;
+                    badge.anchoredPosition = title.anchoredPosition - new Vector2(Mathf.Min(row.Title.preferredWidth, title.rect.width) * 0.5f + badge.rect.width * 0.5f + BadgeGap, 0f);
                 }
                 row.Button.interactable = unlocked;
                 var node = n;

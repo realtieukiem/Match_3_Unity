@@ -469,28 +469,29 @@ namespace Pokiwar.EditorTools
             row.Icon = Img(bg.transform, "Icon", null, Color.white);
             row.Icon.preserveAspect = true;
             At(row.Icon.rectTransform, 0.5f, 0.5f, 0, 14, 200, 200);
-            row.Tag = Txt(bg.transform, "Number", "1", 58, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
-            At(row.Tag.rectTransform, 1, 0, 14, 30, 70, 70);
-            var numberOutline = row.Tag.gameObject.AddComponent<Outline>();
-            numberOutline.effectColor = new Color(0.03f, 0.08f, 0.2f);
-            numberOutline.effectDistance = new Vector2(3, -3);
-            var plate = Img(bg.transform, "Plate", "ui.round", new Color(0.04f, 0.09f, 0.24f, 0.9f), true);
-            At(plate.rectTransform, 0.5f, 1, 0, 70, 290, 76);
-            row.Badge = Img(plate.transform, "Element", "element.Fire", Color.white);
-            row.Badge.preserveAspect = true;
-            At(row.Badge.rectTransform, 0, 0.5f, 38, 0, 56, 56);
-            row.Title = Txt(plate.transform, "Title", "Creature", 26, new Color(0.72f, 1f, 0.55f), TextAnchor.MiddleLeft, FontStyle.Bold);
-            At(row.Title.rectTransform, 0.5f, 0.5f, 11, 16, 172, 36);
+            if (art.ContainsKey("lobby.lock"))
+            {
+                var padlock = Img(bg.transform, "Lock", "lobby.lock", Color.white);
+                padlock.preserveAspect = true;
+                At(padlock.rectTransform, 0.5f, 0.5f, 0, 0, 92, 92);
+                row.Lock = padlock.gameObject;
+            }
+            row.Title = Txt(bg.transform, "Title", "Creature", 28, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            At(row.Title.rectTransform, 0.5f, 0, 26, -32, 300, 40);
             row.Title.horizontalOverflow = HorizontalWrapMode.Overflow;
-            row.Title.resizeTextForBestFit = true;
-            row.Title.resizeTextMinSize = 16;
-            row.Title.resizeTextMaxSize = 26;
-            row.Subtitle = Txt(plate.transform, "Subtitle", "", 19, new Color(0.85f, 0.92f, 1f), TextAnchor.MiddleLeft);
-            At(row.Subtitle.rectTransform, 0.5f, 0.5f, 11, -17, 172, 28);
-            row.Subtitle.horizontalOverflow = HorizontalWrapMode.Overflow;
-            var star = Img(plate.transform, "Highlight", "fx.star", Gold);
+            row.Title.gameObject.AddComponent<Outline>().effectColor = new Color(0.03f, 0.08f, 0.2f);
+            row.Badge = Img(bg.transform, "Element", "element.Fire", Color.white);
+            row.Badge.preserveAspect = true;
+            At(row.Badge.rectTransform, 0.5f, 0, -60, -32, 44, 44);
+            row.Pips = new Image[3];
+            for (int i = 0; i < row.Pips.Length; i++)
+            {
+                row.Pips[i] = Img(bg.transform, "Pip" + (i + 1), "ui.circle", Gold);
+                At(row.Pips[i].rectTransform, 0.5f, 0, (i - 1) * 28, -70, 18, 18);
+            }
+            var star = Img(bg.transform, "Highlight", "fx.star", Gold);
             star.preserveAspect = true;
-            At(star.rectTransform, 1, 0.5f, -30, 0, 44, 44);
+            At(star.rectTransform, 0.5f, 0, 0, -72, 44, 44);
             row.Highlight = star.gameObject;
             return row;
         }
